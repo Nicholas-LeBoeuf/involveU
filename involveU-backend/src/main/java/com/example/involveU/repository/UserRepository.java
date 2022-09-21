@@ -7,4 +7,8 @@ import com.example.involveU.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+
+
+
 }
+

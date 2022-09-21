@@ -1,12 +1,17 @@
 package com.example.involveU;
 
+import com.example.involveU.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.involveU.model.User;
-import com.example.involveU.repository.UserRepository;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.List;
 
 @SpringBootApplication
 public class InvolveUBackendApplication implements CommandLineRunner {
@@ -16,14 +21,18 @@ public class InvolveUBackendApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private UserRepository userRepository;
+	private JdbcTemplate JbdbcTemplated;
+
+	private UserRepository userRepo;
 	
 	@Override
 	public void run(String... args) throws Exception {
-		this.userRepository.save(new User("Nick", "LeBoeuf", "njleboeuf@gmail.com"));
-		this.userRepository.save(new User("Nick", "Gaston", "ngaston@gmail.com"));
-		this.userRepository.save(new User("Ryan", "Simas", "rsimas@gmail.com"));
-		this.userRepository.save(new User("Will", "Gagne", "wgagne@gmail.com"));
+		String sql = "SELECT TOP 501 t.* FROM involveU.dbo.[User] t";
+		List<User> Results = JbdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+		Results.forEach(System.out :: println);
+
+
 	
 	}
 }

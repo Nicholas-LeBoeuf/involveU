@@ -3,12 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
 
 import { AppComponent } from './components/app.component';
-import { UserComponent } from './components/user/user.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

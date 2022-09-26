@@ -3,11 +3,11 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../objects/user";
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.css']
 })
-export class UserComponent implements OnInit {
+export class LandingPageComponent implements OnInit {
 
   public users: User[] = [];
   constructor(private userService: UserService) { }

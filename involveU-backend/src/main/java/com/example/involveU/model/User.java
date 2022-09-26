@@ -20,68 +20,74 @@ public class User {
     private String lastName;
     @Column(name = "year")
     private String year;
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
     @Column(name = "isAdmin")
-    private int isAdmin;
+    private Boolean isAdmin;
     @Column(name = "isEboard")
-    private int isEboard;
-    @Column(name = "Pronouns")
-    private String Pronouns;
+    private Boolean isEboard;
+    @Column(name = "pronouns")
+    private String pronouns;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() {return firstName;}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public void setFirstName(String dbFirstName) {firstName = dbFirstName;}
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String dbLastName) {
+        lastName = lastName;
     }
 
     public String getYear() {
         return year;
     }
 
-    public void setYear(String Year) {
-        year = Year;
+    public void setYear(String dbYear) {
+        year = dbYear;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String dbEmail) {
+        email = dbEmail;
     }
 
-    public Integer getAdmin() {
+    public Boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(int admin) {
-        isAdmin = admin;
+    public void setAdmin(int dbAdmin) {
+        if(dbAdmin == 1) {isAdmin = true;}
+        else if (dbAdmin == 0) {isAdmin = false;}
+        //If the there an error in user creation then the default set value is false.
+        else{ isAdmin = false;}
+
+
     }
 
-    public Integer getEboard() {
+    public Boolean getEboard() {
         return isEboard;
     }
 
-    public void setEboard(int eboard) {
-        isEboard = eboard;
+    public void setEboard(int dbEboard) {
+
+        if(dbEboard == 1) {isEboard = true;}
+        else if (dbEboard == 0) {isEboard = false;}
+        //If the there an error in user creation then the default set value is false.
+        else{isEboard = false;}
+
     }
 
     public String getPronouns() {
-        return Pronouns;
+        return pronouns;
     }
 
-    public void setPronouns(String pronouns) {
-        Pronouns = pronouns;
+    public void setPronouns(String dbPronouns) {
+        pronouns = pronouns;
     }
 }

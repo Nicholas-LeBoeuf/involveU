@@ -1,0 +1,18 @@
+.navbar {
+  background-color: #AECDE6;
+  justify-content: flex-start;
+}
+
+.navbar a {
+  padding: 15px 20px;
+}
+
+.SNHUlogoScale {
+  width: 150px;
+  height: 43px;
+}
+
+.involveULogoScale {
+  width: 49px;
+  height: 43px;
+}

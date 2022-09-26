@@ -23,9 +23,9 @@ public class User {
     @Column(name = "email")
     private String email;
     @Column(name = "isAdmin")
-    private Boolean isAdmin;
+    private int isAdmin;
     @Column(name = "isEboard")
-    private Boolean isEboard;
+    private int isEboard;
     @Column(name = "pronouns")
     private String pronouns;
 
@@ -57,29 +57,24 @@ public class User {
         email = dbEmail;
     }
 
-    public Boolean getAdmin() {
+    public int getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(int dbAdmin) {
-        if(dbAdmin == 1) {isAdmin = true;}
-        else if (dbAdmin == 0) {isAdmin = false;}
-        //If the there an error in user creation then the default set value is false.
-        else{ isAdmin = false;}
+    public void setIsAdmin(int dbAdmin) {
 
+       isAdmin = dbAdmin;
+        System.out.println(isAdmin);
 
     }
 
-    public Boolean getEboard() {
+    public int getIsEboard() {
         return isEboard;
     }
 
-    public void setEboard(int dbEboard) {
+    public void setIsEboard(int dbEboard) {
 
-        if(dbEboard == 1) {isEboard = true;}
-        else if (dbEboard == 0) {isEboard = false;}
-        //If the there an error in user creation then the default set value is false.
-        else{isEboard = false;}
+       isEboard = dbEboard;
 
     }
 
@@ -88,6 +83,6 @@ public class User {
     }
 
     public void setPronouns(String dbPronouns) {
-        pronouns = pronouns;
+        pronouns = dbPronouns;
     }
 }

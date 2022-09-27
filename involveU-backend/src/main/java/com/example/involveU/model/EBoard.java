@@ -14,4 +14,11 @@ public class EBoard {
     private  int studentID;
     @Column(name = "eboardPosition")
     private  String eboardPosition;
+
+    public String getEboardPosition(){
+        return eboardPosition;
+    }
+    public void setEboardPosition(String dbEboardPosition){
+        eboardPosition = dbEboardPosition;
+    }
 }

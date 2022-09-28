@@ -2,6 +2,13 @@
   background-color: #AECDE6;
   justify-content: flex-start;
 }
+li {
+  display: inline;
+}
+
+ul {
+  margin-top: 1rem !important;
+}
 
 .navbar a {
   padding: 15px 20px;
@@ -13,6 +20,21 @@
 }
 
 .involveULogoScale {
-  width: 49px;
-  height: 43px;
+  width: 67px;
+  height: 59px;
+  margin-left: 10px;
+}
+
+.blueButton {
+  background-color: #0667B3;
+  border: none;
+  border-radius: 14px;
+  height: 40px;
+  padding: 0 20px;
+  margin: 10px;
+  color: white;
+}
+
+.blueButton:hover {
+  background-color: #3b88c4;
 }

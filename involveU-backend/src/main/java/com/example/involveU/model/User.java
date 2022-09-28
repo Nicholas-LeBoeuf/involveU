@@ -37,9 +37,7 @@ public class User {
         return lastName;
     }
 
-    public void setLastName(String dbLastName) {
-        lastName = lastName;
-    }
+    public void setLastName(String dbLastName) {lastName = dbLastName;}
 
     public String getYear() {
         return year;

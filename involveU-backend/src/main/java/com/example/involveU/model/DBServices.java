@@ -44,4 +44,13 @@ public class DBServices {
         System.out.println(users);
         return users;
     }
+
+    public List<User> getSpecificUser(int userID)
+    {
+        sql = "SELECT * FROM [USER] WHERE StudentID = " + userID + ";";
+        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users;
+    }
+
 }

@@ -22,9 +22,10 @@ public class UserController {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/{id}")
-	public User getSpecificUser(@PathVariable("id") int id )
+	public List<User> getSpecificUser(@PathVariable("id") int id )
 	{
-		User foundUser = new User();
+		List<User> foundUser;
+		foundUser = dbHandler.getSpecificUser(id);
 
 		return foundUser;
 

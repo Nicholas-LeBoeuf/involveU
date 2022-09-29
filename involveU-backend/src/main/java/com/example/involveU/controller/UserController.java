@@ -30,4 +30,14 @@ public class UserController {
 		return foundUser;
 
 	}
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("user/checkCredentials/{username}/{password}")
+	public void checkCredentials(@PathVariable("username") String username,  @PathVariable("password")String password)
+	{
+
+		System.out.println(username + " " + password);
+
+
+	}
+
 }

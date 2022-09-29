@@ -40,7 +40,6 @@ public class DBServices {
     {
         sql = "SELECT TOP 501 t.* FROM involveU.dbo.[User] t";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-
         System.out.println(users);
         return users;
     }

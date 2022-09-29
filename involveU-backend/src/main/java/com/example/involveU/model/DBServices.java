@@ -52,4 +52,16 @@ public class DBServices {
         return users;
     }
 
+    public String checkUserCredentials(String username, String password)
+    {
+        sql = "SELECT * FROM [USER] WHERE email = '" + username + "'";
+        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        //If size of the array is not checked then there will be a Whitelabel error
+        if(users.size() == 1 && users.get(0).getUserPassword().equals(password))
+        {
+            return String.valueOf(users.get(0).getStudentID());
+        }
+        else {return "not accepted";}
+    }
 }

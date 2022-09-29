@@ -4,7 +4,6 @@ import {HttpClientModule} from "@angular/common/http";
 
 import { AppComponent } from './components/app.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -13,8 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

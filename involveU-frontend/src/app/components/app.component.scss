@@ -1,3 +1,4 @@
+
 .navbar {
   background-color: #AECDE6;
   justify-content: flex-start;
@@ -37,4 +38,43 @@ ul {
 
 .blueButton:hover {
   background-color: #3b88c4;
+}
+
+
+/*Popup modal dialog styling*/
+
+.involveUModalScale {
+  width: 200px;
+  height: 174px;
+  display: block;
+  margin: 4% auto;
+}
+
+.dialogLines {
+  border-top: 2px solid black;
+  margin: 2% 8%;
+}
+
+.dialogTitle {
+  font-size: 1.8em;
+  text-align: center;
+  font-weight: normal;
+}
+
+::ng-deep .p-dialog {
+  background-color: #AECDE6;
+  border-radius: 20px;
+}
+
+
+
+.centerInput {
+  display:block;
+  margin: auto;
+}
+
+.outerTextInput {
+  position: relative;
+  padding: 10px 0;
+
 }

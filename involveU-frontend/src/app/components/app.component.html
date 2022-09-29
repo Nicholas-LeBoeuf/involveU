@@ -9,9 +9,25 @@
     </ul>
   </div>
   <div class="buttons">
-    <button class="blueButton">Sign Up</button>
+    <button class="blueButton" (click)="showBasicDialog()">Sign Up</button>
     <button class="blueButton">Login</button>
     <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
   </div>
 </nav>
 <app-landing-page></app-landing-page>
+
+<p-dialog [(visible)]="displayLoginDialog" [modal]="true" [style]="{width: '35vw'}"  [baseZIndex]="10000">
+  <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
+  <hr class="dialogLines">
+  <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
+  <div class="outerTextInput centerInput">
+    <input class="inputField" type="text">
+    <label>Email</label>
+  </div>
+  <div class="outerTextInput centerInput">
+    <input class="inputField" type="text">
+    <label>Password</label>
+  </div>
+  <ng-template pTemplate="footer">
+  </ng-template>
+</p-dialog>

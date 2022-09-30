@@ -1,4 +1,5 @@
 
+
 .navbar {
   background-color: #AECDE6;
   justify-content: flex-start;
@@ -66,15 +67,28 @@ ul {
   border-radius: 20px;
 }
 
-
-
-.centerInput {
-  display:block;
+.inputField {
+  display: block;
   margin: auto;
 }
 
-.outerTextInput {
-  position: relative;
-  padding: 10px 0;
-
+.centerButton {
+  display: block;
+  margin: auto;
 }
+
+.signupGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  justify-items: center;
+}
+
+.input1 { grid-area: 1 / 1 / 2 / 2; }
+.input2 { grid-area: 1 / 2 / 2 / 3; }
+.input3 { grid-area: 2 / 1 / 3 / 2; }
+.input4 { grid-area: 2 / 2 / 3 / 3; }
+.input5 { grid-area: 3 / 1 / 4 / 2; }
+.input6 { grid-area: 3 / 2 / 4 / 3; }

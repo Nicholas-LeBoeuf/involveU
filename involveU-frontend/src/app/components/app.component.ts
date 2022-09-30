@@ -8,9 +8,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'involveU';
   displayLoginDialog: boolean = false;
+  displaySignupDialog: boolean = false;
 
-  showBasicDialog() {
+  showLoginDialog() {
     this.displayLoginDialog = true;
-    console.log("test")
+  }
+
+  showSignupDialog() {
+    this.displaySignupDialog = true;
   }
 }

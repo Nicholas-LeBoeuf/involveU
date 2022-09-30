@@ -8,11 +8,11 @@ import { User } from '../objects/user'
 })
 export class UserService {
 
-  private baseUrl = "http://localhost:8080/api/user"
+  private baseUrl = "http://localhost:8080/api/"
 
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]>{
-    return this.http.get<User[]>(`${this.baseUrl}`);
+    return this.http.get<User[]>(this.baseUrl + `user/test`);
   }
 }

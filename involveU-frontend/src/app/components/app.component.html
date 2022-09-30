@@ -9,8 +9,8 @@
     </ul>
   </div>
   <div class="buttons">
-    <button class="blueButton" (click)="showBasicDialog()">Sign Up</button>
-    <button class="blueButton">Login</button>
+    <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
+    <button class="blueButton" (click)="showLoginDialog()">Login</button>
     <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
   </div>
 </nav>
@@ -20,14 +20,47 @@
   <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
   <hr class="dialogLines">
   <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
-  <div class="outerTextInput centerInput">
-    <input class="inputField" type="text">
-    <label>Email</label>
+  <input class="inputField" type="text" placeholder="Email">
+  <input class="inputField" type="password" placeholder="Password">
+  <button class="blueButton centerButton" type="submit">Login</button>
+  <hr class="dialogLines">
+  <ng-template pTemplate="footer">
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displaySignupDialog" [modal]="true" [style]="{width: '35vw'}"  [baseZIndex]="10000">
+  <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
+  <hr class="dialogLines">
+  <h1 class="dialogTitle">Create an Account, Join the Fun!</h1>
+  <div class="signupGrid">
+    <div class="input1">
+      <input class="inputField" type="text" placeholder="First Name">
+    </div>
+    <div class="input2">
+      <input class="inputField" type="text" placeholder="Last Name">
+    </div>
+    <div class="input3">
+      <input class="inputField" type="email" placeholder="Email">
+    </div>
+    <div class="input4">
+      <input class="inputField" type="password" placeholder="Password">
+    </div>
+    <div class="input5">
+      <select name="year">
+        <option value="none" selected disabled hidden>Select Your Year...</option>
+        <option value="Freshman">Freshman</option>
+        <option value="Sophomore">Sophomore</option>
+        <option value="Junior">Junior</option>
+        <option value="Senior">Senior</option>
+        <option value="Faculty">Faculty</option>
+      </select>
+    </div>
+    <div class="input6">
+      <input class="inputField" type="text" placeholder="Pronouns">
+    </div>
   </div>
-  <div class="outerTextInput centerInput">
-    <input class="inputField" type="text">
-    <label>Password</label>
-  </div>
+  <button class="blueButton centerButton" type="submit">Login</button>
+  <hr class="dialogLines">
   <ng-template pTemplate="footer">
   </ng-template>
 </p-dialog>

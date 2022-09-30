@@ -22,7 +22,7 @@ public class UserController {
 	@Autowired
 	private JdbcTemplate JbdbcTemplated;
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("user")
+	@GetMapping("user/test")
 	public List<User> getUsers() {
 
 		String sql = "SELECT TOP 501 t.* FROM involveU.dbo.[User] t";

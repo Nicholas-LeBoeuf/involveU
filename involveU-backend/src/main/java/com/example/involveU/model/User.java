@@ -1,5 +1,4 @@
 package com.example.involveU.model;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,68 +19,80 @@ public class User {
     private String lastName;
     @Column(name = "year")
     private String year;
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
     @Column(name = "isAdmin")
     private int isAdmin;
     @Column(name = "isEboard")
     private int isEboard;
-    @Column(name = "Pronouns")
-    private String Pronouns;
+    @Column(name = "pronouns")
+    private String pronouns;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    @Column(name = "username")
+    private String username;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+
+
+    @Column(name = "userPassword")
+    private String userPassword;
+
+    public long getStudentID() {return studentID;}
+
+    public void setStudentID(long studentID) {this.studentID = studentID;}
+    public String getFirstName() {return firstName;}
+
+    public void setFirstName(String dbFirstName) {firstName = dbFirstName;}
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public void setLastName(String dbLastName) {lastName = dbLastName;}
 
     public String getYear() {
         return year;
     }
 
-    public void setYear(String Year) {
-        year = Year;
+    public void setYear(String dbYear) {
+        year = dbYear;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String dbEmail) {
+        email = dbEmail;
     }
 
-    public Integer getAdmin() {
+    public int getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(int admin) {
-        isAdmin = admin;
+    public void setIsAdmin(int dbAdmin) {
+        isAdmin = dbAdmin;
+        System.out.println(isAdmin);
     }
 
-    public Integer getEboard() {
+    public int getIsEboard() {
         return isEboard;
     }
 
-    public void setEboard(int eboard) {
-        isEboard = eboard;
-    }
+    public void setIsEboard(int dbEboard) {isEboard = dbEboard;}
 
     public String getPronouns() {
-        return Pronouns;
+        return pronouns;
     }
 
-    public void setPronouns(String pronouns) {
-        Pronouns = pronouns;
+    public void setPronouns(String dbPronouns) {
+        pronouns = dbPronouns;
     }
+
+    public String getUsername() {return username;}
+
+    public String getUserPassword() {return userPassword;}
+
+    public void setUsername(String username) {this.username = username;}
+
+    public void setUserPassword(String userPassword) {this.userPassword = userPassword;}
 }

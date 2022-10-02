@@ -21,7 +21,6 @@ public class UserController {
 		List<User> Results = dbHandler.getAllUsers();
 		return Results;
 	}
-
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/{id}")
 	public List<User> getSpecificUser(@PathVariable("id") int id )
@@ -30,7 +29,6 @@ public class UserController {
 		foundUser = dbHandler.getSpecificUser(id);
 
 		return foundUser;
-
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/checkCredentials/{username}/{password}")
@@ -43,9 +41,5 @@ public class UserController {
 		// If the database handler class returns an empty list then this function will return a bad request.
 		if(repsonseString.equals("not accepted")) {return new ResponseEntity<>( repsonseString, HttpStatus.BAD_REQUEST);}
 		else {return new ResponseEntity<>( repsonseString, HttpStatus.OK);}
-
-
-
 	}
-
 }

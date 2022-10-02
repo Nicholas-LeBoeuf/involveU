@@ -27,12 +27,8 @@ public class User {
     private int isEboard;
     @Column(name = "pronouns")
     private String pronouns;
-
     @Column(name = "username")
     private String username;
-
-
-
     @Column(name = "userPassword")
     private String userPassword;
 

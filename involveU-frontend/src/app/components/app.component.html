@@ -20,9 +20,11 @@
   <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
   <hr class="dialogLines">
   <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
-  <input class="inputField" type="text" placeholder="Email">
-  <input class="inputField" type="password" placeholder="Password">
-  <button class="blueButton centerButton" type="submit">Login</button>
+  <form [formGroup]="loginForm">
+    <input class="inputField" type="text" placeholder="Email" formControlName="username">
+    <input class="inputField" type="password" placeholder="Password" formControlName="password">
+    <button class="blueButton centerButton" type="submit" (click)="onLoginSubmit()">Login</button>
+  </form>
   <hr class="dialogLines">
   <ng-template pTemplate="footer">
   </ng-template>

@@ -16,7 +16,7 @@ public class UserController {
 	private UserRepository userRepository;
 	private DBServices dbHandler = new DBServices();
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("user")
+	@GetMapping("user/test")
 	public List<User> getUsers() {
 		List<User> Results = dbHandler.getAllUsers();
 		return Results;

@@ -1,5 +1,4 @@
 package com.example.involveU.model;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +28,17 @@ public class User {
     @Column(name = "pronouns")
     private String pronouns;
 
+    @Column(name = "username")
+    private String username;
+
+
+
+    @Column(name = "userPassword")
+    private String userPassword;
+
+    public long getStudentID() {return studentID;}
+
+    public void setStudentID(long studentID) {this.studentID = studentID;}
     public String getFirstName() {return firstName;}
 
     public void setFirstName(String dbFirstName) {firstName = dbFirstName;}
@@ -37,9 +47,7 @@ public class User {
         return lastName;
     }
 
-    public void setLastName(String dbLastName) {
-        lastName = lastName;
-    }
+    public void setLastName(String dbLastName) {lastName = dbLastName;}
 
     public String getYear() {
         return year;
@@ -62,21 +70,15 @@ public class User {
     }
 
     public void setIsAdmin(int dbAdmin) {
-
-       isAdmin = dbAdmin;
+        isAdmin = dbAdmin;
         System.out.println(isAdmin);
-
     }
 
     public int getIsEboard() {
         return isEboard;
     }
 
-    public void setIsEboard(int dbEboard) {
-
-       isEboard = dbEboard;
-
-    }
+    public void setIsEboard(int dbEboard) {isEboard = dbEboard;}
 
     public String getPronouns() {
         return pronouns;
@@ -85,4 +87,12 @@ public class User {
     public void setPronouns(String dbPronouns) {
         pronouns = dbPronouns;
     }
+
+    public String getUsername() {return username;}
+
+    public String getUserPassword() {return userPassword;}
+
+    public void setUsername(String username) {this.username = username;}
+
+    public void setUserPassword(String userPassword) {this.userPassword = userPassword;}
 }

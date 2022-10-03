@@ -33,16 +33,16 @@ public class UserController {
 
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("user/checkCredentials/{username}/{password}")
-	public ResponseEntity<String> checkCredentials(@PathVariable("username") String username, @PathVariable("password")String password)
+	@GetMapping("user/checkCredentials/{email}/{password}")
+	public ResponseEntity<String> checkCredentials(@PathVariable("email") String email, @PathVariable("password")String password)
 	{
-		String repsonseString;
-		System.out.println(username + " " + password);
-		repsonseString = dbHandler.checkUserCredentials(username,password);
+		String responseString;
+		System.out.println(email + " " + password);
+		responseString = dbHandler.checkUserCredentials(email,password);
 
 		// If the database handler class returns an empty list then this function will return a bad request.
-		if(repsonseString.equals("not accepted")) {return new ResponseEntity<>( repsonseString, HttpStatus.BAD_REQUEST);}
-		else {return new ResponseEntity<>( repsonseString, HttpStatus.OK);}
+		if(responseString.equals("not accepted")) {return new ResponseEntity<>( responseString, HttpStatus.BAD_REQUEST);}
+		else {return new ResponseEntity<>( responseString, HttpStatus.OK);}
 
 
 

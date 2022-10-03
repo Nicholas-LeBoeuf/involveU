@@ -28,11 +28,6 @@ public class User {
     @Column(name = "pronouns")
     private String pronouns;
 
-    @Column(name = "username")
-    private String username;
-
-
-
     @Column(name = "userPassword")
     private String userPassword;
 
@@ -88,11 +83,7 @@ public class User {
         pronouns = dbPronouns;
     }
 
-    public String getUsername() {return username;}
-
     public String getUserPassword() {return userPassword;}
-
-    public void setUsername(String username) {this.username = username;}
 
     public void setUserPassword(String userPassword) {this.userPassword = userPassword;}
 }

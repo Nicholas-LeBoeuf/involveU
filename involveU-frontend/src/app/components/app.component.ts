@@ -4,6 +4,7 @@ import {UserService} from "../services/user.service";
 import {Login} from "../objects/login";
 import {LoginReturn} from "../objects/login-return";
 import {CookieService} from "ngx-cookie-service";
+import {User} from "../objects/user";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ import {CookieService} from "ngx-cookie-service";
 export class AppComponent {
 
   loginForm: FormGroup;
+  signupForm: FormGroup;
+
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -20,7 +23,16 @@ export class AppComponent {
     this.loginForm = new FormGroup({
       username: new FormControl(),
       password: new FormControl()
-    })
+    });
+
+    this.signupForm = new FormGroup({
+      firstName: new FormControl(),
+      lastName: new FormControl(),
+      email: new FormControl(),
+      password: new FormControl(),
+      year: new FormControl(),
+      pronouns: new FormControl()
+    });
   }
 
   title = 'involveU';
@@ -46,7 +58,13 @@ export class AppComponent {
       this.loginReturn = response;
 
       this.setCookie();
+      this.displayLoginDialog = false;
     })
+  }
+
+  onSignupSubmit() {
+    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, email: this.signupForm.value.email, password: this.signupForm.value.password, year: this.signupForm.value.year, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0}
+    this.userService.signupNewUser(userInfo);
   }
 
   setCookie() {

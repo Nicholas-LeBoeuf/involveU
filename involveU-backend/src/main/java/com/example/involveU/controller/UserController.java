@@ -1,8 +1,10 @@
 package com.example.involveU.controller;
+import java.io.IOException;
 import java.util.List;
 import com.example.involveU.model.DBServices;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +43,18 @@ public class UserController {
 		// If the database handler class returns an empty list then this function will return a bad request.
 		if(repsonseString.equals("not accepted")) {return new ResponseEntity<>( repsonseString, HttpStatus.BAD_REQUEST);}
 		else {return new ResponseEntity<>( repsonseString, HttpStatus.OK);}
+	}
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping("user/submitSignupInfo")
+	public ResponseEntity<String> submitSignupInfo(@RequestParam(value = "userInfo") String userInfo)
+	throws IOException{
+		int newUserSuccessful;
+		//Takes inputted string (JSON) and maps it to each variable in the User class
+		final User newUser = new ObjectMapper().readValue(userInfo, User.class);
+		newUserSuccessful = dbHandler.insertNewUser(newUser);
+
+		if(newUserSuccessful == 1) {
+			return new ResponseEntity<>("Received", HttpStatus.OK);}
+		else {return new ResponseEntity<>("Error: User could not be inserted", HttpStatus.BAD_REQUEST);}
 	}
 }

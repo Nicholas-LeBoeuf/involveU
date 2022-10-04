@@ -49,8 +49,7 @@ public class UserController {
 	public ResponseEntity<String> submitSignupInfo(@RequestBody User userInfo)
 	throws IOException{
 		int newUserSuccessful;
-		//Takes inputted string (JSON) and maps it to each variable in the User class
-//		final User newUser = new ObjectMapper().readValue(userInfo, User.class);
+
 		newUserSuccessful = dbHandler.insertNewUser(userInfo);
 
 		if(newUserSuccessful == 1) {

@@ -68,10 +68,10 @@ public class DBServices {
 
     public int insertNewUser(User newUser)
     {
-        sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,username,userPassword) VALUES (?,?,?,?,?,?,?,?,?);";
+        sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
 
         //Query executes and sends back an integer for error checking
-        validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUsername(),newUser.getUserPassword());
+        validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
 
         return validQuery;
     }

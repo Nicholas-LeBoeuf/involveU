@@ -14,7 +14,6 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((data: User[]) => {
-      console.log(data);
       this.users = data;
     });
   }

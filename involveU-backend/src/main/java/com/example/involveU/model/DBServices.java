@@ -11,6 +11,7 @@ public class DBServices {
     private UserRepository userRepo;
     private List<User> users;
     private String sql;
+    private int validQuery;
     @Autowired
     private JdbcTemplate JdbcTemplated = new JdbcTemplate();
     private DataSource JdbcDataSource;
@@ -63,5 +64,15 @@ public class DBServices {
             return String.valueOf(users.get(0).getStudentID());
         }
         else {return "not accepted";}
+    }
+
+    public int insertNewUser(User newUser)
+    {
+        sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
+
+        //Query executes and sends back an integer for error checking
+        validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
+
+        return validQuery;
     }
 }

@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {Login} from "../objects/login";
 import {LoginReturn} from "../objects/login-return";
+import {CookieService} from "ngx-cookie-service";
+import {User} from "../objects/user";
 
 @Component({
   selector: 'app-root',
@@ -12,30 +14,36 @@ import {LoginReturn} from "../objects/login-return";
 export class AppComponent {
 
   loginForm: FormGroup;
+  signupForm: FormGroup;
+
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService) {
+              private userService: UserService,
+              private cookie: CookieService) {
     this.loginForm = new FormGroup({
       username: new FormControl(),
       password: new FormControl()
-    })
+    });
+
+    this.signupForm = new FormGroup({
+      firstName: new FormControl(),
+      lastName: new FormControl(),
+      email: new FormControl(),
+      password: new FormControl(),
+      year: new FormControl(),
+      pronouns: new FormControl()
+    });
   }
 
   title = 'involveU';
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
 
+  userID: number = 0;
+
   loginReturn: LoginReturn = new class implements LoginReturn {
-    httpResponseMessage: string = "";
     userID: string = "";
   };
-
-  loginValues: Login = new class implements Login {
-    id: string = "";
-    username: string = "";
-    password: string = "";
-  };
-
 
   showLoginDialog() {
     this.displayLoginDialog = true;
@@ -46,9 +54,21 @@ export class AppComponent {
   }
 
   onLoginSubmit() {
-    this.userService.checkLoginCredentials(this.loginForm.value.username, this.loginForm.value.password).subscribe((data: LoginReturn) => {
-      this.loginReturn = data;
-      console.log(data);
+    this.userService.checkLoginCredentials(this.loginForm.value.username, this.loginForm.value.password).subscribe((response: any) => {
+      this.loginReturn = response;
+
+      this.setCookie();
+      this.displayLoginDialog = false;
     })
+  }
+
+  onSignupSubmit() {
+    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password}
+
+    this.userService.signupNewUser(userInfo).subscribe();
+  }
+
+  setCookie() {
+    this.cookie.set("userID", JSON.stringify(this.loginReturn));
   }
 }

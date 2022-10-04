@@ -25,9 +25,9 @@ public class EBoardController {
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("eboard/{clubID}")
-    public List<EBoard> getClubEBoardChair(@PathVariable("clubID") int clubID)
+    public List<EBoard> getClubEBoardChair()
     {
-        List<EBoard> clubEBoardChair = dbHandler.getClubEBoardMembers(clubID);
+        List<EBoard> clubEBoardChair = dbHandler.getClubEBoardMembers();
         return clubEBoardChair;
     }
 }

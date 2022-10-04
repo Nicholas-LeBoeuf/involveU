@@ -1,5 +1,6 @@
 package com.example.involveU.model;
 import com.example.involveU.repository.UserRepository;
+import com.example.involveU.repository.EBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,7 @@ import java.util.List;
 public class DBServices {
 
     private UserRepository userRepo;
+    private EBoardRepository eboardRepo;
     private List<User> users;
     private List<EBoard> eboardMembers;
     private String sql;
@@ -68,15 +70,15 @@ public class DBServices {
 
     public List<EBoard> getEBoardMembers()
     {
-        sql = "SELECT TOP 501 t.* FROM involveU.dbo.[Eboard] t";
+        sql = "SELECT TOP 501 t.* FROM involveU.dbo.[EBOARD] t";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         System.out.println(eboardMembers);
         return eboardMembers;
     }
 
-    public List<EBoard> getClubEBoardMembers(int clubID)
+    public List<EBoard> getClubEBoardMembers()
     {
-        sql = "SELECT * FROM [EBOARD] WHERE clubID = '" + clubID + "'";
+        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM [USER] INNER JOIN [EBOARD] ON User.studentID=Eboard.studentID clubID";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
     }

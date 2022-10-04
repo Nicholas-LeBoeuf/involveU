@@ -42,8 +42,8 @@ public class UserController {
 
 		// If the database handler class returns an empty list then this function will return a bad request.
 
-		if(repsonseString.equals("not accepted")) {return new ResponseEntity<>( repsonseString, HttpStatus.BAD_REQUEST);}
-		else {return new ResponseEntity<>( repsonseString, HttpStatus.OK);}
+		if(responseString.equals("not accepted")) {return new ResponseEntity<>( responseString, HttpStatus.BAD_REQUEST);}
+		else {return new ResponseEntity<>( responseString, HttpStatus.OK);}
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("user/submitSignupInfo")

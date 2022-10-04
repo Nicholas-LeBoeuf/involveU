@@ -78,12 +78,11 @@ public class DBServices {
         return eboardMembers;
     }
 
-    public List<EBoard> getClubEBoardMembers()
-    {
+    public List<EBoard> getClubEBoardMembers() {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM [USER] INNER JOIN [EBOARD] ON User.studentID=Eboard.studentID clubID";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
-
+    }
     public int insertNewUser(User newUser)
     {
         sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";

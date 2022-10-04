@@ -9,6 +9,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 
 import { DialogModule } from 'primeng/dialog';
 import {ButtonModule} from "primeng/button";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import {ButtonModule} from "primeng/button";
     BrowserAnimationsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

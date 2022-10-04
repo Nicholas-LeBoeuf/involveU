@@ -1,5 +1,6 @@
 package com.example.involveU.model;
 import com.example.involveU.repository.UserRepository;
+import com.example.involveU.repository.EBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,7 +10,9 @@ import java.util.List;
 public class DBServices {
 
     private UserRepository userRepo;
+    private EBoardRepository eboardRepo;
     private List<User> users;
+    private List<EBoard> eboardMembers;
     private String sql;
     private int validQuery;
     @Autowired
@@ -66,6 +69,21 @@ public class DBServices {
         else {return "not accepted";}
     }
 
+
+    public List<EBoard> getEBoardMembers()
+    {
+        sql = "SELECT TOP 501 t.* FROM involveU.dbo.[EBOARD] t";
+        eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
+        System.out.println(eboardMembers);
+        return eboardMembers;
+    }
+
+    public List<EBoard> getClubEBoardMembers()
+    {
+        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM [USER] INNER JOIN [EBOARD] ON User.studentID=Eboard.studentID clubID";
+        eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
+        return eboardMembers;
+
     public int insertNewUser(User newUser)
     {
         sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
@@ -74,5 +92,6 @@ public class DBServices {
         validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
 
         return validQuery;
+
     }
 }

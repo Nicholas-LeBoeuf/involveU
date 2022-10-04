@@ -63,7 +63,8 @@ export class AppComponent {
   }
 
   onSignupSubmit() {
-    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, email: this.signupForm.value.email, password: this.signupForm.value.password, year: this.signupForm.value.year, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0}
+    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password}
+
     this.userService.signupNewUser(userInfo);
   }
 

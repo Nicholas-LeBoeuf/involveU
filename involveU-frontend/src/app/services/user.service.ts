@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { User } from '../objects/user'
 import {LoginReturn} from "../objects/login-return";
@@ -21,6 +21,16 @@ export class UserService {
   }
 
   signupNewUser(userInfo: User) {
-    return this.http.post(environment.apiURL + `user/submitSignupInfo`);
+    let queryParams = new HttpParams();
+    queryParams  = queryParams.append('firstName', userInfo.firstName);
+    queryParams  = queryParams .append('lastName', userInfo.lastName);
+    queryParams  = queryParams .append('year', userInfo.year);
+    queryParams  = queryParams .append('email', userInfo.email);
+    queryParams  = queryParams .append('pronouns', userInfo.pronouns);
+    queryParams = queryParams .append('isAdmin', userInfo.isAdmin);
+    queryParams  = queryParams .append('isEboard', userInfo.isEboard);
+    queryParams = queryParams .append('userPassword', userInfo.userPassword);
+    console.log(queryParams );
+    return this.http.post(environment.apiURL + `user/submitSignupInfo/userInfo`, {params: queryParams});
   }
 }

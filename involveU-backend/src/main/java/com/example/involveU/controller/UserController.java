@@ -45,13 +45,13 @@ public class UserController {
 		else {return new ResponseEntity<>( repsonseString, HttpStatus.OK);}
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping("user/submitSignupInfo")
-	public ResponseEntity<String> submitSignupInfo(@RequestParam(value = "userInfo") String userInfo)
+	@PostMapping("user/submitSignupInfo")
+	public ResponseEntity<String> submitSignupInfo(@RequestBody User userInfo)
 	throws IOException{
 		int newUserSuccessful;
 		//Takes inputted string (JSON) and maps it to each variable in the User class
-		final User newUser = new ObjectMapper().readValue(userInfo, User.class);
-		newUserSuccessful = dbHandler.insertNewUser(newUser);
+//		final User newUser = new ObjectMapper().readValue(userInfo, User.class);
+		newUserSuccessful = dbHandler.insertNewUser(userInfo);
 
 		if(newUserSuccessful == 1) {
 			return new ResponseEntity<>("Received", HttpStatus.OK);}

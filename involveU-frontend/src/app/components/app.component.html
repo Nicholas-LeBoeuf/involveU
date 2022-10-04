@@ -34,34 +34,36 @@
   <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
   <hr class="dialogLines">
   <h1 class="dialogTitle">Create an Account, Join the Fun!</h1>
-  <div class="signupGrid">
-    <div class="input1">
-      <input class="inputField" type="text" placeholder="First Name">
+  <form [formGroup]="signupForm">
+    <div class="signupGrid">
+      <div class="input1">
+        <input class="inputField" type="text" placeholder="First Name" formControlName="firstName">
+      </div>
+      <div class="input2">
+        <input class="inputField" type="text" placeholder="Last Name" formControlName="lastName">
+      </div>
+      <div class="input3">
+        <input class="inputField" type="email" placeholder="Email" formControlName="email">
+      </div>
+      <div class="input4">
+        <input class="inputField" type="password" placeholder="Password" formControlName="password">
+      </div>
+      <div class="input5">
+        <select name="year" formControlName="year">
+          <option value="none" selected disabled hidden>Select Your Year...</option>
+          <option value="Freshman">Freshman</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
+          <option value="Faculty">Faculty</option>
+        </select>
+      </div>
+      <div class="input6">
+        <input class="inputField" type="text" placeholder="Pronouns" formControlName="pronouns">
+      </div>
     </div>
-    <div class="input2">
-      <input class="inputField" type="text" placeholder="Last Name">
-    </div>
-    <div class="input3">
-      <input class="inputField" type="email" placeholder="Email">
-    </div>
-    <div class="input4">
-      <input class="inputField" type="password" placeholder="Password">
-    </div>
-    <div class="input5">
-      <select name="year">
-        <option value="none" selected disabled hidden>Select Your Year...</option>
-        <option value="Freshman">Freshman</option>
-        <option value="Sophomore">Sophomore</option>
-        <option value="Junior">Junior</option>
-        <option value="Senior">Senior</option>
-        <option value="Faculty">Faculty</option>
-      </select>
-    </div>
-    <div class="input6">
-      <input class="inputField" type="text" placeholder="Pronouns">
-    </div>
-  </div>
-  <button class="blueButton centerButton" type="submit">Login</button>
+    <button class="blueButton centerButton" type="submit" (click)="onSignupSubmit()">Signup</button>
+  </form>
   <hr class="dialogLines">
   <ng-template pTemplate="footer">
   </ng-template>

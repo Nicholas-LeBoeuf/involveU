@@ -14,6 +14,7 @@ public class DBServices {
     private List<User> users;
     private List<EBoard> eboardMembers;
     private String sql;
+    private int validQuery;
     @Autowired
     private JdbcTemplate JdbcTemplated = new JdbcTemplate();
     private DataSource JdbcDataSource;
@@ -68,6 +69,7 @@ public class DBServices {
         else {return "not accepted";}
     }
 
+
     public List<EBoard> getEBoardMembers()
     {
         sql = "SELECT TOP 501 t.* FROM involveU.dbo.[EBOARD] t";
@@ -81,5 +83,15 @@ public class DBServices {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM [USER] INNER JOIN [EBOARD] ON User.studentID=Eboard.studentID clubID";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
+
+    public int insertNewUser(User newUser)
+    {
+        sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
+
+        //Query executes and sends back an integer for error checking
+        validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
+
+        return validQuery;
+
     }
 }

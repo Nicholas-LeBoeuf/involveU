@@ -10,6 +10,7 @@ public class DBServices {
 
     private UserRepository userRepo;
     private List<User> users;
+    private List<EBoard> eboardMembers;
     private String sql;
     @Autowired
     private JdbcTemplate JdbcTemplated = new JdbcTemplate();
@@ -63,5 +64,20 @@ public class DBServices {
             return String.valueOf(users.get(0).getStudentID());
         }
         else {return "not accepted";}
+    }
+
+    public List<EBoard> getEBoardMembers()
+    {
+        sql = "SELECT TOP 501 t.* FROM involveU.dbo.[Eboard] t";
+        eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
+        System.out.println(eboardMembers);
+        return eboardMembers;
+    }
+
+    public List<EBoard> getClubEBoardMembers(int clubID)
+    {
+        sql = "SELECT * FROM [EBOARD] WHERE clubID = '" + clubID + "'";
+        eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
+        return eboardMembers;
     }
 }

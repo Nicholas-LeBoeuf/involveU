@@ -51,7 +51,6 @@ public class UserController {
 	throws IOException{
 		int newUserSuccessful;
 
-
 		newUserSuccessful = dbHandler.insertNewUser(userInfo);
 
 		if(newUserSuccessful == 1) {

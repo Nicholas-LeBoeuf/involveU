@@ -47,13 +47,28 @@ public class DBServices {
         System.out.println(users);
         return users;
     }
-
     public List<User> getSpecificUser(int userID)
     {
         sql = "SELECT * FROM [USER] WHERE StudentID = " + userID + ";";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users;
+    }
+    public int insertNewUser(User newUser)
+    {
+        sql = "SELECT * FROM [USER] WHERE email = '" + newUser.getEmail() + "'";
+        users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        if( users.size() < 1)
+        {
+            sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
+            validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
+        }
+        else {
+            validQuery = 0;
+        }
+        //Query executes and sends back an integer for error checking
+        return validQuery;
     }
 
     public String checkUserCredentials(String username, String password)
@@ -83,14 +98,5 @@ public class DBServices {
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
     }
-    public int insertNewUser(User newUser)
-    {
-        sql="INSERT INTO [User] (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
 
-        //Query executes and sends back an integer for error checking
-        validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
-
-        return validQuery;
-
-    }
 }

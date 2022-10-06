@@ -16,7 +16,7 @@
 </nav>
 <app-landing-page></app-landing-page>
 
-<p-dialog [(visible)]="displayLoginDialog" [modal]="true" [style]="{width: '35vw'}"  [baseZIndex]="10000">
+<p-dialog [(visible)]="displayLoginDialog" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000">
   <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
   <hr class="dialogLines">
   <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
@@ -30,7 +30,10 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="displaySignupDialog" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000">
+<p-dialog [(visible)]="displaySignupDialog" [modal]="true" [style]="{width: '35vw'}" [closable]="false" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" href="#" role="button" (click)="closeSignupDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
   <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
   <hr class="dialogLines">
   <h1 class="dialogTitle">Create an Account, Join the Fun!</h1>

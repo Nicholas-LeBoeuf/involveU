@@ -5,6 +5,7 @@ import {Login} from "../objects/login";
 import {LoginReturn} from "../objects/login-return";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-root',
@@ -89,5 +90,9 @@ export class AppComponent {
   onLoginClickFromSignupModal() {
     this.displaySignupDialog = false;
     this.displayLoginDialog = true;
+  }
+
+  closeSignupDialog() {
+    this.displaySignupDialog = false;
   }
 }

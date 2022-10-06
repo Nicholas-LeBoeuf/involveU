@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {Login} from "../objects/login";
 import {LoginReturn} from "../objects/login-return";
@@ -17,6 +17,7 @@ export class AppComponent {
   signupForm: FormGroup;
 
 
+
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private cookie: CookieService) {
@@ -25,19 +26,21 @@ export class AppComponent {
       password: new FormControl()
     });
 
-    this.signupForm = new FormGroup({
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      email: new FormControl(),
-      password: new FormControl(),
-      year: new FormControl(),
-      pronouns: new FormControl()
+    this.signupForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
+      password: ['',  Validators.required, Validators.minLength(8)],
+      year: ['', Validators.required],
+      pronouns: ['', Validators.required]
+
     });
   }
 
   title = 'involveU';
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
+  isLoggedIn: boolean = false;
 
   userID: number = 0;
 
@@ -65,10 +68,26 @@ export class AppComponent {
   onSignupSubmit() {
     const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password}
 
-    this.userService.signupNewUser(userInfo).subscribe();
+    this.userService.signupNewUser(userInfo).subscribe(success =>{
+      console.log(success);
+    }, error => {
+      console.log(error);
+
+    });
+
+    this.displaySignupDialog = false;
+
   }
 
+  get signupFormInputs() {
+    return this.signupForm.controls;
+  }
   setCookie() {
     this.cookie.set("userID", JSON.stringify(this.loginReturn));
+  }
+
+  onLoginClickFromSignupModal() {
+    this.displaySignupDialog = false;
+    this.displayLoginDialog = true;
   }
 }

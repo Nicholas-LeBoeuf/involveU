@@ -13,9 +13,17 @@ export class LandingPageComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+    this.loadUserTable();
+  }
+
+  loadUserTable() {
     this.userService.getUsers().subscribe((data: User[]) => {
       this.users = data;
     });
-  }
+}
 
 }

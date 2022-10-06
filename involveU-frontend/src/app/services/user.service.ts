@@ -20,21 +20,7 @@ export class UserService {
     return this.http.get<LoginReturn>(environment.apiURL + `user/checkCredentials/${username}/${password}`);
   }
 
-  signupNewUser(newuser:User):Observable<Object> {
-
-    let parameters = {'firstName': newuser.firstName,'lastName': newuser.lastName,'year': newuser.year,'email': newuser.email,'pronouns': newuser.pronouns,'isAdmin': newuser.isAdmin,'isEboard': newuser.isEboard, 'userPassword': newuser.userPassword}
-    let userInfo = new HttpParams({fromObject: parameters});
-
-
-    // queryParams  = queryParams.append('firstName', userInfo.firstName);
-    // queryParams  = queryParams .append('lastName', userInfo.lastName);
-    // queryParams  = queryParams .append('year', userInfo.year);
-    // queryParams  = queryParams .append('email', userInfo.email);
-    // queryParams  = queryParams .append('pronouns', userInfo.pronouns);
-    // queryParams = queryParams .append('isAdmin', userInfo.isAdmin);
-    // queryParams  = queryParams .append('isEboard', userInfo.isEboard);
-    // queryParams = queryParams .append('userPassword', userInfo.userPassword);SSS
-    console.log({params:userInfo} );
-    return this.http.post<Object>( `http://localhost:8080/api/user/submitSignupInfo`, newuser);
+  signupNewUser(newUser:User):Observable<Object> {
+    return this.http.post<Object>( `http://localhost:8080/api/user/submitSignupInfo`, newUser);
   }
 }

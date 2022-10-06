@@ -60,6 +60,7 @@ ul {
   font-size: 1.8em;
   text-align: center;
   font-weight: normal;
+  margin-bottom: 5%;
 }
 
 ::ng-deep .p-dialog {
@@ -92,3 +93,45 @@ ul {
 .input4 { grid-area: 2 / 2 / 3 / 3; }
 .input5 { grid-area: 3 / 1 / 4 / 2; }
 .input6 { grid-area: 3 / 2 / 4 / 3; }
+
+.bottomModal {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.bottomModal p {
+  font-weight: 500;
+  line-height: 10px;
+}
+
+.bottomModal p a {
+  color: #0000EE;
+  cursor: pointer;
+}
+
+:host ::ng-deep p-dialog,
+:host ::ng-deep .p-dialog-mask.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.loginSignupFormInputs {
+  border: 2px solid #0667B3;
+  color: #0667B3
+}
+
+.loginSignupFormInputs::placeholder {
+  color: #0667B3;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.form-control {
+  height: 40px;
+  width: 250px;
+  border-radius: 10px;
+}

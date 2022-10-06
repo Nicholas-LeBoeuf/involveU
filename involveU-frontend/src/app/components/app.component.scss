@@ -123,6 +123,10 @@ ul {
   color: #0667B3;
 }
 
+:host ::ng-deep .p-dialog-header-icons {
+  display:none!important;
+}
+
 .alert {
   padding: 0 !important;
   margin: 0 !important;

@@ -17,15 +17,36 @@
 <app-landing-page></app-landing-page>
 
 <p-dialog [(visible)]="displayLoginDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" href="#" role="button" (click)="closeLoginDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
   <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
   <hr class="dialogLines">
   <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
   <form [formGroup]="loginForm">
-    <input class="inputField" type="text" placeholder="Email" formControlName="username">
-    <input class="inputField" type="password" placeholder="Password" formControlName="password">
+    <div class="form-group loginInputs">
+      <input class="form-control loginSignupFormInputs" type="text" placeholder="Email" formControlName="username">
+      <div *ngIf="loginFormInputs?.['username']?.invalid && (loginFormInputs?.['username']?.dirty || loginFormInputs?.['username']?.touched)" class="alert alert-danger">
+        <div *ngIf="loginFormInputs?.['username']?.errors?.['required']">
+          Email is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group loginInputs">
+      <input class="form-control loginSignupFormInputs" type="password" placeholder="Password" formControlName="password">
+      <div *ngIf="loginFormInputs?.['password']?.invalid && (loginFormInputs?.['password']?.dirty || loginFormInputs?.['password']?.touched)" class="alert alert-danger">
+        <div *ngIf="loginFormInputs?.['password']?.errors?.['required']">
+          Password is required
+        </div>
+      </div>
+    </div>
     <button class="blueButton centerButton" type="submit" (click)="onLoginSubmit()">Login</button>
   </form>
   <hr class="dialogLines">
+  <div class="bottomModal">
+    <p class="text-center">Don't have an account?</p>
+    <p class="text-center"><a (click)="onSignupClickFromLoginModal()">Sign up</a></p>
+  </div>
   <ng-template pTemplate="footer">
   </ng-template>
 </p-dialog>

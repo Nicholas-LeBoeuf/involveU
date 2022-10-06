@@ -22,9 +22,10 @@ export class AppComponent {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private cookie: CookieService) {
-    this.loginForm = new FormGroup({
-      username: new FormControl(),
-      password: new FormControl()
+
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
 
     this.signupForm = this.formBuilder.group({
@@ -83,6 +84,11 @@ export class AppComponent {
   get signupFormInputs() {
     return this.signupForm.controls;
   }
+
+  get loginFormInputs() {
+    return this.loginForm.controls;
+  }
+
   setCookie() {
     this.cookie.set("userID", JSON.stringify(this.loginReturn));
   }
@@ -92,7 +98,15 @@ export class AppComponent {
     this.displayLoginDialog = true;
   }
 
+  onSignupClickFromLoginModal() {
+    this.displayLoginDialog = false;
+    this.displaySignupDialog = true;
+  }
+
   closeSignupDialog() {
     this.displaySignupDialog = false;
+  }
+  closeLoginDialog() {
+    this.displayLoginDialog = false;
   }
 }

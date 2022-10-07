@@ -1,6 +1,7 @@
 package com.example.involveU.model;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.repository.EBoardRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,8 @@ public class DBServices {
     private EBoardRepository eboardRepo;
     private List<User> users;
     private List<EBoard> eboardMembers;
+    private List<Club> clubs;
+    private Club foundClub;
     private String sql;
     private int validQuery;
     @Autowired
@@ -98,5 +101,32 @@ public class DBServices {
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
     }
+
+
+    public List<Club> getAllDBClubs(){
+
+        sql = "SELECT TOP 501 t.* FROM involveU.dbo.[CLUB] t";
+        clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
+
+        return clubs;
+    }
+
+    public Club getSpecficClub(int clubID) {
+
+        sql = "SELECT * FROM [CLUB] WHERE ClubID = " + clubID + ";";
+
+        clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
+
+        if (clubs.size() == 0) {
+
+            return null;
+        }
+        else
+        {
+            return clubs.get(0);
+        }
+
+    }
+
 
 }

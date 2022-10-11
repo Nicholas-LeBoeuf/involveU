@@ -20,7 +20,7 @@ public class ClubController extends DBServices{
 
         return clubs;
     }
-
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/club/{id}")
   private ResponseEntity<Object> getSpecificClub(@PathVariable("id") int clubID)
   {
@@ -37,7 +37,7 @@ public class ClubController extends DBServices{
 
   
   }
-
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping ("/club/insertClub/{newClub}")
   private ResponseEntity<String> insertClub(@PathVariable("newClub") Club newClub)
   {
@@ -48,7 +48,7 @@ public class ClubController extends DBServices{
        else {return new ResponseEntity<>("Club has been successfully inserted", HttpStatus.OK);}
 
   }
-
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/club/serachClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {

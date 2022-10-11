@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ClubService } from "../../services/club.service";
+import { Club } from "../../objects/club";
 
 @Component({
   selector: 'app-club-page',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClubPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private clubService: ClubService) { }
 
   ngOnInit(): void {
+    const clubInfo: Club = { ownerID: 1, clubName: 'Environmental Club', clubAffiliation: 'SGA', clubBio: 'Your mom', clubVision: 'Plant Trees', clubLogo: 'Paul LeBlanc EV Car', clubAdvisor: 2}
+
+    this.clubService.insertNewClub(clubInfo).subscribe(success => {
+      console.log(success);
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

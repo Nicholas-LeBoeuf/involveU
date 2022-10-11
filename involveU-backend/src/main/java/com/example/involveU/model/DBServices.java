@@ -134,7 +134,7 @@ public class DBServices {
 
         if(validQuery == 1)
         {
-            return "Club succssfully created";
+            return "Club successfully created";
         }
         else
         {

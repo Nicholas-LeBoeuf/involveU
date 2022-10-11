@@ -47,8 +47,15 @@ public class ClubController extends DBServices{
        if(repsonse.equals("error") == true){return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);}
        else {return new ResponseEntity<>("Club has been successfully inserted", HttpStatus.OK);}
 
-
   }
+
+  @GetMapping("/club/serachClubs/{searchContent}")
+   private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
+  {
+
+      return new ResponseEntity<>(clubs, HttpStatus.OK);
+  }
+
 
 
 

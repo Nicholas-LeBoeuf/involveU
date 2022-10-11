@@ -6,6 +6,9 @@ import {LoginReturn} from "../objects/login-return";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
 import {ButtonModule} from "primeng/button";
+import { Router } from '@angular/router';
+import {Club} from "../objects/club";
+import {ClubService} from "../services/club.service";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +24,9 @@ export class AppComponent {
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
-              private cookie: CookieService) {
+              private cookie: CookieService,
+              private router: Router,
+              private clubService: ClubService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -49,7 +54,15 @@ export class AppComponent {
   loginReturn: LoginReturn = new class implements LoginReturn {
     userID: string = "";
   };
+  ngOnInit(): void{
+    const clubInfo: Club = { ownerID: 1, clubName: 'Environmental Club', clubAffiliation: 'SGA', clubBio: 'Your mom', clubVision: 'Plant Trees', clubLogo: 'Paul LeBlanc EV Car', clubAdvisor: 2}
 
+    this.clubService.insertNewClub(clubInfo).subscribe(success => {
+      console.log(success);
+    }, error => {
+      console.log(error);
+    });
+  }
   showLoginDialog() {
     this.displayLoginDialog = true;
   }
@@ -109,4 +122,6 @@ export class AppComponent {
   closeLoginDialog() {
     this.displayLoginDialog = false;
   }
+
+
 }

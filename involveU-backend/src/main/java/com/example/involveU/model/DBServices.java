@@ -129,7 +129,7 @@ public class DBServices {
     }
     public String insertNewClub(Club newClub)
     {
-        sql = "INSERT INTO [CLUB] (OwenerID, clubName, clubAffiliation, clubBio, clubVision, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?);";
+        sql = "INSERT INTO [CLUB] (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?);";
         validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubLogo(),newClub.getAdvisorID());
 
         if(validQuery == 1)
@@ -142,5 +142,14 @@ public class DBServices {
         }
 
     }
+
+    public List<Club> searchDBClub(String searchContent)
+    {
+        sql = "SELECT * FROM [CLUB] WHERE Club.clubName LIKE '%" + searchContent +"%';";
+        clubs = this.JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
+
+        return clubs;
+    }
+
 
 }

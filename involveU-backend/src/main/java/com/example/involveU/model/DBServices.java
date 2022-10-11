@@ -143,4 +143,13 @@ public class DBServices {
 
     }
 
+    public List<Club> searchDBClub(String searchContent)
+    {
+        sql = "SELECT * FROM [CLUB] WHERE Club.clubName LIKE '%" + searchContent +"%';";
+        clubs = this.JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
+
+        return clubs;
+    }
+
+
 }

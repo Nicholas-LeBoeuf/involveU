@@ -52,7 +52,7 @@ public class ClubController extends DBServices{
   @GetMapping("/club/serachClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {
-
+          clubs = searchDBClub(searchContent);
       return new ResponseEntity<>(clubs, HttpStatus.OK);
   }
 

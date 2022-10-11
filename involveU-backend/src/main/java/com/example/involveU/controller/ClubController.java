@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClubController extends DBServices{
   private List<Club>  clubs;
   private Club currentClub;
+  private String repsonse;
 
   @GetMapping("/clubs")
   private List<Club> getAllClubs()
@@ -35,6 +36,18 @@ public class ClubController extends DBServices{
     }
 
   
+  }
+
+  @GetMapping ("/club/insertClub/{newClub}")
+  private ResponseEntity<String> insertClub(@PathVariable("newClub") Club newClub)
+  {
+
+     repsonse = insertNewClub(newClub);
+
+       if(repsonse.equals("error") == true){return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);}
+       else {return new ResponseEntity<>("Club has been successfully inserted", HttpStatus.OK);}
+
+
   }
 
 

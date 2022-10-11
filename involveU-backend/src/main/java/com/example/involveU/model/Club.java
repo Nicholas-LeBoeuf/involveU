@@ -8,7 +8,8 @@ public class Club {
     private String clubBio;
     private String clubVision;
     private String clubLogo;
-
+    private int ownerID;
+    private int advisorID;
 
     public int getClubID() {
         return clubID;
@@ -56,5 +57,19 @@ public class Club {
 
     public void setClubLogo(String clubLogo) {
         this.clubLogo = clubLogo;
+    }
+
+    public int getOwnerID() {
+        return ownerID;
+    }
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
+    }
+    public int getAdvisorID() {
+        return advisorID;
+    }
+
+    public void setAdvisorID(int advisorID) {
+        this.advisorID = advisorID;
     }
 }

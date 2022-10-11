@@ -10,12 +10,13 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { DialogModule } from 'primeng/dialog';
 import {ButtonModule} from "primeng/button";
 import {CookieService} from "ngx-cookie-service";
-import {CarouselModule} from "primeng/carousel";
+import { ClubPageComponent } from './components/club-page/club-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ClubPageComponent
   ],
   imports: [
     BrowserModule,
@@ -23,8 +24,7 @@ import {CarouselModule} from "primeng/carousel";
     DialogModule,
     ButtonModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    CarouselModule
+    ReactiveFormsModule
   ],
   providers: [
     CookieService

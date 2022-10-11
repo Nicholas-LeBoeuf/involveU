@@ -38,8 +38,8 @@ public class ClubController extends DBServices{
   
   }
   @CrossOrigin(origins = "http://localhost:4200")
-  @GetMapping ("/club/insertClub/{newClub}")
-  private ResponseEntity<String> insertClub(@PathVariable("newClub") Club newClub)
+  @GetMapping ("/club/insertClub/")
+  private ResponseEntity<String> insertClub(@RequestBody Club newClub)
   {
 
      repsonse = insertNewClub(newClub);

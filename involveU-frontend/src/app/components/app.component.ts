@@ -50,11 +50,14 @@ export class AppComponent {
   displayClubPage: boolean = false;
   isLoggedIn: boolean = false;
 
+  loggedInUser: User;
+
   userID: number = 0;
 
   loginReturn: LoginReturn = new class implements LoginReturn {
     userID: string = "";
   };
+
   ngOnInit(): void {
 
   }
@@ -68,8 +71,10 @@ export class AppComponent {
   }
 
   onLoginSubmit() {
-    this.userService.checkLoginCredentials(this.loginForm.value.username, this.loginForm.value.password).subscribe((response: any) => {
-      this.loginReturn = response;
+    this.userService.checkLoginCredentials(this.loginForm.value.username, this.loginForm.value.password).subscribe((response: User) => {
+      this.loggedInUser = response;
+      console.log(response);
+      console.log(this.loggedInUser.studentID)
 
       this.setCookie();
       this.displayLoginDialog = false;
@@ -99,7 +104,7 @@ export class AppComponent {
   }
 
   setCookie() {
-    this.cookie.set("userID", JSON.stringify(this.loginReturn));
+    this.cookie.set("userID", JSON.stringify(this.loggedInUser.studentID));
   }
 
   onLoginClickFromSignupModal() {

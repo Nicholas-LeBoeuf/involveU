@@ -16,8 +16,8 @@ export class UserService {
     return this.http.get<User[]>(environment.apiURL + `user/test`);
   }
 
-  checkLoginCredentials(username?: string, password?: string) {
-    return this.http.get<LoginReturn>(environment.apiURL + `user/checkCredentials/${username}/${password}`);
+  checkLoginCredentials(username?: string, password?: string): Observable<User> {
+    return this.http.get<User>(environment.apiURL + `user/checkCredentials/${username}/${password}`);
   }
 
   signupNewUser(newUser:User):Observable<Object> {

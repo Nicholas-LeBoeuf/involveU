@@ -12,6 +12,8 @@
 }
 
 ::ng-deep .p-carousel {
+  z-index: -1;
+  position: absolute;
   width: 100vw;
 }
 
@@ -20,25 +22,10 @@ img {
   width: 100vw;
 }
 
-:host ::ng-deep p-carousel {
-  //On later realease of PrimeNG, this can be done programmatically with [showIndicators | showNavigators]="false"
-  .p-carousel-indicators {
-    display: none !important;
-  }
-  .p-carousel-next, .p-carousel-prev {
-    display: none !important;
-  }
-}
 
-.images {
-  z-index: -1;
-  position: absolute;
-
-}
 
 .imageMask {
   z-index: 2;
-  postion: absolute;
   width: 100vw;
   height: 75vh;
   background-color: rgba(0, 0, 0, 0.7);

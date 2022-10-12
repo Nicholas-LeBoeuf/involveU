@@ -1,6 +1,6 @@
 <div class="container">
   <div class="images">
-    <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" >
+    <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
         <img src="assets/landingPageImages/{{image}}">
       </ng-template>

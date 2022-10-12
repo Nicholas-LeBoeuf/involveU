@@ -6,11 +6,12 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { AppComponent } from './components/app.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ClubPageComponent } from './components/club-page/club-page.component';
 
 import { DialogModule } from 'primeng/dialog';
 import {ButtonModule} from "primeng/button";
 import {CookieService} from "ngx-cookie-service";
-import { ClubPageComponent } from './components/club-page/club-page.component';
+import {CarouselModule} from "primeng/carousel";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ClubPageComponent } from './components/club-page/club-page.component';
     DialogModule,
     ButtonModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CarouselModule
   ],
   providers: [
     CookieService

@@ -12,6 +12,8 @@ export class LandingPageComponent implements OnInit {
   public users: User[] = [];
   constructor(private userService: UserService) { }
 
+  imageArray = ["involveU-image1.jpg", "involveU-image2.jpg", "involveU-image3.jpg", "involveU-image4.jpg", "involveU-image5.jpg"];
+
   ngOnInit(): void {
 
   }

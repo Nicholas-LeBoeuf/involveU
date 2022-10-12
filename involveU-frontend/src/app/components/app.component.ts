@@ -54,15 +54,10 @@ export class AppComponent {
   loginReturn: LoginReturn = new class implements LoginReturn {
     userID: string = "";
   };
-  ngOnInit(): void{
-    const clubInfo: Club = { ownerID: 1, clubName: 'Environmental Club', clubAffiliation: 'SGA', clubBio: 'Your mom', clubVision: 'Plant Trees', clubLogo: 'Paul LeBlanc EV Car', clubAdvisor: 2}
+  ngOnInit(): void {
 
-    this.clubService.insertNewClub(clubInfo).subscribe(success => {
-      console.log(success);
-    }, error => {
-      console.log(error);
-    });
   }
+
   showLoginDialog() {
     this.displayLoginDialog = true;
   }

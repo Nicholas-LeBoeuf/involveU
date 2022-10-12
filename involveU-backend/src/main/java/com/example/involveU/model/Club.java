@@ -72,4 +72,5 @@ public class Club {
     public void setAdvisorID(int advisorID) {
         this.advisorID = advisorID;
     }
+
 }

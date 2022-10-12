@@ -1,5 +1,8 @@
 package com.example.involveU.controller;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.example.involveU.model.Club;
 import com.example.involveU.model.DBServices;
 import org.apache.coyote.Response;
@@ -49,12 +52,47 @@ public class ClubController extends DBServices{
 
   }
   @CrossOrigin(origins = "http://localhost:4200")
-  @GetMapping("/club/serachClubs/{searchContent}")
+  @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {
           clubs = searchDBClub(searchContent);
       return new ResponseEntity<>(clubs, HttpStatus.OK);
   }
+ @CrossOrigin(origins = "http://localhost:4200")
+ @GetMapping("/club/getTopFavorite")
+ private ResponseEntity<List<Club>> getTopFavorite()
+ {
+     Map<String, Object> tempPosition;
+     List<Map<String,Object>> favoritesList;
+     List<Club> sortedFavoriteClubs = new ArrayList<>();
+     Club currentClub;
+     favoritesList = getMostFavoriteClubs();
+      for(int i = 0; i < favoritesList.size(); i++)
+      {
+         int currentValue = Integer.parseInt(favoritesList.get(i).get("total").toString());
+          for(int j = 0; j < favoritesList.size(); j++)
+          {
+              int checkValue =  Integer.parseInt(favoritesList.get(j).get("total").toString());
+              if( currentValue > checkValue )
+              {
+                tempPosition = favoritesList.get(i);
+                favoritesList.set(i, favoritesList.get(j));
+                favoritesList.set(j,tempPosition);
+
+              }
+          }
+      }
+
+      for(int i = 0; i < favoritesList.size(); i++)
+      {
+           currentClub = getSpecficClub(Integer.parseInt(favoritesList.get(i).get("clubID").toString()));
+
+          sortedFavoriteClubs.add(currentClub);
+      }
+     return new ResponseEntity<>(sortedFavoriteClubs, HttpStatus.OK) ;
+ }
+
+
 
 
 

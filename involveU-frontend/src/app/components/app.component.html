@@ -13,11 +13,11 @@
     </ul>
   </div>
   <div class="buttons">
-    <ng-template [ngIf]="loginReturn.userID == ''">
+    <ng-template [ngIf]="loggedInUser.studentID == -1">
       <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
       <button class="blueButton" (click)="showLoginDialog()">Login</button>
     </ng-template>
-    <ng-template [ngIf]="loginReturn.userID != ''">
+    <ng-template [ngIf]="loggedInUser.studentID != -1">
       <img src="assets/account.svg">
     </ng-template>
     <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">

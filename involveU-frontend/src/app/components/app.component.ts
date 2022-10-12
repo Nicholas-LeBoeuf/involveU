@@ -50,7 +50,18 @@ export class AppComponent {
   displayClubPage: boolean = false;
   isLoggedIn: boolean = false;
 
-  loggedInUser: User;
+
+  loggedInUser: User = new class implements User {
+    email: string = "";
+    firstName: string = "";
+    isAdmin: number = -1;
+    isEboard: number = -1;
+    lastName: string = "";
+    pronouns: string = "";
+    studentID: number = -1;
+    userPassword: string = "";
+    year: string = "";
+  };
 
   userID: number = 0;
 
@@ -59,7 +70,7 @@ export class AppComponent {
   };
 
   ngOnInit(): void {
-
+    console.log(this.loggedInUser.studentID);
   }
 
   showLoginDialog() {
@@ -104,7 +115,7 @@ export class AppComponent {
   }
 
   setCookie() {
-    this.cookie.set("userID", JSON.stringify(this.loggedInUser.studentID));
+    this.cookie.set("studentID", JSON.stringify(this.loggedInUser.studentID));
   }
 
   onLoginClickFromSignupModal() {

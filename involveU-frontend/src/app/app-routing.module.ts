@@ -5,6 +5,7 @@ import {LandingPageComponent} from "./components/landing-page/landing-page.compo
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent},
+  { path: 'home', component: LandingPageComponent},
   { path: 'clubs', component: ClubPageComponent }
 ];
 

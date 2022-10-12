@@ -16,6 +16,8 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	private List<User> foundUser;
+	private Object singleUser;
 	private DBServices dbHandler = new DBServices();
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/test")
@@ -27,23 +29,23 @@ public class UserController {
 	@GetMapping("user/{id}")
 	public List<User> getSpecificUser(@PathVariable("id") int id )
 	{
-		List<User> foundUser;
+
 		foundUser = dbHandler.getSpecificUser(id);
 
 		return foundUser;
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/checkCredentials/{email}/{password}")
-	public ResponseEntity<String> checkCredentials(@PathVariable("email") String email, @PathVariable("password")String password)
+	public ResponseEntity<Object> checkCredentials(@PathVariable("email") String email, @PathVariable("password")String password)
 	{
 		String responseString;
 		System.out.println(email + " " + password);
-		responseString = dbHandler.checkUserCredentials(email,password);
+		singleUser = dbHandler.checkUserCredentials(email,password);
 
 		// If the database handler class returns an empty list then this function will return a bad request.
 
-		if(responseString.equals("not accepted")) {return new ResponseEntity<>( responseString, HttpStatus.BAD_REQUEST);}
-		else {return new ResponseEntity<>( responseString, HttpStatus.OK);}
+		if(singleUser.equals("error")) {return new ResponseEntity<>( "User not found", HttpStatus.BAD_REQUEST);}
+		else {return new ResponseEntity<>( singleUser, HttpStatus.OK);}
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("user/submitSignupInfo")

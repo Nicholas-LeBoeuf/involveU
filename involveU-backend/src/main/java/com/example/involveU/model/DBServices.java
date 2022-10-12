@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.List;
+import java.util.Map;
+
 public class DBServices {
 
     private UserRepository userRepo;
@@ -74,7 +76,7 @@ public class DBServices {
         return validQuery;
     }
 
-    public String checkUserCredentials(String username, String password)
+    public Object checkUserCredentials(String username, String password)
     {
         sql = "SELECT * FROM [USER] WHERE email = '" + username + "'";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
@@ -82,9 +84,12 @@ public class DBServices {
         //If size of the array is not checked then there will be a Whitelabel error
         if(users.size() == 1 && users.get(0).getUserPassword().equals(password))
         {
-            return String.valueOf(users.get(0).getStudentID());
+            return users.get(0);
         }
-        else {return "not accepted";}
+        else
+        {
+            return "error";
+        }
     }
 
 
@@ -150,6 +155,16 @@ public class DBServices {
 
         return clubs;
     }
+    public List<Map<String,Object>> getMostFavoriteClubs()
+    {
+        List<Map<String,Object>> results;
+        sql = "select Favorites.clubID,count(*) as Total from Favorites group by clubID;";
+        results = JdbcTemplated.queryForList(sql);
+
+        return results;
+    }
+
+
 
 
 }

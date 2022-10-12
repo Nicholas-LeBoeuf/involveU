@@ -1,0 +1,88 @@
+.imageContainer {
+  .imageContent {
+    width: 100%;
+    text-align: center;
+
+  }
+}
+
+.container {
+  padding: 0;
+  margin: 0;
+}
+
+::ng-deep .p-carousel {
+  width: 100vw;
+}
+
+img {
+  height: 75vh;
+  width: 100vw;
+}
+
+:host ::ng-deep p-carousel {
+  //On later realease of PrimeNG, this can be done programmatically with [showIndicators | showNavigators]="false"
+  .p-carousel-indicators {
+    display: none !important;
+  }
+  .p-carousel-next, .p-carousel-prev {
+    display: none !important;
+  }
+}
+
+.images {
+  z-index: -1;
+  position: absolute;
+
+}
+
+.imageMask {
+  z-index: 2;
+  postion: absolute;
+  width: 100vw;
+  height: 75vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.imageMask h1 {
+  color: white;
+  text-align: center;
+  font-size: 60px;
+  padding-top: 4%;
+}
+
+.imageMask h3 {
+  color: white;
+  text-align: center;
+  font-size: 25px;
+  padding-top: 5%;
+}
+
+.involveUDescription {
+  width: 75%;
+  display: block;
+  margin: auto;
+}
+
+.involveUNext {
+  width: 40%;
+  display: block;
+  margin: 2% auto auto;
+}
+
+.thisWeekButton .blueButton {
+  display: block;
+  margin: 7% auto auto;
+  width: 150px;
+  height: 50px;
+}
+
+.todaysEventsHeader {
+  width: 100vw;
+  margin-top: 2%;
+}
+
+.todaysEventsHeader h1 {
+  color: #0667B3;
+  text-align: center;
+}

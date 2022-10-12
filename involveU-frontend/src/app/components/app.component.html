@@ -5,7 +5,9 @@
       <li><a>Home</a></li>
       <li><a>This Week</a></li>
       <li><a>Master Schedule</a></li>
-      <li><a>Clubs</a></li>
+      <li routerLinkActive="active">
+        <a routerLink="/clubs">Clubs</a>
+      </li>
     </ul>
   </div>
   <div class="buttons">
@@ -14,7 +16,9 @@
     <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
   </div>
 </nav>
-<app-landing-page></app-landing-page>
+<main class="router">
+  <router-outlet></router-outlet>
+</main>
 
 <p-dialog [(visible)]="displayLoginDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" href="#" role="button" (click)="closeLoginDialog()">

@@ -11,6 +11,8 @@ import { DialogModule } from 'primeng/dialog';
 import {ButtonModule} from "primeng/button";
 import {CookieService} from "ngx-cookie-service";
 import { ClubPageComponent } from './components/club-page/club-page.component';
+import {RouterOutlet} from "@angular/router";
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,14 @@ import { ClubPageComponent } from './components/club-page/club-page.component';
     DialogModule,
     ButtonModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterOutlet,
+    AppRoutingModule
   ],
   providers: [
     CookieService
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

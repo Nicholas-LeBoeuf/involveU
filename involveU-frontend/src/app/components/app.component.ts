@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, NgModule} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {Login} from "../objects/login";
@@ -6,15 +6,16 @@ import {LoginReturn} from "../objects/login-return";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
 import {ButtonModule} from "primeng/button";
-import { Router } from '@angular/router';
 import {Club} from "../objects/club";
 import {ClubService} from "../services/club.service";
+import {ClubPageComponent} from "./club-page/club-page.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
 
   loginForm: FormGroup;
@@ -25,7 +26,6 @@ export class AppComponent {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private cookie: CookieService,
-              private router: Router,
               private clubService: ClubService) {
 
     this.loginForm = this.formBuilder.group({
@@ -47,6 +47,7 @@ export class AppComponent {
   title = 'involveU';
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
+  displayClubPage: boolean = false;
   isLoggedIn: boolean = false;
 
   userID: number = 0;
@@ -123,5 +124,7 @@ export class AppComponent {
     this.displayLoginDialog = false;
   }
 
-
+  goToClubPage() {
+    this.displayClubPage = true;
+  }
 }

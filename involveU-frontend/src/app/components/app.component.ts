@@ -9,6 +9,7 @@ import {ButtonModule} from "primeng/button";
 import {Club} from "../objects/club";
 import {ClubService} from "../services/club.service";
 import {ClubPageComponent} from "./club-page/club-page.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -25,8 +26,9 @@ export class AppComponent {
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
-              private cookie: CookieService,
-              private clubService: ClubService) {
+              public cookie: CookieService,
+              private clubService: ClubService,
+              private router: Router) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -84,11 +86,10 @@ export class AppComponent {
   onLoginSubmit() {
     this.userService.checkLoginCredentials(this.loginForm.value.username, this.loginForm.value.password).subscribe((response: User) => {
       this.loggedInUser = response;
-      console.log(response);
-      console.log(this.loggedInUser.studentID)
 
       this.setCookie();
       this.displayLoginDialog = false;
+      location.reload();
     })
   }
 
@@ -116,11 +117,14 @@ export class AppComponent {
 
   setCookie() {
     this.cookie.set("studentID", JSON.stringify(this.loggedInUser.studentID));
+    this.cookie.set("studentFName", JSON.stringify(this.loggedInUser.firstName));
+    this.cookie.set("studentLName", JSON.stringify(this.loggedInUser.lastName));
   }
 
   onLoginClickFromSignupModal() {
     this.displaySignupDialog = false;
     this.displayLoginDialog = true;
+    this.ngOnInit();
   }
 
   onSignupClickFromLoginModal() {

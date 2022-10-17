@@ -21,6 +21,6 @@ export class UserService {
   }
 
   signupNewUser(newUser:User):Observable<Object> {
-    return this.http.post<Object>( `http://localhost:8080/api/user/submitSignupInfo`, newUser);
+    return this.http.post<Object>( environment.apiURL + `user/submitSignupInfo`, newUser);
   }
 }

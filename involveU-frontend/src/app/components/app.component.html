@@ -1,3 +1,23 @@
+<div *ngIf="loggedInMessage === true" class="alert alert-success alert-dismissible fade show loginSignupAlerts" role="alert">
+  <p>Successfully logged in!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="loggedInFailedMessage === true" class="alert alert-danger alert-dismissible fade show loginSignupAlerts" role="alert">
+  <p>Invalid username or password</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="signUpMessage === true" class="alert alert-success alert-dismissible fade show loginSignupAlerts" role="alert">
+  <p>Signup successful!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="signUpFailMessage === true" class="alert alert-danger alert-dismissible fade show loginSignupAlerts" role="alert">
+  <p>Signup unsuccessful</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <nav class="navbar">
   <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" routerLink="">
   <div class="navbar-nav mr-auto">
@@ -13,8 +33,13 @@
     </ul>
   </div>
   <div class="buttons">
-    <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
-    <button class="blueButton" (click)="showLoginDialog()">Login</button>
+    <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+      <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
+      <button class="blueButton" (click)="showLoginDialog()">Login</button>
+    </ng-template>
+    <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+      <img src="assets/account.svg">
+    </ng-template>
     <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
   </div>
 </nav>

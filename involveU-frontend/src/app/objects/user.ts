@@ -1,11 +1,11 @@
 export interface User {
-  id?: number;
+  studentID?: number;
   firstName: string;
   lastName: string;
-  year: string;
-  email: string;
-  pronouns: string;
-  isAdmin: number;
-  isEboard: number;
-  userPassword: string;
+  year?: string;
+  email?: string;
+  pronouns?: string;
+  isAdmin?: number;
+  isEboard?: number;
+  userPassword?: string;
 }

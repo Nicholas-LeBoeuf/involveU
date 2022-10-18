@@ -2,6 +2,7 @@ package com.example.involveU.controller;
 import java.io.IOException;
 import java.util.List;
 import com.example.involveU.model.DBServices;
+import com.example.involveU.repository.EBoardRepository;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.EBoard;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 public class EBoardController {
     @Autowired
-    private UserRepository userRepository;
+    private EBoardRepository eBoardRepository;
     private DBServices dbHandler = new DBServices();
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("eboard/test")

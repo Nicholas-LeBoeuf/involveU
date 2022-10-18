@@ -1,6 +1,6 @@
 <div class="container">
   <div class="images">
-    <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
+      <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
         <img src="assets/landingPageImages/{{image}}">
       </ng-template>
@@ -8,7 +8,12 @@
   </div>
 
   <div class="imageMask">
-    <h1>Welcome to involveU!</h1>
+    <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
+      <h1>Welcome to involveU, {{this.currentUser.firstName}}!</h1>
+    </ng-template>
+    <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
+      <h1>Welcome to involveU!</h1>
+    </ng-template>
     <div class="involveUDescription">
       <h3>involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h3>
     </div>

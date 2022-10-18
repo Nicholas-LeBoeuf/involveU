@@ -56,7 +56,7 @@ public class UserController {
 		newUserSuccessful = dbHandler.insertNewUser(userInfo);
 
 		if(newUserSuccessful == 1) {
-			return new ResponseEntity<>("Received", HttpStatus.OK);}
-		else {return new ResponseEntity<>("Error: User could not be inserted", HttpStatus.BAD_REQUEST);}
+			return new ResponseEntity<>(HttpStatus.OK);}
+		else {return new ResponseEntity<>( HttpStatus.BAD_REQUEST);}
 	}
 }

@@ -20,7 +20,7 @@ export class UserService {
     return this.http.get<User>(environment.apiURL + `user/checkCredentials/${username}/${password}`);
   }
 
-  signupNewUser(newUser:User):Observable<Object> {
-    return this.http.post<Object>( environment.apiURL + `user/submitSignupInfo`, newUser);
+  signupNewUser(newUser:User) {
+    return this.http.post( environment.apiURL + `user/submitSignupInfo`, newUser);
   }
 }

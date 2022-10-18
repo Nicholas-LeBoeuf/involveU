@@ -138,3 +138,25 @@ ul {
   display: table;
   margin: 0 auto 4%;
 }
+
+.loginSignupAlerts {
+  position: absolute;
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.loginSignupAlerts p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}

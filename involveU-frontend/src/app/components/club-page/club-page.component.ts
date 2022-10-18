@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClubService } from "../../services/club.service";
 import { Club } from "../../objects/club";
 import { Router } from '@angular/router';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-club-page',
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
 export class ClubPageComponent implements OnInit {
 
   constructor(private clubService: ClubService,
-              private router: Router) { }
+              private router: Router,
+              public cookie: CookieService) { }
 
   displayClubSearchModal: boolean = false;
 
@@ -46,7 +48,18 @@ export class ClubPageComponent implements OnInit {
       this.allClubs = response;
       console.log(response);
       console.log(this.allClubs);
-    });
+    },
+      (error) => {
+        console.log(error)
+      });
   }
 
+  favoriteClub(userID: number, clubID: number) {
+    this.clubService.favortiteClub(userID, clubID).subscribe(response => {
+      console.log(response);
+    },
+      (error) => {
+      console.log(error)
+    });
+  }
 }

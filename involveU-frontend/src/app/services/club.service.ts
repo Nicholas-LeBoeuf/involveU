@@ -18,4 +18,8 @@ export class ClubService {
   getAllClubs(): Observable<Club[]> {
     return this.http.get<Club[]>(environment.apiURL + `clubs`);
   }
+
+  favortiteClub(ID: number, clubID: number) {
+    return this.http.get(environment.apiURL + `club/submitFavorite/${ID}/${clubID}`);
+  }
 }

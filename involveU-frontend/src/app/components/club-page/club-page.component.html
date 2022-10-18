@@ -15,6 +15,7 @@
         <!-- results of ngFor is passed to appFilter with argument searchText -->
         <li class="list-group-item" *ngFor="let c of allClubs | filter: searchText">
           {{c.clubName}}
+          <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), c.clubID)">Favorite</button>
         </li>
       </ul>
     </div>

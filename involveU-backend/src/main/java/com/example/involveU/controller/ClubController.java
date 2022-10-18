@@ -99,4 +99,21 @@ public class ClubController extends DBServices{
          return new ResponseEntity<>(submitDBFavorite(userID,clubID), HttpStatus.OK) ;
  }
 
+@CrossOrigin(origins ="http://localhost:4200")
+@GetMapping("/club/getUserFavorites/{ID}")
+private ResponseEntity<List<Club>> getUserFavorites() {
+
+
+
+      return new ResponseEntity<>(clubs,HttpStatus.OK);
 }
+
+}
+
+
+
+
+
+
+
+

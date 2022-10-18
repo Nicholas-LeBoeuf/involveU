@@ -91,12 +91,12 @@ public class ClubController extends DBServices{
       }
      return new ResponseEntity<>(sortedFavoriteClubs, HttpStatus.OK) ;
  }
-
-
-
-
-
-
-
+@CrossOrigin(origins = "http://localhost:4200")
+@GetMapping("/club/submitFavorite/{ID}/{clubID}")
+ private ResponseEntity<String> submitFavorite(@PathVariable("ID") int userID, @PathVariable("clubID") int clubID)
+ {
+     
+         return new ResponseEntity<>(submitDBFavorite(userID,clubID), HttpStatus.OK) ;
+ }
 
 }

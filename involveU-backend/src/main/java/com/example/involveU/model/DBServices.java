@@ -163,6 +163,22 @@ public class DBServices {
 
         return results;
     }
+    public String submitDBFavorite(int id, int clubID){
+
+        sql = "INSERT INTO [FAVORITES] (userID, clubID) values (?,?);";
+        validQuery = JdbcTemplated.update(sql, String.valueOf(id),String.valueOf(clubID));
+
+        if(validQuery == 1)
+        {
+            return "accepted";
+        }
+        else
+        {
+            return "error";
+        }
+
+    }
+
 
 
 

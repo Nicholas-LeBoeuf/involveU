@@ -1,5 +1,5 @@
-import {Component, NgModule} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";

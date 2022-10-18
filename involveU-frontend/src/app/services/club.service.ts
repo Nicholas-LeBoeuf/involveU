@@ -10,7 +10,16 @@ import {Club} from "../objects/club";
 export class ClubService {
 
   constructor(private http: HttpClient ) { }
+
   insertNewClub(newClub: Club): Observable<Club>{
     return this.http.post<Club>(environment.apiURL + `club/insertClub`, newClub);
+  }
+
+  getAllClubs(): Observable<Club[]> {
+    return this.http.get<Club[]>(environment.apiURL + `clubs`);
+  }
+
+  favortiteClub(ID: number, clubID: number) {
+    return this.http.get(environment.apiURL + `club/submitFavorite/${ID}/${clubID}`);
   }
 }

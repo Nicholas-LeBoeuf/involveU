@@ -1,2 +1,25 @@
-<h1>Club</h1>
-<p>club-page works!</p>
+<p-dialog [(visible)]="displayClubSearchModal" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeClubSearchDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+
+  <div class="content" role="main">
+    <div class="card">
+      <div class="form-group">
+        <label for="search-text">Search Text</label>
+        <input type="email" class="form-control" id="search-text" aria-describedby="search-text"
+               [(ngModel)]="searchText" placeholder="Enter text to search"
+               autofocus>
+      </div>
+      <ul class="list-group list-group-flush">
+        <!-- results of ngFor is passed to appFilter with argument searchText -->
+        <li class="list-group-item" *ngFor="let c of allClubs | filter: searchText">
+          {{c.clubName}}
+          <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), c.clubID)">Favorite</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</p-dialog>
+
+<button class="blueButton" (click)="showClubSearchDialog()">Search Clubs</button>

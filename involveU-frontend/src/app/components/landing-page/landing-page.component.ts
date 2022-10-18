@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
-import { HttpParameterCodec } from "@angular/common/http";
 
 @Component({
   selector: 'app-landing-page',

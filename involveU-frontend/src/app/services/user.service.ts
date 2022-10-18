@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { User } from '../objects/user'
-import {LoginReturn} from "../objects/login-return";
 import {environment} from "../../environments/environment";
 
 @Injectable({

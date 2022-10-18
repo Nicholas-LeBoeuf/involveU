@@ -16,6 +16,7 @@ public class ClubController extends DBServices{
   private Club currentClub;
   private String repsonse;
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/clubs")
   private List<Club> getAllClubs()
     {

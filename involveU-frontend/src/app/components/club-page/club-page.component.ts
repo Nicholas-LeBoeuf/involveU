@@ -13,16 +13,40 @@ export class ClubPageComponent implements OnInit {
   constructor(private clubService: ClubService,
               private router: Router) { }
 
-  ngOnInit(): void {
-    const clubInfo: Club = { ownerID: 1, clubName: 'Environmental Club', clubAffiliation: 'SGA', clubBio: 'Your mom', clubVision: 'Plant Trees', clubLogo: 'Paul LeBlanc EV Car', clubAdvisor: 2}
+  displayClubSearchModal: boolean = false;
 
-    this.clubService.insertNewClub(clubInfo).subscribe(success => {
-      console.log(success);
-    }, error => {
-      console.log(error);
+  searchText = '';
+  characters = [
+    'Ant-Man',
+    'Aquaman',
+    'Asterix',
+    'The Atom',
+    'The Avengers',
+    'Batgirl',
+    'Batman',
+    'Batwoman'
+  ]
+
+  allClubs: Club[] = [];
+
+  ngOnInit(): void {
+    this.fillClubList();
+  }
+
+  showClubSearchDialog() {
+    this.displayClubSearchModal = true;
+  }
+
+  closeClubSearchDialog() {
+    this.displayClubSearchModal = false;
+  }
+
+  fillClubList() {
+    this.clubService.getAllClubs().subscribe((response: Club[]) => {
+      this.allClubs = response;
+      console.log(response);
+      console.log(this.allClubs);
     });
   }
-  goToSite() {
-    this.router.navigateByUrl('/club');
-  }
+
 }

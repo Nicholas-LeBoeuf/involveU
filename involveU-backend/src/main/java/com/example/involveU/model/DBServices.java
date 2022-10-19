@@ -23,7 +23,7 @@ public class DBServices {
     @Autowired
     private JdbcTemplate JdbcTemplated = new JdbcTemplate();
     private DataSource JdbcDataSource;
-    private static final String className = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String className = "com.mysql.cj.jdbc.Driver.";
     private static final String url = "jdbc:mysql://involveu.cl8bziw5fohm.us-east-1.rds.amazonaws.com:3306/involveU";
     private static final String username = "awsuser";
     private static final String password ="Remdog10$";
@@ -38,7 +38,7 @@ public class DBServices {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(className);
+
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
@@ -78,7 +78,7 @@ public class DBServices {
 
     public Object checkUserCredentials(String username, String password)
     {
-        sql = "SELECT * FROM user WHERE email = '" + username + "'";
+        sql = "SELECT * FROM USER WHERE email = '" + username + "'";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         //If size of the array is not checked then there will be a Whitelabel error
@@ -110,7 +110,7 @@ public class DBServices {
 
     public List<Club> getAllDBClubs(){
 
-        sql = "SELECT * FROM club";
+        sql = "SELECT * FROM Club";
         clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
 
         return clubs;

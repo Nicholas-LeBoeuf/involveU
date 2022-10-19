@@ -18,16 +18,6 @@ export class ClubPageComponent implements OnInit {
   displayClubSearchModal: boolean = false;
 
   searchText = '';
-  characters = [
-    'Ant-Man',
-    'Aquaman',
-    'Asterix',
-    'The Atom',
-    'The Avengers',
-    'Batgirl',
-    'Batman',
-    'Batwoman'
-  ]
 
   allClubs: Club[] = [];
 

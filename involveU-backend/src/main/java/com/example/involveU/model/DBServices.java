@@ -54,19 +54,19 @@ public class DBServices {
     }
     public List<User> getSpecificUser(int userID)
     {
-        sql = "SELECT * FROM user WHERE StudentID = " + userID + ";";
+        sql = "SELECT * FROM User WHERE StudentID = " + userID + ";";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users;
     }
     public int insertNewUser(User newUser)
     {
-        sql = "SELECT * FROM user WHERE email = '" + newUser.getEmail() + "'";
+        sql = "SELECT * FROM User WHERE email = '" + newUser.getEmail() + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         if( users.size() < 1)
         {
-            sql="INSERT INTO user (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
+            sql="INSERT INTO User (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
         }
         else {
@@ -78,7 +78,7 @@ public class DBServices {
 
     public Object checkUserCredentials(String username, String password)
     {
-        sql = "SELECT * FROM USER WHERE email = '" + username + "'";
+        sql = "SELECT * FROM User WHERE email = '" + username + "'";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         //If size of the array is not checked then there will be a Whitelabel error
@@ -95,14 +95,14 @@ public class DBServices {
 
     public List<EBoard> getEBoardMembers()
     {
-        sql = "SELECT * FROM EBOARD";
+        sql = "SELECT * FROM Eboard";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         System.out.println(eboardMembers);
         return eboardMembers;
     }
 
     public List<EBoard> getClubEBoardMembers() {
-        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM user INNER JOIN eboard ON User.studentID=Eboard.studentID clubID";
+        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID clubID";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
     }
@@ -118,7 +118,7 @@ public class DBServices {
 
     public Club getSpecficClub(int clubID) {
 
-        sql = "SELECT * FROM club WHERE ClubID = " + clubID + ";";
+        sql = "SELECT * FROM Club WHERE ClubID = " + clubID + ";";
 
         clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
 
@@ -134,7 +134,7 @@ public class DBServices {
     }
     public String insertNewClub(Club newClub)
     {
-        sql = "INSERT INTO club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?);";
+        sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?);";
         validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubLogo(),newClub.getAdvisorID());
 
         if(validQuery == 1)
@@ -150,7 +150,7 @@ public class DBServices {
 
     public List<Club> searchDBClub(String searchContent)
     {
-        sql = "SELECT * FROM club WHERE club.clubName LIKE '%" + searchContent +"%';";
+        sql = "SELECT * FROM Club WHERE Club.clubName LIKE '%" + searchContent +"%';";
         clubs = this.JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
 
         return clubs;
@@ -158,14 +158,14 @@ public class DBServices {
     public List<Map<String,Object>> getMostFavoriteClubs()
     {
         List<Map<String,Object>> results;
-        sql = "select Favorites.clubID,count(*) as Total from Favorites group by clubID;";
+        sql = "select Favorites.ClubID,count(*) as Total from Favorites group by clubID;";
         results = JdbcTemplated.queryForList(sql);
 
         return results;
     }
     public String submitDBFavorite(int id, int clubID){
 
-        sql = "INSERT INTO favoirites (userID, clubID) values (?,?);";
+        sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
         validQuery = JdbcTemplated.update(sql,String.valueOf(id),String.valueOf(clubID));
 
         if(validQuery == 1)
@@ -180,7 +180,7 @@ public class DBServices {
     }
     public List<Club> getDBUserFavorites(int userID)
     {
-        sql = "SELECT * FROM favorites WHERE FAVORITES.userID = \" " + userID + "\";";
+        sql = "SELECT * FROM Favorites WHERE Favorites.userID = \" " + userID + "\";";
 
         clubs = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;

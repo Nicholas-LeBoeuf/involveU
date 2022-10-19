@@ -102,9 +102,9 @@ public class ClubController extends DBServices{
 
 @CrossOrigin(origins ="http://localhost:4200")
 @GetMapping("/club/getUserFavorites/{ID}")
-private ResponseEntity<List<Club>> getUserFavorites() {
+private ResponseEntity<List<Club>> getUserFavorites(@PathVariable("ID") int ID) {
 
-
+       clubs = getDBUserFavorites(ID);
 
       return new ResponseEntity<>(clubs,HttpStatus.OK);
 }

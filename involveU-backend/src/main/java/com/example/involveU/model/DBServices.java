@@ -180,7 +180,7 @@ public class DBServices {
     }
     public List<Club> getDBUserFavorites(int userID)
     {
-        sql = "SELECT * FROM Favorites WHERE Favorites.userID = \" " + userID + "\";";
+        sql = "SELECT Club.clubID, Club.clubName, Club.clubAffiliation, Club.clubBio, Club.clubVision, Club.clubLogo, Club.clubAdvisor FROM Club INNER JOIN Favorites ON Club.ClubID = Favorites.ClubID AND Favorites.UserID = "+userID+";";
 
         clubs = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;

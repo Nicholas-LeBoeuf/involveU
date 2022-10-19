@@ -1,7 +1,6 @@
 package com.example.involveU.model;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.repository.EBoardRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -52,14 +51,14 @@ public class DBServices {
         System.out.println(users);
         return users;
     }
-    public List<User> getSpecificUser(int userID)
+    public List<User> getDBSpecificUser(int userID)
     {
         sql = "SELECT * FROM User WHERE StudentID = " + userID + ";";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users;
     }
-    public int insertNewUser(User newUser)
+    public int insertDBNewUser(User newUser)
     {
         sql = "SELECT * FROM User WHERE email = '" + newUser.getEmail() + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
@@ -76,7 +75,7 @@ public class DBServices {
         return validQuery;
     }
 
-    public Object checkUserCredentials(String username, String password)
+    public Object DBcheckUserCredentials(String username, String password)
     {
         sql = "SELECT * FROM User WHERE email = '" + username + "'";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
@@ -93,7 +92,7 @@ public class DBServices {
     }
 
 
-    public List<EBoard> getEBoardMembers()
+    public List<EBoard> getDBEboardMembers()
     {
         sql = "SELECT * FROM Eboard";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
@@ -101,7 +100,7 @@ public class DBServices {
         return eboardMembers;
     }
 
-    public List<EBoard> getClubEBoardMembers() {
+    public List<EBoard> getDBClubEboardMembers() {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID clubID";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;

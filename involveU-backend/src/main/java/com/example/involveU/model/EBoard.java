@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "eboard")
-public class EBoard {
+public class EBoard  extends Club{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long eboardID;

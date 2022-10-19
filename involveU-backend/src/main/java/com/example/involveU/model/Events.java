@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "events")
-public class Events {
+public class Events extends Club{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long eventID;

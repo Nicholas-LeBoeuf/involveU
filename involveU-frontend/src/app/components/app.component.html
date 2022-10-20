@@ -56,7 +56,7 @@
   <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
   <form [formGroup]="loginForm">
     <div class="form-group loginInputs">
-      <input class="form-control loginSignupFormInputs" type="text" placeholder="Email" formControlName="username">
+      <input class="form-control formInputs" type="text" placeholder="Email" formControlName="username">
       <div *ngIf="loginFormInputs?.['username']?.invalid && (loginFormInputs?.['username']?.dirty || loginFormInputs?.['username']?.touched)" class="alert alert-danger">
         <div *ngIf="loginFormInputs?.['username']?.errors?.['required']">
           Email is required
@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="form-group loginInputs">
-      <input class="form-control loginSignupFormInputs" type="password" placeholder="Password" formControlName="password">
+      <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
       <div *ngIf="loginFormInputs?.['password']?.invalid && (loginFormInputs?.['password']?.dirty || loginFormInputs?.['password']?.touched)" class="alert alert-danger">
         <div *ngIf="loginFormInputs?.['password']?.errors?.['required']">
           Password is required
@@ -92,7 +92,7 @@
   <form [formGroup]="signupForm">
     <div class="signupGrid">
       <div class="form-group">
-        <input class="form-control loginSignupFormInputs" type="text" placeholder="First Name" formControlName="firstName">
+        <input class="form-control formInputs" type="text" placeholder="First Name" formControlName="firstName">
         <div *ngIf="signupFormInputs?.['firstName']?.invalid && (signupFormInputs?.['firstName']?.dirty || signupFormInputs?.['firstName']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['firstName']?.errors?.['required']">
             First name is required
@@ -100,7 +100,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control loginSignupFormInputs" type="text" placeholder="Last Name" formControlName="lastName">
+        <input class="form-control formInputs" type="text" placeholder="Last Name" formControlName="lastName">
         <div *ngIf="signupFormInputs?.['lastName']?.invalid && (signupFormInputs?.['lastName']?.dirty || signupFormInputs?.['lastName']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['lastName']?.errors?.['required']">
             Last name is required
@@ -108,7 +108,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control loginSignupFormInputs" type="text" placeholder="Email" email formControlName="email">
+        <input class="form-control formInputs" type="text" placeholder="Email" email formControlName="email">
         <div *ngIf="signupFormInputs?.['email']?.invalid && (signupFormInputs?.['email']?.dirty || signupFormInputs?.['email']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['email']?.errors?.['required']">
             Email is required
@@ -119,7 +119,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control loginSignupFormInputs" type="password" placeholder="Password" formControlName="password">
+        <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
         <div *ngIf="signupFormInputs?.['password']?.invalid && (signupFormInputs?.['password']?.dirty || signupFormInputs?.['password']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['password']?.errors?.['required']">
             Password is required
@@ -130,7 +130,7 @@
         </div>
       </div>
       <div class="form-group">
-        <select class="form-control loginSignupFormInputs" name="year" formControlName="year">
+        <select class="form-control formInputs" name="year" formControlName="year">
           <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Your Year...</option>
           <option value="Freshman">Freshman</option>
           <option value="Sophomore">Sophomore</option>
@@ -145,7 +145,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control loginSignupFormInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
+        <input class="form-control formInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
         <div *ngIf="signupFormInputs?.['pronouns']?.invalid && (signupFormInputs?.['pronouns']?.dirty || signupFormInputs?.['pronouns']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['pronouns']?.errors?.['required']">
             Pronouns are required

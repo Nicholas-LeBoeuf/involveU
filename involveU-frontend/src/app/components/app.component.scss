@@ -102,15 +102,6 @@ ul {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.loginSignupFormInputs {
-  border: 2px solid #0667B3;
-  color: #0667B3
-}
-
-.loginSignupFormInputs::placeholder {
-  color: #0667B3;
-}
-
 :host ::ng-deep .p-dialog-header-icons {
   display:none!important;
 }
@@ -119,12 +110,6 @@ ul {
   padding: 0 !important;
   margin: 0 !important;
   text-align: center;
-  border-radius: 10px;
-}
-
-.form-control {
-  height: 40px;
-  width: 250px;
   border-radius: 10px;
 }
 

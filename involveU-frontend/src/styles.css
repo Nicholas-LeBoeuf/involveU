@@ -1,17 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/primeng/resources/primeng.min.scss';
+@import '../node_modules/primeicons/primeicons.scss';
+@import "~primeng/resources/themes/nova/theme.scss";
+@import "~primeng/resources/primeng.min.scss";
+@import "~primeicons/primeicons.scss";
+
 html {
-  font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+}
+p {
+  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+}
+li {
+  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+}
+button {
+  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+}
+
 .blueButton {
   background-color: #0667B3;
-  border: none;
+  border: 1px solid black;
   border-radius: 14px;
   height: 40px;
   padding: 0 20px;
   margin: 10px;
   color: white;
+
 }
 
 .blueButton:hover {
   background-color: #3b88c4;
+}
+
+.form-control {
+  height: 40px;
+  width: 250px;
+  border-radius: 10px;
+}
+
+.formInputs {
+  border: 2px solid #0667B3;
+  color: #0667B3
+}
+
+.formInputs::placeholder {
+  color: #0667B3;
 }

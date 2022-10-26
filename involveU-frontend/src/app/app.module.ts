@@ -13,6 +13,7 @@ import {RouterOutlet} from "@angular/router";
 import { AppRoutingModule } from './app-routing.module';
 import {CarouselModule} from "primeng/carousel";
 import { FilterPipe } from './pipes/filter.pipe';
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     RouterOutlet,
     AppRoutingModule,
     CarouselModule,
-    FormsModule
+    FormsModule,
+    RippleModule
   ],
   providers: [
     CookieService

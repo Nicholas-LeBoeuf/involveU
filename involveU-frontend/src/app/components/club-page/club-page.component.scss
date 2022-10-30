@@ -171,3 +171,7 @@
   background-color: #AECDE6;
   margin-bottom: 15px;
 }
+
+:host ::ng-deep .p-carousel-items-container {
+  text-align: center;
+}

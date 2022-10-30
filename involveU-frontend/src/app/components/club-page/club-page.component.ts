@@ -17,17 +17,34 @@ export class ClubPageComponent implements OnInit {
               public cookie: CookieService) { }
 
   displayClubSearchModal: boolean = false;
+  displayClubSearchLoggedInModal: boolean = false;
+  isLoggedIn: boolean = false;
 
   searchText = '';
 
   allClubs: Club[] = [];
+  compareAllClubs: Club[] = [];
   topClubs: Club[] = [];
   favoritedClubs: Club[] = [];
+  notFavoritedClubsOG: Club[] = [];
+  notFavoritedClubs: Club[] = [];
 
   ngOnInit(): void {
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
+  }
+
+  checkLogin() {
+    if (this.cookie.get('studentID') !== '') {
+      this.isLoggedIn = true;
+      this.getClubsThatArentFavorited();
+    }
+    else {
+      this.showClubSearchDialog();
+    }
+
+    console.log(this.isLoggedIn);
   }
 
   showClubSearchDialog() {
@@ -36,6 +53,14 @@ export class ClubPageComponent implements OnInit {
 
   closeClubSearchDialog() {
     this.displayClubSearchModal = false;
+  }
+
+  showClubSearchLoggedInDialog() {
+    this.displayClubSearchLoggedInModal = true;
+  }
+
+  closeClubSearchLoggedInDialog() {
+    this.displayClubSearchLoggedInModal = false;
   }
 
   fillClubList() {
@@ -47,11 +72,30 @@ export class ClubPageComponent implements OnInit {
       });
   }
 
+  getClubsThatArentFavorited() {
+    this.clubService.getAllClubs().subscribe((response: Club[]) => {
+        this.compareAllClubs = response;
+      });
+
+    console.log(this.compareAllClubs);
+
+    this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
+      this.notFavoritedClubsOG = response;
+      console.log(this.notFavoritedClubsOG);
+      console.log(response);
+    },
+      (error) => {
+        console.log(error);
+      });
+
+    this.showClubSearchLoggedInDialog();
+  }
+
   getTopClubs() {
     this.clubService.getTopClubs().subscribe((response: Club[]) => {
       this.topClubs = response;
-      console.log(response);
-      console.log(this.topClubs);
+
+
     },
       (error) => {
         console.log(error);
@@ -76,3 +120,4 @@ export class ClubPageComponent implements OnInit {
       })
   }
 }
+

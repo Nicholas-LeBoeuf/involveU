@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {CarouselModule} from "primeng/carousel";
 import { FilterPipe } from './pipes/filter.pipe';
 import {RippleModule} from "primeng/ripple";
+import { SpecificClubPageComponent } from './components/specific-club-page/specific-club-page.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {RippleModule} from "primeng/ripple";
     AppComponent,
     LandingPageComponent,
     ClubPageComponent,
-    FilterPipe
+    FilterPipe,
+    SpecificClubPageComponent
   ],
   imports: [
     BrowserModule,

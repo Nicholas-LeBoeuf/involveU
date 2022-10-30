@@ -119,5 +119,9 @@ export class ClubPageComponent implements OnInit {
       console.log(error);
       })
   }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
+  }
 }
 

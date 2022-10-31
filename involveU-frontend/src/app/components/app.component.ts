@@ -109,6 +109,8 @@ export class AppComponent {
     this.cookie.set("studentID", JSON.stringify(this.loggedInUser.studentID));
     this.cookie.set("studentFName", JSON.stringify(this.loggedInUser.firstName));
     this.cookie.set("studentLName", JSON.stringify(this.loggedInUser.lastName));
+    this.cookie.set("isAdmin", JSON.stringify(this.loggedInUser.isAdmin));
+    this.cookie.set("isEboard", JSON.stringify(this.loggedInUser.isEboard));
   }
 
   onLoginClickFromSignupModal() {

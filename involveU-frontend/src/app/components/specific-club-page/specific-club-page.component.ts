@@ -14,17 +14,15 @@ export class SpecificClubPageComponent implements OnInit {
               private router: ActivatedRoute) { }
 
   clubID!: number;
-  sub!: any;
 
   clubInfo!: Club;
 
   ngOnInit(): void {
-    this.sub = this.router.params.subscribe(params => {
+    this.router.params.subscribe(params => {
       this.clubID = params['id'];
     });
 
     this.getClubInfo();
-
   }
 
   getClubInfo() {

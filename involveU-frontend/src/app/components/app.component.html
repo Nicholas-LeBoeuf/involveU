@@ -30,6 +30,11 @@
       <li routerLinkActive="active">
         <a routerLink="/clubs">Clubs</a>
       </li>
+      <li routerLinkActive="active">
+        <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
+          <a routerLink="/admin">Admin</a>
+        </ng-template>
+      </li>
     </ul>
   </div>
   <div class="buttons">

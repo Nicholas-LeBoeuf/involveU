@@ -109,6 +109,14 @@ private ResponseEntity<List<Club>> getUserFavorites(@PathVariable("ID") int ID) 
       return new ResponseEntity<>(clubs,HttpStatus.OK);
 }
 
+@CrossOrigin(origins = "http://localhost:4200")
+@GetMapping("/club/removeFavorites/{club}/{id}")
+private ResponseEntity<String> removeFavorite()
+{
+    
+   return new ResponseEntity<>("success", HttpStatus.OK);
+}
+
 }
 
 

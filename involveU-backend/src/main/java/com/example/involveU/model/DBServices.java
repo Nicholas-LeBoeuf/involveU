@@ -209,5 +209,29 @@ public class DBServices {
         return users.get(0);
     }
 
+    protected Boolean assignDBAdvisor(int clubID, int userID)
+    {
+        sql = "UPDATE Club SET clubAdvisor = ? WHERE clubID = ?;";
+
+        try{
+
+            validQuery = JdbcTemplated.update(sql,userID,clubID);
+        }catch(Exception e)
+        {
+            return false;
+        }
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+
 
 }

@@ -8,7 +8,7 @@
       </ng-template>
     </p-carousel>
     <div class="d-flex align-items-center justify-content-center">
-      <button class="blueButton clubSearch" (click)="this.checkLogin()">Search for Clubs</button>
+      <button class="blueButton clubSearch" (click)="this.checkLogin()" [disabled]="!timeout">Search for Clubs</button>
     </div>
   </div>
   <div id="topClubsDiv">
@@ -107,7 +107,7 @@
               autofocus>
      </div>
      <ul class="list-group list-group-flush">
-       <li class="list-group-item" *ngFor="let nonFavClub of compareAllClubs | filter: searchText">
+       <li class="list-group-item" *ngFor="let nonFavClub of notFavoritedClubs | filter: searchText">
          {{nonFavClub.clubName}}
          <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), nonFavClub.clubID)">Favorite</button>
        </li>

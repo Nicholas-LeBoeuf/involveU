@@ -20,8 +20,10 @@ export class ClubPageComponent implements OnInit {
   displayClubSearchLoggedInModal: boolean = false;
   isLoggedIn: boolean = false;
 
-  searchText = '';
+  timeout: boolean = false;
+  userID!: number;
 
+  searchText = '';
   allClubs: Club[] = [];
   compareAllClubs: Club[] = [];
   topClubs: Club[] = [];
@@ -30,17 +32,23 @@ export class ClubPageComponent implements OnInit {
   notFavoritedClubs: Club[] = [];
 
   ngOnInit(): void {
-    this.fillClubList();
+    this.userID = +this.cookie.get('studentID')
     this.getTopClubs();
     this.getUsersFavoritedClubs();
+
+    setTimeout(() => {
+      this.timeout = true;
+    }, 4000)
+
   }
 
   checkLogin() {
-    if (this.cookie.get('studentID') !== '') {
+    if (this.userID !== undefined) {
       this.isLoggedIn = true;
       this.getClubsThatArentFavorited();
     }
     else {
+      this.fillClubList();
       this.showClubSearchDialog();
     }
 
@@ -73,21 +81,18 @@ export class ClubPageComponent implements OnInit {
   }
 
   getClubsThatArentFavorited() {
-    this.clubService.getAllClubs().subscribe((response: Club[]) => {
+    this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
         this.compareAllClubs = response;
       });
-
-    console.log(this.compareAllClubs);
-
-    this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
-      this.notFavoritedClubsOG = response;
-      console.log(this.notFavoritedClubsOG);
-      console.log(response);
+    this.clubService.getAllClubs().subscribe(response => {
+      this.notFavoritedClubs = response.filter(allClubs => !this.compareAllClubs.find(x => x.clubID === allClubs.clubID));
     },
       (error) => {
         console.log(error);
       });
 
+    console.log(this.notFavoritedClubs)
+    console.log(this.compareAllClubs);
     this.showClubSearchLoggedInDialog();
   }
 
@@ -105,6 +110,7 @@ export class ClubPageComponent implements OnInit {
   favoriteClub(userID: number, clubID: number) {
     this.clubService.favoriteClub(userID, clubID).subscribe(response => {
       console.log(response);
+      location.reload();
     },
       (error) => {
       console.log(error);

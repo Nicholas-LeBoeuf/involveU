@@ -12,8 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class AdvisorController {
+public class AdvisorController extends DBServices {
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/admin/addAdmin/$newAdmin")
+    private ResponseEntity<String> addAdmin (@PathVariable("newAdmin") User newAdmin) {
 
+        if (newAdmin.getIsAdmin() == 0) {return new ResponseEntity<>("User was not set as an admin", HttpStatus.BAD_REQUEST);}
+        else {
+
+            if( insertDBNewUser(newAdmin)  == 1) {return new ResponseEntity<>("User not created", HttpStatus.BAD_REQUEST);}
+            else {return new ResponseEntity<>("Successfully Created", HttpStatus.OK);}
+
+        }
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/admin/assignNewAdvisor/{advisorID}")
+    private ResponseEntity<String> assignNewAdvisor()
+    {
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 
 
 

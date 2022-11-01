@@ -184,9 +184,30 @@ public class DBServices {
         clubs = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;
     }
+    public Boolean removeDBFavorite(int clubID, int userID)
+    {
+        sql = "DELETE FROM Favorites WHERE userID = ? AND clubID = ? ;";
+
+        validQuery = JdbcTemplated.update(sql,userID, clubID);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
 
 
+    }
+    public User getDBClubAdvisor(int clubID)
+    {
+        sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on " + clubID + " AND User.studentID = clubAdvisor;";
 
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users.get(0);
+    }
 
 
 }

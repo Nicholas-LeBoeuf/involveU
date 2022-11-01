@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ClubService} from "../../services/club.service";
+import {AdminService} from "../../services/admin.service";
 import {Club} from "../../objects/club";
 import {User} from "../../objects/user";
 
@@ -27,6 +28,7 @@ export class AdminPageComponent implements OnInit {
     });
   }
   createClubMessage: boolean = false;
+  createClubFailed: boolean = false;
 
   loggedInUser: User = new class implements User {
     email: string = "";
@@ -46,10 +48,15 @@ export class AdminPageComponent implements OnInit {
   createClubSubmit() {
     // @ts-ignore
     const clubInfo : Club = {ownerID: this.loggedInUser.studentID, clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubAdvisor: this.createClubForm.value.clubAdvisor, clubLogo: this.createClubForm.value.clubLogo}
-    this.clubService.insertNewClub(clubInfo);
+    this.clubService.insertNewClub(clubInfo).subscribe(success =>{
+        this.createClubFailed = false;
+        this.createClubMessage = true;
+      },
+      (error) => {
+        this.createClubFailed = true;
+      });
     console.warn('Your club has been created');
     location.reload();
-    this.createClubMessage = true;
   }
 
   ngOnInit(): void {

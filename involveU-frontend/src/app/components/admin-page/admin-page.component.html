@@ -3,6 +3,10 @@
   <p>Club creation successful!</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+<div *ngIf="createClubFailed === true" class="alert alert-danger alert-dismissible fade show loginSignupAlerts" role="alert">
+  <p>Club creation unsuccessful</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <form [formGroup]="createClubForm">
   <div class="form-group createClubInputs">
     <input class="form-control formInputs" type="text" placeholder="Club Name" formControlName="clubName">

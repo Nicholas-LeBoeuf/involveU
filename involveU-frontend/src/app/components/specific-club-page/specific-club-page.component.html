@@ -3,8 +3,12 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <button class="clubButton blueButton">Favorite</button>
-        <button class="clubButton blueButton">Club Info</button>
+        <ng-container *ngIf="this.clubIsFav;else notFav">
+          <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Remove Favorite</button>
+        </ng-container>
+        <ng-template #notFav>
+          <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
+        </ng-template>
       </div>
     </div>
   </div>

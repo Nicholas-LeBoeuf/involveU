@@ -34,4 +34,8 @@ export class ClubService {
   getSpecificClub(id: number): Observable<Club> {
     return this.http.get<Club>(environment.apiURL + `club/${id}`);
   }
+
+  unfavoriteClub(clubID: number, id: number) {
+    return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`);
+  }
 }

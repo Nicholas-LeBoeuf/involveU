@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.involveU.model.Club;
 import com.example.involveU.model.DBServices;
+import com.example.involveU.model.User;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,6 +126,15 @@ private ResponseEntity<String> removeFavorite(@PathVariable("clubID") int clubID
       return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
   }
 
+}
+@CrossOrigin(origins = "http://localhost:4200")
+@GetMapping("/club/getClubAdvisor/{clubID}")
+private ResponseEntity<User> getClubAdvisor (@PathVariable("clubID") int clubID)
+{
+ User tempUser = new User();
+
+ tempUser = getDBClubAdvisor(clubID);
+ return new ResponseEntity<>(tempUser, HttpStatus.OK);
 }
 
 }

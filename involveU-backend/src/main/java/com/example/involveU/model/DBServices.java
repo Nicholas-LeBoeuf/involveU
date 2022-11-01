@@ -200,5 +200,14 @@ public class DBServices {
 
 
     }
+    public User getDBClubAdvisor(int clubID)
+    {
+        sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on " + clubID + " AND User.studentID = clubAdvisor;";
+
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users.get(0);
+    }
+
 
 }

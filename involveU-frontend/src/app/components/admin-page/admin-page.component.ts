@@ -5,6 +5,7 @@ import {ClubService} from "../../services/club.service";
 import {AdminService} from "../../services/admin.service";
 import {Club} from "../../objects/club";
 import {User} from "../../objects/user";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-admin-page',
@@ -17,46 +18,42 @@ export class AdminPageComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
-              private clubService: ClubService ) {
+              private clubService: ClubService,
+              public cookie: CookieService,
+              private adminService: AdminService) {
     this.createClubForm = this.formBuilder.group({
       clubName: ['', Validators.required],
       clubAffiliation: ['', Validators.required],
       clubBio: ['', Validators.required],
       clubVision: ['', Validators.required],
-      clubAdvisor: ['', Validators.required],
+      clubMission: ['', Validators.required],
+      clubValues: ['', Validators.required],
+      advisorID: ['', Validators.required],
       clubLogo: ['']
     });
   }
   createClubMessage: boolean = false;
   createClubFailed: boolean = false;
 
-  loggedInUser: User = new class implements User {
-    email: string = "";
-    firstName: string = "";
-    isAdmin: number = -1;
-    isEboard: number = -1;
-    lastName: string = "";
-    pronouns: string = "";
-    studentID: number = -1;
-    userPassword: string = "";
-    year: string = "";
-  };
   get clubCreationFormInputs() {
     return this.createClubForm.controls;
   }
 
   createClubSubmit() {
     // @ts-ignore
-    const clubInfo : Club = {ownerID: this.loggedInUser.studentID, clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubAdvisor: this.createClubForm.value.clubAdvisor, clubLogo: this.createClubForm.value.clubLogo}
-    this.clubService.insertNewClub(clubInfo).subscribe(success =>{
+    const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubForm.value.advisorID}
+    console.log(clubInfo);
+    this.adminService.insertNewClub(clubInfo).subscribe(success =>{
         this.createClubFailed = false;
         this.createClubMessage = true;
+        console.log(success);
+
       },
       (error) => {
         this.createClubFailed = true;
+        console.log(error);
+
       });
-    console.warn('Your club has been created');
-    location.reload();
   }
 
   ngOnInit(): void {

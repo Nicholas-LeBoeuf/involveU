@@ -4,7 +4,7 @@
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
         <ng-container *ngIf="this.clubIsFav;else notFav">
-          <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Remove Favorite</button>
+          <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
         </ng-container>
         <ng-template #notFav>
           <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>

@@ -111,6 +111,16 @@ export class ClubPageComponent implements OnInit {
     });
   }
 
+  removeFromFavorites(userID: number, clubID: number) {
+    this.clubService.unfavoriteClub(clubID, userID).subscribe(response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+        window.location.reload();
+      })
+  }
+
   getUsersFavoritedClubs() {
     this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe(response => {
       this.favoritedClubs = response;

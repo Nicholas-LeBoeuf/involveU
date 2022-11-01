@@ -50,6 +50,7 @@
             </div>
             <div>
               <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
+              <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
             </div>
           </div>
         </div>

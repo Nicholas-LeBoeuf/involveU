@@ -17,8 +17,6 @@ import {RippleModule} from "primeng/ripple";
 import { SpecificClubPageComponent } from './components/specific-club-page/specific-club-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

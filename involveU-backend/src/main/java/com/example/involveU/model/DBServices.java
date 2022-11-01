@@ -133,8 +133,8 @@ public class DBServices {
     }
     public String insertNewClub(Club newClub)
     {
-        sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?);";
-        validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubLogo(),newClub.getAdvisorID());
+        sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?,?,?);";
+        validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getClubLogo(), newClub.getAdvisorID());
 
         if(validQuery == 1)
         {

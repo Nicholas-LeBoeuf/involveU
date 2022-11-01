@@ -52,8 +52,20 @@ ul {
 }
 
 ::ng-deep .p-dialog {
-  background-color: #AECDE6;
+  background-color: #AECDE6 !important;
   border-radius: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: #AECDE6 !important;
+}
+
+::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
+  display:none;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  display: none;
 }
 
 .inputField {

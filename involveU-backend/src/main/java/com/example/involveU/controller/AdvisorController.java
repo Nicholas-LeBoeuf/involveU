@@ -26,8 +26,12 @@ public class AdvisorController extends DBServices {
         }
 
     }
-
-
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/admin/assignNewAdvisor/{advisorID}")
+    private ResponseEntity<String> assignNewAdvisor()
+    {
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 
 
 

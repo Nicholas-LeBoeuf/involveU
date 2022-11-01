@@ -7,6 +7,9 @@ public class Club {
     private String clubAffiliation;
     private String clubBio;
     private String clubVision;
+
+    private String clubMission;
+    private String clubValues;
     private String clubLogo;
     private int ownerID;
     private int advisorID;
@@ -49,6 +52,21 @@ public class Club {
 
     public void setClubVision(String clubVision) {
         this.clubVision = clubVision;
+    }
+    public String getClubMission() {
+        return clubMission;
+    }
+
+    public void setClubMission(String clubMission) {
+        this.clubMission = clubMission;
+    }
+
+    public String getClubValues() {
+        return clubValues;
+    }
+
+    public void setClubValues(String clubValues) {
+        this.clubValues = clubValues;
     }
 
     public String getClubLogo() {

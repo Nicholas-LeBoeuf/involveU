@@ -33,6 +33,7 @@ export class ClubPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')
+    this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
 

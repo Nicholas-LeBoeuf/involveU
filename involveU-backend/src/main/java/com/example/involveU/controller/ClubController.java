@@ -39,7 +39,7 @@ public class ClubController extends DBServices{
     {
      return new ResponseEntity<>( currentClub, HttpStatus.OK);
     }
-
+        
   
   }
   @CrossOrigin(origins = "http://localhost:4200")
@@ -47,9 +47,9 @@ public class ClubController extends DBServices{
   private ResponseEntity<String> insertClub(@RequestBody Club newClub)
   {
 
-     repsonse = insertNewClub(newClub);
+         repsonse = insertNewClub(newClub);
 
-       if(repsonse.equals("error") == true){return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);}
+       if(repsonse.equals("error")){return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);}
        else {return new ResponseEntity<>("Club has been successfully inserted", HttpStatus.OK);}
 
   }
@@ -129,13 +129,22 @@ private ResponseEntity<String> removeFavorite(@PathVariable("clubID") int clubID
 }
 @CrossOrigin(origins = "http://localhost:4200")
 @GetMapping("/club/getClubAdvisor/{clubID}")
-private ResponseEntity<User> getClubAdvisor (@PathVariable("clubID") int clubID)
+private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubID)
 {
- User tempUser = new User();
+     User tempUser = new User();
 
- tempUser = getDBClubAdvisor(clubID);
- return new ResponseEntity<>(tempUser, HttpStatus.OK);
+     tempUser = getDBClubAdvisor(clubID);
+     return new ResponseEntity<>(tempUser, HttpStatus.OK);
 }
+     @CrossOrigin(origins = "http://localhost:4200")
+     @GetMapping("/club/getNonFavoritedClubs/{userID}")
+     private ResponseEntity<List<Club>> getNonFavoritedClubs(@PathVariable("userID") int userID)
+     {
+
+         return new ResponseEntity<>(clubs, HttpStatus.OK);
+     }
+
+
 
 }
 

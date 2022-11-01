@@ -16,7 +16,6 @@ import { FilterPipe } from './pipes/filter.pipe';
 import {RippleModule} from "primeng/ripple";
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

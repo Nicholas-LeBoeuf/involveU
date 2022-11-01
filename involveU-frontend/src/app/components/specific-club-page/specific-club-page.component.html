@@ -1,6 +1,6 @@
 <div class="clubContainer">
   <div class="clubNameSection clubGridStyle">
-    <div class="textBlock">
+    <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
         <button class="clubButton blueButton">Favorite</button>
@@ -9,26 +9,25 @@
     </div>
   </div>
   <div class="clubLogoSection clubGridStyle">
-    <img class="clubsLogo" src="assets/{{clubInfo.clubLogo}}">
-  </div>
-  <div class="clubBioSection clubGridStyle">
-    <h2 class="text-center">Club Bio</h2>
-    <div class="textBlock">
-      <p>{{clubInfo.clubBio}}</p>
+    <div class="sectionContent">
+      <img class="clubsLogo" src="assets/{{clubInfo.clubLogo}}">
+      <h2 class="text-center">Affiliated With</h2>
+      <h2 class="text-center">{{clubInfo.clubAffiliation}}</h2>
     </div>
   </div>
-  <div class="clubVisionSection clubGridStyle">
-    <h2 class="text-center">Club Affiliation</h2>
-    <div class="textBlock">
-      <p>{{clubInfo.clubAffiliation}}</p>
+</div>
+<hr class="spanScreen">
+<div class="bioAndEboard">
+  <div class="bioSection">
+    <h1 class="text-center addTopMargin">Who Are We?</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
     </div>
   </div>
-  <div class="clubEboardSection clubGridStyle">
-    <h2 class="text-center">Club Eboard</h2>
-    <div class="textBlock">
-
+  <div class="eboardSection">
+    <h1 class="text-center addTopMargin">The EBoard!</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">Testing this</h5>
     </div>
   </div>
-  <div class="clubEventsSection clubGridStyle"></div>
-  <div class="clubAnnouncementsSection clubGridStyle"></div>
 </div>

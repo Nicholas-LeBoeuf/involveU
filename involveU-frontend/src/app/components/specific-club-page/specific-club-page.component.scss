@@ -1,18 +1,20 @@
 .clubContainer {
-  margin: 1.5%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "clubNameSection clubNameSection clubLogoSection"
-    "clubBioSection clubAffSection clubEboardSection"
+    "clubNameSection clubLogoSection"
+/*    "clubBioSection clubAffSection clubEboardSection"
     "clubEventsSection clubEventsSection clubEventsSection"
-    "clubAnnouncementsSection clubAnnouncementsSection clubAnnouncementsSection";
+    "clubAnnouncementsSection clubAnnouncementsSection clubAnnouncementsSection"*/;
 }
 
 .clubGridStyle {
+  display: flex;
+  justify-content: center;
+
   border-radius: 10px;
   margin: 2%;
   background-color: #5c93cb;
@@ -21,7 +23,6 @@
 }
 
 .clubNameSection {
-  margin: 1% !important;
   grid-area: clubNameSection;
 }
 
@@ -30,9 +31,6 @@
 }
 
 .clubLogoSection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   grid-area: clubLogoSection;
 }
 
@@ -71,22 +69,9 @@
 }
 
 .clubsLogo {
-  width: 325px;
-}
-
-.textBlock {
-  background-color: #AECDE6;
-  margin: 5%;
-  text-align: center;
-  border-radius: 10px;
-  font-size: 25px;
-  padding: 5%;
-  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-  height: 215px;
-}
-
-p {
-  margin: 0 !important;
+  margin: 0 auto;
+  display: block;
+  width: 100%;
 }
 
 .clubButton {
@@ -96,4 +81,47 @@ p {
 .buttonRow {
   display: flex;
   justify-content: center;
+}
+
+.sectionContent {
+  background-color: #AECDE6;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 25px;
+  padding: 2%;
+  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  margin: 5%;
+}
+
+.spanScreen {
+  width: 100%;
+}
+
+.bioAndEboard {
+  width: 100%;
+}
+
+.bioSection {
+  width: 50%;
+  float: left;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.eboardSection {
+  width: 50%;
+  float: left;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 0 !important;
+}
+
+.bioandEboardContent {
+  margin: 1% 15% !important;
+}
+
+.addTopMargin {
+  margin-top: 2%;
 }

@@ -110,11 +110,21 @@ private ResponseEntity<List<Club>> getUserFavorites(@PathVariable("ID") int ID) 
 }
 
 @CrossOrigin(origins = "http://localhost:4200")
-@GetMapping("/club/removeFavorites/{club}/{id}")
-private ResponseEntity<String> removeFavorite()
+@GetMapping("/club/removeFavorites/{clubID}/{id}")
+private ResponseEntity<String> removeFavorite(@PathVariable("clubID") int clubID, @PathVariable("id") int userID)
 {
-    
-   return new ResponseEntity<>("success", HttpStatus.OK);
+    Boolean isValid;
+
+  isValid = removeDBFavorite(clubID, userID);
+  if(isValid == true)
+  {
+      return new ResponseEntity<>("success", HttpStatus.OK);
+  }
+  else{
+
+      return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
+  }
+
 }
 
 }

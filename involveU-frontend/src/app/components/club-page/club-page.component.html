@@ -8,12 +8,13 @@
       </ng-template>
     </p-carousel>
     <div class="d-flex align-items-center justify-content-center">
-      <button class="blueButton clubSearch" (click)="showClubSearchDialog()">Search for Clubs</button>
+      <button class="blueButton clubSearch" (click)="this.checkLogin()">Search for Clubs</button>
     </div>
   </div>
   <div id="topClubsDiv">
     <h1 class="topClubsTitle text-center">Top 5 Clubs at SNHU</h1>
     <div class="text-center firstPlace">
+
       <h3>{{topClubs[0].clubName}}</h3>
       <h5>First</h5>
     </div>
@@ -48,7 +49,8 @@
               <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
             </div>
             <div>
-              <button class="blueButton">Go To Club</button>
+              <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
+              <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
             </div>
           </div>
         </div>
@@ -59,7 +61,7 @@
   <div id="item-4">&nbsp;</div>
 </div>
 
-
+<!-- NOT LOGGED IN-->
 <p-dialog [(visible)]="displayClubSearchModal" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeClubSearchDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
@@ -74,11 +76,42 @@
       </div>
       <ul class="list-group list-group-flush">
         <!-- results of ngFor is passed to appFilter with argument searchText -->
-        <li class="list-group-item" *ngFor="let club of allClubs | filter: searchText">
-          {{club.clubName}}
-          <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), club.clubID)">Favorite</button>
-        </li>
+        <ng-template *ngIf="this.cookie.get('studentID') !== '';else notLoggedIn">
+          <li class="list-group-item" *ngFor="let nonFavClub of allClubs | filter: searchText">
+            {{nonFavClub.clubName}}
+            <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), nonFavClub.clubID)">Favorite</button>
+          </li>
+        </ng-template>
+        <ng-template #notLoggedIn>
+          <li class="list-group-item" *ngFor="let club of allClubs | filter: searchText">
+            {{club.clubName}}
+            <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), club.clubID)">Favorite</button>
+          </li>
+        </ng-template>
       </ul>
     </div>
   </div>
+</p-dialog>
+
+<!-- LOGGED IN-->
+<p-dialog [(visible)]="displayClubSearchLoggedInModal" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+ <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeClubSearchLoggedInDialog()">
+   <span class="fa fa-fw fa-close fa-lg"></span>
+ </a>
+
+ <div class="content" role="main">
+   <div class="card">
+     <div class="form-group">
+       <input type="email" class="form-control formInputs" aria-describedby="search-text"
+              [(ngModel)]="searchText" placeholder="Enter text to search"
+              autofocus>
+     </div>
+     <ul class="list-group list-group-flush">
+       <li class="list-group-item" *ngFor="let nonFavClub of compareAllClubs | filter: searchText">
+         {{nonFavClub.clubName}}
+         <button class="blueButton" (click)="favoriteClub(+this.cookie.get('studentID'), nonFavClub.clubID)">Favorite</button>
+       </li>
+     </ul>
+   </div>
+ </div>
 </p-dialog>

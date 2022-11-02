@@ -10,6 +10,6 @@
 Database for involveU is hosted on an aws mySQL RDS server and is a mySQL Relational database. Please name the database involveU as that is how it is configured within the application. You may have to change the username and password to access your specific databse
 
 - Please refer to the schema model in the database to view how the schema is structured
-[Database Schema Model](https://github.com/Nicholas-LeBoeuf/involveU/blob/main/involveU.vpp)
+[Database Schema Model](https://github.com/Nicholas-LeBoeuf/involveU/blob/main/Database)
 
 - The query sheet will help build the inital database and should not be tempered with as it will mess with the configuration

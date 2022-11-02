@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -212,12 +214,12 @@ public class DBServices {
     protected Boolean assignDBAdvisor(int clubID, int userID)
     {
         sql = "UPDATE Club SET clubAdvisor = ? WHERE clubID = ?;";
-
+        //Catches if the Admin tries to add a user to an advisor to a club that is already an advisor to another club
         try{
-
             validQuery = JdbcTemplated.update(sql,userID,clubID);
         }catch(Exception e)
         {
+            System.out.println(e);
             return false;
         }
 
@@ -229,8 +231,72 @@ public class DBServices {
         {
             return false;
         }
-
     }
+protected Boolean addDBEboardMember(int userId, int clubID, String position)
+{
+    sql = "INSERT INTO Eboard (clubID, studentID,eboardPosition ) VALUES (?,?,?);";
+
+    validQuery = JdbcTemplated.update(sql,clubID,userId,position);
+
+    if(validQuery == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+protected Boolean deleteDBUser(int userID) {
+    sql = "DELETE FROM User WHERE studentID = ?;";
+
+    validQuery = JdbcTemplated.update(sql,userID);
+
+    if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
+    {
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+protected Boolean deleteDBEboardMember(int userID)
+{
+    sql = "DELETE FROM Eboard WHERE studentID = ?";
+    validQuery = JdbcTemplated.update(sql,userID);
+    if(validQuery == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+protected Boolean deleteAllFavorites(int userID)
+{
+    sql = "DELETE FROM Favorites WHERE userID = ?";
+    validQuery = JdbcTemplated.update(sql,userID);
+    if(validQuery == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
 
 
 

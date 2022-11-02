@@ -36,9 +36,19 @@ public class AdminController extends DBServices {
             return new ResponseEntity<>("duplicate entry", HttpStatus.BAD_REQUEST);
         }
 
-
     }
-
-
-
+   @CrossOrigin(origins = "http://localhost:4200")
+   @GetMapping("/admin/addNewEboard/{userID}/{clubID}/{role}")
+    private ResponseEntity<String> addNewEboard(@PathVariable("userID") int userID, @PathVariable("clubID") int clubID,@PathVariable("role") String position)
+    {
+        addDBEboardMember(userID, clubID,position);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/admin/deleteUser/{userID}")
+    private ResponseEntity<String> deleteUser(@PathVariable("userID") int userID)
+    {
+        deleteDBUser(userID);
+        return new ResponseEntity<>("user is deleted", HttpStatus.OK);
+    }
 }

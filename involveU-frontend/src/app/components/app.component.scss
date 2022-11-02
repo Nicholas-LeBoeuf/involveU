@@ -157,3 +157,7 @@ ul {
 .alert-dismissible .btn-close {
   padding: 1rem  1rem;
 }
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 50px;
+}

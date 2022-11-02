@@ -16,6 +16,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import {RippleModule} from "primeng/ripple";
 import { SpecificClubPageComponent } from './components/specific-club-page/specific-club-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import {Table, TableModule} from "primeng/table";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     AppRoutingModule,
     CarouselModule,
     FormsModule,
-    RippleModule
+    RippleModule,
+    TableModule
   ],
   providers: [
     CookieService

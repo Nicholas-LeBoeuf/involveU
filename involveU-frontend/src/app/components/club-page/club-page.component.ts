@@ -4,6 +4,7 @@ import { Club } from "../../objects/club";
 import { Router } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
 import {ButtonModule} from "primeng/button";
+import {LazyLoadEvent} from "primeng/api";
 
 @Component({
   selector: 'app-club-page',
@@ -23,6 +24,8 @@ export class ClubPageComponent implements OnInit {
   timeout: boolean = false;
   userID!: number;
 
+  loading!: boolean;
+
   searchText = '';
   allClubs: Club[] = [];
   compareAllClubs: Club[] = [];
@@ -36,23 +39,18 @@ export class ClubPageComponent implements OnInit {
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
-
-    setTimeout(() => {
-      this.timeout = true;
-    }, 4000)
-
+    this.loading = true;
   }
 
   checkLogin() {
-    if (this.userID !== undefined) {
+    if (this.userID !== 0) {
       this.isLoggedIn = true;
       this.getClubsThatArentFavorited();
     }
     else {
-      this.fillClubList();
       this.showClubSearchDialog();
     }
-
+    console.log(this.userID);
     console.log(this.isLoggedIn);
   }
 
@@ -82,26 +80,30 @@ export class ClubPageComponent implements OnInit {
   }
 
   getClubsThatArentFavorited() {
+    this.loading = true;
+
     this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
-        this.compareAllClubs = response;
-      });
-    this.clubService.getAllClubs().subscribe(response => {
-      this.notFavoritedClubs = response.filter(allClubs => !this.compareAllClubs.find(x => x.clubID === allClubs.clubID));
-    },
-      (error) => {
-        console.log(error);
-      });
+      this.compareAllClubs = response;
+    });
+
+    setTimeout(() => {
+      this.clubService.getAllClubs().subscribe(response => {
+        this.notFavoritedClubs = response.filter(allClubs => !this.compareAllClubs.find(x => x.clubID === allClubs.clubID));
+        this.loading = false;
+
+      })
+    }, 1000);
+
+
+    this.showClubSearchLoggedInDialog();
 
     console.log(this.notFavoritedClubs)
     console.log(this.compareAllClubs);
-    this.showClubSearchLoggedInDialog();
   }
 
   getTopClubs() {
     this.clubService.getTopClubs().subscribe((response: Club[]) => {
       this.topClubs = response;
-
-
     },
       (error) => {
         console.log(error);
@@ -141,4 +143,3 @@ export class ClubPageComponent implements OnInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 }
-

@@ -51,4 +51,15 @@ public class AdminController extends DBServices {
         deleteDBUser(userID);
         return new ResponseEntity<>("user is deleted", HttpStatus.OK);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/admin/createUser/")
+    private ResponseEntity<String>createUser(@RequestBody User newUser)
+    {
+
+            insertDBNewUser(newUser);
+            
+        return new ResponseEntity<>("added user successfully", HttpStatus.OK);
+    }
 }
+
+

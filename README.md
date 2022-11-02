@@ -12,4 +12,7 @@ Database for involveU is hosted on an aws mySQL RDS server and is a mySQL Relati
 - Please refer to the schema model in the database to view how the schema is structured
 [Database Schema Model](https://github.com/Nicholas-LeBoeuf/involveU/blob/main/Database)
 
-- The query sheet will help build the inital database and should not be tempered with as it will mess with the configuration
+- The query sheet will help build the inital database and should not be tempered with as it will mess with the configuration:
+  [DDL Queries](https://github.com/Nicholas-LeBoeuf/involveU/blob/main/Database)
+  
+ > Database Information Last Updated: 11/2/2022 1:26pm EST

@@ -7,7 +7,9 @@
 ## Set-Up
 ### Database
 
-<p font-size = "18px"> Database for involveU is hosted on an aws mySQL RDS server and is a mySQL Relational database. Please name the database involveU as that is how it is configured within the application. You may have to change the username and password to access your specific databse</p>
-<p font-size = "18px"> Please refer to the schema model in the database to view how the schema is structured</p>
-<p>[Database Schema Model]https://github.com/Nicholas-LeBoeuf/involveU/blob/main/involveU.vpp</p>
-<p font-size = "18px"> The query sheet will help build the inital database and should not be tempered with as it will mess with the configuration</p>
+Database for involveU is hosted on an aws mySQL RDS server and is a mySQL Relational database. Please name the database involveU as that is how it is configured within the application. You may have to change the username and password to access your specific databse
+
+- Please refer to the schema model in the database to view how the schema is structured
+[Database Schema Model](https://github.com/Nicholas-LeBoeuf/involveU/blob/main/involveU.vpp)
+
+- The query sheet will help build the inital database and should not be tempered with as it will mess with the configuration

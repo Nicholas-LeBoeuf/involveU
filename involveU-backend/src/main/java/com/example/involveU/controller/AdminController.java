@@ -1,7 +1,4 @@
 package com.example.involveU.controller;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class AdvisorController extends DBServices {
+public class AdminController extends DBServices {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/admin/addAdmin/$newAdmin")
     private ResponseEntity<String> addAdmin (@PathVariable("newAdmin") User newAdmin) {
@@ -27,12 +24,31 @@ public class AdvisorController extends DBServices {
 
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/admin/assignNewAdvisor/{advisorID}")
-    private ResponseEntity<String> assignNewAdvisor()
+    @GetMapping("/admin/assignNewAdvisor/{advisorID}/{clubID}")
+    private ResponseEntity<String> assignNewAdvisor(@PathVariable("advisorID") int advisorID,@PathVariable("clubID") int clubID)
     {
+        if(assignDBAdvisor(clubID, advisorID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("duplicate entry", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+   @CrossOrigin(origins = "http://localhost:4200")
+   @GetMapping("/admin/addNewEboard/{userID}/{clubID}/{role}")
+    private ResponseEntity<String> addNewEboard(@PathVariable("userID") int userID, @PathVariable("clubID") int clubID,@PathVariable("role") String position)
+    {
+        addDBEboardMember(userID, clubID,position);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
-
-
-
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/admin/deleteUser/{userID}")
+    private ResponseEntity<String> deleteUser(@PathVariable("userID") int userID)
+    {
+        deleteDBUser(userID);
+        return new ResponseEntity<>("user is deleted", HttpStatus.OK);
+    }
 }

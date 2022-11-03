@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ClubService } from "../../services/club.service";
 import { Club } from "../../objects/club";
 import { Router } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
 import {ButtonModule} from "primeng/button";
 import {LazyLoadEvent} from "primeng/api";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-club-page',
@@ -33,6 +34,9 @@ export class ClubPageComponent implements OnInit {
   favoritedClubs: Club[] = [];
   notFavoritedClubsOG: Club[] = [];
   notFavoritedClubs: Club[] = [];
+
+  @ViewChild('SearchTable') SearchTable: Table | undefined;
+
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')

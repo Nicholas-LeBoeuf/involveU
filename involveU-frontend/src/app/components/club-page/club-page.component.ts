@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ClubService } from "../../services/club.service";
 import { Club } from "../../objects/club";
 import { Router } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
 import {ButtonModule} from "primeng/button";
+import {LazyLoadEvent} from "primeng/api";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-club-page',
@@ -20,30 +22,43 @@ export class ClubPageComponent implements OnInit {
   displayClubSearchLoggedInModal: boolean = false;
   isLoggedIn: boolean = false;
 
-  searchText = '';
+  timeout: boolean = false;
+  userID!: number;
 
+  loading!: boolean;
+
+  imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
   compareAllClubs: Club[] = [];
   topClubs: Club[] = [];
   favoritedClubs: Club[] = [];
-  notFavoritedClubsOG: Club[] = [];
   notFavoritedClubs: Club[] = [];
 
   ngOnInit(): void {
+    this.userID = +this.cookie.get('studentID')
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
+    this.loading = true;
+
+    if (!localStorage.getItem('isReloaded')) {
+      localStorage.setItem('isReloaded', 'no reload')
+      location.reload()
+    }
+    else {
+      localStorage.removeItem('isReloaded')
+    }
   }
 
   checkLogin() {
-    if (this.cookie.get('studentID') !== '') {
+    if (this.userID !== 0) {
       this.isLoggedIn = true;
       this.getClubsThatArentFavorited();
     }
     else {
       this.showClubSearchDialog();
     }
-
+    console.log(this.userID);
     console.log(this.isLoggedIn);
   }
 
@@ -73,29 +88,30 @@ export class ClubPageComponent implements OnInit {
   }
 
   getClubsThatArentFavorited() {
-    this.clubService.getAllClubs().subscribe((response: Club[]) => {
-        this.compareAllClubs = response;
-      });
-
-    console.log(this.compareAllClubs);
+    this.loading = true;
 
     this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
-      this.notFavoritedClubsOG = response;
-      console.log(this.notFavoritedClubsOG);
-      console.log(response);
-    },
-      (error) => {
-        console.log(error);
-      });
+      this.compareAllClubs = response;
+    });
+
+    setTimeout(() => {
+      this.clubService.getAllClubs().subscribe(response => {
+        this.notFavoritedClubs = response.filter(allClubs => !this.compareAllClubs.find(x => x.clubID === allClubs.clubID));
+        this.loading = false;
+
+      })
+    }, 1000);
+
 
     this.showClubSearchLoggedInDialog();
+
+    console.log(this.notFavoritedClubs)
+    console.log(this.compareAllClubs);
   }
 
   getTopClubs() {
     this.clubService.getTopClubs().subscribe((response: Club[]) => {
       this.topClubs = response;
-
-
     },
       (error) => {
         console.log(error);
@@ -105,6 +121,7 @@ export class ClubPageComponent implements OnInit {
   favoriteClub(userID: number, clubID: number) {
     this.clubService.favoriteClub(userID, clubID).subscribe(response => {
       console.log(response);
+      location.reload();
     },
       (error) => {
       console.log(error);
@@ -134,4 +151,3 @@ export class ClubPageComponent implements OnInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 }
-

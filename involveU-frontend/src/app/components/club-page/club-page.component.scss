@@ -175,3 +175,45 @@
 :host ::ng-deep .p-carousel-items-container {
   text-align: center;
 }
+
+::ng-deep .p-dialog {
+  background-color: #AECDE6 !important;
+  border-radius: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: #AECDE6 !important;
+}
+
+.form-group {
+  display: block;
+  margin: 15px auto;
+}
+
+.closeButtonDialog {
+  float: right;
+}
+
+.card {
+  margin-top: 7%;
+  background-color: #AECDE6;
+  border: none;
+  overflow: hidden;
+}
+
+.clubSearchTitle {
+  font-size: 2.5em;
+  margin-bottom: 4%;
+  font-weight: normal;
+}
+
+.clubNameCell {
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 250ms all ease-in-out;
+}
+
+.clubNameCell:hover {
+  background-color: #d1e8ff;
+}

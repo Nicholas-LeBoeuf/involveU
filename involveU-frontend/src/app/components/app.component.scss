@@ -127,7 +127,6 @@ ul {
 
 .closeButtonDialog {
   float: right;
-  transform: translate(-10px, 10px);
   color: black;
 }
 
@@ -156,4 +155,8 @@ ul {
 
 .alert-dismissible .btn-close {
   padding: 1rem  1rem;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 50px;
 }

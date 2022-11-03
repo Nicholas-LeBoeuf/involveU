@@ -19,6 +19,7 @@ import { AdminPageComponent } from './components/create-club/create-club-page.co
 import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import { AssignRemoveAdvisorComponent } from './components/assign-remove-advisor/assign-remove-advisor.component';
+import { AddRemoveEboardComponent } from './components/add-remove-eboard/add-remove-eboard.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AssignRemoveAdvisorComponent } from './components/assign-remove-advisor
     FilterPipe,
     SpecificClubPageComponent,
     AdminPageComponent,
-    AssignRemoveAdvisorComponent
+    AssignRemoveAdvisorComponent,
+    AddRemoveEboardComponent
   ],
   imports: [
     BrowserModule,

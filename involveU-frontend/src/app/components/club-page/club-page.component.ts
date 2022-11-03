@@ -40,6 +40,14 @@ export class ClubPageComponent implements OnInit {
     this.getTopClubs();
     this.getUsersFavoritedClubs();
     this.loading = true;
+
+    if (!localStorage.getItem('isReloaded')) {
+      localStorage.setItem('isReloaded', 'no reload')
+      location.reload()
+    }
+    else {
+      localStorage.removeItem('isReloaded')
+    }
   }
 
   checkLogin() {

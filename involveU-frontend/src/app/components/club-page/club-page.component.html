@@ -2,9 +2,9 @@
   <div id="titleDiv">
     <h1 class="pageTitle text-center">View and Manage Clubs</h1>
     <h3 class="text-center textMargin">View all of the clubs offered here at SNHU and favorite them!</h3>
-    <p-carousel [value]="allClubs" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [showNavigators]="false" [showIndicators]="false">
+    <p-carousel [value]="imagesForClubSearch" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-club pTemplate="item">
-        <img src="assets/{{club.clubLogo}}">
+        <img src="assets/{{club}}">
       </ng-template>
     </p-carousel>
     <div class="d-flex align-items-center justify-content-center">

@@ -27,16 +27,12 @@ export class ClubPageComponent implements OnInit {
 
   loading!: boolean;
 
-  searchText = '';
+  imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
   compareAllClubs: Club[] = [];
   topClubs: Club[] = [];
   favoritedClubs: Club[] = [];
-  notFavoritedClubsOG: Club[] = [];
   notFavoritedClubs: Club[] = [];
-
-  @ViewChild('SearchTable') SearchTable: Table | undefined;
-
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')

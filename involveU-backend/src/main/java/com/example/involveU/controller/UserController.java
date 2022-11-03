@@ -19,7 +19,7 @@ public class UserController extends DBServices{
 	private List<User> foundUser;
 	private Object singleUser;
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("user/test")
+	@GetMapping("user/getAllUsers")
 	public List<User> getUsers() {
 		List<User> Results = getAllUsers();
 		return Results;

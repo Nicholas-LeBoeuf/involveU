@@ -4,6 +4,8 @@ import { ClubPageComponent} from "./components/club-page/club-page.component";
 import {LandingPageComponent} from "./components/landing-page/landing-page.component";
 import {SpecificClubPageComponent} from "./components/specific-club-page/specific-club-page.component";
 import {AdminPageComponent} from "./components/create-club/create-club-page.component";
+import {AssignRemoveAdvisorComponent} from "./components/assign-remove-advisor/assign-remove-advisor.component";
+import {AddRemoveEboardComponent} from "./components/add-remove-eboard/add-remove-eboard.component";
 
 const routes: Routes = [
   {
@@ -25,6 +27,14 @@ const routes: Routes = [
   {
     path: 'createclub',
     component: AdminPageComponent
+  },
+  {
+    path: 'assignremoveadvisor',
+    component: AssignRemoveAdvisorComponent
+  },
+  {
+    path: 'addremoveeboard',
+    component: AddRemoveEboardComponent
   }
 ];
 

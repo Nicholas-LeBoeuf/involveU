@@ -23,6 +23,10 @@ export class SpecificClubPageComponent implements OnInit {
   clubInfo!: Club;
   favoritedClubs: Club[] = [];
 
+  successMessage: boolean = false;
+  failMessage: boolean = false;
+  message!: string;
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.clubID = params['id'];
@@ -41,23 +45,17 @@ export class SpecificClubPageComponent implements OnInit {
   }
 
   removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe(response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-        window.location.reload();
-      })
+    this.clubService.unfavoriteClub(clubID, userID).subscribe()
+    this.message = 'Club successfully unfavorited!';
+    this.successMessage = true;
+    location.reload();
   }
 
   favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe(response => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-        window.location.reload();
-      });
+    this.clubService.favoriteClub(userID, clubID).subscribe()
+    this.message = 'Club successfully favorited!';
+    this.successMessage = true;
+    location.reload();
   }
 
   getUsersFavoritedClubs() {

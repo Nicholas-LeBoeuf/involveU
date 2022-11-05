@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -62,10 +60,9 @@ public class DBServices {
     }
     public int insertDBNewUser(User newUser)
     {
-        sql = "SELECT * FROM User WHERE email = '" + newUser.getEmail() + "'";
-        users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
-        if( users.size() < 1)
+
+        if( checkUserExistence(newUser.getEmail()) == 1 )
         {
             sql="INSERT INTO User (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
@@ -76,7 +73,21 @@ public class DBServices {
         //Query executes and sends back an integer for error checking
         return validQuery;
     }
+    public int checkUserExistence(String userEmail)
+    {
+        sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
+        users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
+        if(users.size() > 0 )
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+
+    }
     public Object DBcheckUserCredentials(String username, String password)
     {
         sql = "SELECT * FROM User WHERE email = '" + username + "'";

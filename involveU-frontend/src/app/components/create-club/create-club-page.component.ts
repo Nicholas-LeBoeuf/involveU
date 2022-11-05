@@ -8,9 +8,9 @@ import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
 
 @Component({
-  selector: 'app-admin-page',
-  templateUrl: './admin-page.component.html',
-  styleUrls: ['./admin-page.component.scss']
+  selector: 'app-create-club',
+  templateUrl: './create-club-page.component.html',
+  styleUrls: ['./create-club-page.component.scss']
 })
 export class AdminPageComponent implements OnInit {
 

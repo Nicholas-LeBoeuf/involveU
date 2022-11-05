@@ -23,9 +23,13 @@ export class ClubPageComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   timeout: boolean = false;
-  userID!: number;
+  userID: number = -1;
 
   loading!: boolean;
+
+  successMessage: boolean = false;
+  failMessage: boolean = false;
+  message!: string;
 
   imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
@@ -119,23 +123,17 @@ export class ClubPageComponent implements OnInit {
   }
 
   favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe(response => {
-      console.log(response);
-      location.reload();
-    },
-      (error) => {
-      console.log(error);
-    });
+    this.clubService.favoriteClub(userID, clubID).subscribe()
+    this.message = 'Club successfully favorited!';
+    this.successMessage = true;
+    location.reload();
   }
 
   removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe(response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-        window.location.reload();
-      })
+    this.clubService.unfavoriteClub(clubID, userID).subscribe()
+    this.message = 'Club successfully unfavorited!';
+    this.successMessage = true;
+    location.reload();
   }
 
   getUsersFavoritedClubs() {

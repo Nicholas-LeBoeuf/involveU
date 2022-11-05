@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { environment } from "../../environments/environment";
-import { Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Club} from "../objects/club";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClubService {
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
 
   constructor(private http: HttpClient ) { }
 

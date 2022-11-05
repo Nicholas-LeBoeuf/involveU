@@ -6,7 +6,7 @@
 
 ## Structure
 
-involveU is set up with a front-end (Angular), a back- end (Java), and Database (MySQL). The front-end and the back-end is connected through a RESTful API. The Database is connected through JDBC with BeanPropertyRowMapper to map the data to objects. Please see [Dependcies](README.md#dependcies) section for more info!
+involveU is set up with a front-end (Angular), a back-end (Java), and Database (MySQL). The front-end and the back-end is connected through a RESTful API. The Database is connected through JDBC with BeanPropertyRowMapper to map the data to objects. Please see [Dependencies](README.md#dependencies) section for more info!
 
 ## Set-Up
 ### Database
@@ -23,7 +23,7 @@ Database for involveU is hosted on an aws mySQL RDS server and is a mySQL Relati
  
  ### Enviornment 
  
- The two main enviornemnts our team uses is [WebStorm](https://www.jetbrains.com/webstorm/) (Angular) and, [IntelliJ](https://www.jetbrains.com/idea/) (Java). We reccommend you stay with the same IDE's as it will prevent any unneeded issues further on into development. Some dependices will be missing on first start, we recommend running any npm installs that the IDE asks of as it will make it quick and easy to start up. All dependicies will be listed bellow.
+ The two main enviornemnts our team uses is [WebStorm](https://www.jetbrains.com/webstorm/) (Angular) and, [IntelliJ](https://www.jetbrains.com/idea/) (Java). We reccommend you stay with the same IDE's as it will prevent any unneeded issues further on into development. Some dependencies will be missing on first start, we recommend running any npm installs that the IDE asks of as it will make it quick and easy to start up. All dependencies will be listed bellow.
  
-## Dependcies
+## Dependencies
               

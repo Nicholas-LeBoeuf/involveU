@@ -5,6 +5,8 @@ import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
 import {ClubService} from "../services/club.service";
 import {Router} from "@angular/router";
+import {MenuItem} from 'primeng/api';
+import {ContextMenu} from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-root',
@@ -62,6 +64,23 @@ export class AppComponent {
 
   ngOnInit(): void {
   }
+
+  private prevContextMenu!: ContextMenu;
+
+  public profileContextMenuItems: MenuItem[] = [
+    {
+      label: 'Logout',
+      command: () => {
+        this.cookie.delete('studentID');
+        this.cookie.delete('studentFName');
+        this.cookie.delete('studentLName');
+        this.cookie.delete('isAdmin');
+        this.cookie.delete('isEboard');
+
+        location.reload();
+      }
+    }
+  ]
 
   showLoginDialog() {
     this.displayLoginDialog = true;
@@ -130,5 +149,14 @@ export class AppComponent {
 
   closeLoginDialog() {
     this.displayLoginDialog = false;
+  }
+
+  activateContextMenu(contextMenu: ContextMenu, event: MouseEvent, xOffset: number = -20, yOffset: number = 50) {
+    this.prevContextMenu?.hide();
+    event.stopPropagation();
+    contextMenu.show(new MouseEvent(event.type,
+      { 'view': window, 'bubbles': true, 'cancelable': true, 'clientX': event.clientX-event.offsetX+xOffset, 'clientY': event.clientY-event.offsetY+yOffset}
+    ));
+    this.prevContextMenu = contextMenu;
   }
 }

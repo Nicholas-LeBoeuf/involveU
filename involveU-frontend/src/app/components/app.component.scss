@@ -160,3 +160,19 @@ ul {
 ::ng-deep .p-dialog .p-dialog-content:last-of-type {
   border-radius: 50px;
 }
+
+::ng-deep .p-contextmenu {
+  width: 90px;
+}
+
+::ng-deep .p-contextmenu ul {
+  text-align: center;
+}
+
+::ng-deep .p-contextmenu .p-menuitem-link {
+  justify-content: center;
+}
+
+.profileIcon {
+  cursor: pointer;
+}

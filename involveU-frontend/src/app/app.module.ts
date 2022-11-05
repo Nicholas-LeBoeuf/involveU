@@ -18,6 +18,7 @@ import { SpecificClubPageComponent } from './components/specific-club-page/speci
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
+import {ContextMenuModule} from "primeng/contextmenu";
 
 @NgModule({
   declarations: [
@@ -28,21 +29,22 @@ import {InputTextModule} from "primeng/inputtext";
     SpecificClubPageComponent,
     AdminPageComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    DialogModule,
-    ButtonModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    RouterOutlet,
-    AppRoutingModule,
-    CarouselModule,
-    FormsModule,
-    RippleModule,
-    TableModule,
-    InputTextModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        DialogModule,
+        ButtonModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        RouterOutlet,
+        AppRoutingModule,
+        CarouselModule,
+        FormsModule,
+        RippleModule,
+        TableModule,
+        InputTextModule,
+        ContextMenuModule
+    ],
   providers: [
     CookieService
   ],

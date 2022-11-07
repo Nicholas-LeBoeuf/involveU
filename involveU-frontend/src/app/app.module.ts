@@ -18,6 +18,7 @@ import { SpecificClubPageComponent } from './components/specific-club-page/speci
 import { AdminPageComponent } from './components/create-club/create-club-page.component';
 import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
+import {ContextMenuModule} from "primeng/contextmenu";
 import { AssignRemoveAdvisorComponent } from './components/assign-remove-advisor/assign-remove-advisor.component';
 import { AddRemoveEboardComponent } from './components/add-remove-eboard/add-remove-eboard.component';
 
@@ -32,21 +33,22 @@ import { AddRemoveEboardComponent } from './components/add-remove-eboard/add-rem
     AssignRemoveAdvisorComponent,
     AddRemoveEboardComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    DialogModule,
-    ButtonModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    RouterOutlet,
-    AppRoutingModule,
-    CarouselModule,
-    FormsModule,
-    RippleModule,
-    TableModule,
-    InputTextModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        DialogModule,
+        ButtonModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        RouterOutlet,
+        AppRoutingModule,
+        CarouselModule,
+        FormsModule,
+        RippleModule,
+        TableModule,
+        InputTextModule,
+        ContextMenuModule
+    ],
   providers: [
     CookieService
   ],

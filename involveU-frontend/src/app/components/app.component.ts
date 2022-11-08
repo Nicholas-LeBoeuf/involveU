@@ -82,6 +82,42 @@ export class AppComponent {
     }
   ]
 
+  public adminContextMenuItems: MenuItem[] = [
+    {
+      label: 'Create Clubs',
+      command: (router: Router) => {
+        this.router.navigateByUrl('/createclub').then(nav => {
+          console.log(nav); // true if navigation is successful
+        }, err => {
+          console.log(err) // when there's an error
+        });;
+      }
+    },
+    {
+      label: 'Create/Delete Users'
+    },
+    {
+      label: 'Assign/Remove Advisors',
+      command: (router: Router) => {
+        this.router.navigateByUrl('/assignremoveadvisor').then(nav => {
+          console.log(nav); // true if navigation is successful
+        }, err => {
+          console.log(err) // when there's an error
+        });;
+      }
+    },
+    {
+      label: 'Assign/Remove EBoard',
+      command: (router: Router) => {
+        this.router.navigateByUrl('/addremoveeboard').then(nav => {
+          console.log(nav); // true if navigation is successful
+        }, err => {
+          console.log(err) // when there's an error
+        });;
+      }
+    }
+  ]
+
   showLoginDialog() {
     this.displayLoginDialog = true;
   }

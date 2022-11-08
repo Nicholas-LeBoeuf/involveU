@@ -32,7 +32,7 @@
       </li>
       <li routerLinkActive="active">
         <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
-          <a routerLink="/createclub">Admin</a>
+          <a (click)="activateContextMenu(adminContextMenu, $event)">Admin</a>
         </ng-template>
       </li>
     </ul>
@@ -168,3 +168,4 @@
 </p-dialog>
 
 <p-contextMenu #profileContextMenu [model]="profileContextMenuItems"></p-contextMenu>
+<p-contextMenu #adminContextMenu [model]="adminContextMenuItems"></p-contextMenu>

@@ -1,6 +1,7 @@
 package com.example.involveU.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "events")
@@ -17,7 +18,7 @@ public class Events extends Club{
     @Column(name = "endTime")
     private  String endTime;
     @Column(name = "eventDate")
-    private  String eventDate;
+    private Date eventDate;
     @Column(name = "eventDesc")
     private  String eventDesc;
     @Column(name = "isTransportation")
@@ -43,9 +44,9 @@ public class Events extends Club{
 
     public void setEndTime(String endTime) {this.endTime = endTime;}
 
-    public String getEventDate() {return eventDate;}
+    public Date getEventDate() {return eventDate;}
 
-    public void setEventDate(String eventDate) {this.eventDate = eventDate;}
+    public void setEventDate(Date eventDate) {this.eventDate = eventDate;}
 
     public String getEventDesc() {return eventDesc;}
 

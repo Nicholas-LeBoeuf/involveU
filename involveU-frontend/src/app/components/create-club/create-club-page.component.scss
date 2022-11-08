@@ -1,0 +1,116 @@
+.createClubInputs {
+  display: table;
+  margin: 0 auto 4%;
+}
+
+.createClubDiv {
+  width: 96vw;
+  min-height: 83vh;
+  max-height: 86vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+}
+
+.leftClubDiv {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.rightClubDiv {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.clubCreationAlerts {
+  position: absolute;
+  z-index: 1000000;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.clubCreationAlerts p {
+  font-size: 1.8em;
+}
+
+.centerButton {
+  display: block;
+  margin: auto auto auto 42%;
+  width: 58%;
+}
+
+.dialogTitle {
+  font-size: 4em;
+  text-align: center;
+  font-weight: normal;
+  margin-top: 2%;
+  margin-bottom: 3%;
+  padding-top: 54px;
+}
+
+.createClubButton {
+  background-color: #0667B3;
+  border: 1px solid black;
+  border-radius: 14px;
+  height: 60px;
+  padding: 0 20px;
+  margin: 10px;
+  color: white;
+  width: 250px;
+  font-size: 1.8em;
+}
+
+.form-submit-button{
+  clear:left;
+  float:left;
+}
+
+.form-control {
+  height: 60px;
+  width: 500px;
+  border-radius: 10px;
+  font-size: 1.5em;
+}
+
+.formLeftInputs {
+  border: 2px solid #0667B3;
+  color: #0667B3;
+  margin-left: 270px;
+}
+
+.formRightInputs {
+  border: 2px solid #0667B3;
+  color: #0667B3;
+  margin-right: 270px;
+}
+
+.formInputs::placeholder {
+  color: #0667B3;
+}
+
+.leftAlert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  width: 500px;
+  float: right;
+}
+
+.rightAlert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  width: 500px;
+  float: left;
+}

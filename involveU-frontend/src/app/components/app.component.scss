@@ -1,0 +1,179 @@
+
+
+.navbar {
+  background-color: #AECDE6;
+  justify-content: flex-start;
+}
+li {
+  display: inline;
+}
+
+ul {
+  margin-top: 1rem !important;
+}
+
+.navbar a {
+  padding: 15px 20px;
+}
+
+.SNHUlogoScale {
+  width: 150px;
+  height: 43px;
+}
+
+.involveULogoScale {
+  width: 67px;
+  height: 59px;
+  margin-left: 10px;
+}
+
+
+
+
+/*Popup modal dialog styling*/
+
+.involveUModalScale {
+  width: 200px;
+  height: 174px;
+  display: block;
+  margin: 4% auto;
+}
+
+.dialogLines {
+  border-top: 2px solid black;
+  margin: 2% 8%;
+}
+
+.dialogTitle {
+  font-size: 1.8em;
+  text-align: center;
+  font-weight: normal;
+  margin-bottom: 5%;
+}
+
+::ng-deep .p-dialog {
+  background-color: #AECDE6 !important;
+  border-radius: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: #AECDE6 !important;
+}
+
+::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
+  display:none;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  display: none;
+}
+
+.inputField {
+  display: block;
+  margin: auto;
+}
+
+.centerButton {
+  display: block;
+  margin: auto;
+}
+
+.signupGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  justify-items: center;
+}
+
+.input1 { grid-area: 1 / 1 / 2 / 2; }
+.input2 { grid-area: 1 / 2 / 2 / 3; }
+.input3 { grid-area: 2 / 1 / 3 / 2; }
+.input4 { grid-area: 2 / 2 / 3 / 3; }
+.input5 { grid-area: 3 / 1 / 4 / 2; }
+.input6 { grid-area: 3 / 2 / 4 / 3; }
+
+.bottomModal {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.bottomModal p {
+  font-weight: 500;
+  line-height: 10px;
+}
+
+.bottomModal p a {
+  color: #0000EE;
+  cursor: pointer;
+}
+
+:host ::ng-deep p-dialog,
+:host ::ng-deep .p-dialog-mask.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+:host ::ng-deep .p-dialog-header-icons {
+  display:none!important;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  position: sticky;
+}
+
+.closeButtonDialog {
+  float: right;
+  color: black;
+}
+
+.loginInputs {
+  display: table;
+  margin: 0 auto 4%;
+}
+
+.loginSignupAlerts {
+  position: absolute;
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.loginSignupAlerts p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 50px;
+}
+
+::ng-deep .p-contextmenu {
+  width: 90px;
+}
+
+::ng-deep .p-contextmenu ul {
+  text-align: center;
+}
+
+::ng-deep .p-contextmenu .p-menuitem-link {
+  justify-content: center;
+}
+
+.profileIcon {
+  cursor: pointer;
+}

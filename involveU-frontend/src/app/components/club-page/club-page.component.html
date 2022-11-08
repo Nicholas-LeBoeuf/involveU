@@ -1,0 +1,121 @@
+<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="gridContainer">
+  <div id="titleDiv">
+    <h1 class="pageTitle text-center">View and Manage Clubs</h1>
+    <h3 class="text-center textMargin">View all of the clubs offered here at SNHU and favorite them!</h3>
+    <p-carousel [value]="imagesForClubSearch" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [showNavigators]="false" [showIndicators]="false">
+      <ng-template let-club pTemplate="item">
+        <img src="assets/{{club}}">
+      </ng-template>
+    </p-carousel>
+    <div class="d-flex align-items-center justify-content-center">
+      <button class="blueButton clubSearch" (click)="this.checkLogin()">Search for Clubs</button>
+    </div>
+  </div>
+  <div id="topClubsDiv">
+    <h1 class="topClubsTitle text-center">Top 5 Clubs at SNHU</h1>
+    <div class="text-center firstPlace">
+
+      <h3>{{topClubs[0].clubName}}</h3>
+      <h5>First</h5>
+    </div>
+    <div class="text-center secondPlace">
+      <h3>{{topClubs[1].clubName}}</h3>
+      <h5>Second</h5>
+    </div>
+    <div class="text-center thirdPlace">
+      <h3>{{topClubs[2].clubName}}</h3>
+      <h5>Third</h5>
+    </div>
+    <div class="text-center fourthPlace">
+      <h3>{{topClubs[3].clubName}}</h3>
+      <h5>Fourth</h5>
+    </div>
+    <div class="text-center fifthPlace">
+      <h3>{{topClubs[4].clubName}}</h3>
+      <h5>Fifth</h5>
+    </div>
+  </div>
+  <div id="favoritedClubs">
+    <h1 class="text-center">Favorited Clubs</h1>
+    <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+      <ng-template let-favClubs pTemplate="item">
+        <div class="clubCard">
+          <div class="clubContent">
+            <div>
+              <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
+              <hr>
+            </div>
+            <div class="logoMargin">
+              <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
+            </div>
+            <div>
+              <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
+              <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  <div id="item-3">&nbsp;</div>
+  <div id="item-4">&nbsp;</div>
+</div>
+
+<!-- NOT LOGGED IN-->
+<p-dialog [(visible)]="displayClubSearchModal" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeClubSearchDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <div class="content" role="main">
+    <div class="card">
+      <h1 class="text-center clubSearchTitle">Search for Clubs</h1>
+      <p-table [lazy]="true" [value]="allClubs" responsiveLayout="scroll" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="justify-content: center">Club Name</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-club>
+          <tr>
+            <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- LOGGED IN-->
+<p-dialog [(visible)]="displayClubSearchLoggedInModal" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+ <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeClubSearchLoggedInDialog()">
+   <span class="fa fa-fw fa-close fa-lg"></span>
+ </a>
+ <div class="content" role="main">
+   <div class="card">
+     <h1 class="text-center clubSearchTitle">Search for Clubs</h1>
+     <p-table [lazy]="true" [value]="notFavoritedClubs" responsiveLayout="scroll" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped">
+       <ng-template pTemplate="header">
+         <tr>
+           <th style="justify-content: center">Club Name</th>
+           <th style="max-width: 200px; justify-content: center">Favorite</th>
+         </tr>
+       </ng-template>
+       <ng-template pTemplate="body" let-club>
+         <tr>
+           <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
+           <td style="max-width: 200px; justify-content: center;"><button class="blueButton" (click)="favoriteClub(this.userID, club.clubID)">Favorite</button></td>
+         </tr>
+       </ng-template>
+     </p-table>
+   </div>
+ </div>
+</p-dialog>

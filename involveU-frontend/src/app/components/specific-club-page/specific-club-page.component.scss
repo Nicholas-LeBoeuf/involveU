@@ -1,0 +1,179 @@
+.clubContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "clubNameSection clubLogoSection"
+/*    "clubBioSection clubAffSection clubEboardSection"
+    "clubEventsSection clubEventsSection clubEventsSection"
+    "clubAnnouncementsSection clubAnnouncementsSection clubAnnouncementsSection"*/;
+}
+
+.clubGridStyle {
+  display: flex;
+  justify-content: center;
+
+  border-radius: 10px;
+  margin: 2%;
+  background-color: #5c93cb;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.clubNameSection {
+  grid-area: clubNameSection;
+}
+
+.clubNameSection:hover {
+  transform: scale(1.02);
+}
+
+.clubLogoSection {
+  grid-area: clubLogoSection;
+}
+
+.clubLogoSection:hover {
+  transform: scale(1.04);
+}
+
+.clubBioSection {
+  grid-area: clubBioSection;
+}
+
+.clubAffSection {
+  grid-area: clubAffSection;
+}
+
+.clubEboardSection {
+  grid-area: clubEboardSection;
+}
+
+.clubEventsSection {
+  grid-area: clubEventsSection;
+}
+
+.clubAnnouncementsSection {
+  grid-area: clubAnnouncementsSection;
+}
+
+.clubsName {
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.clubsLogo {
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+}
+
+.clubButton {
+  float: left;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
+}
+
+.sectionContent {
+  background-color: #AECDE6;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 25px;
+  padding: 2%;
+  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  margin: 5%;
+}
+
+.spanScreen {
+  width: 100%;
+}
+
+.bioAndEboard {
+  width: 100%;
+  height: 300px;
+}
+
+.bioSection {
+  width: 50%;
+  float: left;
+
+}
+
+.eboardSection {
+  width: 50%;
+  float: left;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 0 !important;
+}
+
+.bioandEboardContent {
+  margin: 1% 6% !important;
+  height: 200px;
+}
+
+.addTopMargin {
+  margin-top: 2%;
+}
+
+.missionValueVision {
+  width: 100%;
+  height: 300px;
+}
+
+.mission {
+  width: 33%;
+  float: left;
+}
+
+.values {
+  width: 33%;
+  float: left;
+}
+
+.vision {
+  width: 33%;
+  float: left;
+}
+
+.eventAlerts {
+  position: absolute;
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.eventAlerts p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  top: 35px;
+  position: sticky;
+}

@@ -1,0 +1,66 @@
+<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="clubContainer">
+  <div class="clubNameSection clubGridStyle">
+    <div class="sectionContent">
+      <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
+      <div class="buttonRow">
+        <ng-container *ngIf="this.clubIsFav;else notFav">
+          <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
+        </ng-container>
+        <ng-template #notFav>
+          <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="clubLogoSection clubGridStyle">
+    <div class="sectionContent">
+      <img class="clubsLogo" src="assets/{{clubInfo.clubLogo}}">
+      <h2 class="text-center">Affiliated With</h2>
+      <h2 class="text-center">{{clubInfo.clubAffiliation}}</h2>
+    </div>
+  </div>
+</div>
+<div class="bioAndEboard">
+  <div class="bioSection">
+    <h1 class="text-center addTopMargin">Who Are We?</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
+    </div>
+  </div>
+  <div class="eboardSection">
+    <h1 class="text-center addTopMargin">The EBoard!</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">Testing this</h5>
+    </div>
+  </div>
+</div>
+<div class="missionValueVision">
+  <div class="mission">
+    <h1 class="text-center addTopMargin">Mission</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">{{clubInfo.clubMission}}</h5>
+    </div>
+  </div>
+  <div class="values">
+    <h1 class="text-center addTopMargin">Values</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">{{clubInfo.clubValues}}</h5>
+    </div>
+  </div>
+  <div class="vision">
+    <h1 class="text-center addTopMargin">Vision</h1>
+    <div class="sectionContent bioandEboardContent">
+      <h5 class="text-center">{{clubInfo.clubVision}}</h5>
+    </div>
+  </div>
+</div>

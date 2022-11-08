@@ -1,32 +1,37 @@
 package com.example.involveU.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
-@Entity
-@Table(name = "events")
-public class Events extends Club{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class Events{
+
+
     private long eventID;
-    @Column(name = "eventName")
+
     private  String eventName;
-    @Column(name = "eventLocation")
+
     private  String eventLocation;
-    @Column(name = "startTime")
+
     private  String startTime;
-    @Column(name = "endTime")
+
     private  String endTime;
-    @Column(name = "eventDate")
-    private Date eventDate;
-    @Column(name = "eventDesc")
+
+    private  String eventDate;
+
     private  String eventDesc;
-    @Column(name = "isTransportation")
+
     private  int isTransportation;
-    @Column(name = "ticketLink")
+
     private  String ticketLink;
-    @Column(name = "clubID")
+
     private  int clubID;
+    public long getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(long eventID) {
+        this.eventID = eventID;
+    }
 
     public String getEventName() {return eventName;}
 
@@ -44,9 +49,9 @@ public class Events extends Club{
 
     public void setEndTime(String endTime) {this.endTime = endTime;}
 
-    public Date getEventDate() {return eventDate;}
+    public String getEventDate() {return eventDate;}
 
-    public void setEventDate(Date eventDate) {this.eventDate = eventDate;}
+    public void setEventDate(String eventDate) {this.eventDate = eventDate;}
 
     public String getEventDesc() {return eventDesc;}
 

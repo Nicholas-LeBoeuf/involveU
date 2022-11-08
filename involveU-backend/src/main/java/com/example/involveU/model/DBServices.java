@@ -8,6 +8,10 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.List;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 
 public class DBServices {
 
@@ -15,6 +19,7 @@ public class DBServices {
     private EBoardRepository eboardRepo;
     private List<User> users;
     private List<EBoard> eboardMembers;
+    private List<Events> events;
     private List<Club> clubs;
     private Club foundClub;
     private String sql;
@@ -104,7 +109,7 @@ public class DBServices {
         }
     }
 
-
+//TO-DO: DELETE THESE FUNCTIONS
     public List<EBoard> getDBEboardMembers()
     {
         sql = "SELECT * FROM Eboard";
@@ -300,16 +305,18 @@ protected Boolean deleteAllFavorites(int userID)
         return false;
     }
 }
+//EVENTS CONTROLLER
 
+    protected List<Events> getDBTodaysEvents()
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String strDate = formatter.format(date);
 
+        sql = "SELECT * FROM Events WHERE  eventDate = '" + strDate +"';";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
-
-
-
-
-
-
-
-
+        return events;
+    }
 
 }

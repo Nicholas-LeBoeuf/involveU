@@ -25,15 +25,15 @@ const routes: Routes = [
     component: SpecificClubPageComponent
   },
   {
-    path: 'createclub',
+    path: 'createClub',
     component: AdminPageComponent
   },
   {
-    path: 'assignremoveadvisor',
+    path: 'assignRemoveAdvisor',
     component: AssignRemoveAdvisorComponent
   },
   {
-    path: 'addremoveeboard',
+    path: 'addRemoveEBoard',
     component: AddRemoveEboardComponent
   }
 ];

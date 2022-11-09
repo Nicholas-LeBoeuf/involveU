@@ -20,22 +20,22 @@
 
 <nav class="navbar">
   <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" routerLink="">
-  <div class="navbar-nav mr-auto">
-    <ul>
-      <li routerLinkActive="active">
-        <a routerLink="">Home</a>
-      </li>
-      <li><a>This Week</a></li>
-      <li><a>Master Schedule</a></li>
-      <li routerLinkActive="active">
-        <a routerLink="/clubs">Clubs</a>
-      </li>
-      <li routerLinkActive="active">
-        <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
-          <a routerLink="/createclub">Admin</a>
-        </ng-template>
-      </li>
-    </ul>
+  <div>
+    <a routerLinkActive="active" routerLink="/home">Home</a>
+  </div>
+  <div>
+    <a>This Week</a>
+  </div>
+  <div>
+    <a>Master Schedule</a>
+  </div>
+  <div>
+    <a routerLink="/clubs" routerLinkActive="active">Clubs</a>
+  </div>
+  <div class="adminMenu">
+    <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
+      <a class="adminMenu" (click)="activateContextMenu(adminContextMenu, $event)">Admin</a>
+    </ng-template>
   </div>
   <div class="buttons">
     <ng-template [ngIf]="this.cookie.get('studentID') == ''">
@@ -168,3 +168,4 @@
 </p-dialog>
 
 <p-contextMenu #profileContextMenu [model]="profileContextMenuItems"></p-contextMenu>
+<p-contextMenu #adminContextMenu [model]="adminContextMenuItems"></p-contextMenu>

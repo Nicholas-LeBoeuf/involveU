@@ -1,6 +1,5 @@
 package com.example.involveU.model;
 import com.example.involveU.repository.UserRepository;
-import com.example.involveU.repository.EBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +15,7 @@ import java.util.Date;
 public class DBServices {
 
     private UserRepository userRepo;
-    private EBoardRepository eboardRepo;
+
     private List<User> users;
     private List<EBoard> eboardMembers;
     private List<Events> events;
@@ -110,18 +109,14 @@ public class DBServices {
     }
 
 //TO-DO: DELETE THESE FUNCTIONS
-    public List<EBoard> getDBEboardMembers()
-    {
-        sql = "SELECT * FROM Eboard";
-        eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
-        System.out.println(eboardMembers);
-        return eboardMembers;
-    }
+//
 
-    public List<EBoard> getDBClubEboardMembers() {
-        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID clubID";
+    public List<EBoard> getDBClubEboardMembers(int clubID) {
+        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
+
+
     }
 
 

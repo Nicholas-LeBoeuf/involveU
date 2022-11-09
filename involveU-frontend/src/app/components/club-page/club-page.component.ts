@@ -25,7 +25,7 @@ export class ClubPageComponent implements OnInit {
   timeout: boolean = false;
   userID: number = -1;
 
-  loading!: boolean;
+  loading: boolean = true;
 
   successMessage: boolean = false;
   failMessage: boolean = false;
@@ -38,12 +38,15 @@ export class ClubPageComponent implements OnInit {
   favoritedClubs: Club[] = [];
   notFavoritedClubs: Club[] = [];
 
+  @ViewChild('ClubTable') clubTable: Table;
+  @ViewChild('ClubTable2') clubTable2: Table;
+
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
-    this.loading = true;
+    this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
       localStorage.setItem('isReloaded', 'no reload')
@@ -148,4 +151,10 @@ export class ClubPageComponent implements OnInit {
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
+
+  onFilterTable(event: Event) {
+    this.clubTable.filterGlobal((event.target as HTMLInputElement).value, 'contains');  }
+
+  onFilterTable2(event: Event) {
+    this.clubTable2.filterGlobal((event.target as HTMLInputElement).value, 'contains');  }
 }

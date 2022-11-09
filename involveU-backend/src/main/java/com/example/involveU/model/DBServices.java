@@ -318,5 +318,18 @@ protected Boolean deleteAllFavorites(int userID)
 
         return events;
     }
+    protected  List<Events> getDBClubEvents(int clubID)
+    {
+        sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
+
+
+
+
 
 }

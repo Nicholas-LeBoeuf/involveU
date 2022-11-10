@@ -45,13 +45,14 @@ export class ClubPageComponent implements OnInit {
   ];
 
   @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
-  @ViewChild('ClubTable2') clubTable2: Table;
+  @ViewChild('dtLoggedIn') dtLoggedIn: Table;
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
+    this.getClubsThatArentFavorited();
     this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
@@ -66,7 +67,7 @@ export class ClubPageComponent implements OnInit {
   checkLogin() {
     if (this.userID !== 0) {
       this.isLoggedIn = true;
-      this.getClubsThatArentFavorited();
+      this.showClubSearchLoggedInDialog();
     }
     else {
       this.showClubSearchDialog();
@@ -85,6 +86,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   showClubSearchLoggedInDialog() {
+    console.log(this.notFavoritedClubs);
     this.displayClubSearchLoggedInModal = true;
   }
 
@@ -115,12 +117,6 @@ export class ClubPageComponent implements OnInit {
 
       })
     }, 1000);
-
-
-    this.showClubSearchLoggedInDialog();
-
-    console.log(this.notFavoritedClubs)
-    console.log(this.compareAllClubs);
   }
 
   getTopClubs() {
@@ -159,9 +155,9 @@ export class ClubPageComponent implements OnInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 
-  onFilterTable(event: Event) {
+  onFilterNotLoggedInTable(event: Event) {
     this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
 
-  onFilterTable2(event: Event) {
-    this.clubTable2.filterGlobal((event.target as HTMLInputElement).value, 'contains');  }
+  onFilterLoggedInTable(event: Event) {
+    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
 }

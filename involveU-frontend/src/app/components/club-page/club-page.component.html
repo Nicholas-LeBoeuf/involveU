@@ -78,10 +78,15 @@
   <div class="content" role="main">
     <div class="card">
       <h1 class="text-center clubSearchTitle">Search for Clubs</h1>
-      <p-table [lazy]="true" [value]="allClubs" responsiveLayout="scroll" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped">
-        <ng-template pTemplate="header">
+      <p-table #dtNotLoggedIn [columns]="cols" [value]="allClubs" responsiveLayout="scroll" [loading]="loading" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped" [globalFilterFields]="['clubName']">
+        <ng-template pTemplate="caption">
+          <div class="clubSearchInput">
+            <input class="form-control formInputs" pInputText type="text" (input)="onFilterNotLoggedInTable($event)" placeholder="Search" />
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
           <tr>
-            <th style="justify-content: center">Club Name</th>
+            <th style="justify-content: center" *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-club>
@@ -102,16 +107,21 @@
  <div class="content" role="main">
    <div class="card">
      <h1 class="text-center clubSearchTitle">Search for Clubs</h1>
-     <p-table [lazy]="true" [value]="notFavoritedClubs" responsiveLayout="scroll" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped">
-       <ng-template pTemplate="header">
+     <p-table #dtLoggedIn [value]="notFavoritedClubs" [columns]="cols" responsiveLayout="scroll" [loading]="loading" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped" [globalFilterFields]="['clubName']">
+       <ng-template pTemplate="caption">
+         <div class="clubSearchInput">
+           <input class="form-control formInputs" pInputText type="text" (input)="onFilterLoggedInTable($event)" placeholder="Search" />
+         </div>
+       </ng-template>
+       <ng-template pTemplate="header" let-columns>
          <tr>
-           <th style="justify-content: center">Club Name</th>
+           <th style="justify-content: center" *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
            <th style="max-width: 200px; justify-content: center">Favorite</th>
          </tr>
        </ng-template>
        <ng-template pTemplate="body" let-club>
          <tr>
-           <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
+           <td style="justify-content: center" class="clubNameCell"(click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
            <td style="max-width: 200px; justify-content: center;"><button class="blueButton" (click)="favoriteClub(this.userID, club.clubID)">Favorite</button></td>
          </tr>
        </ng-template>

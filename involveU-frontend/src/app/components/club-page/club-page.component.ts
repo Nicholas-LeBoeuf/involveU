@@ -25,11 +25,13 @@ export class ClubPageComponent implements OnInit {
   timeout: boolean = false;
   userID: number = -1;
 
-  loading!: boolean;
+  loading: boolean = true;
 
   successMessage: boolean = false;
   failMessage: boolean = false;
   message!: string;
+
+  clubName: string;
 
   imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
@@ -38,12 +40,20 @@ export class ClubPageComponent implements OnInit {
   favoritedClubs: Club[] = [];
   notFavoritedClubs: Club[] = [];
 
+  cols = [
+    { field: 'clubName', header: 'Club Name' }
+  ];
+
+  @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
+  @ViewChild('dtLoggedIn') dtLoggedIn: Table;
+
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
-    this.loading = true;
+    this.getClubsThatArentFavorited();
+    this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
       localStorage.setItem('isReloaded', 'no reload')
@@ -57,7 +67,7 @@ export class ClubPageComponent implements OnInit {
   checkLogin() {
     if (this.userID !== 0) {
       this.isLoggedIn = true;
-      this.getClubsThatArentFavorited();
+      this.showClubSearchLoggedInDialog();
     }
     else {
       this.showClubSearchDialog();
@@ -67,6 +77,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   showClubSearchDialog() {
+    console.log(this.allClubs);
     this.displayClubSearchModal = true;
   }
 
@@ -75,6 +86,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   showClubSearchLoggedInDialog() {
+    console.log(this.notFavoritedClubs);
     this.displayClubSearchLoggedInModal = true;
   }
 
@@ -105,12 +117,6 @@ export class ClubPageComponent implements OnInit {
 
       })
     }, 1000);
-
-
-    this.showClubSearchLoggedInDialog();
-
-    console.log(this.notFavoritedClubs)
-    console.log(this.compareAllClubs);
   }
 
   getTopClubs() {
@@ -148,4 +154,10 @@ export class ClubPageComponent implements OnInit {
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
+
+  onFilterNotLoggedInTable(event: Event) {
+    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
+
+  onFilterLoggedInTable(event: Event) {
+    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
 }

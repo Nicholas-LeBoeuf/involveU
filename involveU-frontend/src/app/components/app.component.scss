@@ -19,6 +19,7 @@ ul {
 .SNHUlogoScale {
   width: 150px;
   height: 43px;
+  cursor: pointer;
 }
 
 .involveULogoScale {
@@ -178,6 +179,31 @@ ul {
   cursor: pointer;
 }
 
-.adminMenu {
-  justify-content: flex-start;
+
+.navButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.specificNavButton {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.specificNavButton a {
+  text-decoration: none;
+  color: black;
+}
+
+.specificNavButton a:hover {
+  color: blue;
+}
+
+::ng-deep .p-contextmenu {
+  width: 120px !important;
+}
+
+.active-span {
+  color: blue !important;
 }

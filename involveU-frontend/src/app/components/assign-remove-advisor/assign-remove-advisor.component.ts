@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-assign-remove-advisor',
@@ -8,22 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AssignRemoveAdvisorComponent implements OnInit {
 
-  assignAdvisorForm : FormGroup;
-  constructor(private formBuilder : FormBuilder) {
-    this.assignAdvisorForm = this.formBuilder.group({
-      clubName: ['', Validators.required],
-      advisorID: ['', Validators.required]
-    });
-
-  }
-
-  get assignAdvisorFormInputs() {
-    return this.assignAdvisorForm.controls;
-  }
-
-  assignAdvisorSubmit(){
-
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }

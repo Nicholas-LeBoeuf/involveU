@@ -14,7 +14,7 @@ export class LandingPageComponent implements OnInit {
   constructor(private userService: UserService,
               public cookie: CookieService) { }
 
-  imageArray = ["involveU-image1.jpg", "involveU-image2.jpg", "involveU-image3.jpg", "involveU-image4.jpg", "involveU-image5.jpg"];
+  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
 
   currentUser: User = {studentID: -1, firstName: '', lastName: ''};
 

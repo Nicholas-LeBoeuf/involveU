@@ -31,6 +31,8 @@ export class ClubPageComponent implements OnInit {
   failMessage: boolean = false;
   message!: string;
 
+  clubName: string;
+
   imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
   compareAllClubs: Club[] = [];
@@ -38,7 +40,11 @@ export class ClubPageComponent implements OnInit {
   favoritedClubs: Club[] = [];
   notFavoritedClubs: Club[] = [];
 
-  @ViewChild('ClubTable') clubTable: Table;
+  cols = [
+    { field: 'clubName', header: 'Club Name' }
+  ];
+
+  @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
   @ViewChild('ClubTable2') clubTable2: Table;
 
   ngOnInit(): void {
@@ -70,6 +76,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   showClubSearchDialog() {
+    console.log(this.allClubs);
     this.displayClubSearchModal = true;
   }
 
@@ -153,7 +160,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   onFilterTable(event: Event) {
-    this.clubTable.filterGlobal((event.target as HTMLInputElement).value, 'contains');  }
+    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
 
   onFilterTable2(event: Event) {
     this.clubTable2.filterGlobal((event.target as HTMLInputElement).value, 'contains');  }

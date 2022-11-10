@@ -78,21 +78,23 @@
   <div class="content" role="main">
     <div class="card">
       <h1 class="text-center clubSearchTitle">Search for Clubs</h1>
-      <p-table #ClubTable [columns]="allClubs" [lazy]="true" [value]="allClubs" responsiveLayout="scroll" [loading]="loading" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped" [globalFilterFields]="['allClubs']">
+      <p-table #dtNotLoggedIn [columns]="cols" [value]="allClubs" responsiveLayout="scroll" [loading]="loading" [scrollable]="true" scrollHeight="600px" styleClass="p-datatable-striped" [globalFilterFields]="['clubName']">
         <ng-template pTemplate="caption">
           <div style="text-align: right">
-            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-            <input class="searchField" pInputText type="text" placeholder="Search" (input)="onFilterTable($event)">
+            <ng-container *ngIf="allClubs">
+              <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+              <input pInputText type="text" (input)="onFilterTable($event)" placeholder="Global Search" />
+            </ng-container>
           </div>
         </ng-template>
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" let-columns>
           <tr>
-            <th style="justify-content: center">Club Name</th>
+            <th style="justify-content: center" *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-club>
+        <ng-template pTemplate="body" let-club let-columns="columns">
           <tr>
-            <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
+            <td style="justify-content: center" class="clubNameCell" *ngFor="let col of columns" (click)="goToClubPage(club.clubID)">{{club[col.field]}}</td>
           </tr>
         </ng-template>
       </p-table>

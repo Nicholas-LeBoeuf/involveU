@@ -1,5 +1,5 @@
 package com.example.involveU.model;
-import com.example.involveU.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,31 +13,27 @@ import java.util.Date;
 
 
 public class DBServices {
-
-    private UserRepository userRepo;
-
     private List<User> users;
     private List<EBoard> eboardMembers;
     private List<Events> events;
     private List<Club> clubs;
-    private Club foundClub;
     private String sql;
     private int validQuery;
     @Autowired
     private JdbcTemplate JdbcTemplated = new JdbcTemplate();
-    private DataSource JdbcDataSource;
+    private final DataSource JdbcDataSource;
     private static final String className = "com.mysql.cj.jdbc.Driver.";
     private static final String url = "jdbc:mysql://involveu.cl8bziw5fohm.us-east-1.rds.amazonaws.com:3306/involveU";
     private static final String username = "awsuser";
     private static final String password ="Remdog10$";
-    public DBServices()
+    protected DBServices()
    {
        //Creates Datasource object and call getDatasource function to populate connection string information
        JdbcDataSource = getDataSource();
        JdbcTemplated.setDataSource(JdbcDataSource);
    }
     //Creates DriverManagerDatasource to hold connection string information to then return to be set to DataSource class.
-    public static DriverManagerDataSource getDataSource() {
+    protected static DriverManagerDataSource getDataSource() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -48,21 +44,21 @@ public class DBServices {
 
         return dataSource;
     }
-    public List<User> getAllUsers()
+    protected List<User> getAllUsers()
     {
         sql = "SELECT * FROM User";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
         System.out.println(users);
         return users;
     }
-    public List<User> getDBSpecificUser(int userID)
+    protected List<User> getDBSpecificUser(int userID)
     {
         sql = "SELECT * FROM User WHERE StudentID = " + userID + ";";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users;
     }
-    public int insertDBNewUser(User newUser)
+    protected int insertDBNewUser(User newUser)
     {
 
 
@@ -77,7 +73,7 @@ public class DBServices {
         //Query executes and sends back an integer for error checking
         return validQuery;
     }
-    public int checkUserExistence(String userEmail)
+    protected int checkUserExistence(String userEmail)
     {
         sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
@@ -92,7 +88,7 @@ public class DBServices {
         }
 
     }
-    public Object DBcheckUserCredentials(String username, String password)
+    protected Object DBcheckUserCredentials(String username, String password)
     {
         sql = "SELECT * FROM User WHERE email = '" + username + "'";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
@@ -107,29 +103,20 @@ public class DBServices {
             return "error";
         }
     }
-
-//TO-DO: DELETE THESE FUNCTIONS
-//
-
-    public List<EBoard> getDBClubEboardMembers(int clubID) {
+    protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
         return eboardMembers;
-
-
     }
-
-
-    public List<Club> getAllDBClubs(){
-
+    protected List<Club> getAllDBClubs()
+    {
         sql = "SELECT * FROM Club";
         clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
 
         return clubs;
     }
-
-    public Club getSpecficClub(int clubID) {
-
+    protected Club getSpecficClub(int clubID)
+    {
         sql = "SELECT * FROM Club WHERE ClubID = " + clubID + ";";
 
         clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
@@ -142,9 +129,8 @@ public class DBServices {
         {
             return clubs.get(0);
         }
-
     }
-    public String insertNewClub(Club newClub)
+    protected String insertNewClub(Club newClub)
     {
         sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, clubAdvisor) Values (?,?,?,?,?,?,?,?,?);";
         validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getClubLogo(), newClub.getAdvisorID());
@@ -159,15 +145,14 @@ public class DBServices {
         }
 
     }
-
-    public List<Club> searchDBClub(String searchContent)
+    protected List<Club> searchDBClub(String searchContent)
     {
         sql = "SELECT * FROM Club WHERE Club.clubName LIKE '%" + searchContent +"%';";
         clubs = this.JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
 
         return clubs;
     }
-    public List<Map<String,Object>> getMostFavoriteClubs()
+    protected List<Map<String,Object>> getMostFavoriteClubs()
     {
         List<Map<String,Object>> results;
         sql = "select Favorites.ClubID,count(*) as Total from Favorites group by clubID;";
@@ -175,8 +160,8 @@ public class DBServices {
 
         return results;
     }
-    public String submitDBFavorite(int id, int clubID){
-
+    protected String submitDBFavorite(int id, int clubID)
+    {
         sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
         validQuery = JdbcTemplated.update(sql,String.valueOf(id),String.valueOf(clubID));
 
@@ -188,34 +173,25 @@ public class DBServices {
         {
             return "error";
         }
-
     }
-    public List<Club> getDBUserFavorites(int userID)
+    protected List<Club> getDBUserFavorites(int userID)
     {
         sql = "SELECT Club.clubID, Club.clubName, Club.clubAffiliation, Club.clubBio, Club.clubVision, Club.clubLogo, Club.clubAdvisor FROM Club INNER JOIN Favorites ON Club.ClubID = Favorites.ClubID AND Favorites.UserID = "+userID+";";
 
         clubs = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;
     }
-    public Boolean removeDBFavorite(int clubID, int userID)
+    protected Boolean removeDBFavorite(int clubID, int userID)
     {
         sql = "DELETE FROM Favorites WHERE userID = ? AND clubID = ? ;";
 
         validQuery = JdbcTemplated.update(sql,userID, clubID);
 
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
-
-
+        return validQuery == 1;
     }
-    public User getDBClubAdvisor(int clubID)
+    protected User getDBClubAdvisor(int clubID)
     {
-        sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on Club.clubID = " + clubID + "  AND User.studentID = clubAdvisor;";
+        sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on C.clubID = " + clubID + "  AND User.studentID = clubAdvisor;";
 
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
@@ -266,7 +242,6 @@ protected Boolean deleteDBUser(int userID) {
 
     if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
     {
-
         return true;
     }
     else
@@ -301,7 +276,6 @@ protected Boolean deleteAllFavorites(int userID)
     }
 }
 //EVENTS CONTROLLER
-
     protected List<Events> getDBTodaysEvents()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -39,7 +39,16 @@ public class EventController extends DBServices{
         events = getDBAllFutureEvents();
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-        
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getFavoriteClubEvents/{userID}")
+    private ResponseEntity<List<Events>> getFavoriteClubEvents(@PathVariable("userID") int userID)
+    {
+        events = getDBFavoriteClubEvents(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+
     }
 }
 

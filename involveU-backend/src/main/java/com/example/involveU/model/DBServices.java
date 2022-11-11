@@ -276,33 +276,41 @@ protected Boolean deleteAllFavorites(int userID)
     }
 }
 //EVENTS CONTROLLER
-    protected List<Events> getDBTodaysEvents()
-    {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String strDate = formatter.format(date);
+protected List<Events> getDBTodaysEvents()
+{
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+    String strDate = formatter.format(date);
 
-        sql = "SELECT * FROM Events WHERE  eventDate = '" + strDate +"';";
-        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+    sql = "SELECT * FROM Events WHERE  eventDate = '" + strDate +"' ORDER BY startTime;";
+    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
-        return events;
-    }
-    protected  List<Events> getDBClubEvents(int clubID)
-    {
-        sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
+    return events;
+}
+protected  List<Events> getDBClubEvents(int clubID)
+{
+    sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
 
-        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
-        return events;
-    }
+    return events;
+}
 
-    protected List<Events> getDBAllFutureEvents()
-    {
-        sql = "SELECT * FROM Events WHERE eventDate >= NOW();";
-        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+protected List<Events> getDBAllFutureEvents()
+{
+    sql = "SELECT * FROM Events WHERE eventDate >= NOW();";
+    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
-        return events;
-    }
+    return events;
+}
+protected  List<Events> getDBFavoriteClubEvents(int userID)
+{
+    sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID  from Events JOIN Favorites ON Events.clubID = Favorites.clubID AND Favorites.userID =" + userID + ";";
+
+    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+    return  events;
+}
 
 
 

@@ -32,7 +32,15 @@ public class EventController extends DBServices{
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getFutureEvents")
+    private ResponseEntity<List<Events>> getFutureEvents()
+    {
+        events = getDBAllFutureEvents();
 
+        return new ResponseEntity<>(events, HttpStatus.OK);
+        
+    }
 }
 
 

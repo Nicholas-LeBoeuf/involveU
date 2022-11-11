@@ -296,6 +296,15 @@ protected Boolean deleteAllFavorites(int userID)
         return events;
     }
 
+    protected List<Events> getDBAllFutureEvents()
+    {
+        sql = "SELECT * FROM Events WHERE eventDate >= NOW();";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
+
 
 
 

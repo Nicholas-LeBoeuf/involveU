@@ -289,7 +289,7 @@ public class DBServices {
     }
     protected  List<Events> getDBClubEvents(int clubID)
     {
-        sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
+        sql = "SELECT * FROM Events WHERE clubID = " + clubID + " ORDER BY eventDate, startTime ASC ;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 

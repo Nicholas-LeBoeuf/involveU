@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class EventController extends DBServices{
     List<Events> events;
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("events/getTodaysEvents/")
+    @GetMapping("events/getTodaysEvents")
     private ResponseEntity<List<Events>> getTodaysEvents()
     {
        events = getDBTodaysEvents();

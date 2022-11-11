@@ -26,7 +26,7 @@ public class DBServices {
     private static final String url = "jdbc:mysql://involveu.cl8bziw5fohm.us-east-1.rds.amazonaws.com:3306/involveU";
     private static final String username = "awsuser";
     private static final String password ="Remdog10$";
-    protected DBServices()
+    public DBServices()
    {
        //Creates Datasource object and call getDatasource function to populate connection string information
        JdbcDataSource = getDataSource();

@@ -28,5 +28,23 @@
   <div class="todaysEventsHeader">
     <h1>What’s Going On Today at Southern New Hampshire University</h1>
   </div>
+  <div class="todaysEventsContainer">
+    <p-carousel styleClass="eventsCaro" [value]="todaysEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+      <ng-template let-event pTemplate="item">
+        <div class="clubCard">
+          <div class="clubContent">
+            <div>
+              <h3 class="p-mb-1">{{event.eventName}}</h3>
+              <hr>
+              <p>Date: {{event.eventDate}}</p>
+              <p>Time: {{event.startTime}} - {{event.endTime}}</p>
+              <p>Location: {{event.eventLocation}}</p>
+              <p>Hosted by: {{event.clubID}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
 
 </div>

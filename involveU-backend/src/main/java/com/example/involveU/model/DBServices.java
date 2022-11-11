@@ -219,103 +219,96 @@ public class DBServices {
             return false;
         }
     }
-protected Boolean addDBEboardMember(int userId, int clubID, String position)
-{
-    sql = "INSERT INTO Eboard (clubID, studentID,eboardPosition ) VALUES (?,?,?);";
-
-    validQuery = JdbcTemplated.update(sql,clubID,userId,position);
-
-    if(validQuery == 1)
+    protected Boolean addDBEboardMember(int userId, int clubID, String position)
     {
-        return true;
+        sql = "INSERT INTO Eboard (clubID, studentID,eboardPosition ) VALUES (?,?,?);";
+
+        validQuery = JdbcTemplated.update(sql,clubID,userId,position);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-    else
+
+    protected Boolean deleteDBUser(int userID) {
+        sql = "DELETE FROM User WHERE studentID = ?;";
+
+        validQuery = JdbcTemplated.update(sql,userID);
+
+        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    protected Boolean deleteDBEboardMember(int userID)
     {
-        return false;
+        sql = "DELETE FROM Eboard WHERE studentID = ?";
+        validQuery = JdbcTemplated.update(sql,userID);
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-}
-
-protected Boolean deleteDBUser(int userID) {
-    sql = "DELETE FROM User WHERE studentID = ?;";
-
-    validQuery = JdbcTemplated.update(sql,userID);
-
-    if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
+    protected Boolean deleteAllFavorites(int userID)
     {
-        return true;
+        sql = "DELETE FROM Favorites WHERE userID = ?";
+        validQuery = JdbcTemplated.update(sql,userID);
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-    else
+    //EVENTS CONTROLLER
+    protected List<Events> getDBTodaysEvents()
     {
-        return false;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String strDate = formatter.format(date);
+
+        sql = "SELECT * FROM Events WHERE  eventDate = '" + strDate +"' ORDER BY startTime ASC ;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
     }
-}
-protected Boolean deleteDBEboardMember(int userID)
-{
-    sql = "DELETE FROM Eboard WHERE studentID = ?";
-    validQuery = JdbcTemplated.update(sql,userID);
-    if(validQuery == 1)
+    protected  List<Events> getDBClubEvents(int clubID)
     {
-        return true;
+        sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
     }
-    else
+
+    protected List<Events> getDBAllFutureEvents()
     {
-        return false;
+        sql = "SELECT * FROM Events WHERE eventDate >= NOW() ORDER BY eventDate ,startTime ASC;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
     }
-}
-protected Boolean deleteAllFavorites(int userID)
-{
-    sql = "DELETE FROM Favorites WHERE userID = ?";
-    validQuery = JdbcTemplated.update(sql,userID);
-    if(validQuery == 1)
+    protected  List<Events> getDBFavoriteClubEvents(int userID)
     {
-        return true;
+        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID  from Events JOIN Favorites ON Events.clubID = Favorites.clubID AND Favorites.userID =" + userID + " ORDER BY eventDate ,startTime ASC;";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return  events;
     }
-    else
-    {
-        return false;
-    }
-}
-//EVENTS CONTROLLER
-protected List<Events> getDBTodaysEvents()
-{
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = new Date();
-    String strDate = formatter.format(date);
-
-    sql = "SELECT * FROM Events WHERE  eventDate = '" + strDate +"' ORDER BY startTime;";
-    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
-    return events;
-}
-protected  List<Events> getDBClubEvents(int clubID)
-{
-    sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
-
-    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
-    return events;
-}
-
-protected List<Events> getDBAllFutureEvents()
-{
-    sql = "SELECT * FROM Events WHERE eventDate >= NOW();";
-    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
-    return events;
-}
-protected  List<Events> getDBFavoriteClubEvents(int userID)
-{
-    sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID  from Events JOIN Favorites ON Events.clubID = Favorites.clubID AND Favorites.userID =" + userID + ";";
-
-    events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
-    return  events;
-}
-
-
-
-
-
-
-
 }

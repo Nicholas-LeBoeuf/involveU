@@ -298,7 +298,7 @@ public class DBServices {
 
     protected List<Events> getDBAllFutureEvents()
     {
-        sql = "SELECT * FROM Events WHERE eventDate >= NOW() ORDER BY eventDate ,startTime ASC;";
+        sql = "SELECT * FROM Events WHERE eventDate >= DATE(NOW()) ORDER BY eventDate ,startTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;

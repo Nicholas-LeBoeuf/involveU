@@ -15,4 +15,8 @@ export class EventsService {
   getTodaysEvents(): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTodaysEvents`);
   }
+
+  getFavoritedClubsEvents(userID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getFavoriteClubEvents/${userID}`)
+  }
 }

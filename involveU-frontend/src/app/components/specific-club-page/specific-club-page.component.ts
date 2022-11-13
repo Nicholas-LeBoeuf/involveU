@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ClubService} from "../../services/club.service";
 import {Club} from "../../objects/club";
 import {CookieService} from "ngx-cookie-service";
+import {Events} from "../../objects/events";
+import {EventsService} from "../../services/events.service";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -12,6 +14,7 @@ import {CookieService} from "ngx-cookie-service";
 export class SpecificClubPageComponent implements OnInit {
 
   constructor(private clubService: ClubService,
+              private eventsService: EventsService,
               private route: ActivatedRoute,
               private router: Router,
               public cookie: CookieService) { }
@@ -27,6 +30,8 @@ export class SpecificClubPageComponent implements OnInit {
   failMessage: boolean = false;
   message!: string;
 
+  clubEvents: Events[] = [];
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.clubID = params['id'];
@@ -36,6 +41,7 @@ export class SpecificClubPageComponent implements OnInit {
 
     this.getClubInfo();
     this.getUsersFavoritedClubs();
+    this.getClubEvents();
   }
 
   getClubInfo() {
@@ -76,4 +82,11 @@ export class SpecificClubPageComponent implements OnInit {
       }
     }
   }
+
+  getClubEvents() {
+    this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
+      this.clubEvents = response;
+    })
+  }
+
 }

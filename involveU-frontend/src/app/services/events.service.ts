@@ -23,4 +23,8 @@ export class EventsService {
   getAllFutureEvents(): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getFutureEvents`);
   }
+
+  getSpecificClubEvents(clubID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getClubEvents/${clubID}`);
+  }
 }

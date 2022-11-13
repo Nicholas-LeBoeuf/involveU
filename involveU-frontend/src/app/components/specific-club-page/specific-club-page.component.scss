@@ -35,7 +35,7 @@
 }
 
 .clubLogoSection:hover {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 .clubBioSection {
@@ -176,4 +176,66 @@ hr {
   border-radius: 10px;
   top: 35px;
   position: sticky;
+}
+
+.clubContent {
+  background-color: #AECDE6;
+  border-radius: 5px;
+  margin: 0.6rem;
+  text-align: center;
+  padding-top: 20px;
+  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.clubContent h3 {
+  font-weight: bold;
+}
+
+::ng-deep .p-carousel.eventsCaro {
+  overflow-x: hidden !important;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+  margin-bottom: 20px;
+}
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
+  margin-bottom: 20px;
+}
+.div3 { grid-area: 2 / 1 / 3 / 2; }
+.div4 { grid-area: 2 / 2 / 3 / 3; }
+.div5 { grid-area: 3 / 1 / 4 / 3; }
+
+.eventData {
+  font-weight: bolder !important;
+}
+
+.eventDataTitle {
+  font-weight: 400 !important;
+}
+
+.clubEventsBackground {
+  border-radius: 10px;
+  margin: 1%;
+  background-color: #5c93cb;
+  grid-row-start: 3;
+  grid-column-start: 1;
+
+  grid-row-end: 4;
+  grid-column-end: 5;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.clubEventsBackground:hover {
+  transform: scale(1.01 );
 }

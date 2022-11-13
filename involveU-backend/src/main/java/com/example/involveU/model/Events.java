@@ -24,6 +24,8 @@ public class Events{
 
     private  String ticketLink;
 
+    private String clubName;
+
     private  int clubID;
     public long getEventID() {
         return eventID;
@@ -64,6 +66,10 @@ public class Events{
     public String getTicketLink() {return ticketLink;}
 
     public void setTicketLink(String ticketLink) {this.ticketLink = ticketLink;}
+
+    public String getClubName() {return clubName;}
+
+    public void setClubName(String clubName) {this.clubName = clubName;}
 
     public int getClubID() {return clubID;}
 

@@ -45,28 +45,86 @@
     </div>
   </div>
   <div id="favoritedClubs">
-    <h1 class="text-center">Favorited Clubs</h1>
-    <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-      <ng-template let-favClubs pTemplate="item">
+    <ng-container *ngIf="this.isLoggedIn;else featuredClubsView">
+      <h1 class="text-center">Favorited Clubs</h1>
+      <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+        <ng-template let-favClubs pTemplate="item">
+          <div class="clubCard">
+            <div class="clubContent">
+              <div>
+                <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
+                <hr>
+              </div>
+              <div class="logoMargin">
+                <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
+              </div>
+              <div>
+                <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
+                <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </ng-container>
+    <ng-template #featuredClubsView>
+      <h1 class="text-center">Featured Clubs</h1>
+      <p-carousel [value]="featuredClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+        <ng-template let-featClubs pTemplate="item">
+          <div class="clubCard">
+            <div class="clubContent">
+              <div>
+                <h3 class="p-mb-1">{{featClubs.clubName}}</h3>
+                <hr>
+              </div>
+              <div class="logoMargin">
+                <img class="clubLogo" src="assets/{{featClubs.clubLogo}}">
+              </div>
+              <div>
+                <button class="blueButton" (click)="goToClubPage(featClubs.clubID)">Go To Club</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </ng-template>
+  </div>
+  <div id="favoritedEvents">
+    <h1 class="text-center">Your Favorited Clubs Events</h1>
+    <p-carousel styleClass="eventsCaro" [value]="favoritedClubsEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+      <ng-template let-event pTemplate="item">
         <div class="clubCard">
           <div class="clubContent">
             <div>
-              <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
+              <h3 class="p-mb-1">{{event.eventName}}</h3>
               <hr>
-            </div>
-            <div class="logoMargin">
-              <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
-            </div>
-            <div>
-              <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
-              <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+              <div class="parent">
+                <div class="div1">
+                  <h3 class="eventDataTitle">Date</h3>
+                  <h5 class="eventData">{{event.eventDate}}</h5>
+                </div>
+                <div class="div2">
+                  <h3 class="eventDataTitle">Time</h3>
+                  <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                </div>
+                <div class="div3">
+                  <h3 class="eventDataTitle">Location</h3>
+                  <h5 class="eventData">{{event.eventLocation}}</h5>
+                </div>
+                <div class="div4">
+                  <h3 class="eventDataTitle">Hosted By</h3>
+                  <h5 class="eventData">{{event.clubID}}</h5>
+                </div>
+                <div class="div5">
+                  <button class="blueButton">View More Information</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </ng-template>
     </p-carousel>
   </div>
-  <div id="item-3">&nbsp;</div>
   <div id="item-4">&nbsp;</div>
 </div>
 

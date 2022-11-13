@@ -311,4 +311,16 @@ public class DBServices {
 
         return  events;
     }
+
+    protected boolean insertRsvpEvent(int eventID, int userID)
+    {
+        sql = "SELECT * FROM RSVP WHERE studentID = " + userID + ";";
+
+
+        sql = "INSERT INTO RSVP (studentID, eventID) VALUES (?,?);";
+        validQuery = JdbcTemplated.update(sql, userID, eventID);
+
+        return validQuery == 1;
+    }
+
 }

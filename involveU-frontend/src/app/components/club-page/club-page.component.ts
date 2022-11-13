@@ -45,7 +45,7 @@ export class ClubPageComponent implements OnInit {
   featuredClubs: Club[] = [];
 
   favoritedClubsEvents: Events[] = [];
-
+  allFutureEvents: Events[] = [];
 
   cols = [
     { field: 'clubName', header: 'Club Name' }
@@ -63,6 +63,7 @@ export class ClubPageComponent implements OnInit {
     this.getClubsThatArentFavorited();
     this.getFavoritedClubEvents();
     this.getAllClubsForFeatured();
+    this.getAllFutureEvents();
     this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
@@ -185,6 +186,12 @@ export class ClubPageComponent implements OnInit {
     this.clubService.getAllClubs().subscribe(response => {
       response.sort(() => Math.random() - 0.5);
       this.featuredClubs = response;
+    })
+  }
+
+  getAllFutureEvents() {
+    this.eventService.getAllFutureEvents().subscribe(response => {
+      this.allFutureEvents = response;
     })
   }
 }

@@ -50,12 +50,14 @@ public class EventController extends DBServices{
         return new ResponseEntity<>(events, HttpStatus.OK);
 
     }
-
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/rsvpEvent/{eventID}/{userID}")
     private ResponseEntity<String> rsvpEvnt(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID)
     {
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        if(insertRsvpEvent(eventID, userID))
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
     }
 }
 

@@ -9,7 +9,7 @@ public class RSVP {
 
     public void setStudentID(int studentID) {this.studentID = studentID;}
 
-    public int getEventID() {return eventID;}z
+    public int getEventID() {return eventID;}
 
     public void setEventID(int eventID) {this.eventID = eventID;}
 

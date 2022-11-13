@@ -17,6 +17,7 @@ public class DBServices {
     private List<EBoard> eboardMembers;
     private List<Events> events;
     private List<Club> clubs;
+    private List<RSVP> rsvps;
     private String sql;
     private int validQuery;
     @Autowired
@@ -314,11 +315,23 @@ public class DBServices {
 
     protected boolean insertRsvpEvent(int eventID, int userID)
     {
+        //setting validQuery to 1 ensures that it won't accidentally be set to 0 on last use.
+        validQuery = 1;
         sql = "SELECT * FROM RSVP WHERE studentID = " + userID + ";";
+        rsvps = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(RSVP.class));
 
+        //Checks if the event requested to be added is already in the database
+        for(RSVP rsvp : rsvps) {
+            if (eventID == rsvp.getEventID() && userID == rsvp.getStudentID()) {
+                validQuery = 0;
+                break;
+            }
+        }
+        if(validQuery == 1) {
 
-        sql = "INSERT INTO RSVP (studentID, eventID) VALUES (?,?);";
-        validQuery = JdbcTemplated.update(sql, userID, eventID);
+            sql = "INSERT INTO RSVP (studentID, eventID) VALUES (?,?);";
+            validQuery = JdbcTemplated.update(sql, userID, eventID);
+        }
 
         return validQuery == 1;
     }

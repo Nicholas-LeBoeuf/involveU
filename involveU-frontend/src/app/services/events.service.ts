@@ -15,4 +15,16 @@ export class EventsService {
   getTodaysEvents(): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTodaysEvents`);
   }
+
+  getFavoritedClubsEvents(userID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getFavoriteClubEvents/${userID}`);
+  }
+
+  getAllFutureEvents(): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getFutureEvents`);
+  }
+
+  getSpecificClubEvents(clubID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getClubEvents/${clubID}`);
+  }
 }

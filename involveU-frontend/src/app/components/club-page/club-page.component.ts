@@ -6,6 +6,8 @@ import {CookieService} from "ngx-cookie-service";
 import {ButtonModule} from "primeng/button";
 import {LazyLoadEvent} from "primeng/api";
 import {Table} from "primeng/table";
+import {Events} from "../../objects/events";
+import {EventsService} from "../../services/events.service";
 
 @Component({
   selector: 'app-club-page',
@@ -15,6 +17,7 @@ import {Table} from "primeng/table";
 export class ClubPageComponent implements OnInit {
 
   constructor(private clubService: ClubService,
+              private eventService: EventsService,
               private router: Router,
               public cookie: CookieService) { }
 
@@ -23,7 +26,7 @@ export class ClubPageComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   timeout: boolean = false;
-  userID: number = -1;
+  userID: number;
 
   loading: boolean = true;
 
@@ -39,6 +42,10 @@ export class ClubPageComponent implements OnInit {
   topClubs: Club[] = [];
   favoritedClubs: Club[] = [];
   notFavoritedClubs: Club[] = [];
+  featuredClubs: Club[] = [];
+
+  favoritedClubsEvents: Events[] = [];
+  allFutureEvents: Events[] = [];
 
   cols = [
     { field: 'clubName', header: 'Club Name' }
@@ -49,10 +56,14 @@ export class ClubPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')
+    this.isUserLoggedIn();
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
     this.getClubsThatArentFavorited();
+    this.getFavoritedClubEvents();
+    this.getAllClubsForFeatured();
+    this.getAllFutureEvents();
     this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
@@ -64,20 +75,23 @@ export class ClubPageComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(): void {
+  }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
+  }
+
   checkLogin() {
-    if (this.userID !== 0) {
-      this.isLoggedIn = true;
+    if (this.isLoggedIn) {
       this.showClubSearchLoggedInDialog();
     }
     else {
       this.showClubSearchDialog();
     }
-    console.log(this.userID);
-    console.log(this.isLoggedIn);
   }
 
   showClubSearchDialog() {
-    console.log(this.allClubs);
     this.displayClubSearchModal = true;
   }
 
@@ -86,7 +100,6 @@ export class ClubPageComponent implements OnInit {
   }
 
   showClubSearchLoggedInDialog() {
-    console.log(this.notFavoritedClubs);
     this.displayClubSearchLoggedInModal = true;
   }
 
@@ -156,8 +169,29 @@ export class ClubPageComponent implements OnInit {
   }
 
   onFilterNotLoggedInTable(event: Event) {
-    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
+    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
 
   onFilterLoggedInTable(event: Event) {
-    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');  }
+    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
+
+  getFavoritedClubEvents() {
+    this.eventService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+      this.favoritedClubsEvents = response;
+    })
+  }
+
+  getAllClubsForFeatured() {
+    this.clubService.getAllClubs().subscribe(response => {
+      response.sort(() => Math.random() - 0.5);
+      this.featuredClubs = response;
+    })
+  }
+
+  getAllFutureEvents() {
+    this.eventService.getAllFutureEvents().subscribe(response => {
+      this.allFutureEvents = response;
+    })
+  }
 }

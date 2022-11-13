@@ -36,10 +36,27 @@
             <div>
               <h3 class="p-mb-1">{{event.eventName}}</h3>
               <hr>
-              <p>Date: {{event.eventDate}}</p>
-              <p>Time: {{event.startTime}} - {{event.endTime}}</p>
-              <p>Location: {{event.eventLocation}}</p>
-              <p>Hosted by: {{event.clubID}}</p>
+              <div class="parent">
+                <div class="div1">
+                  <h3 class="eventDataTitle">Date</h3>
+                  <h5 class="eventData">{{event.eventDate}}</h5>
+                </div>
+                <div class="div2">
+                  <h3 class="eventDataTitle">Time</h3>
+                  <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                </div>
+                <div class="div3">
+                  <h3 class="eventDataTitle">Location</h3>
+                  <h5 class="eventData">{{event.eventLocation}}</h5>
+                </div>
+                <div class="div4">
+                  <h3 class="eventDataTitle">Hosted By</h3>
+                  <h5 class="eventData">{{event.clubID}}</h5>
+                </div>
+                <div class="div5">
+                  <button class="blueButton">View More Information</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

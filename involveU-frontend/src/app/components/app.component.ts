@@ -86,7 +86,7 @@ export class AppComponent {
     {
       label: 'Create Clubs',
       command: (router: Router) => {
-        this.router.navigateByUrl('/createClub').then(nav => {
+        this.router.navigateByUrl('admin/createClub').then(nav => {
           console.log(nav); // true if navigation is successful
         }, err => {
           console.log(err) // when there's an error
@@ -99,7 +99,7 @@ export class AppComponent {
     {
       label: 'Assign/Remove Advisors',
       command: (router: Router) => {
-        this.router.navigateByUrl('/assignRemoveAdvisor').then(nav => {
+        this.router.navigateByUrl('admin/assignRemoveAdvisor').then(nav => {
           console.log(nav); // true if navigation is successful
         }, err => {
           console.log(err) // when there's an error
@@ -109,7 +109,7 @@ export class AppComponent {
     {
       label: 'Assign/Remove EBoard',
       command: (router: Router) => {
-        this.router.navigateByUrl('/addRemoveEBoard').then(nav => {
+        this.router.navigateByUrl('admin/addRemoveEBoard').then(nav => {
           console.log(nav); // true if navigation is successful
         }, err => {
           console.log(err) // when there's an error

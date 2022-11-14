@@ -1,4 +1,6 @@
+import {Club} from "./club";
+
 export interface AssignRemoveAdvisor {
-  clubName: string;
+  club: Club;
   advisorID: number;
 }

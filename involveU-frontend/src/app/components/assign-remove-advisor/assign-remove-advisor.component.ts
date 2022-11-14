@@ -5,6 +5,9 @@ import {AdminService} from "../../services/admin.service";
 import {DropdownModule} from 'primeng/dropdown';
 import {Club} from "../../objects/club";
 import {ClubService} from "../../services/club.service";
+import {Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-assign-remove-advisor',
@@ -15,16 +18,20 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   // @ts-ignore
   removeAdvisorForm : FormGroup;
   assignAdvisorForm : FormGroup;
+  clubNames: Club[] = [];
+  selectedClubName: Club;
   // @ts-ignore
   constructor(private formBuilder : FormBuilder,
               private adminService: AdminService,
               private clubService: ClubService) {
     this.assignAdvisorForm = this.formBuilder.group({
       clubName: ['', Validators.required],
-      advisorID: ['', Validators.required]
+      advisorID: ['', Validators.required],
+      clubNames: ['', Validators.required]
     });
 
   }
+
   // @ts-ignore
   constructor(private formBuilder : FormBuilder) {
     this.removeAdvisorForm = this.formBuilder.group({
@@ -32,6 +39,21 @@ export class AssignRemoveAdvisorComponent implements OnInit {
       advisorID: ['', Validators.required]
     });
 
+  }
+  // @ts-ignore
+  constructor(private http: HttpClient ) { }
+
+  ngOnInit(): void {
+    this.fillClubList();
+  }
+
+  fillClubList() {
+    this.clubService.getAllClubs().subscribe((response: Club[]) => {
+        this.clubNames = response;
+      },
+      (error) => {
+        console.log(error)
+      });
   }
 
   get assignAdvisorFormInputs() {
@@ -43,7 +65,7 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   }
 
   assignAdvisorSubmit(){
-    const assignAdvisor : AssignRemoveAdvisor = {clubName: this.assignAdvisorForm.value.clubName, advisorID: this.assignAdvisorForm.value.advisorID}
+    const assignAdvisor : AssignRemoveAdvisor = {club: this.assignAdvisorForm.value.selectedClubName, advisorID: this.assignAdvisorForm.value.advisorID}
     console.log(assignAdvisor);
     this.adminService.assignNewAdvisor(assignAdvisor).subscribe(success =>{
         console.log(success);
@@ -54,7 +76,7 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   }
 
   removeAdvisorSubmit(){
-    const removeAdvisor : AssignRemoveAdvisor = {clubName: this.assignAdvisorForm.value.clubName, advisorID: this.assignAdvisorForm.value.advisorID}
+    const removeAdvisor : AssignRemoveAdvisor = {club: this.assignAdvisorForm.value.selectedClubName, advisorID: this.assignAdvisorForm.value.advisorID}
     console.log(removeAdvisor);
     this.adminService.removeAdvisor(removeAdvisor).subscribe(success =>{
         console.log(success);
@@ -62,12 +84,5 @@ export class AssignRemoveAdvisorComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-  }
-
-  clubNames = [
-    {name : 'CAPE'}
-  ]
-
-  ngOnInit(): void {
   }
 }

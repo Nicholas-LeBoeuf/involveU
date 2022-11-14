@@ -1,4 +1,4 @@
 export interface AssignRemoveAdvisor {
-  clubID?: number;
+  clubName: string;
   advisorID: number;
 }

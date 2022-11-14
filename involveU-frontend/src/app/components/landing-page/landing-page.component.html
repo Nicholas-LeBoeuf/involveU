@@ -55,6 +55,9 @@
                 </div>
                 <div class="div5">
                   <button class="blueButton">View More Information</button>
+                  <ng-container *ngIf="userID !== 0">
+                    <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                  </ng-container>
                 </div>
               </div>
             </div>

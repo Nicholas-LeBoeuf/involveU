@@ -17,7 +17,7 @@ import {EventsService} from "../../services/events.service";
 export class ClubPageComponent implements OnInit {
 
   constructor(private clubService: ClubService,
-              private eventService: EventsService,
+              private eventsService: EventsService,
               private router: Router,
               public cookie: CookieService) { }
 
@@ -177,7 +177,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   getFavoritedClubEvents() {
-    this.eventService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+    this.eventsService.getFavoritedClubsEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
     })
   }
@@ -190,8 +190,14 @@ export class ClubPageComponent implements OnInit {
   }
 
   getAllFutureEvents() {
-    this.eventService.getAllFutureEvents().subscribe(response => {
+    this.eventsService.getAllFutureEvents().subscribe(response => {
       this.allFutureEvents = response;
+    })
+  }
+
+  eventRSVP(eventID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+      console.log(response);
     })
   }
 }

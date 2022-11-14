@@ -335,5 +335,13 @@ public class DBServices {
 
         return validQuery == 1;
     }
+    protected boolean removeDBRsvp(int userID, int eventID)
+    {
+        sql = "DELETE FROM RSVP WHERE studentID = ? AND eventID = ?;";
+        validQuery = JdbcTemplated.update(sql, userID, eventID);
+
+        return validQuery == 1;
+    }
+
 
 }

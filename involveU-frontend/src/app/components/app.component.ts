@@ -90,7 +90,7 @@ export class AppComponent {
           console.log(nav); // true if navigation is successful
         }, err => {
           console.log(err) // when there's an error
-        });;
+        });
       }
     },
     {

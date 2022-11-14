@@ -6,6 +6,8 @@ import {CookieService} from "ngx-cookie-service";
 import {ButtonModule} from "primeng/button";
 import {LazyLoadEvent} from "primeng/api";
 import {Table} from "primeng/table";
+import {Events} from "../../objects/events";
+import {EventsService} from "../../services/events.service";
 
 @Component({
   selector: 'app-club-page',
@@ -15,6 +17,7 @@ import {Table} from "primeng/table";
 export class ClubPageComponent implements OnInit {
 
   constructor(private clubService: ClubService,
+              private eventService: EventsService,
               private router: Router,
               public cookie: CookieService) { }
 
@@ -23,13 +26,15 @@ export class ClubPageComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   timeout: boolean = false;
-  userID: number = -1;
+  userID: number;
 
-  loading!: boolean;
+  loading: boolean = true;
 
   successMessage: boolean = false;
   failMessage: boolean = false;
   message!: string;
+
+  clubName: string;
 
   imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
@@ -37,13 +42,29 @@ export class ClubPageComponent implements OnInit {
   topClubs: Club[] = [];
   favoritedClubs: Club[] = [];
   notFavoritedClubs: Club[] = [];
+  featuredClubs: Club[] = [];
+
+  favoritedClubsEvents: Events[] = [];
+  allFutureEvents: Events[] = [];
+
+  cols = [
+    { field: 'clubName', header: 'Club Name' }
+  ];
+
+  @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
+  @ViewChild('dtLoggedIn') dtLoggedIn: Table;
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID')
+    this.isUserLoggedIn();
     this.fillClubList();
     this.getTopClubs();
     this.getUsersFavoritedClubs();
-    this.loading = true;
+    this.getClubsThatArentFavorited();
+    this.getFavoritedClubEvents();
+    this.getAllClubsForFeatured();
+    this.getAllFutureEvents();
+    this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
       localStorage.setItem('isReloaded', 'no reload')
@@ -54,16 +75,20 @@ export class ClubPageComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(): void {
+  }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
+  }
+
   checkLogin() {
-    if (this.userID !== 0) {
-      this.isLoggedIn = true;
-      this.getClubsThatArentFavorited();
+    if (this.isLoggedIn) {
+      this.showClubSearchLoggedInDialog();
     }
     else {
       this.showClubSearchDialog();
     }
-    console.log(this.userID);
-    console.log(this.isLoggedIn);
   }
 
   showClubSearchDialog() {
@@ -105,12 +130,6 @@ export class ClubPageComponent implements OnInit {
 
       })
     }, 1000);
-
-
-    this.showClubSearchLoggedInDialog();
-
-    console.log(this.notFavoritedClubs)
-    console.log(this.compareAllClubs);
   }
 
   getTopClubs() {
@@ -147,5 +166,32 @@ export class ClubPageComponent implements OnInit {
 
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
+  }
+
+  onFilterNotLoggedInTable(event: Event) {
+    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
+
+  onFilterLoggedInTable(event: Event) {
+    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
+
+  getFavoritedClubEvents() {
+    this.eventService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+      this.favoritedClubsEvents = response;
+    })
+  }
+
+  getAllClubsForFeatured() {
+    this.clubService.getAllClubs().subscribe(response => {
+      response.sort(() => Math.random() - 0.5);
+      this.featuredClubs = response;
+    })
+  }
+
+  getAllFutureEvents() {
+    this.eventService.getAllFutureEvents().subscribe(response => {
+      this.allFutureEvents = response;
+    })
   }
 }

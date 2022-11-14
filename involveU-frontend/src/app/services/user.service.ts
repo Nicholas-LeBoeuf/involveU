@@ -11,10 +11,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<User[]>{
-    return this.http.get<User[]>(environment.apiURL + `user/test`);
-  }
-
   checkLoginCredentials(username?: string, password?: string): Observable<User> {
     return this.http.get<User>(environment.apiURL + `user/checkCredentials/${username}/${password}`);
   }

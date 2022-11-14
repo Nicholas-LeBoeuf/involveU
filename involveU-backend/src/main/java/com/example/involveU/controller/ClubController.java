@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.involveU.model.Club;
 import com.example.involveU.model.DBServices;
+import com.example.involveU.model.EBoard;
 import com.example.involveU.model.User;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class ClubController extends DBServices{
   private List<Club>  clubs;
+  private List<EBoard> EboardList;
   private Club currentClub;
   private String repsonse;
 
@@ -136,16 +138,20 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
      tempUser = getDBClubAdvisor(clubID);
      return new ResponseEntity<>(tempUser, HttpStatus.OK);
 }
+ @CrossOrigin(origins = "http://localhost:4200")
+ @GetMapping("/club/getNonFavoritedClubs/{userID}")
+ private ResponseEntity<List<Club>> getNonFavoritedClubs(@PathVariable("userID") int userID)
+ {
+
+     return new ResponseEntity<>(clubs, HttpStatus.OK);
+ }
      @CrossOrigin(origins = "http://localhost:4200")
-     @GetMapping("/club/getNonFavoritedClubs/{userID}")
-     private ResponseEntity<List<Club>> getNonFavoritedClubs(@PathVariable("userID") int userID)
+     @GetMapping("/club/getClubsEboard/{clubID}")
+     private ResponseEntity<List<EBoard>> getClubEbaord(@PathVariable("clubID") int clubID)
      {
-
-         return new ResponseEntity<>(clubs, HttpStatus.OK);
+         EboardList = getDBClubEboardMembers(clubID);
+         return new ResponseEntity<>(EboardList,HttpStatus.OK);
      }
-
-
-
 }
 
 

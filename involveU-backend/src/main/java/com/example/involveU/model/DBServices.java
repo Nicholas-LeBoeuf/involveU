@@ -351,6 +351,13 @@ public class DBServices {
 
         return events;
     }
+    protected List<Events> getAllClubRsvp(int clubID)
+    {
+        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
 
 
 }

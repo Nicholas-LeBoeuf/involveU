@@ -74,6 +74,14 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getClubRsvpEvent/{clubID}")
+    private  ResponseEntity<List<Events>> getClubRsvpEvents(@PathVariable("clubID") int clubID)
+    {
+        events = getAllClubRsvp(clubID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
 
 
 }

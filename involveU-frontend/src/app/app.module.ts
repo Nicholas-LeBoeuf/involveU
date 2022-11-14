@@ -21,6 +21,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import { AssignRemoveAdvisorComponent } from './components/assign-remove-advisor/assign-remove-advisor.component';
 import { AddRemoveEboardComponent } from './components/add-remove-eboard/add-remove-eboard.component';
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AddRemoveEboardComponent } from './components/add-remove-eboard/add-rem
         RippleModule,
         TableModule,
         InputTextModule,
-        ContextMenuModule
+        ContextMenuModule,
+        DropdownModule
     ],
   providers: [
     CookieService

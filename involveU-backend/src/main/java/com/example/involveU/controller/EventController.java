@@ -66,6 +66,15 @@ public class EventController extends DBServices{
         removeDBRsvp(userID,eventID);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getUserRsvpEvent/{userID}")
+    private  ResponseEntity<List<Events>> getUserRsvpEvents(@PathVariable("userID") int userID)
+    {
+        events = getAllUserRsvp(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
 
 }
 

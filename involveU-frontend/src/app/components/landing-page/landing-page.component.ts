@@ -20,10 +20,11 @@ export class LandingPageComponent implements OnInit {
   imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
 
   currentUser: User;
-
+  userID: number;
   todaysEvents: Events[];
 
   ngOnInit(): void {
+    this.userID = +this.cookie.get('studentID')
     this.fillUserInfo();
     this.fillTodaysEvents();
   }
@@ -40,6 +41,12 @@ export class LandingPageComponent implements OnInit {
   fillTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
+    })
+  }
+
+  eventRSVP(eventID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+      console.log(response);
     })
   }
 }

@@ -28,7 +28,6 @@ public class UserController extends DBServices{
 	@GetMapping("user/{id}")
 	public List<User> getSpecificUser(@PathVariable("id") int id )
 	{
-
 		foundUser = getDBSpecificUser(id);
 
 		return foundUser;

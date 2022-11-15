@@ -1,5 +1,6 @@
 package com.example.involveU.model;
 
+import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +18,7 @@ public class DBServices {
     private List<EBoard> eboardMembers;
     private List<Events> events;
     private List<Club> clubs;
+    private List<RSVP> rsvps;
     private String sql;
     private int validQuery;
     @Autowired
@@ -198,26 +200,18 @@ public class DBServices {
         return users.get(0);
     }
 
-    protected Boolean assignDBAdvisor(int clubID, int userID)
+    protected Boolean assignDBAdvisor(int advisorID, int clubID)
     {
-        sql = "UPDATE Club SET clubAdvisor = ? WHERE clubID = ?;";
+        sql = "UPDATE Club SET advisorID = ? WHERE clubID = ?;";
         //Catches if the Admin tries to add a user to an advisor to a club that is already an advisor to another club
         try{
-            validQuery = JdbcTemplated.update(sql,userID,clubID);
+            validQuery = JdbcTemplated.update(sql,advisorID,clubID);
         }catch(Exception e)
         {
             System.out.println(e);
             return false;
         }
-
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return validQuery == 1;
     }
     protected Boolean addDBEboardMember(int userId, int clubID, String position)
     {
@@ -298,7 +292,7 @@ public class DBServices {
 
     protected List<Events> getDBAllFutureEvents()
     {
-        sql = "SELECT * FROM Events WHERE eventDate >= NOW() ORDER BY eventDate ,startTime ASC;";
+        sql = "SELECT * FROM Events WHERE eventDate >= DATE(NOW()) ORDER BY eventDate ,startTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;
@@ -311,4 +305,51 @@ public class DBServices {
 
         return  events;
     }
+
+    protected boolean insertRsvpEvent(int eventID, int userID)
+    {
+        //setting validQuery to 1 ensures that it won't accidentally be set to 0 on last use.
+        validQuery = 1;
+        sql = "SELECT * FROM RSVP WHERE studentID = " + userID + ";";
+        rsvps = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(RSVP.class));
+
+        //Checks if the event requested to be added is already in the database
+        for(RSVP rsvp : rsvps) {
+            if (eventID == rsvp.getEventID() && userID == rsvp.getStudentID()) {
+                validQuery = 0;
+                break;
+            }
+        }
+        if(validQuery == 1) {
+
+            sql = "INSERT INTO RSVP (studentID, eventID) VALUES (?,?);";
+            validQuery = JdbcTemplated.update(sql, userID, eventID);
+        }
+
+        return validQuery == 1;
+    }
+    protected boolean removeDBRsvp(int userID, int eventID)
+    {
+        sql = "DELETE FROM RSVP WHERE studentID = ? AND eventID = ?;";
+        validQuery = JdbcTemplated.update(sql, userID, eventID);
+
+        return validQuery == 1;
+    }
+
+    protected List<Events> getAllUserRsvp(int userID)
+    {
+        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + ";";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+    protected List<Events> getAllClubRsvp(int clubID)
+    {
+        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
+
 }

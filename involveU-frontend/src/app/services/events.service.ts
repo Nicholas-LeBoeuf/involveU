@@ -27,4 +27,8 @@ export class EventsService {
   getSpecificClubEvents(clubID: number): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getClubEvents/${clubID}`);
   }
+
+  rsvpToEvent(eventID: number, userID: number) {
+    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
+  }
 }

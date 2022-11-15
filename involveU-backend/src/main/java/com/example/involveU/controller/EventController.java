@@ -50,6 +50,41 @@ public class EventController extends DBServices{
         return new ResponseEntity<>(events, HttpStatus.OK);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/rsvpEvent/{eventID}/{userID}")
+    private ResponseEntity<String> rsvpEvnt(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID)
+    {
+        if(insertRsvpEvent(eventID, userID))
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/removeRsvpEvent/{eventID}/{userID}")
+    private ResponseEntity<String> removeRsvp(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID)
+    {
+        removeDBRsvp(userID,eventID);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getUserRsvpEvent/{userID}")
+    private  ResponseEntity<List<Events>> getUserRsvpEvents(@PathVariable("userID") int userID)
+    {
+        events = getAllUserRsvp(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getClubRsvpEvent/{clubID}")
+    private  ResponseEntity<List<Events>> getClubRsvpEvents(@PathVariable("clubID") int clubID)
+    {
+        events = getAllClubRsvp(clubID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+
 }
+
 
 

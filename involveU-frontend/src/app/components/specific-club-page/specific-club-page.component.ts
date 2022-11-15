@@ -89,4 +89,9 @@ export class SpecificClubPageComponent implements OnInit {
     })
   }
 
+  eventRSVP(eventID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+      console.log(response);
+    })
+  }
 }

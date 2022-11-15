@@ -1,1 +1,61 @@
-<p>add-remove-eboard works!</p>
+<div>
+  <h1 class="dialogTitle">Assign/Remove EBoard Member</h1>
+  <form [formGroup]="addEBoardForm">
+    <div class="assignAdvisorDiv">
+      <div class="form-group">
+        <p-dropdown [options]="clubNames" [formControl]="addEBoardClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <div *ngIf="addEBoardFormInputs?.['clubName']?.invalid && (addEBoardFormInputs?.['clubName']?.dirty || addEBoardFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['clubName']?.errors?.['required']">
+            Club Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="User ID" formControlName="userID">
+        <div *ngIf="addEBoardFormInputs?.['userID']?.invalid && (addEBoardFormInputs?.['userID']?.dirty || addEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['userID']?.errors?.['required']">
+            User ID is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="EBoard Position" formControlName="role">
+        <div *ngIf="addEBoardFormInputs?.['role']?.invalid && (addEBoardFormInputs?.['position']?.dirty || addEBoardFormInputs?.['role']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['role']?.errors?.['role']">
+            EBoard position is required
+          </div>
+        </div>
+      </div>
+      <button class="form-submit-button" type="submit" (click)="addEBoardSubmit()">Assign EBoard Member</button>
+    </div>
+  </form>
+  <form [formGroup]="removeEBoardForm">
+    <div class="removeAdvisorDiv">
+      <div class="form-group">
+        <p-dropdown [options]="clubNames" [formControl]="removeEBoardClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <div *ngIf="removeEBoardFormInputs?.['clubName']?.invalid && (removeEBoardFormInputs?.['clubName']?.dirty || removeEBoardFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="removeEBoardFormInputs?.['clubName']?.errors?.['required']">
+            Club Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="User ID" formControlName="userID">
+        <div *ngIf="removeEBoardFormInputs?.['userID']?.invalid && (removeEBoardFormInputs?.['userID']?.dirty || removeEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="removeEBoardFormInputs?.['userID']?.errors?.['required']">
+            User ID is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="EBoard Position" formControlName="role">
+        <div *ngIf="addEBoardFormInputs?.['role']?.invalid && (addEBoardFormInputs?.['role']?.dirty || addEBoardFormInputs?.['role']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['role']?.errors?.['required']">
+            EBoard position is required
+          </div>
+        </div>
+      </div>
+      <button class="form-submit-button" type="submit" (click)="removeEBoardSubmit()">Remove EBoard Member</button>
+    </div>
+  </form>
+</div>

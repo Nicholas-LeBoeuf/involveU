@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="form-group createClubInputs">
-        <input class="form-control formLeftInputs" type="text" placeholder="Club Biography" formControlName="clubBio">
+        <textarea class="form-control formLeftInputs largeTextField"placeholder="Club Biography" formControlName="clubBio"></textarea>
         <div *ngIf="clubCreationFormInputs?.['clubBio']?.invalid && (clubCreationFormInputs?.['clubBio']?.dirty || clubCreationFormInputs?.['clubBio']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="clubCreationFormInputs?.['clubBio']?.errors?.['required']">
             Club Biography is required
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="form-group createClubInputs">
-        <input class="form-control formLeftInputs" type="text" placeholder="Club Vision" formControlName="clubVision">
+        <textarea class="form-control formLeftInputs largeTextField" type="text" placeholder="Club Vision" formControlName="clubVision"></textarea>
         <div *ngIf="clubCreationFormInputs?.['clubVision']?.invalid && (clubCreationFormInputs?.['clubVision']?.dirty || clubCreationFormInputs?.['clubVision']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="clubCreationFormInputs?.['clubVision']?.errors?.['required']">
             Club Vision is required
@@ -44,22 +44,6 @@
       </div>
     </div>
     <div class="rightClubDiv">
-      <div class="form-group createClubInputs">
-        <input class="form-control formRightInputs" type="text" placeholder="Club Mission" formControlName="clubMission">
-        <div *ngIf="clubCreationFormInputs?.['clubMission']?.invalid && (clubCreationFormInputs?.['clubMission']?.dirty || clubCreationFormInputs?.['clubMission']?.touched)" class="rightAlert alert-danger">
-          <div *ngIf="clubCreationFormInputs?.['clubMission']?.errors?.['required']">
-            Club Mission is required
-          </div>
-        </div>
-      </div>
-      <div class="form-group createClubInputs">
-        <input class="form-control formRightInputs" type="text" placeholder="Club Values" formControlName="clubValues">
-        <div *ngIf="clubCreationFormInputs?.['clubValues']?.invalid && (clubCreationFormInputs?.['clubValues']?.dirty || clubCreationFormInputs?.['clubValues']?.touched)" class="rightAlert alert-danger">
-          <div *ngIf="clubCreationFormInputs?.['clubValues']?.errors?.['required']">
-            Club Value is required
-          </div>
-        </div>
-      </div>
       <div class="form-group createClubInputs">
         <input class="form-control formRightInputs" type="text" placeholder="Club Advisor" formControlName="advisorID">
         <div *ngIf="clubCreationFormInputs?.['advisorID']?.invalid && (clubCreationFormInputs?.['advisorID']?.dirty || clubCreationFormInputs?.['advisorID']?.touched)" class="rightAlert alert-danger">
@@ -73,6 +57,22 @@
         <div *ngIf="clubCreationFormInputs?.['clubLogo']?.invalid && (clubCreationFormInputs?.['clubLogo']?.dirty || clubCreationFormInputs?.['clubLogo']?.touched)" class="rightAlert alert-danger">
           <div *ngIf="clubCreationFormInputs?.['clubLogo']?.errors?.['required']">
             Club Advisor is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <textarea class="form-control formRightInputs largeTextField" type="text" placeholder="Club Mission" formControlName="clubMission"></textarea>
+        <div *ngIf="clubCreationFormInputs?.['clubMission']?.invalid && (clubCreationFormInputs?.['clubMission']?.dirty || clubCreationFormInputs?.['clubMission']?.touched)" class="rightAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubMission']?.errors?.['required']">
+            Club Mission is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <textarea class="form-control formRightInputs largeTextField" type="text" placeholder="Club Values" formControlName="clubValues"></textarea>
+        <div *ngIf="clubCreationFormInputs?.['clubValues']?.invalid && (clubCreationFormInputs?.['clubValues']?.dirty || clubCreationFormInputs?.['clubValues']?.touched)" class="rightAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubValues']?.errors?.['required']">
+            Club Value is required
           </div>
         </div>
       </div>

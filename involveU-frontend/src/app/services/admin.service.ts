@@ -16,7 +16,7 @@ export class AdminService {
     return this.http.post(environment.apiURL + `club/insertClub`, newClub);
   }
   assignNewAdvisor(advisorID: number, clubID: number){
-    return this.http.get(environment.apiURL + `/admin/assignNewAdvisor/${advisorID}/${clubID}`);
+    return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`);
   }
 
   //removeAdvisor(removeAdvisor : AssignRemoveAdvisor){

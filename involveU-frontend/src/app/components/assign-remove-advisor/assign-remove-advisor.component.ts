@@ -32,7 +32,6 @@ export class AssignRemoveAdvisorComponent implements OnInit {
     });
 
     this.removeAdvisorForm = this.formBuilder.group({
-      clubName: ['', Validators.required],
       advisorID: ['', Validators.required]
     });
   }

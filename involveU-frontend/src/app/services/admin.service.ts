@@ -21,4 +21,12 @@ export class AdminService {
   removeAdvisor(advisorID: number, clubID: number){
     return this.http.get(environment.apiURL + `admin/removeAdvisor/${advisorID}/${clubID}`);
   }
+
+  addEBoardMember(userID: number, clubID: number, role: string) {
+    return this.http.get(environment.apiURL + `admin/addNewEboard/${userID}/${clubID}/${role}`);
+  }
+
+  removeEBoardMember(userID: number){
+    return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`);
+  }
 }

@@ -1,6 +1,6 @@
 .assignAdvisorDiv {
-  float: left;
-  width:50%;
+  display: flex;
+  justify-content: center;
   min-height: 86%;
   max-height: 86%;
 }
@@ -19,4 +19,9 @@
   margin-top: 2%;
   margin-bottom: 3%;
   padding-top: 54px;
+}
+
+.assignAdvisorForm {
+  display: flex;
+  justify-content: center;
 }

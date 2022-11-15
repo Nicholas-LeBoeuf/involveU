@@ -3,7 +3,7 @@
   <form *ngIf="assign" [formGroup]="assignAdvisorForm">
     <div class="assignAdvisorDiv">
       <div class="form-group">
-        <p-dropdown [ngModelOptions]="{standalone: true}" [options]="clubNames" [(ngModel)]="selectedClubName" optionValue="clubNames.clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <p-dropdown [options]="clubNames" [formControl]="assignAdvisorClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
         <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
             Club Name is required

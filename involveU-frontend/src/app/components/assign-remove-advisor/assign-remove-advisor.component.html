@@ -1,9 +1,9 @@
 <div>
   <h1 class="dialogTitle">Assign/Remove Advisor</h1>
-  <form [formGroup]="assignAdvisorForm">
+  <form *ngIf="assign" [formGroup]="assignAdvisorForm">
     <div class="assignAdvisorDiv">
       <div class="form-group">
-        <p-dropdown [options]="clubNames" [(ngModel)]="selectedClubName" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <p-dropdown [ngModelOptions]="{standalone: true}" [options]="clubNames" [(ngModel)]="selectedClubName" optionValue="clubNames.clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
         <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
             Club Name is required
@@ -21,7 +21,7 @@
       <button class="form-submit-button" type="submit" (click)="assignAdvisorSubmit()">Assign Advisor</button>
     </div>
   </form>
-  <form [formGroup]="removeAdvisorForm">
+  <!--<form [formGroup]="removeAdvisorForm">
     <div class="removeAdvisorDiv">
       <div class="form-group">
         <input class="form-control" type="text" placeholder="Club Name" formControlName="clubName">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <button class="form-submit-button" type="submit" (click)="removeAdvisorSubmit()">Remove Advisor</button>
+&lt;!&ndash;      <button class="form-submit-button" type="submit" (click)="removeAdvisorSubmit()">Remove Advisor</button>&ndash;&gt;
     </div>
-  </form>
+  </form>-->
 </div>

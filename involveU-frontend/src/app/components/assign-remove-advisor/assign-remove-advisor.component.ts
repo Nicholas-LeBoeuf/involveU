@@ -20,14 +20,14 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   assignAdvisorForm : FormGroup;
   clubNames: Club[] = [];
   selectedClubName: Club;
+  assign: boolean = true;
   // @ts-ignore
   constructor(private formBuilder : FormBuilder,
               private adminService: AdminService,
               private clubService: ClubService) {
     this.assignAdvisorForm = this.formBuilder.group({
       clubName: ['', Validators.required],
-      advisorID: ['', Validators.required],
-      clubNames: ['', Validators.required]
+      advisorID: ['', Validators.required]
     });
 
   }
@@ -65,9 +65,9 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   }
 
   assignAdvisorSubmit(){
-    const assignAdvisor : AssignRemoveAdvisor = {club: this.assignAdvisorForm.value.selectedClubName, advisorID: this.assignAdvisorForm.value.advisorID}
+    const assignAdvisor : AssignRemoveAdvisor = {clubID: this.assignAdvisorForm.value.clubNames.clubID, advisorID: this.assignAdvisorForm.value.advisorID}
     console.log(assignAdvisor);
-    this.adminService.assignNewAdvisor(assignAdvisor).subscribe(success =>{
+    this.adminService.assignNewAdvisor(assignAdvisor.advisorID, assignAdvisor.clubID).subscribe(success =>{
         console.log(success);
       },
       (error) => {
@@ -75,8 +75,8 @@ export class AssignRemoveAdvisorComponent implements OnInit {
       });
   }
 
-  removeAdvisorSubmit(){
-    const removeAdvisor : AssignRemoveAdvisor = {club: this.assignAdvisorForm.value.selectedClubName, advisorID: this.assignAdvisorForm.value.advisorID}
+  /*removeAdvisorSubmit(){
+    const removeAdvisor : AssignRemoveAdvisor = {clubID: this.removeAdvisorForm.value.clubNames.clubID, advisorID: this.removeAdvisorForm.value.advisorID}
     console.log(removeAdvisor);
     this.adminService.removeAdvisor(removeAdvisor).subscribe(success =>{
         console.log(success);
@@ -84,5 +84,5 @@ export class AssignRemoveAdvisorComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-  }
+  }*/
 }

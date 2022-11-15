@@ -15,11 +15,11 @@ export class AdminService {
   insertNewClub(newClub: Club){
     return this.http.post(environment.apiURL + `club/insertClub`, newClub);
   }
-  assignNewAdvisor(assignAdvisor: AssignRemoveAdvisor){
-    return this.http.post(environment.apiURL + `admin/assignNewAdvisor`, assignAdvisor);
+  assignNewAdvisor(advisorID: number, clubID: number){
+    return this.http.get(environment.apiURL + `/admin/assignNewAdvisor/${advisorID}/${clubID}`);
   }
 
-  removeAdvisor(removeAdvisor : AssignRemoveAdvisor){
-    return this.http.post(environment.apiURL + `admin/removeAdvisor`, removeAdvisor);
-  }
+  //removeAdvisor(removeAdvisor : AssignRemoveAdvisor){
+    //return this.http.get(environment.apiURL + `admin/removeAdvisor/${advisorID}/${clubID}`);
+  //}
 }

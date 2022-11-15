@@ -54,7 +54,7 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   }
 
   get removeAdvisorFormInputs() {
-    return this.assignAdvisorForm.controls;
+    return this.removeAdvisorForm.controls;
   }
 
   assignAdvisorSubmit(){
@@ -64,7 +64,6 @@ export class AssignRemoveAdvisorComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-
     console.log(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value)
   }
 

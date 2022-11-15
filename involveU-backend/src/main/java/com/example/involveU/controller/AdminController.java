@@ -23,19 +23,6 @@ public class AdminController extends DBServices {
         }
 
     }
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/admin/assignNewAdvisor/{advisorID}/{clubID}")
-    private ResponseEntity<String> assignNewAdvisor(@PathVariable("advisorID") int advisorID,@PathVariable("clubID") int clubID)
-    {
-        if(assignDBAdvisor(advisorID, clubID))
-        {
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>("duplicate entry", HttpStatus.BAD_REQUEST);
-        }
-    }
    @CrossOrigin(origins = "http://localhost:4200")
    @GetMapping("/admin/addNewEboard/{userID}/{clubID}/{role}")
     private ResponseEntity<String> addNewEboard(@PathVariable("userID") int userID, @PathVariable("clubID") int clubID,@PathVariable("role") String position)

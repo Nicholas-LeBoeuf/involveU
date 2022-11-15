@@ -22,6 +22,7 @@ export class AssignRemoveAdvisorComponent implements OnInit {
   assign: boolean = true;
 
   assignAdvisorClubID: FormControl = new FormControl(null);
+  removeAdvisorClubID: FormControl = new FormControl(null);
 
   constructor(private formBuilder : FormBuilder,
               private adminService: AdminService,
@@ -67,14 +68,13 @@ export class AssignRemoveAdvisorComponent implements OnInit {
     console.log(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value)
   }
 
-  /*removeAdvisorSubmit(){
-    const removeAdvisor : AssignRemoveAdvisor = {clubID: this.removeAdvisorForm.value.clubNames.clubID, advisorID: this.removeAdvisorForm.value.advisorID}
-    console.log(removeAdvisor);
-    this.adminService.removeAdvisor(removeAdvisor).subscribe(success =>{
+  removeAdvisorSubmit(){
+    this.adminService.removeAdvisor(this.removeAdvisorForm.value.advisorID, this.removeAdvisorClubID.value).subscribe(success =>{
         console.log(success);
       },
       (error) => {
         console.log(error);
       });
-  }*/
+    console.log(this.removeAdvisorForm.value.advisorID, this.removeAdvisorClubID.value)
+  }
 }

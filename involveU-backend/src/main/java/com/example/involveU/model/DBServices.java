@@ -200,26 +200,18 @@ public class DBServices {
         return users.get(0);
     }
 
-    protected Boolean assignDBAdvisor(int clubID, int userID)
+    protected Boolean assignDBAdvisor(int advisorID, int clubID)
     {
-        sql = "UPDATE Club SET clubAdvisor = ? WHERE clubID = ?;";
+        sql = "UPDATE Club SET advisorID = ? WHERE clubID = ?;";
         //Catches if the Admin tries to add a user to an advisor to a club that is already an advisor to another club
         try{
-            validQuery = JdbcTemplated.update(sql,userID,clubID);
+            validQuery = JdbcTemplated.update(sql,advisorID,clubID);
         }catch(Exception e)
         {
             System.out.println(e);
             return false;
         }
-
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return validQuery == 1;
     }
     protected Boolean addDBEboardMember(int userId, int clubID, String position)
     {

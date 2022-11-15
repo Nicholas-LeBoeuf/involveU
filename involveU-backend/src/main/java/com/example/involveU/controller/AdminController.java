@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class AdminController extends DBServices {
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/admin/addAdmin/$newAdmin")
+    @PostMapping("/admin/addAdmin/{newAdmin}")
     private ResponseEntity<String> addAdmin (@PathVariable("newAdmin") User newAdmin) {
 
         if (newAdmin.getIsAdmin() == 0) {return new ResponseEntity<>("User was not set as an admin", HttpStatus.BAD_REQUEST);}
@@ -27,7 +27,7 @@ public class AdminController extends DBServices {
     @GetMapping("/admin/assignNewAdvisor/{advisorID}/{clubID}")
     private ResponseEntity<String> assignNewAdvisor(@PathVariable("advisorID") int advisorID,@PathVariable("clubID") int clubID)
     {
-        if(assignDBAdvisor(clubID, advisorID))
+        if(assignDBAdvisor(advisorID, clubID))
         {
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
@@ -35,7 +35,6 @@ public class AdminController extends DBServices {
         {
             return new ResponseEntity<>("duplicate entry", HttpStatus.BAD_REQUEST);
         }
-
     }
    @CrossOrigin(origins = "http://localhost:4200")
    @GetMapping("/admin/addNewEboard/{userID}/{clubID}/{role}")

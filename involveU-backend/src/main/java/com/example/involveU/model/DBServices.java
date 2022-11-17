@@ -1,5 +1,6 @@
 package com.example.involveU.model;
 
+import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -64,7 +65,7 @@ public class DBServices {
     {
 
 
-        if( checkUserExistence(newUser.getEmail()) == 1 )
+        if( checkUserExistence(newUser.getEmail()))
         {
             sql="INSERT INTO User (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
@@ -75,20 +76,12 @@ public class DBServices {
         //Query executes and sends back an integer for error checking
         return validQuery;
     }
-    protected int checkUserExistence(String userEmail)
+    protected Boolean checkUserExistence(String userEmail)
     {
         sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
-        if(users.size() > 0 )
-        {
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
-
+        return users.size() > 0;
     }
     protected Object DBcheckUserCredentials(String username, String password)
     {
@@ -132,19 +125,12 @@ public class DBServices {
             return clubs.get(0);
         }
     }
-    protected String insertNewClub(Club newClub)
+    protected Boolean insertNewClub(Club newClub)
     {
         sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, advisorID) Values (?,?,?,?,?,?,?,?,?);";
         validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getClubLogo(), newClub.getAdvisorID());
 
-        if(validQuery == 1)
-        {
-            return "Club successfully created";
-        }
-        else
-        {
-            return "error";
-        }
+        return validQuery == 1;
 
     }
     protected List<Club> searchDBClub(String searchContent)
@@ -162,19 +148,12 @@ public class DBServices {
 
         return results;
     }
-    protected String submitDBFavorite(int id, int clubID)
+    protected Boolean submitDBFavorite(int id, int clubID)
     {
         sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
         validQuery = JdbcTemplated.update(sql,String.valueOf(id),String.valueOf(clubID));
 
-        if(validQuery == 1)
-        {
-            return "accepted";
-        }
-        else
-        {
-            return "error";
-        }
+       return validQuery == 1;
     }
     protected List<Club> getDBUserFavorites(int userID)
     {

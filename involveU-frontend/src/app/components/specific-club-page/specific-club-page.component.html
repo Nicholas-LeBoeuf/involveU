@@ -40,7 +40,16 @@
   <div class="eboardSection">
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
-      <h5 class="text-center">Testing this</h5>
+      <p-table [value]="favoritedClubs">
+        <ng-template pTemplate="body" let-favorite>
+          <tr>
+            <td>{{favorite.clubName }}</td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+
+
     </div>
   </div>
 </div>

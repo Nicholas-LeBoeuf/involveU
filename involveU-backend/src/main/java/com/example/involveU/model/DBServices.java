@@ -178,7 +178,7 @@ public class DBServices {
     }
     protected List<Club> getDBUserFavorites(int userID)
     {
-        sql = "SELECT Club.clubID, Club.clubName, Club.clubAffiliation, Club.clubBio, Club.clubVision, Club.clubLogo, Club.clubAdvisor FROM Club INNER JOIN Favorites ON Club.ClubID = Favorites.ClubID AND Favorites.UserID = "+userID+";";
+        sql = "SELECT Club.clubID, Club.clubName, Club.clubAffiliation, Club.clubBio, Club.clubVision, Club.clubLogo, Club.advisorID FROM Club INNER JOIN Favorites ON Club.ClubID = Favorites.ClubID AND Favorites.UserID = "+userID+";";
 
         clubs = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;
@@ -193,7 +193,7 @@ public class DBServices {
     }
     protected User getDBClubAdvisor(int clubID)
     {
-        sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on C.clubID = " + clubID + "  AND User.studentID = clubAdvisor;";
+        sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on C.clubID = " + clubID + "  AND User.studentID = advisorID;";
 
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 

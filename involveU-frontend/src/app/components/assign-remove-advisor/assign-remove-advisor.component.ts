@@ -67,13 +67,4 @@ export class AssignRemoveAdvisorComponent implements OnInit {
     console.log(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value)
   }
 
-  removeAdvisorSubmit(){
-    this.adminService.removeAdvisor(this.removeAdvisorForm.value.advisorID, this.removeAdvisorClubID.value).subscribe(success =>{
-        console.log(success);
-      },
-      (error) => {
-        console.log(error);
-      });
-    console.log(this.removeAdvisorForm.value.advisorID, this.removeAdvisorClubID.value)
-  }
 }

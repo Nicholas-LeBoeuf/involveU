@@ -15,7 +15,7 @@ import {CarouselModule} from "primeng/carousel";
 import { FilterPipe } from './pipes/filter.pipe';
 import {RippleModule} from "primeng/ripple";
 import { SpecificClubPageComponent } from './components/specific-club-page/specific-club-page.component';
-import { AdminPageComponent } from './components/create-club/create-club-page.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";

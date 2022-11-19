@@ -82,6 +82,73 @@
     </div>
   </form>
 </div>
+<div class="createUserDiv">
+  <h1 class="dialogTitle">Create User</h1>
+  <form [formGroup]="createUserForm">
+    <div class="form-group">
+      <input class="form-control formInputs" type="text" placeholder="First Name" formControlName="firstName">
+      <div *ngIf="createUserFormInputs?.['firstName']?.invalid && (createUserFormInputs?.['firstName']?.dirty || createUserFormInputs?.['firstName']?.touched)" class="alert alert-danger">
+        <div *ngIf="createUserFormInputs?.['firstName']?.errors?.['required']">
+          First name is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input class="form-control formInputs" type="text" placeholder="Last Name" formControlName="lastName">
+      <div *ngIf="createUserFormInputs?.['lastName']?.invalid && (createUserFormInputs?.['lastName']?.dirty || createUserFormInputs?.['lastName']?.touched)" class="alert alert-danger">
+        <div *ngIf="createUserFormInputs?.['lastName']?.errors?.['required']">
+          Last name is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input class="form-control formInputs" type="text" placeholder="Email" email formControlName="email">
+      <div *ngIf="createUserFormInputs?.['email']?.invalid && (createUserFormInputs?.['email']?.dirty || createUserFormInputs?.['email']?.touched)" class="alert alert-danger">
+        <div *ngIf="createUserFormInputs?.['email']?.errors?.['required']">
+          Email is required
+        </div>
+        <div *ngIf="createUserFormInputs?.['email']?.errors?.['email']">
+          Email must be a valid email
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
+      <div *ngIf="createUserFormInputs?.['password']?.invalid && (createUserFormInputs?.['password']?.dirty || createUserFormInputs?.['password']?.touched)" class="alert alert-danger">
+        <div *ngIf="createUserFormInputs?.['password']?.errors?.['required']">
+          Password is required
+        </div>
+        <div *ngIf="createUserFormInputs?.['password']?.errors?.['minLength']">
+          Password must be at least 8 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <select class="form-control formInputs" name="year" formControlName="year">
+        <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Your Year...</option>
+        <option value="Freshman">Freshman</option>
+        <option value="Sophomore">Sophomore</option>
+        <option value="Junior">Junior</option>
+        <option value="Senior">Senior</option>
+        <option value="Faculty">Faculty</option>
+      </select>
+      <div *ngIf="createUserFormInputs?.['year']?.invalid && (createUserFormInputs?.['year']?.dirty || createUserFormInputs?.['year']?.touched)" class="alert alert-danger">
+        <div *ngIf="createUserFormInputs?.['year']?.errors?.['required']">
+          Year is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input class="form-control formInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
+      <div *ngIf="createUserFormInputs?.['pronouns']?.invalid && (createUserFormInputs?.['pronouns']?.dirty || createUserFormInputs?.['pronouns']?.touched)" class="alert alert-danger">
+        <div *ngIf="createUserFormInputs?.['pronouns']?.errors?.['required']">
+          Pronouns are required
+        </div>
+      </div>
+    </div>
+  </form>
+  <button class="createUserButton centerButton" type="submit" (click)="createUserSubmit()">Create User</button>
+</div>
 <div class="addRemoveEBoardDiv">
   <h1 class="dialogTitle">Assign/Remove EBoard Member</h1>
   <form [formGroup]="addEBoardForm">

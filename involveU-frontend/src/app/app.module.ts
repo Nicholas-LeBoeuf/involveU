@@ -19,7 +19,6 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
 import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
-import { AssignRemoveAdvisorComponent } from './components/assign-remove-advisor/assign-remove-advisor.component';
 import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
@@ -29,8 +28,7 @@ import {DropdownModule} from "primeng/dropdown";
     ClubPageComponent,
     FilterPipe,
     SpecificClubPageComponent,
-    AdminPageComponent,
-    AssignRemoveAdvisorComponent
+    AdminPageComponent
   ],
     imports: [
         BrowserModule,

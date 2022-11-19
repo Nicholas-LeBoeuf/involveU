@@ -10,17 +10,3 @@ export interface Club {
   clubValues: string;
   clubMission: string;
 }
-
-export interface addEBoardMember {
-  userID: number;
-  role: string;
-}
-
-export interface removeEBoardMember {
-  userID: number;
-}
-
-export interface AssignRemoveAdvisor {
-  clubID: number;
-  advisorID: number;
-}

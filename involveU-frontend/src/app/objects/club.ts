@@ -6,7 +6,7 @@ export interface Club {
   clubBio: string;
   clubVision: string;
   clubLogo: string;
-  clubAdvisor: number;
+  advisorID: number;
   clubValues: string;
   clubMission: string;
 }

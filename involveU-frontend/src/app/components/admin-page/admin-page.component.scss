@@ -121,3 +121,66 @@
   height: 150px;
   overflow-wrap: inherit;
 }
+
+.assignRemoveAdvisorDiv {
+  width: 96vw;
+  min-height: 50vh;
+  max-height: 52vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-bottom: 2%;
+}
+
+.addRemoveEBoardDiv {
+  width: 96vw;
+  min-height: 50vh;
+  max-height: 52vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+}
+
+.assignAdvisorDiv {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.removeAdvisorDiv {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.assignAdvisor {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.removeAdvisor {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.addEBoard {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.removeEBoard {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}

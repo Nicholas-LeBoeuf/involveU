@@ -20,7 +20,6 @@ import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import { AssignRemoveAdvisorComponent } from './components/assign-remove-advisor/assign-remove-advisor.component';
-import { AddRemoveEboardComponent } from './components/add-remove-eboard/add-remove-eboard.component';
 import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
@@ -31,8 +30,7 @@ import {DropdownModule} from "primeng/dropdown";
     FilterPipe,
     SpecificClubPageComponent,
     AdminPageComponent,
-    AssignRemoveAdvisorComponent,
-    AddRemoveEboardComponent
+    AssignRemoveAdvisorComponent
   ],
     imports: [
         BrowserModule,

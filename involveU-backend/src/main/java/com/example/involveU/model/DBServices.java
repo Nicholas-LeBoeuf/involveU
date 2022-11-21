@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.*;
 
 
 
 public class DBServices {
     private List<User> users;
     private List<EBoard> eboardMembers;
+
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
@@ -101,7 +103,49 @@ public class DBServices {
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
+        eboardMembers = sortEboardArray(eboardMembers);
         return eboardMembers;
+    }
+    protected List<EBoard> sortEboardArray(List<EBoard> listToSort)
+    {
+        int indexPresident, indexVPresident;
+        List<String> positionsList = new ArrayList<>();
+        EBoard tempPrezMember;
+        EBoard tempVPPrezMember;
+        for(EBoard member: listToSort)
+        {
+            positionsList.add(member.getEboardPosition());
+        }
+       indexPresident = positionsList.indexOf("President");
+       indexVPresident = positionsList.indexOf("Vice President");
+       if(indexPresident == 0 && indexVPresident == 1)
+       {
+           return listToSort;
+       }
+       else
+       {
+
+           tempPrezMember = listToSort.get(indexPresident);
+           listToSort.remove(indexPresident);
+           listToSort.add(0,tempPrezMember);
+           positionsList.clear();
+           for(EBoard member: listToSort)
+           {
+               positionsList.add(member.getEboardPosition());
+           }
+           if(indexVPresident == 1)
+           {
+               return listToSort;
+           }
+           else
+           {
+               indexVPresident = positionsList.indexOf("Vice President");
+               tempVPPrezMember = listToSort.get(indexVPresident);
+               listToSort.remove(indexVPresident);
+               listToSort.add(1,tempVPPrezMember);
+           }
+           return listToSort;
+       }
     }
     protected List<Club> getAllDBClubs()
     {

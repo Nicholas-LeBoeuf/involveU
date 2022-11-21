@@ -69,7 +69,7 @@
   margin-top: 1.5%;
 }
 
-.createUserButton {
+.adminButton {
   background-color: #0667B3;
   border: 1px solid black;
   border-radius: 14px;
@@ -149,6 +149,17 @@
   width: 96vw;
   min-height: 85vh;
   max-height: 88vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-top: 2%;
+}
+
+.deleteUserDiv {
+  width: 96vw;
+  min-height: 45vh;
+  max-height: 40vh;
   display: block;
   margin-left: 2%;
   background-color: #5c93cb;

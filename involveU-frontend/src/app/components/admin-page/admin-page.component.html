@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="centerButton">
-      <button class="createClubButton form-submit-button" type="submit" (click)="createClubSubmit()">Submit club</button>
+      <button class="adminButton form-submit-button" type="submit" (click)="createClubSubmit()">Submit club</button>
     </div>
   </form>
 </div>
@@ -147,7 +147,23 @@
       </div>
     </div>
   </form>
-  <button class="createUserButton centerButton" type="submit" (click)="createUserSubmit()">Create User</button>
+  <button class="createUserButton adminButton" type="submit" (click)="createUserSubmit()">Create User</button>
+</div>
+<div class="deleteUserDiv">
+  <h1 class="dialogTitle">Delete User</h1>
+  <form [formGroup]="assignAdvisorForm">
+    <div class="assignAdvisor">
+      <div class="form-group">
+        <p-dropdown [options]="clubNames" [formControl]="assignAdvisorClubID" optionValue="userID" optionLabel="userID" placeholder="Select User"></p-dropdown>
+        <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
+            User is required
+          </div>
+        </div>
+      </div>
+      <button class="form-submit-button adminButton" type="submit" (click)="assignAdvisorSubmit()">Delete User</button>
+    </div>
+  </form>
 </div>
 <div class="addRemoveEBoardDiv">
   <h1 class="dialogTitle">Assign/Remove EBoard Member</h1>
@@ -177,7 +193,7 @@
           </div>
         </div>
       </div>
-      <button class="form-submit-button" type="submit" (click)="addEBoardSubmit()">Assign EBoard Member</button>
+      <button class="form-submit-button adminButton" type="submit" (click)="addEBoardSubmit()">Assign EBoard</button>
     </div>
   </form>
   <form [formGroup]="removeEBoardForm">
@@ -198,7 +214,7 @@
           </div>
         </div>
       </div>
-      <button class="form-submit-button" type="submit" (click)="removeEBoardSubmit()">Remove EBoard Member</button>
+      <button class="form-submit-button adminButton" type="submit" (click)="removeEBoardSubmit()">Remove EBoard</button>
     </div>
   </form>
 </div>
@@ -222,7 +238,7 @@
           </div>
         </div>
       </div>
-      <button class="form-submit-button" type="submit" (click)="assignAdvisorSubmit()">Assign Advisor</button>
+      <button class="form-submit-button adminButton" type="submit" (click)="assignAdvisorSubmit()">Assign Advisor</button>
     </div>
   </form>
 </div>

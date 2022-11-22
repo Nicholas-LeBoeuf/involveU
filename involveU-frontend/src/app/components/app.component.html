@@ -35,7 +35,7 @@
     </div>
     <div class="specificNavButton">
       <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
-        <a #vla="routerLinkActive" routerLinkActive="active" class="adminMenu" [class.active-span]="vla.isActive" (click)="activateContextMenu(adminContextMenu, $event)">Admin</a>
+        <a #vla="routerLinkActive" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a>
       </ng-template>
     </div>
   </div>

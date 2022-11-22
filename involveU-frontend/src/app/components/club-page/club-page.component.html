@@ -47,53 +47,67 @@
   <div id="favoritedClubs">
     <ng-container *ngIf="this.isLoggedIn;else featuredClubsView">
       <h1 class="text-center">Favorited Clubs</h1>
-      <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-favClubs pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
-                <hr>
-              </div>
-              <div class="logoMargin">
-                <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
-              </div>
-              <div>
-                <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
-                <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+      <ng-template [ngIf]="favoritedClubs.length === 0">
+        <div class="noDataContent">
+          <h2>There are no clubs to display!</h2>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="favoritedClubs.length !== 0">
+        <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+          <ng-template let-favClubs pTemplate="item">
+            <div class="clubCard">
+              <div class="clubContent">
+                <div>
+                  <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
+                  <hr>
+                </div>
+                <div class="logoMargin">
+                  <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
+                </div>
+                <div>
+                  <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
+                  <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+      </ng-template>
     </ng-container>
     <ng-template #featuredClubsView>
       <h1 class="text-center">Featured Clubs</h1>
-      <p-carousel [value]="featuredClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-featClubs pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{featClubs.clubName}}</h3>
-                <hr>
-              </div>
-              <div class="logoMargin">
-                <img class="clubLogo" src="assets/{{featClubs.clubLogo}}">
-              </div>
-              <div>
-                <button class="blueButton" (click)="goToClubPage(featClubs.clubID)">Go To Club</button>
+      <ng-template [ngIf]="featuredClubs.length === 0">
+        <div class="noDataContent">
+          <h2>There are no clubs to display!</h2>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="featuredClubs.length !== 0">
+        <p-carousel [value]="featuredClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+          <ng-template let-featClubs pTemplate="item">
+            <div class="clubCard">
+              <div class="clubContent">
+                <div>
+                  <h3 class="p-mb-1">{{featClubs.clubName}}</h3>
+                  <hr>
+                </div>
+                <div class="logoMargin">
+                  <img class="clubLogo" src="assets/{{featClubs.clubLogo}}">
+                </div>
+                <div>
+                  <button class="blueButton" (click)="goToClubPage(featClubs.clubID)">Go To Club</button>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+      </ng-template>
     </ng-template>
   </div>
   <div id="favoritedEvents">
     <ng-container *ngIf="isLoggedIn;else allEventsView">
       <h1 class="text-center">Your Favorited Clubs Events</h1>
       <ng-template [ngIf]="favoritedClubsEvents.length === 0">
-        <div class="noEventsContent">
+        <div class="noDataContent">
           <h2>There are no events to display!</h2>
         </div>
       </ng-template>
@@ -137,7 +151,7 @@
     <ng-template #allEventsView>
       <h1 class="text-center">All Club Events</h1>
       <ng-template [ngIf]="allFutureEvents.length === 0">
-          <div class="noEventsContent">
+          <div class="noDataContent">
             <h2>There are no events to display!</h2>
           </div>
       </ng-template>

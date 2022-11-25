@@ -151,17 +151,17 @@
 </div>
 <div class="deleteUserDiv">
   <h1 class="dialogTitle">Delete User</h1>
-  <form [formGroup]="assignAdvisorForm">
+  <form [formGroup]="deleteUserForm">
     <div class="assignAdvisor">
       <div class="form-group">
-        <p-dropdown [options]="clubNames" [formControl]="assignAdvisorClubID" optionValue="userID" optionLabel="userID" placeholder="Select User"></p-dropdown>
-        <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
-          <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
+        <p-dropdown [options]="userList" [formControl]="deleteUserFormID" optionValue="userID" optionLabel="userID" placeholder="Select User"></p-dropdown>
+        <div *ngIf="deleteUserFormInputs?.['userID']?.invalid && (deleteUserFormInputs?.['userID']?.dirty || deleteUserFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="deleteUserFormInputs?.['userID']?.errors?.['required']">
             User is required
           </div>
         </div>
       </div>
-      <button class="form-submit-button adminButton" type="submit" (click)="assignAdvisorSubmit()">Delete User</button>
+      <button class="form-submit-button adminButton" type="submit" (click)="deleteUserSubmit()">Delete User</button>
     </div>
   </form>
 </div>

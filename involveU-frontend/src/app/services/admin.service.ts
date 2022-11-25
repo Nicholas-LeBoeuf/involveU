@@ -20,6 +20,10 @@ export class AdminService {
     return this.http.post(environment.apiURL + `admin/createUser`, newUser);
   }
 
+  deleteUser(userID: number){
+    return this.http.post(environment.apiURL + `admin/deleteUser`, userID);
+  }
+
   assignNewAdvisor(advisorID: number, clubID: number){
     return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`);
   }

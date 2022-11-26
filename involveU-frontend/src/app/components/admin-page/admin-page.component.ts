@@ -26,7 +26,7 @@ export class AdminPageComponent implements OnInit {
   addEBoardClubID: FormControl = new FormControl(null);
   removeEBoardClubID: FormControl = new FormControl(null);
   assignAdvisorClubID: FormControl = new FormControl(null);
-  deleteUserFormID: FormControl = new FormControl(null);
+  deleteUserID: FormControl = new FormControl(null);
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -147,14 +147,14 @@ export class AdminPageComponent implements OnInit {
       });
   }
 
-  deleteUserSubmit(){  //have to get userID based off student name
-    this.adminService.deleteUser(this.deleteUserForm.value.userID).subscribe(success =>{
+  deleteUserSubmit(){
+    this.adminService.deleteUser(this.deleteUserID.value).subscribe(success =>{
         console.log(success);
       },
       (error) => {
         console.log(error);
       });
-    console.log(this.deleteUserForm.value.userID);
+    console.log(this.deleteUserID.value);
   }
 
   addEBoardSubmit(){

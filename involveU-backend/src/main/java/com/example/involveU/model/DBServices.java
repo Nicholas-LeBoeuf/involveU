@@ -230,7 +230,7 @@ public class DBServices {
     }
 
     protected Boolean deleteDBUser(int userID) {
-        sql = "DELETE FROM User WHERE studentID = ?;";
+        sql = "DELETE FROM User WHERE studentID = ?";
 
         validQuery = JdbcTemplated.update(sql,userID);
 

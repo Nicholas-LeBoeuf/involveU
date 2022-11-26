@@ -21,7 +21,7 @@ export class AdminService {
   }
 
   deleteUser(userID: number){
-    return this.http.post(environment.apiURL + `admin/deleteUser`, userID);
+    return this.http.get(environment.apiURL + `admin/deleteUser/${userID}`);
   }
 
   assignNewAdvisor(advisorID: number, clubID: number){

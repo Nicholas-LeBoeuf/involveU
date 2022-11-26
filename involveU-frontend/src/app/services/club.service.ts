@@ -3,6 +3,7 @@ import { environment } from "../../environments/environment";
 import {Observable, throwError} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Club} from "../objects/club";
+import {User} from "../objects/user";
 
 @Injectable({
   providedIn: 'root'

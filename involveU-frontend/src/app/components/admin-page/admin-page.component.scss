@@ -69,6 +69,18 @@
   margin-top: 1.5%;
 }
 
+.adminButton {
+  background-color: #0667B3;
+  border: 1px solid black;
+  border-radius: 14px;
+  height: 60px;
+  padding: 0 20px;
+  color: white;
+  width: 250px;
+  font-size: 1.8em;
+  margin-top: 1.5%;
+}
+
 .form-submit-button{
   clear:left;
   float:left;
@@ -133,10 +145,32 @@
   margin-bottom: 2%;
 }
 
+.createUserDiv {
+  width: 96vw;
+  min-height: 85vh;
+  max-height: 88vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-top: 2%;
+}
+
+.deleteUserDiv {
+  width: 96vw;
+  min-height: 45vh;
+  max-height: 40vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-top: 2%;
+}
+
 .addRemoveEBoardDiv {
   width: 96vw;
-  min-height: 50vh;
-  max-height: 52vh;
+  min-height: 55vh;
+  max-height: 58vh;
   display: block;
   margin-left: 2%;
   background-color: #5c93cb;
@@ -145,9 +179,9 @@
 
 .assignAdvisorDiv {
   float: left;
-  width:50%;
-  min-height: 86%;
-  max-height: 86%;
+  width: 96vw;
+  min-height: 50vh;
+  max-height: 52vh;
 }
 
 .removeAdvisorDiv {

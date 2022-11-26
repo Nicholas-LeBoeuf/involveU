@@ -18,4 +18,8 @@ export class UserService {
   signupNewUser(newUser:User) {
     return this.http.post( environment.apiURL + `user/submitSignupInfo`, newUser);
   }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(environment.apiURL + `user/getAllUsers`);
+  }
 }

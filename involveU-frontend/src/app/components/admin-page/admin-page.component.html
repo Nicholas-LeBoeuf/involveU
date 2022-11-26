@@ -154,7 +154,7 @@
   <form [formGroup]="deleteUserForm">
     <div class="assignAdvisor">
       <div class="form-group">
-        <p-dropdown [options]="userList" [formControl]="deleteUserFormID" optionValue="userID" optionLabel="email" [filter]="true" placeholder="Search email"></p-dropdown>
+        <p-dropdown [options]="userList" [formControl]="deleteUserFormID" optionValue="userID" optionLabel="email" [filter]="true" [autoDisplayFirst]="false" placeholder="Search email"></p-dropdown>
         <div *ngIf="deleteUserFormInputs?.['email']?.invalid && (deleteUserFormInputs?.['email']?.dirty || deleteUserFormInputs?.['email']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="deleteUserFormInputs?.['email']?.errors?.['required']">
             Email is required

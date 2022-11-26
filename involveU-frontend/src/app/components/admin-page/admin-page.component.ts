@@ -148,12 +148,13 @@ export class AdminPageComponent implements OnInit {
   }
 
   deleteUserSubmit(){  //have to get userID based off student name
-    this.adminService.deleteUser(this.deleteUserFormID.value).subscribe(success =>{
+    this.adminService.deleteUser(this.deleteUserForm.value.userID).subscribe(success =>{
         console.log(success);
       },
       (error) => {
         console.log(error);
       });
+    console.log(this.deleteUserForm.value.userID);
   }
 
   addEBoardSubmit(){

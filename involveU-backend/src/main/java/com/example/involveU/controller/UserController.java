@@ -12,38 +12,38 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/")
-public class UserController {
+public class UserController extends DBServices{
 
 	@Autowired
 	private UserRepository userRepository;
-	private DBServices dbHandler = new DBServices();
+	private List<User> foundUser;
+	private Object singleUser;
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("user/test")
+	@GetMapping("user/getAllUsers")
 	public List<User> getUsers() {
-		List<User> Results = dbHandler.getAllUsers();
+		List<User> Results = getAllUsers();
 		return Results;
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/{id}")
 	public List<User> getSpecificUser(@PathVariable("id") int id )
 	{
-		List<User> foundUser;
-		foundUser = dbHandler.getSpecificUser(id);
+		foundUser = getDBSpecificUser(id);
 
 		return foundUser;
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/checkCredentials/{email}/{password}")
-	public ResponseEntity<String> checkCredentials(@PathVariable("email") String email, @PathVariable("password")String password)
+	public ResponseEntity<Object> checkCredentials(@PathVariable("email") String email, @PathVariable("password")String password)
 	{
 		String responseString;
 		System.out.println(email + " " + password);
-		responseString = dbHandler.checkUserCredentials(email,password);
+		singleUser = DBcheckUserCredentials(email,password);
 
 		// If the database handler class returns an empty list then this function will return a bad request.
 
-		if(repsonseString.equals("not accepted")) {return new ResponseEntity<>( repsonseString, HttpStatus.BAD_REQUEST);}
-		else {return new ResponseEntity<>( repsonseString, HttpStatus.OK);}
+		if(singleUser.equals("error")) {return new ResponseEntity<>( "User not found", HttpStatus.BAD_REQUEST);}
+		else {return new ResponseEntity<>( singleUser, HttpStatus.OK);}
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("user/submitSignupInfo")
@@ -51,11 +51,10 @@ public class UserController {
 	throws IOException{
 		int newUserSuccessful;
 
-
-		newUserSuccessful = dbHandler.insertNewUser(userInfo);
+		newUserSuccessful = insertDBNewUser(userInfo);
 
 		if(newUserSuccessful == 1) {
-			return new ResponseEntity<>("Received", HttpStatus.OK);}
-		else {return new ResponseEntity<>("Error: User could not be inserted", HttpStatus.BAD_REQUEST);}
+			return new ResponseEntity<>(HttpStatus.OK);}
+		else {return new ResponseEntity<>( HttpStatus.BAD_REQUEST);}
 	}
 }

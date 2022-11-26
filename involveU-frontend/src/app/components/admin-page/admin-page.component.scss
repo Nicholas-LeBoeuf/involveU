@@ -1,0 +1,220 @@
+.createClubInputs {
+  display: table;
+  margin: auto;
+}
+
+.createClubDiv {
+  width: 96vw;
+  min-height: 83vh;
+  max-height: 86vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+}
+
+.leftClubDiv {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.rightClubDiv {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.clubCreationAlerts {
+  position: absolute;
+  z-index: 1000000;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.clubCreationAlerts p {
+  font-size: 1.8em;
+}
+
+.centerButton {
+  display: block;
+  margin: auto auto auto 42%;
+  width: 58%;
+}
+
+.dialogTitle {
+  font-size: 4em;
+  text-align: center;
+  font-weight: normal;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  padding-top: 54px;
+}
+
+.createClubButton {
+  background-color: #0667B3;
+  border: 1px solid black;
+  border-radius: 14px;
+  height: 60px;
+  padding: 0 20px;
+  color: white;
+  width: 250px;
+  font-size: 1.8em;
+  margin-top: 1.5%;
+}
+
+.adminButton {
+  background-color: #0667B3;
+  border: 1px solid black;
+  border-radius: 14px;
+  height: 60px;
+  padding: 0 20px;
+  color: white;
+  width: 250px;
+  font-size: 1.8em;
+  margin-top: 1.5%;
+}
+
+.form-submit-button{
+  clear:left;
+  float:left;
+}
+
+.form-control {
+  height: 60px;
+  width: 500px;
+  border-radius: 10px;
+  font-size: 1.5em;
+}
+
+.formLeftInputs {
+  border: 2px solid #0667B3;
+  color: #0667B3;
+  margin-left: 270px;
+  margin-top: 1.5%;
+}
+
+.formRightInputs {
+  border: 2px solid #0667B3;
+  color: #0667B3;
+  margin-right: 270px;
+  margin-top: 1.5%;
+}
+
+.formInputs::placeholder {
+  color: #0667B3;
+}
+
+.leftAlert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  width: 500px;
+  float: right;
+}
+
+.rightAlert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  width: 500px;
+  float: left;
+}
+
+.largeTextField {
+  height: 150px;
+  overflow-wrap: inherit;
+}
+
+.assignRemoveAdvisorDiv {
+  width: 96vw;
+  min-height: 50vh;
+  max-height: 52vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-bottom: 2%;
+}
+
+.createUserDiv {
+  width: 96vw;
+  min-height: 85vh;
+  max-height: 88vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-top: 2%;
+}
+
+.deleteUserDiv {
+  width: 96vw;
+  min-height: 45vh;
+  max-height: 40vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+  margin-top: 2%;
+}
+
+.addRemoveEBoardDiv {
+  width: 96vw;
+  min-height: 55vh;
+  max-height: 58vh;
+  display: block;
+  margin-left: 2%;
+  background-color: #5c93cb;
+  border-radius: 10px;
+}
+
+.assignAdvisorDiv {
+  float: left;
+  width: 96vw;
+  min-height: 50vh;
+  max-height: 52vh;
+}
+
+.removeAdvisorDiv {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.assignAdvisor {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.removeAdvisor {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.addEBoard {
+  float: left;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}
+
+.removeEBoard {
+  float: right;
+  width:50%;
+  min-height: 86%;
+  max-height: 86%;
+}

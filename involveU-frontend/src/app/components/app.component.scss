@@ -2,7 +2,7 @@
 
 .navbar {
   background-color: #AECDE6;
-  justify-content: flex-start;
+  //justify-content: flex-start;
 }
 li {
   display: inline;
@@ -19,6 +19,7 @@ ul {
 .SNHUlogoScale {
   width: 150px;
   height: 43px;
+  cursor: pointer;
 }
 
 .involveULogoScale {
@@ -27,19 +28,7 @@ ul {
   margin-left: 10px;
 }
 
-.blueButton {
-  background-color: #0667B3;
-  border: none;
-  border-radius: 14px;
-  height: 40px;
-  padding: 0 20px;
-  margin: 10px;
-  color: white;
-}
 
-.blueButton:hover {
-  background-color: #3b88c4;
-}
 
 
 /*Popup modal dialog styling*/
@@ -60,11 +49,24 @@ ul {
   font-size: 1.8em;
   text-align: center;
   font-weight: normal;
+  margin-bottom: 5%;
 }
 
 ::ng-deep .p-dialog {
-  background-color: #AECDE6;
+  background-color: #AECDE6 !important;
   border-radius: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: #AECDE6 !important;
+}
+
+::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
+  display:none;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  display: none;
 }
 
 .inputField {
@@ -92,3 +94,116 @@ ul {
 .input4 { grid-area: 2 / 2 / 3 / 3; }
 .input5 { grid-area: 3 / 1 / 4 / 2; }
 .input6 { grid-area: 3 / 2 / 4 / 3; }
+
+.bottomModal {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.bottomModal p {
+  font-weight: 500;
+  line-height: 10px;
+}
+
+.bottomModal p a {
+  color: #0000EE;
+  cursor: pointer;
+}
+
+:host ::ng-deep p-dialog,
+:host ::ng-deep .p-dialog-mask.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+:host ::ng-deep .p-dialog-header-icons {
+  display:none!important;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  position: sticky;
+}
+
+.closeButtonDialog {
+  float: right;
+  color: black;
+}
+
+.loginInputs {
+  display: table;
+  margin: 0 auto 4%;
+}
+
+.loginSignupAlerts {
+  position: absolute;
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.loginSignupAlerts p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 50px;
+}
+
+::ng-deep .p-contextmenu {
+  width: 90px;
+}
+
+::ng-deep .p-contextmenu ul {
+  text-align: center;
+}
+
+::ng-deep .p-contextmenu .p-menuitem-link {
+  justify-content: center;
+}
+
+.profileIcon {
+  cursor: pointer;
+}
+
+
+.navButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.specificNavButton {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.specificNavButton a {
+  text-decoration: none;
+  color: black;
+}
+
+.specificNavButton a:hover {
+  color: blue;
+}
+
+::ng-deep .p-contextmenu {
+  width: 120px !important;
+}
+
+.active-span {
+  color: blue !important;
+}

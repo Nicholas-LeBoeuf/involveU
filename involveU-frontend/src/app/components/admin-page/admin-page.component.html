@@ -154,10 +154,10 @@
   <form [formGroup]="deleteUserForm">
     <div class="assignAdvisor">
       <div class="form-group">
-        <p-dropdown [options]="userList" [formControl]="deleteUserFormID" optionValue="userID" optionLabel="userID" placeholder="Select User"></p-dropdown>
-        <div *ngIf="deleteUserFormInputs?.['userID']?.invalid && (deleteUserFormInputs?.['userID']?.dirty || deleteUserFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
-          <div *ngIf="deleteUserFormInputs?.['userID']?.errors?.['required']">
-            User is required
+        <p-dropdown [options]="userList" [formControl]="deleteUserFormID" optionValue="userID" optionLabel="email" [filter]="true" placeholder="Search email"></p-dropdown>
+        <div *ngIf="deleteUserFormInputs?.['email']?.invalid && (deleteUserFormInputs?.['email']?.dirty || deleteUserFormInputs?.['email']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="deleteUserFormInputs?.['email']?.errors?.['required']">
+            Email is required
           </div>
         </div>
       </div>

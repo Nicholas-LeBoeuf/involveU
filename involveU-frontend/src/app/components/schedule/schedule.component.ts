@@ -10,7 +10,7 @@ export class ScheduleComponent implements OnInit {
   constructor() { }
 
   options = {
-    initialDate : '2019-01-01',
+   
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',

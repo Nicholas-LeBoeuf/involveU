@@ -4,7 +4,9 @@ import {ClubService} from "../../services/club.service";
 import {Club} from "../../objects/club";
 import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
+import {User} from "../../objects/user";
 import {EventsService} from "../../services/events.service";
+import {Eboard} from "../../objects/Eboard";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -25,6 +27,7 @@ export class SpecificClubPageComponent implements OnInit {
   clubIsFav: boolean = false;
   clubInfo!: Club;
   favoritedClubs: Club[] = [];
+  clubEboard: User[] = [];
 
   successMessage: boolean = false;
   failMessage: boolean = false;
@@ -42,6 +45,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getClubInfo();
     this.getUsersFavoritedClubs();
     this.getClubEvents();
+    this.getEboard();
   }
 
   getClubInfo() {
@@ -92,6 +96,13 @@ export class SpecificClubPageComponent implements OnInit {
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
+    })
+  }
+  getEboard()
+  {
+    this.clubService.getClubEboard(this.clubID).subscribe(response => {
+      this.clubEboard = response;
+      console.log(this.clubEboard);
     })
   }
 }

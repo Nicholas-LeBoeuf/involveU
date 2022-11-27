@@ -124,7 +124,6 @@ public class DBServices {
        }
        else
        {
-
            tempPrezMember = listToSort.get(indexPresident);
            listToSort.remove(indexPresident);
            listToSort.add(0,tempPrezMember);

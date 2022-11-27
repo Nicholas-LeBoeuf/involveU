@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Club} from "../objects/club";
-import {AssignRemoveAdvisor} from "../objects/assignRemoveAdvisor";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,15 @@ export class AdminService {
   insertNewClub(newClub: Club){
     return this.http.post(environment.apiURL + `club/insertClub`, newClub);
   }
-  assignNewAdvisor(assignAdvisor: AssignRemoveAdvisor){
-    return this.http.post(environment.apiURL + `admin/assignNewAdvisor`, assignAdvisor);
+  assignNewAdvisor(advisorID: number, clubID: number){
+    return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`);
   }
 
-  removeAdvisor(removeAdvisor : AssignRemoveAdvisor){
-    return this.http.post(environment.apiURL + `admin/removeAdvisor`, removeAdvisor);
+  addEBoardMember(userID: number, clubID: number, role: string) {
+    return this.http.get(environment.apiURL + `admin/addNewEboard/${userID}/${clubID}/${role}`);
+  }
+
+  removeEBoardMember(userID: number){
+    return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`);
   }
 }

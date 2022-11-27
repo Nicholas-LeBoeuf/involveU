@@ -63,7 +63,7 @@ public class AdminController extends DBServices {
     private ResponseEntity<String>deleteEboard(@PathVariable("userID") int userID )
     {
 
-        deleteEboard(userID);
+        deleteDBEboardMember(userID);
         return new ResponseEntity<>("added user successfully", HttpStatus.OK);
     }
 }

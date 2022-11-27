@@ -41,6 +41,7 @@ export class LandingPageComponent implements OnInit {
   fillTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
+      console.log(data);
     })
   }
 

@@ -1,0 +1,161 @@
+<div *ngIf="createClubMessage === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Club creation successful!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="createClubFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Club creation unsuccessful</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="createClubDiv">
+  <h1 class="dialogTitle">Create club</h1>
+  <form [formGroup]="createClubForm">
+    <div class="leftClubDiv">
+      <div class="form-group createClubInputs">
+        <input class="form-control formLeftInputs" type="text" placeholder="Club Name" formControlName="clubName">
+        <div *ngIf="clubCreationFormInputs?.['clubName']?.invalid && (clubCreationFormInputs?.['clubName']?.dirty || clubCreationFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubName']?.errors?.['required']">
+            Club Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <input class="form-control formLeftInputs" type="text" placeholder="Club Affiliation" formControlName="clubAffiliation">
+        <div *ngIf="clubCreationFormInputs?.['clubAffiliation']?.invalid && (clubCreationFormInputs?.['clubAffiliation']?.dirty || clubCreationFormInputs?.['clubAffiliation']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubAffiliation']?.errors?.['required']">
+            Club Affiliation is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <textarea class="form-control formLeftInputs largeTextField"placeholder="Club Biography" formControlName="clubBio"></textarea>
+        <div *ngIf="clubCreationFormInputs?.['clubBio']?.invalid && (clubCreationFormInputs?.['clubBio']?.dirty || clubCreationFormInputs?.['clubBio']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubBio']?.errors?.['required']">
+            Club Biography is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <textarea class="form-control formLeftInputs largeTextField" type="text" placeholder="Club Vision" formControlName="clubVision"></textarea>
+        <div *ngIf="clubCreationFormInputs?.['clubVision']?.invalid && (clubCreationFormInputs?.['clubVision']?.dirty || clubCreationFormInputs?.['clubVision']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubVision']?.errors?.['required']">
+            Club Vision is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rightClubDiv">
+      <div class="form-group createClubInputs">
+        <input class="form-control formRightInputs" type="text" placeholder="Club Advisor" formControlName="advisorID">
+        <div *ngIf="clubCreationFormInputs?.['advisorID']?.invalid && (clubCreationFormInputs?.['advisorID']?.dirty || clubCreationFormInputs?.['advisorID']?.touched)" class="rightAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['advisorID']?.errors?.['required']">
+            Club Advisor is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <input class="form-control formRightInputs" type="text" placeholder="Club Logo" formControlName="clubLogo">
+        <div *ngIf="clubCreationFormInputs?.['clubLogo']?.invalid && (clubCreationFormInputs?.['clubLogo']?.dirty || clubCreationFormInputs?.['clubLogo']?.touched)" class="rightAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubLogo']?.errors?.['required']">
+            Club Advisor is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <textarea class="form-control formRightInputs largeTextField" type="text" placeholder="Club Mission" formControlName="clubMission"></textarea>
+        <div *ngIf="clubCreationFormInputs?.['clubMission']?.invalid && (clubCreationFormInputs?.['clubMission']?.dirty || clubCreationFormInputs?.['clubMission']?.touched)" class="rightAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubMission']?.errors?.['required']">
+            Club Mission is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group createClubInputs">
+        <textarea class="form-control formRightInputs largeTextField" type="text" placeholder="Club Values" formControlName="clubValues"></textarea>
+        <div *ngIf="clubCreationFormInputs?.['clubValues']?.invalid && (clubCreationFormInputs?.['clubValues']?.dirty || clubCreationFormInputs?.['clubValues']?.touched)" class="rightAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['clubValues']?.errors?.['required']">
+            Club Value is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="centerButton">
+      <button class="createClubButton form-submit-button" type="submit" (click)="createClubSubmit()">Submit club</button>
+    </div>
+  </form>
+</div>
+<div class="addRemoveEBoardDiv">
+  <h1 class="dialogTitle">Assign/Remove EBoard Member</h1>
+  <form [formGroup]="addEBoardForm">
+    <div class="addEBoard">
+      <div class="form-group">
+        <p-dropdown [options]="clubNames" [formControl]="addEBoardClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <div *ngIf="addEBoardFormInputs?.['clubName']?.invalid && (addEBoardFormInputs?.['clubName']?.dirty || addEBoardFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['clubName']?.errors?.['required']">
+            Club Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="User ID" formControlName="userID">
+        <div *ngIf="addEBoardFormInputs?.['userID']?.invalid && (addEBoardFormInputs?.['userID']?.dirty || addEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['userID']?.errors?.['required']">
+            User ID is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="EBoard Position" formControlName="role">
+        <div *ngIf="addEBoardFormInputs?.['role']?.invalid && (addEBoardFormInputs?.['position']?.dirty || addEBoardFormInputs?.['role']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="addEBoardFormInputs?.['role']?.errors?.['role']">
+            EBoard position is required
+          </div>
+        </div>
+      </div>
+      <button class="form-submit-button" type="submit" (click)="addEBoardSubmit()">Assign EBoard Member</button>
+    </div>
+  </form>
+  <form [formGroup]="removeEBoardForm">
+    <div class="removeEBoard">
+      <div class="form-group">
+        <p-dropdown [options]="clubNames" [formControl]="removeEBoardClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <div *ngIf="removeEBoardFormInputs?.['clubName']?.invalid && (removeEBoardFormInputs?.['clubName']?.dirty || removeEBoardFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="removeEBoardFormInputs?.['clubName']?.errors?.['required']">
+            Club Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="User ID" formControlName="userID">
+        <div *ngIf="removeEBoardFormInputs?.['userID']?.invalid && (removeEBoardFormInputs?.['userID']?.dirty || removeEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="removeEBoardFormInputs?.['userID']?.errors?.['required']">
+            User ID is required
+          </div>
+        </div>
+      </div>
+      <button class="form-submit-button" type="submit" (click)="removeEBoardSubmit()">Remove EBoard Member</button>
+    </div>
+  </form>
+</div>
+<div class="assignRemoveAdvisorDiv">
+  <h1 class="dialogTitle">Assign Advisor</h1>
+  <form [formGroup]="assignAdvisorForm">
+    <div class="assignAdvisor">
+      <div class="form-group">
+        <p-dropdown [options]="clubNames" [formControl]="assignAdvisorClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club"></p-dropdown>
+        <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
+            Club Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="Advisor ID" formControlName="advisorID">
+        <div *ngIf="assignAdvisorFormInputs?.['advisorID']?.invalid && (assignAdvisorFormInputs?.['advisorID']?.dirty || assignAdvisorFormInputs?.['advisorID']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="assignAdvisorFormInputs?.['advisorID']?.errors?.['required']">
+            Advisor ID is required
+          </div>
+        </div>
+      </div>
+      <button class="form-submit-button" type="submit" (click)="assignAdvisorSubmit()">Assign Advisor</button>
+    </div>
+  </form>
+</div>

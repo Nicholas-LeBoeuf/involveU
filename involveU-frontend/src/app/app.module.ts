@@ -20,6 +20,15 @@ import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import {DropdownModule} from "primeng/dropdown";
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -28,7 +37,8 @@ import {DropdownModule} from "primeng/dropdown";
     ClubPageComponent,
     FilterPipe,
     SpecificClubPageComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    ScheduleComponent
   ],
     imports: [
         BrowserModule,
@@ -45,7 +55,8 @@ import {DropdownModule} from "primeng/dropdown";
         TableModule,
         InputTextModule,
         ContextMenuModule,
-        DropdownModule
+        DropdownModule,
+        FullCalendarModule,
     ],
   providers: [
     CookieService

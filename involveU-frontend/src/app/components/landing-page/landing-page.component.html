@@ -28,43 +28,52 @@
   <div class="todaysEventsHeader">
     <h1>What’s Going On Today at Southern New Hampshire University</h1>
   </div>
+
+  <ng-template [ngIf]="todaysEvents.length === 0">
+    <div class="noEventsContent">
+      <h2>There are no events occurring today!</h2>
+    </div>
+  </ng-template>
+
   <div class="todaysEventsContainer">
-    <p-carousel styleClass="eventsCaro" [value]="todaysEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-      <ng-template let-event pTemplate="item">
-        <div class="clubCard">
-          <div class="clubContent">
-            <div>
-              <h3 class="p-mb-1">{{event.eventName}}</h3>
-              <hr>
-              <div class="parent">
-                <div class="div1">
-                  <h3 class="eventDataTitle">Date</h3>
-                  <h5 class="eventData">{{event.eventDate}}</h5>
-                </div>
-                <div class="div2">
-                  <h3 class="eventDataTitle">Time</h3>
-                  <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
-                </div>
-                <div class="div3">
-                  <h3 class="eventDataTitle">Location</h3>
-                  <h5 class="eventData">{{event.eventLocation}}</h5>
-                </div>
-                <div class="div4">
-                  <h3 class="eventDataTitle">Hosted By</h3>
-                  <h5 class="eventData">{{event.clubID}}</h5>
-                </div>
-                <div class="div5">
-                  <button class="blueButton">View More Information</button>
-                  <ng-container *ngIf="userID !== 0">
-                    <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
-                  </ng-container>
+    <ng-template [ngIf]="todaysEvents.length !== 0">
+      <p-carousel styleClass="eventsCaro" [value]="todaysEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+        <ng-template let-event pTemplate="item">
+          <div class="clubCard">
+            <div class="clubContent">
+              <div>
+                <h3 class="p-mb-1">{{event.eventName}}</h3>
+                <hr>
+                <div class="parent">
+                  <div class="div1">
+                    <h3 class="eventDataTitle">Date</h3>
+                    <h5 class="eventData">{{event.eventDate}}</h5>
+                  </div>
+                  <div class="div2">
+                    <h3 class="eventDataTitle">Time</h3>
+                    <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                  </div>
+                  <div class="div3">
+                    <h3 class="eventDataTitle">Location</h3>
+                    <h5 class="eventData">{{event.eventLocation}}</h5>
+                  </div>
+                  <div class="div4">
+                    <h3 class="eventDataTitle">Hosted By</h3>
+                    <h5 class="eventData">{{event.clubID}}</h5>
+                  </div>
+                  <div class="div5">
+                    <button class="blueButton">View More Information</button>
+                    <ng-container *ngIf="userID !== 0">
+                      <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                    </ng-container>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+        </ng-template>
+      </p-carousel>
+    </ng-template>
   </div>
 
 </div>

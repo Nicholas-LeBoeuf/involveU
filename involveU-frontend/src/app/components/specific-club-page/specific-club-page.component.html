@@ -40,7 +40,16 @@
   <div class="eboardSection">
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
-      <h5 class="text-center">Testing this</h5>
+      <table>
+        <div class = "eboardContainer" *ngFor="let member of clubEboard"  >
+           <tr class = "eboardTableData">
+             <td >{{member.eboardPosition}}: </td>
+             <td>{{member.firstName}} {{member.lastName}}</td>
+           </tr>
+        </div>
+      </table>
+
+
     </div>
   </div>
 </div>

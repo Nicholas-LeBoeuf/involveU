@@ -74,4 +74,48 @@ public class Events{
     public int getClubID() {return clubID;}
 
     public void setClubID(int clubID) {this.clubID = clubID;}
+
+    public void milTimeToReg(String str)
+    {
+        String finalTime;
+        int h1 = (int)str.charAt(0) - '0';
+        int h2 = (int)str.charAt(1)- '0';
+
+        int hh = h1 * 10 + h2;
+
+        // Finding out the Meridien of time
+        // ie. AM or PM
+        String Meridien;
+        if (hh < 12) {
+            Meridien = "AM";
+        }
+        else
+            Meridien = "PM";
+
+        hh %= 12;
+
+        // Handle 00 and 12 case separately
+        if (hh == 0) {
+            finalTime = "12";
+
+            // Printing minutes and seconds
+            for (int i = 2; i < 8; ++i) {
+               finalTime += str.charAt(i);
+            }
+        }
+        else {
+            finalTime = String.valueOf(hh);
+            // Printing minutes and seconds
+            for (int i = 2; i < 8; ++i) {
+                finalTime += str.charAt(i);
+            }
+        }
+
+        // After time is printed
+        // cout Meridien
+        finalTime += " "+Meridien;
+
+
+    }
+
 }

@@ -28,7 +28,7 @@ export class SpecificClubPageComponent implements OnInit {
   clubInfo!: Club;
   favoritedClubs: Club[] = [];
   clubEboard: User[] = [];
-
+  isEboard: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
   message!: string;
@@ -46,6 +46,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
+
   }
 
   getClubInfo() {
@@ -105,4 +106,24 @@ export class SpecificClubPageComponent implements OnInit {
       console.log(this.clubEboard);
     })
   }
+  isInEboard()
+  {
+    //console.log(arr.find(e => e.foo === 'bar'))
+    let studentID : number = +this.cookie.get('userID');
+    console.log(this.cookie.get('studentFName'));
+    console.log(this.clubEboard.some(e => e.studentID === this.userID));
+    //console.log("Boolean value:", array1.includes(44));
+    if(this.clubEboard.some(e => e.studentID === this.userID)=== false)
+    {
+      return false;
+    }
+    else
+    {
+     return true;
+    }
+  }
+
+
+
+
 }

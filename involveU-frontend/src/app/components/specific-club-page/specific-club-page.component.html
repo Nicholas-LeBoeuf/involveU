@@ -13,9 +13,12 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <ng-container *ngIf="this.clubIsFav;else notFav">
-          <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
+        <ng-container *ngIf="this.isInEboard() === true;">
+          <button class="clubButton blueButton">Event Data</button>
         </ng-container>
+        <ng-template *If="this.clubIsFav && !this.isInEboard();else notFav" #Fav>
+          <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
+        </ng-template>
         <ng-template #notFav>
           <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
         </ng-template>

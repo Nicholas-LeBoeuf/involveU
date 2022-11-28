@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {User} from "../../objects/user";
 import {EventsService} from "../../services/events.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Eboard} from "../../objects/Eboard";
 
 @Component({
@@ -15,11 +16,28 @@ import {Eboard} from "../../objects/Eboard";
 })
 export class SpecificClubPageComponent implements OnInit {
 
+  createEventForm : FormGroup;
+
+  createNewEventForm: FormControl = new FormControl(null);
   constructor(private clubService: ClubService,
+              private formBuilder: FormBuilder,
               private eventsService: EventsService,
               private route: ActivatedRoute,
               private router: Router,
-              public cookie: CookieService) { }
+              public cookie: CookieService) {
+    this.createEventForm = this.formBuilder.group({
+      eventName: ['', Validators.required],
+      eventLocation: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      eventDate: ['', Validators.required],
+      eventDesc: ['', Validators.required],
+      isTransportation: ['', Validators.required],
+      ticketLink: ['', Validators.required],
+
+    })
+  }
+
 
   clubID!: number;
   userID!: number;
@@ -32,7 +50,8 @@ export class SpecificClubPageComponent implements OnInit {
   successMessage: boolean = false;
   failMessage: boolean = false;
   message!: string;
-
+  eventDialog: boolean = false;
+  addEventDialog: boolean = false;
   clubEvents: Events[] = [];
 
   ngOnInit(): void {
@@ -122,8 +141,23 @@ export class SpecificClubPageComponent implements OnInit {
      return true;
     }
   }
+  showEventsDialog()
+  {
+    this.eventDialog = true;
+  }
 
-
+  closeEventsDialog()
+  {
+    this.eventDialog = false;
+  }
+  showAddEventDialog()
+  {
+    this.addEventDialog = true;
+  }
+  closeAddEventDialog()
+  {
+    this.addEventDialog = false;
+  }
 
 
 }

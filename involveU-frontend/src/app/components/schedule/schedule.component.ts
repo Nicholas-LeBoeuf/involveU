@@ -9,18 +9,6 @@ export class ScheduleComponent implements OnInit {
 
   constructor() { }
 
-  options = {
-   
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    },
-    editable: true,
-    selectable:true,
-    selectMirror: true,
-    dayMaxEvents: true
-  };
 
   ngOnInit(): void {
   }

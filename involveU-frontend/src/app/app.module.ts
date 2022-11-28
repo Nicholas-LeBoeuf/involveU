@@ -21,11 +21,12 @@ import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import {DropdownModule} from "primeng/dropdown";
 import { ScheduleComponent } from './components/schedule/schedule.component';
-import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
-import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
 ]);
@@ -38,7 +39,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FilterPipe,
     SpecificClubPageComponent,
     AdminPageComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    CalendarComponent
   ],
     imports: [
         BrowserModule,

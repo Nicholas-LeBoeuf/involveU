@@ -13,13 +13,13 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <ng-container *ngIf="this.isInEboard() === true;">
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true;">
           <button class="clubButton blueButton">Event Data</button>
         </ng-container>
-        <ng-template *If="this.clubIsFav && !this.isInEboard();else notFav" #Fav>
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.clubIsFav;">
           <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
-        </ng-template>
-        <ng-template #notFav>
+        </ng-container>
+        <ng-template *ngIf=" this.cookie.get('userID') != undefined && !this.clubIsFav;">
           <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
         </ng-template>
       </div>

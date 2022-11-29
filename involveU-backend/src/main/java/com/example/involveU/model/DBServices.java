@@ -379,5 +379,15 @@ public class DBServices {
         return events;
     }
 
+    protected List<Events> getAllEvents()
+    {
+        sql = "SELECT * FROM Events";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
+
 
 }

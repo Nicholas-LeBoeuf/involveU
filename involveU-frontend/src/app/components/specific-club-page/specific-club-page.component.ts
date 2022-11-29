@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {User} from "../../objects/user";
 import {EventsService} from "../../services/events.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Eboard} from "../../objects/Eboard";
 
 @Component({
@@ -15,11 +16,28 @@ import {Eboard} from "../../objects/Eboard";
 })
 export class SpecificClubPageComponent implements OnInit {
 
+  createEventForm : FormGroup;
+
+  createNewEventForm: FormControl = new FormControl(null);
   constructor(private clubService: ClubService,
+              private formBuilder: FormBuilder,
               private eventsService: EventsService,
               private route: ActivatedRoute,
               private router: Router,
-              public cookie: CookieService) { }
+              public cookie: CookieService) {
+    this.createEventForm = this.formBuilder.group({
+      eventName: ['', Validators.required],
+      eventLocation: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      eventDate: ['', Validators.required],
+      eventDesc: ['', Validators.required],
+      isTransportation: ['', Validators.required],
+      ticketLink: ['', Validators.required],
+
+    })
+  }
+
 
   clubID!: number;
   userID!: number;
@@ -28,11 +46,12 @@ export class SpecificClubPageComponent implements OnInit {
   clubInfo!: Club;
   favoritedClubs: Club[] = [];
   clubEboard: User[] = [];
-
+  isEboard: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
   message!: string;
-
+  eventDialog: boolean = false;
+  addEventDialog: boolean = false;
   clubEvents: Events[] = [];
 
   ngOnInit(): void {
@@ -46,6 +65,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
+
   }
 
   getClubInfo() {
@@ -105,4 +125,39 @@ export class SpecificClubPageComponent implements OnInit {
       console.log(this.clubEboard);
     })
   }
+  isInEboard()
+  {
+    //console.log(arr.find(e => e.foo === 'bar'))
+    let studentID : number = +this.cookie.get('userID');
+    console.log(this.cookie.get('studentFName'));
+    console.log(this.clubEboard.some(e => e.studentID === this.userID));
+    //console.log("Boolean value:", array1.includes(44));
+    if(this.clubEboard.some(e => e.studentID === this.userID)=== false)
+    {
+      return false;
+    }
+    else
+    {
+     return true;
+    }
+  }
+  showEventsDialog()
+  {
+    this.eventDialog = true;
+  }
+
+  closeEventsDialog()
+  {
+    this.eventDialog = false;
+  }
+  showAddEventDialog()
+  {
+    this.addEventDialog = true;
+  }
+  closeAddEventDialog()
+  {
+    this.addEventDialog = false;
+  }
+
+
 }

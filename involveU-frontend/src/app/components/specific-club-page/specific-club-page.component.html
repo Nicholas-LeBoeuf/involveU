@@ -13,10 +13,13 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <ng-container *ngIf="this.clubIsFav;else notFav">
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true;">
+          <button class="clubButton blueButton" (click)="showEventsDialog()">Event Data</button>
+        </ng-container>
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.clubIsFav;">
           <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
         </ng-container>
-        <ng-template #notFav>
+        <ng-template *ngIf=" this.cookie.get('userID') != undefined && !this.clubIsFav;">
           <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
         </ng-template>
       </div>
@@ -113,3 +116,55 @@
     </ng-template>
   </p-carousel>
 </div>
+
+<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEventsDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <H1>EVENTS</H1>
+  <p-table [value]="clubEvents">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-event>
+      <tr>
+
+        <td>{{event.eventName}}</td>
+        <td>{{event.eventLocation}}</td>
+        <td>{{event.eventDate}}</td>
+        <td>{{event.startTime}}</td>
+        <td><button class="blueButton">Edit</button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <button (click) = "showAddEventDialog()" class="blueButton"> Add Event</button>
+
+</p-dialog>
+
+<p-dialog [(visible)]="addEventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeAddEventDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>Add Events</h1>
+  <form [formGroup]="createEventForm">
+    <input class="form-control formLeftInputs" type="text" placeholder="Event Name" formControlName="eventName">
+    <input class="form-control formLeftInputs" type="text" placeholder="Location" formControlName="eventLocation">
+    <input class="form-control formRightInputs" type="time" placeholder="Start Time" formControlName="startTime">
+    <input class="form-control formRightInputs" type="time" placeholder="End Time" formControlName="endTime">
+    <input class="form-control formLeftInputs" type="date" placeholder="Event Date" formControlName="eventDate">
+    <input class="form-control formLeftInputs largeTextField" type="text" placeholder="Event Description" formControlName="eventDesc">
+   <label>Transportation?</label>
+    <input  type="radio" placeholder="Transportation" formControlName="isTransportation">
+    <input class="form-control formRightInputs" type="text" placeholder="Ticket Link" formControlName="ticketLink">
+    <button class="blueButton" type="submit" >Create Event</button>
+
+  </form>
+
+</p-dialog>

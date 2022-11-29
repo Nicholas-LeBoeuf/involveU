@@ -8,7 +8,7 @@ export interface Events {
   eventDesc: string;
   isTransportation: boolean;
   ticketLink: string;
-
+  clubName?: string;
   //derived
   clubID: number;
 }

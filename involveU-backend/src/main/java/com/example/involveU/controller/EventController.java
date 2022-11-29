@@ -87,10 +87,17 @@ public class EventController extends DBServices{
 
     @CrossOrigin (origins = "http://localhost:4200")
     @GetMapping("events/createNewEvent")
-    private ResponseEntity<String> createNewClub(@RequestBody Events newEvent)
+    private ResponseEntity<String> createNewEvent(@RequestBody Events newEvent)
     {
             insertNewEvent(newEvent);
         return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/getAllEvents")
+    private ResponseEntity<List<Events>> getAllCalendarEvents()
+    {
+          events =  getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
 

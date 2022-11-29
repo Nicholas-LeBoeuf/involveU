@@ -12,7 +12,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   insertNewClub(newClub: Club){
-    return this.http.post(environment.apiURL + `club/insertClub`, newClub);
+    return this.http.get(environment.apiURL + `club/insertClub/${newClub}`);
   }
   assignNewAdvisor(advisorID: number, clubID: number){
     return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`);

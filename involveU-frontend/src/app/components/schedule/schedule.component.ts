@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ClubService} from "../../services/club.service";
+import {EventsService} from "../../services/events.service";
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-schedule',
@@ -7,11 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScheduleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private clubService: ClubService,
+              private eventsService: EventsService,
+              private router: Router,
+              public cookie: CookieService) { }
 
 
   ngOnInit(): void {
   }
 
+  getAllEvents() {
+
+  }
 
 }

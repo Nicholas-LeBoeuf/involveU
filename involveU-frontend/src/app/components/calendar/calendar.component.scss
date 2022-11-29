@@ -1,4 +1,13 @@
 @import '~@fullcalendar/common/main.css';
+@import '~@fullcalendar/common/main.min.css';
 @import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/daygrid/main.min.css';
 @import '~@fullcalendar/timegrid/main.css';
+@import '~@fullcalendar/timegrid/main.min.css';
+
+
+.fc { /* the calendar root */
+  max-width: 1100px;
+  margin: 0 auto;
+}
 

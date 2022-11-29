@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 public class Events{
 
-
     private long eventID;
 
     private  String eventName;

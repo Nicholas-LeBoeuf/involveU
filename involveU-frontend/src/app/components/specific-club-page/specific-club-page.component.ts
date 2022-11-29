@@ -51,8 +51,10 @@ export class SpecificClubPageComponent implements OnInit {
   failMessage: boolean = false;
   message!: string;
   eventDialog: boolean = false;
+  editDialog: boolean = false;
   addEventDialog: boolean = false;
   clubEvents: Events[] = [];
+  certainEvent: Events[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -65,6 +67,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
+
 
   }
 
@@ -157,6 +160,18 @@ export class SpecificClubPageComponent implements OnInit {
   closeAddEventDialog()
   {
     this.addEventDialog = false;
+  }
+  showEditDialog(SpecficEvent: Events)
+  {
+    console.log(SpecficEvent);
+    this.certainEvent.push(SpecficEvent);
+    this.editDialog = true;
+    console.log(this.certainEvent);
+  }
+  closeEditDialog() {
+    this.certainEvent = [];
+    this.editDialog = false;
+
   }
 
   submitNewEvent()

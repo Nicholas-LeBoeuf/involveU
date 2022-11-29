@@ -86,7 +86,7 @@ public class EventController extends DBServices{
     }
 
     @CrossOrigin (origins = "http://localhost:4200")
-    @GetMapping("events/createNewEvent")
+    @PostMapping("events/createNewEvent")
     private ResponseEntity<String> createNewEvent(@RequestBody Events newEvent)
     {
             insertNewEvent(newEvent);

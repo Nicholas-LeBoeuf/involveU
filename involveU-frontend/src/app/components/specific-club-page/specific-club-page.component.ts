@@ -159,5 +159,18 @@ export class SpecificClubPageComponent implements OnInit {
     this.addEventDialog = false;
   }
 
+  submitNewEvent()
+  {
+    const eventInfo : Events = {eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+
+    this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
+      console.log(success);
+
+    },(error) =>{
+
+      console.log(error.text);
+      })
+  }
+
 
 }

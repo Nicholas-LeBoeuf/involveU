@@ -1,6 +1,8 @@
 package com.example.involveU.model;
 
 import com.fasterxml.jackson.databind.util.ArrayBuilders;
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
 import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -294,8 +296,13 @@ public class DBServices {
     //EVENTS CONTROLLER
     protected boolean insertNewEvent(Events newEvent)
     {
-        sql = "INSERT INTO Events (eventName, startTime, eventLocation,endTime,eventDate,eventDesc, isTransportation, ticketLink,club_name,clubId) Values (?,?,?,?,?,?,?,?,?,?)";
-        validQuery = JdbcTemplated.update(sql,newEvent.getEventName(),newEvent.getStartTime(), newEvent.getEventLocation(),newEvent.getEndTime(), newEvent.getEventDate(), newEvent.getEventDesc(),newEvent.getIsTransportation(),newEvent.getTicketLink(),newEvent.getClubName(), newEvent.getClubID());
+
+         sql = "INSERT INTO Events (eventName, startTime, eventLocation,endTime,eventDate,eventDesc, isTransportation, ticketLink,club_name,clubId) Values (?,?,?,?,?,?,?,?,?,?)";
+
+
+         validQuery = JdbcTemplated.update(sql, newEvent.getEventName(), newEvent.getStartTime(), newEvent.getEventLocation(), newEvent.getEndTime(), newEvent.getEventDate(), newEvent.getEventDesc(), newEvent.getIsTransportation(), newEvent.getTicketLink(), newEvent.getClubName(), newEvent.getClubID());
+
+
         return validQuery == 1;
     }
     protected List<Events> getDBTodaysEvents()

@@ -167,10 +167,23 @@ export class SpecificClubPageComponent implements OnInit {
       console.log(success);
 
     },(error) =>{
-
+      location.reload();
       console.log(error.text);
       })
   }
+  get getEventsFormInputs()
+  {
+    return this.createEventForm.controls;
+  }
+  areFormInputsValid()
+  {
+    if(this.createEventForm.value.eventName == '' || this.createEventForm.value.eventLocation == '' ||this.createEventForm.value.startTime == '' || this.createEventForm.value.endTime == '' || this.createEventForm.value.eventDate == '' || this.createEventForm.value.eventDesc == '') {
+      return true;
+    }
+    else{
+        return false;
+      }
 
+  }
 
 }

@@ -21,7 +21,6 @@ export class CalendarComponent implements OnInit {
     this.formatAllEvents();
   }
 
-
   formatAllEvents() {
     for (let i = 0; i < this.eventsToDisplay.length; i++)
     {
@@ -30,7 +29,7 @@ export class CalendarComponent implements OnInit {
 
     this.setOptions();
   }
-  
+
   setOptions() {
     this.options = {
       initialView: 'dayGridMonth',
@@ -44,13 +43,7 @@ export class CalendarComponent implements OnInit {
       selectMirror: true,
       dayMaxEvents: true,
       contentHeight: '80vh',
-      events: this.formattedEvents/*[
-      {  title:  'My Event this tnjs askjdn'+ '\r\n' + 'Test',
-        start:  '2022-11-29T14:30:00',
-        end: '2022-11-29T17:30:00',
-        allDay: false,},
-     /!* { title: 'event 2', date: '2022-11-30', startStr: '4:00' }*!/
-    ]*/
+      events: this.formattedEvents
     };
   }
 }

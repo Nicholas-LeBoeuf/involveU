@@ -209,16 +209,22 @@ export class ClubPageComponent implements OnInit {
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
+
     })
 
+    this.message = "Event Successfully RSVPd!";
+    this.successMessage = true;
     location.reload();
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
       console.log(response);
+
     })
 
+    this.message = "Successfully Removed RSVP!";
+    this.successMessage = true;
     location.reload();
   }
 

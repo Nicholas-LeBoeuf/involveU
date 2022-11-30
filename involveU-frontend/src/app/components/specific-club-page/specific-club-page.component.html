@@ -104,7 +104,7 @@
                 <h5 class="eventData">{{event.clubID}}</h5>
               </div>
               <div class="div5">
-                <button class="blueButton">View More Information</button>
+                <button class="blueButton" (click)="showViewMoreInfoDialog()">View More Information</button>
                 <ng-container *ngIf="userID !== 0">
                   <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
                 </ng-container>
@@ -252,4 +252,37 @@
 
     </div>
 
+</p-dialog>
+
+<p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>Event Information</h1>
+  <ng-template let-event>
+    <div>
+      <label>Event Name</label>
+      <p>{{event.eventName}}</p>
+    </div>
+    <div>
+      <label>Event Location</label>
+      <p>{{event.eventLocation}}</p>
+    </div>
+    <div>
+      <label>Start Time</label>
+      <p>{{event.startTime}}</p>
+    </div>
+    <div>
+      <label>End Time</label>
+      <p>{{event.endTime}}</p>
+    </div>
+    <div>
+      <label>Event Date</label>
+      <p>{{event.eventDate}}</p>
+    </div>
+    <div>
+      <label>Event Description</label>
+      <p>{{event.eventDesc}}</p>
+    </div>
+  </ng-template>
 </p-dialog>

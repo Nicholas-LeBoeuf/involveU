@@ -53,6 +53,7 @@ export class SpecificClubPageComponent implements OnInit {
   eventDialog: boolean = false;
   editDialog: boolean = false;
   addEventDialog: boolean = false;
+  viewMoreInfoDialog: boolean = false;
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
 
@@ -174,6 +175,13 @@ export class SpecificClubPageComponent implements OnInit {
     this.editDialog = false;
     this.createEventForm.reset();
    }
+  
+  showViewMoreInfoDialog(){
+    this.viewMoreInfoDialog = true;
+  }
+  closeViewMoreInfoDialog(){
+    this.viewMoreInfoDialog = false;
+  }
 
   submitNewEvent()
   {

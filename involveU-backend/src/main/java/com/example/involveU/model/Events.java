@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 public class Events{
 
-
     private long eventID;
 
     private  String eventName;
@@ -53,7 +52,11 @@ public class Events{
 
     public String getEventDate() {return eventDate;}
 
-    public void setEventDate(String eventDate) {this.eventDate = eventDate;}
+    public void setEventDate(String eventDate) {
+
+        this.eventDate = eventDate;
+
+    }
 
     public String getEventDesc() {return eventDesc;}
 

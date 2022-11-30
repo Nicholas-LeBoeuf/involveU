@@ -8,6 +8,7 @@ import com.example.involveU.model.DBServices;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.Events;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,11 +87,17 @@ public class EventController extends DBServices{
     }
 
     @CrossOrigin (origins = "http://localhost:4200")
-    @GetMapping("events/createNewEvent")
+    @PostMapping("events/createNewEvent")
     private ResponseEntity<String> createNewEvent(@RequestBody Events newEvent)
     {
-            insertNewEvent(newEvent);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+
+            if (insertNewEvent(newEvent)) {
+                return new ResponseEntity<>("success", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Missing Required Data", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+
     }
     @CrossOrigin (origins = "http://localhost:4200")
     @GetMapping("events/getAllEvents")
@@ -114,6 +121,14 @@ public class EventController extends DBServices{
           }
 
     }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @PostMapping("events/updateEvents")
+    private ResponseEntity<String> updateEvents(@RequestBody Events eventToUpdate )
+    {
+        updateDBEvent(eventToUpdate);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
 
 
 

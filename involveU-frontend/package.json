@@ -25,6 +25,7 @@
     "@fullcalendar/list": "^5.0.0",
     "@fullcalendar/timegrid": "^5.0.0",
     "boostrap": "^2.0.0",
+    "fullcalendar": "^5.11.3",
     "ng": "^0.0.0",
     "ngx-cookie-service": "^14.0.1",
     "node-sass": "^7.0.3",

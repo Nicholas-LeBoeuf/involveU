@@ -134,11 +134,17 @@
                     </div>
                     <div class="div4">
                       <h3 class="eventDataTitle">Hosted By</h3>
-                      <h5 class="eventData">{{event.clubID}}</h5>
+                      <h5 class="eventData">{{event.clubName}}</h5>
                     </div>
                     <div class="div5">
                       <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
-                      <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                      <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                        <button class="blueButton" (click)="removeEventRSVP(event.eventID)">Remove RSVP</button>
+                      </ng-container>
+                      <ng-template #ShowRSVP>
+                        <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                      </ng-template>
+
                     </div>
                   </div>
                 </div>
@@ -178,7 +184,7 @@
                     </div>
                     <div class="div4">
                       <h3 class="eventDataTitle">Hosted By</h3>
-                      <h5 class="eventData">{{event.clubID}}</h5>
+                      <h5 class="eventData">{{event.clubName}}</h5>
                     </div>
                     <div class="div5">
                       <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>

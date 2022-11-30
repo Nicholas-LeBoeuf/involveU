@@ -34,19 +34,30 @@ export class EventsService {
     return this.http.get<Events[]>(environment.apiURL + `events/getClubEvents/${clubID}`);
   }
 
+  getUserRSVPdEvents(userID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getUserRsvpEvent/${userID}`);
+  }
+
   rsvpToEvent(eventID: number, userID: number) {
     return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
   }
 
+  removeEventRSVP(eventID: number, userID: number) {
+    return this.http.get(environment.apiURL + `events/removeRsvpEvent/${eventID}/${userID}`);
+  }
 
   submitNewEvent(event: Events)
   {
-
-    return this.http.post(environment.apiURL +`events/createNewEvent/`, event );
+    return this.http.post(environment.apiURL +`events/createNewEvent/`, event, {responseType: 'text'} );
   }
+
   updateEvent(event: Events)
   {
     return this.http.post(environment.apiURL + `events/updateEvents`, event);
+  }
+
+  deleteEvent(eventID: number) {
+    return this.http.get(environment.apiURL + `events/deleteEvent/${eventID}`);
   }
 
 

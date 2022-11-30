@@ -43,6 +43,7 @@
   <div class="eboardSection">
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
+     
       <table>
         <div class = "eboardContainer" *ngFor="let member of clubEboard"  >
            <tr class = "eboardTableData">
@@ -130,6 +131,7 @@
         <th>Date</th>
         <th>Start Time</th>
         <th></th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-event>
@@ -140,6 +142,7 @@
         <td>{{event.eventDate}}</td>
         <td>{{event.startTime}}</td>
         <td><button (click) = "showEditDialog(event)" class="blueButton">Edit</button></td>
+        <td><button (click)= "deleteEvent(event.eventID)" class="blueButton">Delete</button></td>
       </tr>
     </ng-template>
   </p-table>
@@ -199,7 +202,7 @@
 
 </p-dialog>
 
-<p-dialog  [(visible)]="editDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+<p-dialog  [(visible)]="editDialog" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>

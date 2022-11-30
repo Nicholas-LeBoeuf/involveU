@@ -225,4 +225,13 @@ export class SpecificClubPageComponent implements OnInit {
       }
 
   }
+
+  deleteEvent(eventID: number) {
+    this.eventsService.deleteEvent(eventID).subscribe(response => {
+      console.log(response);
+    })
+    location.reload();
+  }
 }
+
+

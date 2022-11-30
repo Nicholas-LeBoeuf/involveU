@@ -24,7 +24,7 @@ export class LandingPageComponent implements OnInit {
   todaysEvents: Events[];
 
   ngOnInit(): void {
-    this.userID = +this.cookie.get('studentID')
+    this.userID = +this.cookie.get('studentID');
     this.fillUserInfo();
     this.fillTodaysEvents();
   }
@@ -41,6 +41,7 @@ export class LandingPageComponent implements OnInit {
   fillTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
+      console.log(data);
     })
   }
 

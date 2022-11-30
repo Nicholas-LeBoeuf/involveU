@@ -45,15 +45,13 @@ public class ClubController extends DBServices{
   
   }
   @CrossOrigin(origins = "http://localhost:4200")
-  @PostMapping ("/club/insertClub")
+  @GetMapping ("/club/insertClub")
   private ResponseEntity<String> insertClub(@RequestBody Club newClub)
   {
-
-         repsonse = insertNewClub(newClub);
-
-       if(repsonse.equals("error")){return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);}
-       else {return new ResponseEntity<>("Club has been successfully inserted", HttpStatus.OK);}
-
+         if(insertNewClub(newClub))
+             return new ResponseEntity<>("Club has been successfully inserted", HttpStatus.OK);
+         else
+             return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);
   }
   @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/club/searchClubs/{searchContent}")
@@ -99,8 +97,11 @@ public class ClubController extends DBServices{
 @GetMapping("/club/submitFavorite/{ID}/{clubID}")
  private ResponseEntity<String> submitFavorite(@PathVariable("ID") int userID, @PathVariable("clubID") int clubID)
  {
-     
-         return new ResponseEntity<>(submitDBFavorite(userID,clubID), HttpStatus.OK) ;
+
+     if(submitDBFavorite(userID,clubID))
+         return new ResponseEntity<>( "success", HttpStatus.OK) ;
+     else
+         return new ResponseEntity<>( "error", HttpStatus.BAD_REQUEST) ;
  }
 
 @CrossOrigin(origins ="http://localhost:4200")

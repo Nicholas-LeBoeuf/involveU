@@ -2,6 +2,8 @@ package com.example.involveU.controller;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import com.example.involveU.model.DBServices;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.Events;
@@ -82,6 +84,22 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/createNewEvent")
+    private ResponseEntity<String> createNewEvent(@RequestBody Events newEvent)
+    {
+            insertNewEvent(newEvent);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/getAllEvents")
+    private ResponseEntity<List<Events>> getAllCalendarEvents()
+    {
+          events =  getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
 
 
 }

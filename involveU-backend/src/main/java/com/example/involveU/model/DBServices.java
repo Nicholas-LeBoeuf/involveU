@@ -71,7 +71,7 @@ public class DBServices {
 
         if( checkUserExistence(newUser.getEmail()))
         {
-            sql="INSERT INTO User (FirstName, LastName, year, Email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
+            sql="INSERT INTO User (firstName, lastName, year, email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
         }
         else {
@@ -254,7 +254,7 @@ public class DBServices {
     }
 
     protected Boolean deleteDBUser(int userID) {
-        sql = "DELETE FROM User WHERE studentID = ?;";
+        sql = "DELETE FROM User WHERE studentID = ?";
 
         validQuery = JdbcTemplated.update(sql,userID);
 

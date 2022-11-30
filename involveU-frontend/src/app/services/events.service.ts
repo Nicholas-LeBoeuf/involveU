@@ -14,6 +14,10 @@ export class EventsService {
   constructor(private http: HttpClient) {
   }
 
+  getAllEvents(): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getAllEvents`);
+  }
+
   getTodaysEvents(): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTodaysEvents`);
   }
@@ -34,6 +38,7 @@ export class EventsService {
     return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
   }
 
+
   submitNewEvent(event: Events)
   {
 
@@ -43,5 +48,6 @@ export class EventsService {
   {
     return this.http.post(environment.apiURL + `events/updateEvents`, event);
   }
+
 
 }

@@ -200,4 +200,6 @@ export class ClubPageComponent implements OnInit {
       console.log(response);
     })
   }
+
+
 }

@@ -51,8 +51,11 @@ export class SpecificClubPageComponent implements OnInit {
   failMessage: boolean = false;
   message!: string;
   eventDialog: boolean = false;
+  editDialog: boolean = false;
   addEventDialog: boolean = false;
+  viewMoreInfoDialog: boolean = false;
   clubEvents: Events[] = [];
+  certainEvent: Events[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -65,6 +68,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
+
 
   }
 
@@ -158,6 +162,67 @@ export class SpecificClubPageComponent implements OnInit {
   {
     this.addEventDialog = false;
   }
+  showEditDialog(SpecficEvent: Events)
+  {
 
+    console.log(SpecficEvent);
+    this.certainEvent.push(SpecficEvent);
+    this.editDialog = true;
+    console.log(this.certainEvent);
+  }
+  closeEditDialog() {
+    this.certainEvent = [];
+    this.editDialog = false;
+    this.createEventForm.reset();
+   }
 
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+  closeViewMoreInfoDialog(){
+    this.certainEvent = [];
+    this.viewMoreInfoDialog = false;
+  }
+
+  submitNewEvent()
+  {
+    const eventInfo : Events = { eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+
+    this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
+      console.log(success);
+
+    },(error) =>{
+      location.reload();
+      console.log(error.text);
+      })
+  }
+
+  updateEvent()
+  {
+    const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+
+    this.eventsService.updateEvent(eventInfo).subscribe(success =>{
+        console.log(success);
+
+      },(error) =>{
+      location.reload();
+        this.getClubEvents();
+        console.log(error.text);
+      })
+  }
+  get getEventsFormInputs()
+  {
+    return this.createEventForm.controls;
+  }
+  areFormInputsValid()
+  {
+    if(this.createEventForm.value.eventName == '' || this.createEventForm.value.eventLocation == '' ||this.createEventForm.value.startTime == '' || this.createEventForm.value.endTime == '' || this.createEventForm.value.eventDate == '' || this.createEventForm.value.eventDesc == '') {
+      return true;
+    }
+    else{
+        return false;
+      }
+
+  }
 }

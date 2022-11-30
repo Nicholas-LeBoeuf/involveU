@@ -37,4 +37,17 @@ export class EventsService {
   rsvpToEvent(eventID: number, userID: number) {
     return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
   }
+
+
+  submitNewEvent(event: Events)
+  {
+
+    return this.http.post(environment.apiURL +`events/createNewEvent/`, event );
+  }
+  updateEvent(event: Events)
+  {
+    return this.http.post(environment.apiURL + `events/updateEvents`, event);
+  }
+
+
 }

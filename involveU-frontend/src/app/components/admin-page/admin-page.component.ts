@@ -121,7 +121,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createClubSubmit() {
-    // @ts-ignore
+
     const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubForm.value.advisorID}
     console.log(clubInfo);
     this.adminService.insertNewClub(clubInfo).subscribe(success =>{
@@ -129,10 +129,14 @@ export class AdminPageComponent implements OnInit {
         this.createClubMessage = true;
         console.log(success);
 
+
       },
       (error) => {
+
         this.createClubFailed = true;
-        console.log(error);
+        console.log(error)
+        console.log(error.text)
+
 
       });
   }

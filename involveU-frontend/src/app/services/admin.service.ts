@@ -13,7 +13,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   insertNewClub(newClub: Club){
-    return this.http.post(environment.apiURL + `club/insertClub`, newClub);
+    return this.http.get(environment.apiURL + `club/insertClub/${newClub}`);
   }
 
   createUser(newUser: User){

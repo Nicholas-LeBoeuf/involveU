@@ -13,10 +13,13 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <ng-container *ngIf="this.clubIsFav;else notFav">
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true;">
+          <button class="clubButton blueButton" (click)="showEventsDialog()">Event Data</button>
+        </ng-container>
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.clubIsFav;">
           <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
         </ng-container>
-        <ng-template #notFav>
+        <ng-template *ngIf=" this.cookie.get('userID') != undefined && !this.clubIsFav;">
           <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
         </ng-template>
       </div>
@@ -40,7 +43,16 @@
   <div class="eboardSection">
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
-      <h5 class="text-center">Testing this</h5>
+      <table>
+        <div class = "eboardContainer" *ngFor="let member of clubEboard"  >
+           <tr class = "eboardTableData">
+             <td >{{member.eboardPosition}}: </td>
+             <td>{{member.firstName}} {{member.lastName}}</td>
+           </tr>
+        </div>
+      </table>
+
+
     </div>
   </div>
 </div>
@@ -92,7 +104,7 @@
                 <h5 class="eventData">{{event.clubID}}</h5>
               </div>
               <div class="div5">
-                <button class="blueButton">View More Information</button>
+                <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
                 <ng-container *ngIf="userID !== 0">
                   <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
                 </ng-container>
@@ -104,3 +116,173 @@
     </ng-template>
   </p-carousel>
 </div>
+
+<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEventsDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <H1>EVENTS</H1>
+  <p-table [value]="clubEvents">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-event>
+      <tr>
+
+        <td>{{event.eventName}}</td>
+        <td>{{event.eventLocation}}</td>
+        <td>{{event.eventDate}}</td>
+        <td>{{event.startTime}}</td>
+        <td><button (click) = "showEditDialog(event)" class="blueButton">Edit</button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <button (click) = "showAddEventDialog()" class="blueButton"> Add Event</button>
+
+</p-dialog>
+
+<p-dialog [(visible)]="addEventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeAddEventDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>Add Events</h1>
+  <form [formGroup]="createEventForm">
+    <input class="form-control formLeftInputs" type="text" placeholder="Event Name" formControlName="eventName">
+    <div *ngIf="getEventsFormInputs?.['eventName']?.invalid && (getEventsFormInputs?.['eventName']?.dirty || getEventsFormInputs?.['eventName']?.touched)" class="leftAlert alert-danger">
+      <div *ngIf="getEventsFormInputs?.['eventName']?.errors?.['required']">
+        Event Name is required
+      </div>
+    </div>
+    <input class="form-control formLeftInputs" type="text" placeholder="Location" formControlName="eventLocation">
+    <div *ngIf="getEventsFormInputs?.['eventLocation']?.invalid && (getEventsFormInputs?.['eventLocation']?.dirty || getEventsFormInputs?.['eventLocation']?.touched)" class="leftAlert alert-danger">
+      <div *ngIf="getEventsFormInputs?.['eventLocation']?.errors?.['required']">
+        Location is required
+      </div>
+    </div>
+    <input class="form-control formRightInputs" type="time" placeholder="Start Time" formControlName="startTime">
+    <div *ngIf="getEventsFormInputs?.['startTime']?.invalid && (getEventsFormInputs?.['startTime']?.dirty || getEventsFormInputs?.['startTime']?.touched)" class="leftAlert alert-danger">
+      <div *ngIf="getEventsFormInputs?.['startTime']?.errors?.['required']">
+        Start time is required
+      </div>
+    </div>
+    <input class="form-control formRightInputs" type="time" placeholder="End Time" formControlName="endTime">
+    <div *ngIf="getEventsFormInputs?.['endTime']?.invalid && (getEventsFormInputs?.['endTime']?.dirty || getEventsFormInputs?.['endTime']?.touched)" class="leftAlert alert-danger">
+      <div *ngIf="getEventsFormInputs?.['endTime']?.errors?.['required']">
+        End time is required
+      </div>
+    </div>
+    <input class="form-control formLeftInputs" type="date" placeholder="Event Date" formControlName="eventDate">
+    <div *ngIf="getEventsFormInputs?.['eventDate']?.invalid && (getEventsFormInputs?.['eventDate']?.dirty || getEventsFormInputs?.['eventDate']?.touched)" class="leftAlert alert-danger">
+      <div *ngIf="getEventsFormInputs?.['eventDate']?.errors?.['required']">
+        Event Date is required
+      </div>
+    </div>
+    <input class="form-control formLeftInputs largeTextField" type="text" placeholder="Event Description" formControlName="eventDesc">
+      <div *ngIf="getEventsFormInputs?.['eventDesc']?.invalid && (getEventsFormInputs?.['eventDesc']?.dirty || getEventsFormInputs?.['eventDesc']?.touched)" class="leftAlert alert-danger">
+        <div *ngIf="getEventsFormInputs?.['eventDesc']?.errors?.['required']">
+          Event Description is required
+        </div>
+      </div>
+   <label>Transportation?</label>
+    <input  type="radio" placeholder="Transportation" formControlName="isTransportation">
+    <input class="form-control formRightInputs" type="text" placeholder="Ticket Link" formControlName="ticketLink">
+    <button class="blueButton" type="submit"  [disabled] = "areFormInputsValid()" (click)="submitNewEvent()">Create Event</button>
+
+  </form>
+
+</p-dialog>
+
+<p-dialog  [(visible)]="editDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+
+    <div *ngFor="let event of this.certainEvent" >
+      <h1 type="final">Edit {{event.eventName}}</h1>
+      <form [formGroup]="createEventForm">
+        <input class="form-control formLeftInputs" type="text" [(ngModel)] = "event.eventName" formControlName="eventName">
+        <div *ngIf="getEventsFormInputs?.['eventName']?.invalid && (getEventsFormInputs?.['eventName']?.dirty || getEventsFormInputs?.['eventName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getEventsFormInputs?.['eventName']?.errors?.['required']">
+            Event Name is required
+          </div>
+        </div>
+        <input class="form-control formLeftInputs" type="text" [(ngModel)]  ="event.eventLocation" formControlName="eventLocation">
+        <div *ngIf="getEventsFormInputs?.['eventLocation']?.invalid && (getEventsFormInputs?.['eventLocation']?.dirty || getEventsFormInputs?.['eventLocation']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getEventsFormInputs?.['eventLocation']?.errors?.['required']">
+            Location is required
+          </div>
+        </div>
+        <input class="form-control formRightInputs" type="time" [(ngModel)]  ="event.startTime" formControlName="startTime">
+        <div *ngIf="getEventsFormInputs?.['startTime']?.invalid && (getEventsFormInputs?.['startTime']?.dirty || getEventsFormInputs?.['startTime']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getEventsFormInputs?.['startTime']?.errors?.['required']">
+            Start time is required
+          </div>
+        </div>
+        <input class="form-control formRightInputs" type="time" [(ngModel)] = "event.endTime" formControlName="endTime">
+        <div *ngIf="getEventsFormInputs?.['endTime']?.invalid && (getEventsFormInputs?.['endTime']?.dirty || getEventsFormInputs?.['endTime']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getEventsFormInputs?.['endTime']?.errors?.['required']">
+            End time is required
+          </div>
+        </div>
+        <input class="form-control formLeftInputs" type="date" [(ngModel)] = "event.eventDate" formControlName="eventDate">
+        <div *ngIf="getEventsFormInputs?.['eventDate']?.invalid && (getEventsFormInputs?.['eventDate']?.dirty || getEventsFormInputs?.['eventDate']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getEventsFormInputs?.['eventDate']?.errors?.['required']">
+            Event Date is required
+          </div>
+        </div>
+        <input class="form-control formLeftInputs largeTextField" type="text" [(ngModel)] = "event.eventDesc" formControlName="eventDesc">
+        <div *ngIf="getEventsFormInputs?.['eventDesc']?.invalid && (getEventsFormInputs?.['eventDesc']?.dirty || getEventsFormInputs?.['eventDesc']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getEventsFormInputs?.['eventDesc']?.errors?.['required']">
+            Event Description is required
+          </div>
+        </div>
+        <label>Transportation?</label>
+        <input  type="radio" [(ngModel)] = "event.isTransportation" formControlName="isTransportation">
+        <input class="form-control formRightInputs" type="text" [(ngModel)]  ="event.ticketLink" formControlName="ticketLink">
+        <button class="blueButton" type="submit"  [disabled] = "areFormInputsValid()" (click)="updateEvent()">Submit Edits</button>
+
+      </form>
+
+    </div>
+
+</p-dialog>
+
+<p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>Event Information</h1>
+  <div *ngFor="let event of this.certainEvent" >
+    <div>
+      <h3>Event Name: </h3>
+      <h4>{{event.eventName}}</h4>
+    </div>
+    <div>
+      <h3>Event Date: </h3>
+      <h4>{{event.eventDate}}</h4>
+    </div>
+    <div>
+      <h3>Event Location: </h3>
+      <h4>{{event.eventLocation}}</h4>
+    </div>
+    <div>
+      <h3>Start Time: </h3>
+      <h4>{{event.startTime}}</h4>
+    </div>
+    <div>
+      <h3>End Time: </h3>
+      <h4>{{event.endTime}}</h4>
+    </div>
+    <div>
+      <h3>Event Description: </h3>
+      <h4>{{event.eventDesc}}</h4>
+    </div>
+  </div>
+</p-dialog>

@@ -1,5 +1,8 @@
 package com.example.involveU.model;
 
+import com.fasterxml.jackson.databind.util.ArrayBuilders;
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
 import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,12 +13,14 @@ import java.util.List;
 import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.*;
 
 
 
 public class DBServices {
     private List<User> users;
     private List<EBoard> eboardMembers;
+
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
@@ -64,7 +69,7 @@ public class DBServices {
     {
 
 
-        if( checkUserExistence(newUser.getEmail()) == 1 )
+        if( checkUserExistence(newUser.getEmail()))
         {
             sql="INSERT INTO User (firstName, lastName, year, email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
@@ -75,20 +80,12 @@ public class DBServices {
         //Query executes and sends back an integer for error checking
         return validQuery;
     }
-    protected int checkUserExistence(String userEmail)
+    protected Boolean checkUserExistence(String userEmail)
     {
         sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
-        if(users.size() > 0 )
-        {
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
-
+        return users.size() > 0;
     }
     protected Object DBcheckUserCredentials(String username, String password)
     {
@@ -108,7 +105,48 @@ public class DBServices {
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
+        eboardMembers = sortEboardArray(eboardMembers);
         return eboardMembers;
+    }
+    protected List<EBoard> sortEboardArray(List<EBoard> listToSort)
+    {
+        int indexPresident, indexVPresident;
+        List<String> positionsList = new ArrayList<>();
+        EBoard tempPrezMember;
+        EBoard tempVPPrezMember;
+        for(EBoard member: listToSort)
+        {
+            positionsList.add(member.getEboardPosition());
+        }
+       indexPresident = positionsList.indexOf("President");
+       indexVPresident = positionsList.indexOf("Vice President");
+       if(indexPresident == 0 && indexVPresident == 1)
+       {
+           return listToSort;
+       }
+       else
+       {
+           tempPrezMember = listToSort.get(indexPresident);
+           listToSort.remove(indexPresident);
+           listToSort.add(0,tempPrezMember);
+           positionsList.clear();
+           for(EBoard member: listToSort)
+           {
+               positionsList.add(member.getEboardPosition());
+           }
+           if(indexVPresident == 1)
+           {
+               return listToSort;
+           }
+           else
+           {
+               indexVPresident = positionsList.indexOf("Vice President");
+               tempVPPrezMember = listToSort.get(indexVPresident);
+               listToSort.remove(indexVPresident);
+               listToSort.add(1,tempVPPrezMember);
+           }
+           return listToSort;
+       }
     }
     protected List<Club> getAllDBClubs()
     {
@@ -132,19 +170,12 @@ public class DBServices {
             return clubs.get(0);
         }
     }
-    protected String insertNewClub(Club newClub)
+    protected Boolean insertNewClub(Club newClub)
     {
         sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, advisorID) Values (?,?,?,?,?,?,?,?,?);";
         validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getClubLogo(), newClub.getAdvisorID());
 
-        if(validQuery == 1)
-        {
-            return "Club successfully created";
-        }
-        else
-        {
-            return "error";
-        }
+        return validQuery == 1;
 
     }
     protected List<Club> searchDBClub(String searchContent)
@@ -162,19 +193,12 @@ public class DBServices {
 
         return results;
     }
-    protected String submitDBFavorite(int id, int clubID)
+    protected Boolean submitDBFavorite(int id, int clubID)
     {
         sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
         validQuery = JdbcTemplated.update(sql,String.valueOf(id),String.valueOf(clubID));
 
-        if(validQuery == 1)
-        {
-            return "accepted";
-        }
-        else
-        {
-            return "error";
-        }
+       return validQuery == 1;
     }
     protected List<Club> getDBUserFavorites(int userID)
     {
@@ -270,6 +294,24 @@ public class DBServices {
         }
     }
     //EVENTS CONTROLLER
+    protected boolean insertNewEvent(Events newEvent)
+    {
+
+         sql = "INSERT INTO Events (eventName, startTime, eventLocation,endTime,eventDate,eventDesc, isTransportation, ticketLink,clubName,clubId) Values (?,?,?,?,?,?,?,?,?,?)";
+
+
+         validQuery = JdbcTemplated.update(sql, newEvent.getEventName(), newEvent.getStartTime(), newEvent.getEventLocation(), newEvent.getEndTime(), newEvent.getEventDate(), newEvent.getEventDesc(), newEvent.getIsTransportation(), newEvent.getTicketLink(), newEvent.getClubName(), newEvent.getClubID());
+
+         return validQuery == 1;
+    }
+    protected boolean updateDBEvent(Events eventToUpdate)
+    {
+        sql = "UPDATE Events SET eventName = ?, eventLocation = ?, startTime = ?, endTime = ?, eventDate = ?, eventDesc = ?, isTransportation = ?, ticketLink = ? WHERE eventID = " + eventToUpdate.getEventID();
+
+        validQuery = JdbcTemplated.update(sql,eventToUpdate.getEventName(), eventToUpdate.getEventLocation(), eventToUpdate.getStartTime(),  eventToUpdate.getEndTime(), eventToUpdate.getEventDate(), eventToUpdate.getEventDesc(), eventToUpdate.getIsTransportation(), eventToUpdate.getTicketLink());
+
+        return validQuery == 1;
+    }
     protected List<Events> getDBTodaysEvents()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -350,6 +392,16 @@ public class DBServices {
 
         return events;
     }
+
+    protected List<Events> getAllEvents()
+    {
+        sql = "SELECT * FROM Events";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
 
 
 }

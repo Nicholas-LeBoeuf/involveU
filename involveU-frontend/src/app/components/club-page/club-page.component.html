@@ -47,121 +47,149 @@
   <div id="favoritedClubs">
     <ng-container *ngIf="this.isLoggedIn;else featuredClubsView">
       <h1 class="text-center">Favorited Clubs</h1>
-      <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-favClubs pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
-                <hr>
-              </div>
-              <div class="logoMargin">
-                <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
-              </div>
-              <div>
-                <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
-                <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+      <ng-template [ngIf]="favoritedClubs.length === 0">
+        <div class="noDataContent">
+          <h2>There are no clubs to display!</h2>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="favoritedClubs.length !== 0">
+        <p-carousel [value]="favoritedClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+          <ng-template let-favClubs pTemplate="item">
+            <div class="clubCard">
+              <div class="clubContent">
+                <div>
+                  <h3 class="p-mb-1">{{favClubs.clubName}}</h3>
+                  <hr>
+                </div>
+                <div class="logoMargin">
+                  <img class="clubLogo" src="assets/{{favClubs.clubLogo}}">
+                </div>
+                <div>
+                  <button class="blueButton" (click)="goToClubPage(favClubs.clubID)">Go To Club</button>
+                  <button class="blueButton" (click)="removeFromFavorites(+this.cookie.get('studentID'), favClubs.clubID)">Unfavorite</button>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+      </ng-template>
     </ng-container>
     <ng-template #featuredClubsView>
       <h1 class="text-center">Featured Clubs</h1>
-      <p-carousel [value]="featuredClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-featClubs pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{featClubs.clubName}}</h3>
-                <hr>
-              </div>
-              <div class="logoMargin">
-                <img class="clubLogo" src="assets/{{featClubs.clubLogo}}">
-              </div>
-              <div>
-                <button class="blueButton" (click)="goToClubPage(featClubs.clubID)">Go To Club</button>
+      <ng-template [ngIf]="featuredClubs.length === 0">
+        <div class="noDataContent">
+          <h2>There are no clubs to display!</h2>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="featuredClubs.length !== 0">
+        <p-carousel [value]="featuredClubs" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+          <ng-template let-featClubs pTemplate="item">
+            <div class="clubCard">
+              <div class="clubContent">
+                <div>
+                  <h3 class="p-mb-1">{{featClubs.clubName}}</h3>
+                  <hr>
+                </div>
+                <div class="logoMargin">
+                  <img class="clubLogo" src="assets/{{featClubs.clubLogo}}">
+                </div>
+                <div>
+                  <button class="blueButton" (click)="goToClubPage(featClubs.clubID)">Go To Club</button>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+      </ng-template>
     </ng-template>
   </div>
   <div id="favoritedEvents">
     <ng-container *ngIf="isLoggedIn;else allEventsView">
       <h1 class="text-center">Your Favorited Clubs Events</h1>
-      <p-carousel styleClass="eventsCaro" [value]="favoritedClubsEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-event pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{event.eventName}}</h3>
-                <hr>
-                <div class="parent">
-                  <div class="div1">
-                    <h3 class="eventDataTitle">Date</h3>
-                    <h5 class="eventData">{{event.eventDate}}</h5>
-                  </div>
-                  <div class="div2">
-                    <h3 class="eventDataTitle">Time</h3>
-                    <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
-                  </div>
-                  <div class="div3">
-                    <h3 class="eventDataTitle">Location</h3>
-                    <h5 class="eventData">{{event.eventLocation}}</h5>
-                  </div>
-                  <div class="div4">
-                    <h3 class="eventDataTitle">Hosted By</h3>
-                    <h5 class="eventData">{{event.clubID}}</h5>
-                  </div>
-                  <div class="div5">
-                    <button class="blueButton">View More Information</button>
-                    <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+      <ng-template [ngIf]="favoritedClubsEvents.length === 0">
+        <div class="noDataContent">
+          <h2>There are no events to display!</h2>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="favoritedClubsEvents.length !== 0">
+        <p-carousel styleClass="eventsCaro" [value]="favoritedClubsEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+          <ng-template let-event pTemplate="item">
+            <div class="clubCard">
+              <div class="clubContent">
+                <div>
+                  <h3 class="p-mb-1">{{event.eventName}}</h3>
+                  <hr>
+                  <div class="parent">
+                    <div class="div1">
+                      <h3 class="eventDataTitle">Date</h3>
+                      <h5 class="eventData">{{event.eventDate}}</h5>
+                    </div>
+                    <div class="div2">
+                      <h3 class="eventDataTitle">Time</h3>
+                      <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                    </div>
+                    <div class="div3">
+                      <h3 class="eventDataTitle">Location</h3>
+                      <h5 class="eventData">{{event.eventLocation}}</h5>
+                    </div>
+                    <div class="div4">
+                      <h3 class="eventDataTitle">Hosted By</h3>
+                      <h5 class="eventData">{{event.clubID}}</h5>
+                    </div>
+                    <div class="div5">
+                      <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
+                      <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+      </ng-template>
     </ng-container>
     <ng-template #allEventsView>
       <h1 class="text-center">All Club Events</h1>
-      <p-carousel styleClass="eventsCaro" [value]="allFutureEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-event pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{event.eventName}}</h3>
-                <hr>
-                <div class="parent">
-                  <div class="div1">
-                    <h3 class="eventDataTitle">Date</h3>
-                    <h5 class="eventData">{{event.eventDate}}</h5>
-                  </div>
-                  <div class="div2">
-                    <h3 class="eventDataTitle">Time</h3>
-                    <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
-                  </div>
-                  <div class="div3">
-                    <h3 class="eventDataTitle">Location</h3>
-                    <h5 class="eventData">{{event.eventLocation}}</h5>
-                  </div>
-                  <div class="div4">
-                    <h3 class="eventDataTitle">Hosted By</h3>
-                    <h5 class="eventData">{{event.clubID}}</h5>
-                  </div>
-                  <div class="div5">
-                    <button class="blueButton">View More Information</button>
+      <ng-template [ngIf]="allFutureEvents.length === 0">
+          <div class="noDataContent">
+            <h2>There are no events to display!</h2>
+          </div>
+      </ng-template>
+      <ng-template [ngIf]="allFutureEvents.length !== 0">
+        <p-carousel styleClass="eventsCaro" [value]="allFutureEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
+          <ng-template let-event pTemplate="item">
+            <div class="clubCard">
+              <div class="clubContent">
+                <div>
+                  <h3 class="p-mb-1">{{event.eventName}}</h3>
+                  <hr>
+                  <div class="parent">
+                    <div class="div1">
+                      <h3 class="eventDataTitle">Date</h3>
+                      <h5 class="eventData">{{event.eventDate}}</h5>
+                    </div>
+                    <div class="div2">
+                      <h3 class="eventDataTitle">Time</h3>
+                      <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                    </div>
+                    <div class="div3">
+                      <h3 class="eventDataTitle">Location</h3>
+                      <h5 class="eventData">{{event.eventLocation}}</h5>
+                    </div>
+                    <div class="div4">
+                      <h3 class="eventDataTitle">Hosted By</h3>
+                      <h5 class="eventData">{{event.clubID}}</h5>
+                    </div>
+                    <div class="div5">
+                      <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+      </ng-template>
     </ng-template>
   </div>
   <div id="item-4">&nbsp;</div>
@@ -225,4 +253,37 @@
      </p-table>
    </div>
  </div>
+</p-dialog>
+
+<p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>Event Information</h1>
+  <div *ngFor="let event of this.certainEvent" >
+    <div>
+      <h3>Event Name: </h3>
+      <h4>{{event.eventName}}</h4>
+    </div>
+    <div>
+      <h3>Event Date: </h3>
+      <h4>{{event.eventDate}}</h4>
+    </div>
+    <div>
+      <h3>Event Location: </h3>
+      <h4>{{event.eventLocation}}</h4>
+    </div>
+    <div>
+      <h3>Start Time: </h3>
+      <h4>{{event.startTime}}</h4>
+    </div>
+    <div>
+      <h3>End Time: </h3>
+      <h4>{{event.endTime}}</h4>
+    </div>
+    <div>
+      <h3>Event Description: </h3>
+      <h4>{{event.eventDesc}}</h4>
+    </div>
+  </div>
 </p-dialog>

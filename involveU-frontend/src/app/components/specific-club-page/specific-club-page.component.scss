@@ -239,3 +239,7 @@ hr {
 .clubEventsBackground:hover {
   transform: scale(1.01 );
 }
+.largeTextField {
+  height: 150px;
+  overflow-wrap: inherit;
+}

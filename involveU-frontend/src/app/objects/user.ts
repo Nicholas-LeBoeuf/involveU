@@ -8,4 +8,5 @@ export interface User {
   isAdmin?: number;
   isEboard?: number;
   userPassword?: string;
+  eboardPosition?: string;
 }

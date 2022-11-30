@@ -1,5 +1,5 @@
 export interface Events {
-  eventID: number;
+  eventID?: number;
   eventName: string;
   eventLocation: string;
   startTime: string;
@@ -7,8 +7,8 @@ export interface Events {
   eventDate: string;
   eventDesc: string;
   isTransportation: boolean;
-  ticketLink: string;
-
+  ticketLink?: string;
+  clubName?: string;
   //derived
   clubID: number;
 }

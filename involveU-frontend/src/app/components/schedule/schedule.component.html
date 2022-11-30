@@ -1,1 +1,6 @@
-<app-calendar></app-calendar>
+<!--<p>{{formattedEvents[0].title + formattedEvents[0].start + formattedEvents[0].end + formattedEvents[0].allDay}}</p>-->
+
+<ng-template [ngIf]="allEvents">
+  <app-calendar [eventsToDisplay]="allEvents"></app-calendar>
+</ng-template>
+

@@ -3,6 +3,8 @@ import {ClubService} from "../../services/club.service";
 import {EventsService} from "../../services/events.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {Events} from "../../objects/events";
+import {CalendarFormat} from "../../objects/calendar-format";
 
 @Component({
   selector: 'app-schedule',
@@ -14,14 +16,23 @@ export class ScheduleComponent implements OnInit {
   constructor(private clubService: ClubService,
               private eventsService: EventsService,
               private router: Router,
-              public cookie: CookieService) { }
+              public cookie: CookieService) {
+  }
 
 
-  ngOnInit(): void {
+  allEvents: Events[];
+  formattedEvents: CalendarFormat[];
+
+
+  ngOnInit() {
+    this.getAllEvents();
   }
 
   getAllEvents() {
-
+    this.eventsService.getAllEvents().subscribe(response => {
+      this.allEvents = response;
+    });
   }
+
 
 }

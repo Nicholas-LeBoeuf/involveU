@@ -99,6 +99,22 @@ public class EventController extends DBServices{
           events =  getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/deleteEvent/{eventID}")
+    private ResponseEntity<String> deleteEvent(@PathVariable("eventID") int eventID)
+    {
+
+          if(removeDBEvent(eventID))
+          {
+              return new ResponseEntity<>("success", HttpStatus.OK);
+          }
+          else
+          {
+              return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+          }
+
+    }
+
 
 
 

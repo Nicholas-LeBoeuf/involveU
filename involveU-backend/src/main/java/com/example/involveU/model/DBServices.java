@@ -298,6 +298,14 @@ public class DBServices {
         validQuery = JdbcTemplated.update(sql,newEvent.getEventName(),newEvent.getStartTime(), newEvent.getEventLocation(),newEvent.getEndTime(), newEvent.getEventDate(), newEvent.getEventDesc(),newEvent.getIsTransportation(),newEvent.getTicketLink(),newEvent.getClubName());
         return validQuery == 1;
     }
+    protected  boolean removeDBEvent(int eventID){
+
+        sql = "DELETE  FROM Events WHERE eventID = " + eventID;
+
+        validQuery = JdbcTemplated.update(sql);
+
+        return validQuery == 1;
+    }
     protected List<Events> getDBTodaysEvents()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

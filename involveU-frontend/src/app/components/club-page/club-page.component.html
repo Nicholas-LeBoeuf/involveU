@@ -137,7 +137,7 @@
                       <h5 class="eventData">{{event.clubID}}</h5>
                     </div>
                     <div class="div5">
-                      <button class="blueButton">View More Information</button>
+                      <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
                       <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
                     </div>
                   </div>
@@ -253,4 +253,37 @@
      </p-table>
    </div>
  </div>
+</p-dialog>
+
+<p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>Event Information</h1>
+  <div *ngFor="let event of this.certainEvent" >
+    <div>
+      <h3>Event Name: </h3>
+      <h4>{{event.eventName}}</h4>
+    </div>
+    <div>
+      <h3>Event Date: </h3>
+      <h4>{{event.eventDate}}</h4>
+    </div>
+    <div>
+      <h3>Event Location: </h3>
+      <h4>{{event.eventLocation}}</h4>
+    </div>
+    <div>
+      <h3>Start Time: </h3>
+      <h4>{{event.startTime}}</h4>
+    </div>
+    <div>
+      <h3>End Time: </h3>
+      <h4>{{event.endTime}}</h4>
+    </div>
+    <div>
+      <h3>Event Description: </h3>
+      <h4>{{event.eventDesc}}</h4>
+    </div>
+  </div>
 </p-dialog>

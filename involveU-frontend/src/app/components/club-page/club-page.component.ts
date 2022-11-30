@@ -23,6 +23,7 @@ export class ClubPageComponent implements OnInit {
 
   displayClubSearchModal: boolean = false;
   displayClubSearchLoggedInModal: boolean = false;
+  viewMoreInfoDialog: boolean = false;
   isLoggedIn: boolean = false;
 
   timeout: boolean = false;
@@ -46,6 +47,7 @@ export class ClubPageComponent implements OnInit {
 
   favoritedClubsEvents: Events[] = [];
   allFutureEvents: Events[] = [];
+  certainEvent: Events[] = [];
 
   cols = [
     { field: 'clubName', header: 'Club Name' }
@@ -105,6 +107,15 @@ export class ClubPageComponent implements OnInit {
 
   closeClubSearchLoggedInDialog() {
     this.displayClubSearchLoggedInModal = false;
+  }
+
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+  closeViewMoreInfoDialog(){
+    this.certainEvent = [];
+    this.viewMoreInfoDialog = false;
   }
 
   fillClubList() {

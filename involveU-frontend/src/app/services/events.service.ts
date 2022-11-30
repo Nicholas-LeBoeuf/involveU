@@ -37,6 +37,11 @@ export class EventsService {
   submitNewEvent(event: Events)
   {
 
-    return this.http.post(environment.apiURL +`events/createNewEvent/`, event )
+    return this.http.post(environment.apiURL +`events/createNewEvent/`, event );
   }
+  updateEvent(event: Events)
+  {
+    return this.http.post(environment.apiURL + `events/updateEvents`, event);
+  }
+
 }

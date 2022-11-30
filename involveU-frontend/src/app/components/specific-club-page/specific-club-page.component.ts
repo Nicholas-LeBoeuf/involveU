@@ -163,6 +163,7 @@ export class SpecificClubPageComponent implements OnInit {
   }
   showEditDialog(SpecficEvent: Events)
   {
+
     console.log(SpecficEvent);
     this.certainEvent.push(SpecficEvent);
     this.editDialog = true;
@@ -171,12 +172,12 @@ export class SpecificClubPageComponent implements OnInit {
   closeEditDialog() {
     this.certainEvent = [];
     this.editDialog = false;
-
-  }
+    this.createEventForm.reset();
+   }
 
   submitNewEvent()
   {
-    const eventInfo : Events = {eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+    const eventInfo : Events = { eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
 
     this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
       console.log(success);
@@ -184,6 +185,20 @@ export class SpecificClubPageComponent implements OnInit {
     },(error) =>{
       location.reload();
       console.log(error.text);
+      })
+  }
+
+  updateEvent()
+  {
+    const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+
+    this.eventsService.updateEvent(eventInfo).subscribe(success =>{
+        console.log(success);
+
+      },(error) =>{
+      location.reload();
+        this.getClubEvents();
+        console.log(error.text);
       })
   }
   get getEventsFormInputs()
@@ -200,5 +215,4 @@ export class SpecificClubPageComponent implements OnInit {
       }
 
   }
-
 }

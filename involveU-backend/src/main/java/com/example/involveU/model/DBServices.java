@@ -304,6 +304,14 @@ public class DBServices {
 
          return validQuery == 1;
     }
+    protected boolean updateDBEvent(Events eventToUpdate)
+    {
+        sql = "UPDATE Events SET eventName = ?, eventLocation = ?, startTime = ?, endTime = ?, eventDate = ?, eventDesc = ?, isTransportation = ?, ticketLink = ? WHERE eventID = " + eventToUpdate.getEventID();
+
+        validQuery = JdbcTemplated.update(sql,eventToUpdate.getEventName(), eventToUpdate.getEventLocation(), eventToUpdate.getStartTime(),  eventToUpdate.getEndTime(), eventToUpdate.getEventDate(), eventToUpdate.getEventDesc(), eventToUpdate.getIsTransportation(), eventToUpdate.getTicketLink());
+
+        return validQuery == 1;
+    }
     protected List<Events> getDBTodaysEvents()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

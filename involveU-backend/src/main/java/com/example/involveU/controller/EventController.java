@@ -106,6 +106,15 @@ public class EventController extends DBServices{
           events =  getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @PostMapping("events/updateEvents")
+    private ResponseEntity<String> updateEvents(@RequestBody Events eventToUpdate )
+    {
+        updateDBEvent(eventToUpdate);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+
 
 
 

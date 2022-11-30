@@ -45,7 +45,7 @@ public class ClubController extends DBServices{
   
   }
   @CrossOrigin(origins = "http://localhost:4200")
-  @GetMapping ("/club/insertClub")
+  @PostMapping ("/club/insertClub")
   private ResponseEntity<String> insertClub(@RequestBody Club newClub)
   {
          if(insertNewClub(newClub))

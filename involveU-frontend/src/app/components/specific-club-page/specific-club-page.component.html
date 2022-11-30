@@ -43,14 +43,7 @@
   <div class="eboardSection">
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
-      <p-table [value]="favoritedClubs">
-        <ng-template pTemplate="body" let-favorite>
-          <tr>
-            <td>{{favorite.clubName }}</td>
-
-          </tr>
-        </ng-template>
-      </p-table>
+     
       <table>
         <div class = "eboardContainer" *ngFor="let member of clubEboard"  >
            <tr class = "eboardTableData">

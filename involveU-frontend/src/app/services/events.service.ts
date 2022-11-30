@@ -48,7 +48,7 @@ export class EventsService {
 
   submitNewEvent(event: Events)
   {
-    return this.http.post(environment.apiURL +`events/createNewEvent/`, event );
+    return this.http.post(environment.apiURL +`events/createNewEvent/`, event, {responseType: 'text'} );
   }
 
   updateEvent(event: Events)
@@ -56,6 +56,9 @@ export class EventsService {
     return this.http.post(environment.apiURL + `events/updateEvents`, event);
   }
 
+  deleteEvent(eventID: number) {
+    return this.http.get(environment.apiURL + `events/deleteEvent/${eventID}`);
+  }
 
 
 }

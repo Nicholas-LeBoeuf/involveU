@@ -175,11 +175,13 @@ export class SpecificClubPageComponent implements OnInit {
     this.editDialog = false;
     this.createEventForm.reset();
    }
-  
-  showViewMoreInfoDialog(){
+
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
     this.viewMoreInfoDialog = true;
   }
   closeViewMoreInfoDialog(){
+    this.certainEvent = [];
     this.viewMoreInfoDialog = false;
   }
 

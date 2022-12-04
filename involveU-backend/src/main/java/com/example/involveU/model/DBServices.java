@@ -312,8 +312,17 @@ public class DBServices {
 
         return validQuery == 1;
     }
-    protected List<Events> getDBTodaysEvents()
+    protected List<Events> getEventByClub(int clubID)
     {
+        sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
+
+        events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
+    protected List<Events> getDBTodaysEvents()
+     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String strDate = formatter.format(date);

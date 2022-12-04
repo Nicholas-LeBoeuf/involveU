@@ -112,6 +112,13 @@ public class EventController extends DBServices{
     {
         updateDBEvent(eventToUpdate);
         return new ResponseEntity<>("success", HttpStatus.OK);
+    } @CrossOrigin (origins = "http://localhost:4200")
+    @PostMapping("events/getClubEvents/{clubID}")
+    private ResponseEntity<List<Events>> getClubEvents(@PathVariable("clubID") int clubID)
+    {
+            getEventByClub(clubID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
 

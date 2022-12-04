@@ -319,7 +319,17 @@ public class DBServices {
 
         return validQuery == 1;
     }
-    protected List<Events> getEventByID(int eventID)
+
+    protected  boolean removeDBEvent(int eventID){
+
+        sql = "DELETE  FROM Events WHERE eventID = " + eventID;
+
+        validQuery = JdbcTemplated.update(sql);
+
+        return validQuery == 1;
+    }
+
+  protected List<Events> getEventByID(int eventID)
     {
         sql = "SELECT * FROM Events WHERE eventID = " + eventID + ";";
 
@@ -358,7 +368,7 @@ public class DBServices {
     }
     protected  List<Events> getDBFavoriteClubEvents(int userID)
     {
-        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID from Events JOIN Favorites ON eventDate >= DATE(NOW()) AND Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
+        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON eventDate >= DATE(NOW()) AND Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 

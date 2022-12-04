@@ -12,8 +12,8 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  insertNewClub(newClub: Club){
-    return this.http.get(environment.apiURL + `club/insertClub/${newClub}`);
+  insertNewClub(newClub: Club) {
+    return this.http.post(environment.apiURL + `club/insertClub`, newClub, {responseType: 'text'});
   }
 
   createUser(newUser: User){

@@ -20,6 +20,13 @@ import org.springframework.web.bind.annotation.*;
 public class EventController extends DBServices{
     List<Events> events;
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getEvents")
+    private ResponseEntity<List<Events>> getsEvents()
+    {
+        events = getDBEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/getTodaysEvents")
     private ResponseEntity<List<Events>> getTodaysEvents()
     {
@@ -128,6 +135,16 @@ public class EventController extends DBServices{
         updateDBEvent(eventToUpdate);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/getSpecificEvent/{eventID}")
+    private ResponseEntity<List<Events>> getSpecificEvent(@PathVariable("eventID") int eventID)
+    {
+        events = getEventByID(eventID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+
 
 
 

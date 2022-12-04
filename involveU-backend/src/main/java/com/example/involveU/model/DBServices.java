@@ -312,14 +312,15 @@ public class DBServices {
 
         return validQuery == 1;
     }
-    protected List<Events> getEventByClub(int clubID)
+    protected List<Events> getEventByID(int eventID)
     {
-        sql = "SELECT * FROM Events WHERE clubID = " + clubID + ";";
+        sql = "SELECT * FROM Events WHERE eventID = " + eventID + ";";
 
         events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;
     }
+
 
     protected List<Events> getDBTodaysEvents()
      {

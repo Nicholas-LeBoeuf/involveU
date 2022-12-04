@@ -294,6 +294,13 @@ public class DBServices {
         }
     }
     //EVENTS CONTROLLER
+    protected List<Events> getDBEvents()
+    {
+        sql = "SELECT * FROM Events;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
     protected boolean insertNewEvent(Events newEvent)
     {
 
@@ -312,6 +319,7 @@ public class DBServices {
 
         return validQuery == 1;
     }
+
     protected  boolean removeDBEvent(int eventID){
 
         sql = "DELETE  FROM Events WHERE eventID = " + eventID;
@@ -320,8 +328,19 @@ public class DBServices {
 
         return validQuery == 1;
     }
-    protected List<Events> getDBTodaysEvents()
+
+  protected List<Events> getEventByID(int eventID)
     {
+        sql = "SELECT * FROM Events WHERE eventID = " + eventID + ";";
+
+        events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
+
+    protected List<Events> getDBTodaysEvents()
+     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String strDate = formatter.format(date);

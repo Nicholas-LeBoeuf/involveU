@@ -294,6 +294,13 @@ public class DBServices {
         }
     }
     //EVENTS CONTROLLER
+    protected List<Events> getDBEvents()
+    {
+        sql = "SELECT * FROM Events;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
     protected boolean insertNewEvent(Events newEvent)
     {
 

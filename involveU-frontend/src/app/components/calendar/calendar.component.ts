@@ -33,7 +33,7 @@ export class CalendarComponent implements OnInit {
     selectable: false,
     selectMirror: true,
     dayMaxEvents: true,
-    contentHeight: '80vh',
+    contentHeight: '75vh',
     events: this.formattedEvents,
     eventClick: this.showEventInformation.bind(this)
   };

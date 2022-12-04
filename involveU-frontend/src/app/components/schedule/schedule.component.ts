@@ -24,6 +24,8 @@ export class ScheduleComponent implements OnInit {
   eventsToSend: Events[];
   dropdownOptions: Club[] = [];
 
+  optionSelected: boolean = false;
+
   ngOnInit() {
     this.userID = +this.cookie.get('studentID');
     this.getAllClubs();
@@ -38,6 +40,7 @@ export class ScheduleComponent implements OnInit {
     this.eventsService.getAllEvents().subscribe(response => {
       this.eventsToSend = response;
     });
+    this.optionSelected = true;
   }
 
   activateFavoritedClubEvents() {
@@ -45,6 +48,7 @@ export class ScheduleComponent implements OnInit {
       this.eventsToSend = response;
       console.log(response);
     });
+    this.optionSelected = true;
   }
 
   onClubSelected(event) {
@@ -53,7 +57,10 @@ export class ScheduleComponent implements OnInit {
       this.eventsToSend = this.eventsToSend.slice();
       console.log(this.eventsToSend);
     })
+    this.optionSelected = true;
+  }
 
-
+  returnToFilter() {
+    location.reload();
   }
 }

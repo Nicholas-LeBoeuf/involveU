@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
+import {Club} from "../../objects/club";
 
 @Component({
   selector: 'app-schedule',
@@ -19,20 +20,40 @@ export class ScheduleComponent implements OnInit {
               public cookie: CookieService) {
   }
 
-
-  allEvents: Events[];
-  formattedEvents: CalendarFormat[];
-
+  userID: number;
+  eventsToSend: Events[];
+  dropdownOptions: Club[] = [];
 
   ngOnInit() {
-    this.getAllEvents();
+    this.userID = +this.cookie.get('studentID');
+    this.getAllClubs();
   }
 
-  getAllEvents() {
+  getAllClubs() {
+    this.clubService.getAllClubs().subscribe(response => {
+      this.dropdownOptions = response;
+    })
+  }
+  activateAllEvents() {
     this.eventsService.getAllEvents().subscribe(response => {
-      this.allEvents = response;
+      this.eventsToSend = response;
     });
   }
 
+  activateFavoritedClubEvents() {
+    this.eventsService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+      this.eventsToSend = response;
+      console.log(response);
+    });
+  }
 
+  onClubSelected(event) {
+    this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
+      this.eventsToSend = response;
+      this.eventsToSend = this.eventsToSend.slice();
+      console.log(this.eventsToSend);
+    })
+
+
+  }
 }

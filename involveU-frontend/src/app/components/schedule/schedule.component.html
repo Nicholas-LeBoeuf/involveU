@@ -1,6 +1,6 @@
 <div class="buttonContainer">
   <button class="blueButton" (click)="activateAllEvents()">Show All Events</button>
-  <button class="blueButton" (click)="activateFavoritedClubEvents()">Show Favorited Club Events</button>
+  <button class="blueButton" (click)="activateFavoritedClubEvents()" [disabled]="!userID">Show Favorited Club Events</button>
   <p-dropdown [options]="dropdownOptions" optionLabel="clubName" placeholder="Select a Club to View Events" (onChange)="onClubSelected($event)"></p-dropdown>
 </div>
 

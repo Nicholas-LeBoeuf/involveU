@@ -60,5 +60,8 @@ export class EventsService {
     return this.http.get(environment.apiURL + `events/deleteEvent/${eventID}`);
   }
 
+  getSpecificEvent(eventID: number): Observable<Events> {
+    return this.http.get<Events>(environment.apiURL + `events/getSpecificEvent/${eventID}`);
+  }
 
 }

@@ -122,11 +122,11 @@
                   <div class="parent">
                     <div class="div1">
                       <h3 class="eventDataTitle">Date</h3>
-                      <h5 class="eventData">{{event.eventDate}}</h5>
+                      <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
                     </div>
                     <div class="div2">
                       <h3 class="eventDataTitle">Time</h3>
-                      <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                      <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
                     </div>
                     <div class="div3">
                       <h3 class="eventDataTitle">Location</h3>
@@ -172,11 +172,11 @@
                   <div class="parent">
                     <div class="div1">
                       <h3 class="eventDataTitle">Date</h3>
-                      <h5 class="eventData">{{event.eventDate}}</h5>
+                      <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
                     </div>
                     <div class="div2">
                       <h3 class="eventDataTitle">Time</h3>
-                      <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                      <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
                     </div>
                     <div class="div3">
                       <h3 class="eventDataTitle">Location</h3>

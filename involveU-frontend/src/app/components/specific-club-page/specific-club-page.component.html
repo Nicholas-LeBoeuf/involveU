@@ -90,11 +90,11 @@
             <div class="parent">
               <div class="div1">
                 <h3 class="eventDataTitle">Date</h3>
-                <h5 class="eventData">{{event.eventDate}}</h5>
+                <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
               </div>
               <div class="div2">
                 <h3 class="eventDataTitle">Time</h3>
-                <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
               </div>
               <div class="div3">
                 <h3 class="eventDataTitle">Location</h3>
@@ -106,9 +106,12 @@
               </div>
               <div class="div5">
                 <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
-                <ng-container *ngIf="userID !== 0">
-                  <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                  <button class="blueButton" (click)="removeEventRSVP(event.eventID)">Remove RSVP</button>
                 </ng-container>
+                <ng-template #ShowRSVP>
+                  <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                </ng-template>
               </div>
             </div>
           </div>
@@ -130,6 +133,7 @@
         <th>Location</th>
         <th>Date</th>
         <th>Start Time</th>
+        <th>End Time</th>
         <th></th>
         <th></th>
       </tr>
@@ -139,8 +143,9 @@
 
         <td>{{event.eventName}}</td>
         <td>{{event.eventLocation}}</td>
-        <td>{{event.eventDate}}</td>
-        <td>{{event.startTime}}</td>
+        <td>{{event.eventDate | date:'MMMM dd, YYYY'}}</td>
+        <td>{{event.startTime | timeFormat}}</td>
+        <td>{{event.endTime  | timeFormat}}</td>
         <td><button (click) = "showEditDialog(event)" class="blueButton">Edit</button></td>
         <td><button (click)= "deleteEvent(event.eventID)" class="blueButton">Delete</button></td>
       </tr>

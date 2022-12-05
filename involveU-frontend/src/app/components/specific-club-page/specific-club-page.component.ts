@@ -173,7 +173,7 @@ export class SpecificClubPageComponent implements OnInit {
   closeEditDialog() {
     this.certainEvent = [];
     this.editDialog = false;
-    this.createEventForm.reset();
+
    }
 
   showViewMoreInfoDialog(SpecificEvent: Events){

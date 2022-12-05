@@ -27,3 +27,4 @@ Database for involveU is hosted on an aws mySQL RDS server and is a mySQL Relati
  
 ## Dependencies
               
+[Dependencies](https://github.com/Nicholas-LeBoeuf/involveU/network/dependencies)

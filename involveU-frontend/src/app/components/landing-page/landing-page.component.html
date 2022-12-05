@@ -62,7 +62,7 @@
                     <h5 class="eventData">{{event.clubID}}</h5>
                   </div>
                   <div class="div5">
-                    <button class="blueButton">View More Information</button>
+                    <button class="blueButton" (click)="openViewMoreInfoDialog()">View More Information</button>
                     <ng-container *ngIf="userID !== 0">
                       <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
                     </ng-container>
@@ -75,5 +75,55 @@
       </p-carousel>
     </ng-template>
   </div>
+
+  <p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+    <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+      <span class="fa fa-fw fa-close fa-lg"></span>
+    </a>
+    <h1 class="text-center">Event Information</h1>
+    <hr class="dialogLines">
+    <div *ngFor="let event of this.todaysEvents" >
+      <div class="eventInfoContainer">
+        <div class="eventName">
+          <h3 class="eventDataTitle">Event Name: </h3>
+          <h5 class="eventData">{{event.eventName}}</h5>
+        </div>
+        <div class="eventDate">
+          <h3 class="eventDataTitle">Event Date: </h3>
+          <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
+        </div>
+        <div class="eventTime">
+          <h3 class="eventDataTitle">Time: </h3>
+          <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
+        </div>
+        <div class="eventLocation">
+          <h3 class="eventDataTitle">Event Location: </h3>
+          <h5 class="eventData">{{event.eventLocation}}</h5>
+        </div>
+        <div class="eventDesc">
+          <h3 class="eventDataTitle">Event Description: </h3>
+          <h5 class="eventData">{{event.eventDesc}}</h5>
+        </div>
+        <div class="eventHost">
+          <h3 class="eventDataTitle">Hosted By:</h3>
+          <h5 class="eventData">{{event.clubName}}</h5>
+        </div>
+        <div class="eventTransportation">
+          <h3 class="eventDataTitle">Transportation</h3>
+          <ng-container *ngIf="event.isTransportation; else noTransportation">
+            <h5 class="eventData">Transportation Provided</h5>
+          </ng-container>
+          <ng-template #noTransportation>
+            <h5 class="eventData">Transportation NOT provided</h5>
+          </ng-template>
+        </div>
+        <div class="eventTicketLink">
+          <h3 class="eventDataTitle">Ticket Link:</h3>
+          <h5 class="eventData">{{event.ticketLink}}</h5>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+
 
 </div>

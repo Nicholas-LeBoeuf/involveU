@@ -17,7 +17,7 @@ export class AdminService {
   }
 
   createUser(newUser: User){
-    return this.http.post(environment.apiURL + `admin/createUser`, newUser);
+    return this.http.post(environment.apiURL + `admin/createUser`, newUser, {responseType: 'text'});
   }
 
   deleteUser(userID: number){
@@ -25,14 +25,14 @@ export class AdminService {
   }
 
   assignNewAdvisor(advisorID: number, clubID: number){
-    return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`);
+    return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`, {responseType: 'text'});
   }
 
   addEBoardMember(userID: number, clubID: number, role: string) {
-    return this.http.get(environment.apiURL + `admin/addNewEboard/${userID}/${clubID}/${role}`);
+    return this.http.get(environment.apiURL + `admin/addNewEboard/${userID}/${clubID}/${role}`, {responseType: 'text'});
   }
 
   removeEBoardMember(userID: number){
-    return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`);
+    return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`, {responseType: 'text'});
   }
 }

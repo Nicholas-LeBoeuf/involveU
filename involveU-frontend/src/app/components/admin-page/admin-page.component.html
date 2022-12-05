@@ -82,6 +82,14 @@
     </div>
   </form>
 </div>
+<div *ngIf="createUserSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>User created successfully!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="createUserFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Error creating user.</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <div class="createUserDiv">
   <h1 class="dialogTitle">Create User</h1>
   <form [formGroup]="createUserForm">
@@ -148,6 +156,14 @@
     </div>
   </form>
   <button class="createUserButton adminButton" type="submit" (click)="createUserSubmit()">Create User</button>
+</div>
+<div *ngIf="deleteUserSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>User deleted successfully!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="deleteUserFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Error deleting user.</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <div class="deleteUserDiv">
   <h1 class="dialogTitle">Delete User</h1>
@@ -217,6 +233,14 @@
       <button class="form-submit-button adminButton" type="submit" (click)="removeEBoardSubmit()">Remove EBoard</button>
     </div>
   </form>
+</div>
+<div *ngIf="assignAdvisorSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Advisor assigned successfully!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="assignAdvisorFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Error assigning advisor.</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <div class="assignRemoveAdvisorDiv">
   <h1 class="dialogTitle">Assign Advisor</h1>

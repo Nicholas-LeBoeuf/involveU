@@ -80,6 +80,10 @@ export class AdminPageComponent implements OnInit {
   deleteUserFailed: boolean = false;
   assignAdvisorSuccess: boolean = false;
   assignAdvisorFailed: boolean = false;
+  assignEboardSuccess: boolean = false;
+  assignEboardFailed: boolean = false;
+  removeEboardSuccess: boolean = false;
+  removeEboardFailed: boolean = false;
 
   ngOnInit(): void {
     this.fillClubList();
@@ -169,8 +173,10 @@ export class AdminPageComponent implements OnInit {
   addEBoardSubmit(){
     this.adminService.addEBoardMember(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
         console.log(success);
+        this.assignEboardSuccess = true;
       },
       (error) => {
+        this.assignEboardFailed = true;
         console.log(error);
       });
     console.log(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role)
@@ -179,9 +185,11 @@ export class AdminPageComponent implements OnInit {
   removeEBoardSubmit(){
     this.adminService.removeEBoardMember(this.removeEBoardForm.value.userID).subscribe(success =>{
         console.log(success);
+        this.removeEboardSuccess = true;
       },
       (error) => {
         console.log(error);
+        this.removeEboardFailed = true;
       });
     console.log(this.removeEBoardForm.value.userID)
   }

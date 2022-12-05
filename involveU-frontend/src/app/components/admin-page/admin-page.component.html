@@ -181,6 +181,22 @@
     </div>
   </form>
 </div>
+<div *ngIf="assignEboardSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Member assigned successfully!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="assignEboardFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Error assigning Eboard member.</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="removeEboardSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Member removed successfully!</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div *ngIf="removeEboardFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+  <p>Error removing Eboard member.</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <div class="addRemoveEBoardDiv">
   <h1 class="dialogTitle">Assign/Remove EBoard Member</h1>
   <form [formGroup]="addEBoardForm">

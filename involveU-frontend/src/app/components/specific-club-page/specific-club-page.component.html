@@ -118,7 +118,7 @@
   </p-carousel>
 </div>
 
-<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEventsDialog()">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEventsDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
@@ -151,7 +151,7 @@
 
 </p-dialog>
 
-<p-dialog [(visible)]="addEventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+<p-dialog [(visible)]="addEventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeAddEventDialog()">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeAddEventDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
@@ -202,7 +202,7 @@
 
 </p-dialog>
 
-<p-dialog  [(visible)]="editDialog" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000">
+<p-dialog  [(visible)]="editDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditDialog()">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>

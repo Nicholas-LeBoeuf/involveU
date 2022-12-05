@@ -30,12 +30,14 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     editable: false,
-    selectable: false,
+    selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
     contentHeight: '75vh',
     events: this.formattedEvents,
-    eventClick: this.showEventInformation.bind(this)
+    eventClick: this.showEventInformation.bind(this),
+    nowIndicator: true,
+
   };
 
   ngOnInit(): void {

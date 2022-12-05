@@ -27,6 +27,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { TimeFormatPipe } from './pipes/time-format.pipe';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -44,7 +45,8 @@ FullCalendarModule.registerPlugins([
     SpecificClubPageComponent,
     AdminPageComponent,
     ScheduleComponent,
-    CalendarComponent
+    CalendarComponent,
+    TimeFormatPipe
   ],
     imports: [
         BrowserModule,

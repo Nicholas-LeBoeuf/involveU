@@ -7,8 +7,35 @@
 
 
 .fc { /* the calendar root */
-  max-width: 1100px;
+  max-width: 95vw;
   margin: 0 auto;
   white-space: pre-wrap;
 }
 
+::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button {
+  background-color: #dadada;
+  border-color: #dadada;
+  color: #333333;
+}
+
+::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:hover {
+  background-color: #116fbf;
+  border-color: #116fbf;
+  color: white;
+}
+
+::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:active {
+  background-color: #007ad9 !important;
+  border-color: #007ad9 !important;
+  color: white;
+}
+
+::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
+  background-color: #007ad9 !important;
+  border-color: #007ad9 !important;
+  color: white;
+}
+
+::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus {
+  box-shadow: 0 0 0 0.2rem #8dcdff !important;
+}

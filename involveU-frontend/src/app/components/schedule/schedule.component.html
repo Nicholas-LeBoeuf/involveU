@@ -1,6 +1,14 @@
-<!--<p>{{formattedEvents[0].title + formattedEvents[0].start + formattedEvents[0].end + formattedEvents[0].allDay}}</p>-->
+<div class="buttonContainer" *ngIf="!optionSelected">
+  <h1>Filter Calendar</h1>
+  <button class="blueButton" (click)="activateAllEvents()">Show All Events</button>
+  <button class="blueButton" (click)="activateFavoritedClubEvents()" [disabled]="!userID">Show Favorited Club Events</button>
+  <p-dropdown class="clubDropdown" [options]="dropdownOptions" optionLabel="clubName" placeholder="Select a Club to View Events" (onChange)="onClubSelected($event)"></p-dropdown>
+</div>
 
-<ng-template [ngIf]="allEvents">
-  <app-calendar [eventsToDisplay]="allEvents"></app-calendar>
+<ng-template [ngIf]="eventsToSend && optionSelected">
+  <div class="centerButton">
+    <button class="blueButton" *ngIf="optionSelected" (click)="returnToFilter()">Return to Filters</button>
+  </div>
+  <app-calendar [eventsToDisplay]="eventsToSend"></app-calendar>
 </ng-template>
 

@@ -1,1 +1,35 @@
 <full-calendar [options]="options"></full-calendar>
+
+<p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+
+  <h1>Event Information</h1>
+  <div *ngIf="selectedEvent">
+    <div>
+      <h3>Event Name: </h3>
+      <h4>{{selectedEvent[0].eventName}}</h4>
+    </div>
+    <div>
+      <h3>Event Date: </h3>
+      <h4>{{selectedEvent[0].eventDate}}</h4>
+    </div>
+    <div>
+      <h3>Event Location: </h3>
+      <h4>{{selectedEvent[0].eventLocation}}</h4>
+    </div>
+    <div>
+      <h3>Start Time: </h3>
+      <h4>{{selectedEvent[0].startTime}}</h4>
+    </div>
+    <div>
+      <h3>End Time: </h3>
+      <h4>{{selectedEvent[0].endTime}}</h4>
+    </div>
+    <div>
+      <h3>Event Description: </h3>
+      <h4>{{selectedEvent[0].eventDesc}}</h4>
+    </div>
+  </div>
+</p-dialog>

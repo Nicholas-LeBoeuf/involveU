@@ -77,7 +77,11 @@ export class AppComponent {
         this.cookie.delete('isAdmin');
         this.cookie.delete('isEboard');
 
-        location.reload();
+        this.router.navigateByUrl('/home').then(nav => {
+          console.log(nav); // true if navigation is successful
+        }, err => {
+          console.log(err) // when there's an error
+        });;
       }
     }
   ]

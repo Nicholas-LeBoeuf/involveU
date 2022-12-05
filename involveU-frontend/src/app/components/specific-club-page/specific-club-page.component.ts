@@ -126,15 +126,12 @@ export class SpecificClubPageComponent implements OnInit {
   {
     this.clubService.getClubEboard(this.clubID).subscribe(response => {
       this.clubEboard = response;
-      console.log(this.clubEboard);
     })
   }
   isInEboard()
   {
     //console.log(arr.find(e => e.foo === 'bar'))
     let studentID : number = +this.cookie.get('userID');
-    console.log(this.cookie.get('studentFName'));
-    console.log(this.clubEboard.some(e => e.studentID === this.userID));
     //console.log("Boolean value:", array1.includes(44));
     if(this.clubEboard.some(e => e.studentID === this.userID)=== false)
     {

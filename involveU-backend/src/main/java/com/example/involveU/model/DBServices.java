@@ -67,17 +67,12 @@ public class DBServices {
     }
     protected int insertDBNewUser(User newUser)
     {
-        System.out.println(newUser.getEmail());
-
         if( checkUserExistence(newUser.getEmail()))
         {
-            System.out.println(newUser.getFirstName());
             sql="INSERT INTO User (firstName, lastName, year, email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
-            System.out.println("Pass");
         }
         else {
-            System.out.println("Fail");
             validQuery = 0;
         }
         //Query executes and sends back an integer for error checking
@@ -87,7 +82,6 @@ public class DBServices {
     {
         sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-        System.out.println(users.size());
         return users.size() == 0;
     }
     protected Object DBcheckUserCredentials(String username, String password)

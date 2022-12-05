@@ -17,7 +17,7 @@ export class AdminService {
   }
 
   createUser(newUser: User){
-    return this.http.post(environment.apiURL + `admin/createUser`, newUser);
+    return this.http.post(environment.apiURL + `admin/createUser`, newUser, {responseType: 'text'});
   }
 
   deleteUser(userID: number){

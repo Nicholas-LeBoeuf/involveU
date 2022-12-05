@@ -243,3 +243,97 @@ hr {
   height: 150px;
   overflow-wrap: inherit;
 }
+
+.addEditEventDialogContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: center;
+  margin-top: 30px;
+
+}
+
+.eventTitle {
+  grid-area: 1 / 1 / 2 / 2;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventDate {
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventStart {
+  grid-area: 2 / 1 / 3 / 2;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventEnd {
+  grid-area: 2 / 2 / 3 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventLocation {
+  grid-area: 3 / 1 / 4 / 2;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventLink {
+  grid-area: 3 / 2 / 4 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventDesc {
+  grid-area: 4 / 1 / 5 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventTransp {
+  grid-area: 5 / 1 / 6 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventButton {
+  grid-area: 6 / 1 / 7 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.dialogLabels {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.containerContentSize {
+  height:50px;
+}
+
+.buttonSize {
+
+  margin: auto !important;
+}
+
+.transpMargin {
+  margin-top: 5%;
+  flex-direction: row;
+}

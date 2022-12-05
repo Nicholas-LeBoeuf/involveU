@@ -41,8 +41,12 @@ button {
 
 .form-control {
   height: 40px;
-  width: 250px;
+
   border-radius: 10px;
+}
+
+.formSelect {
+  width: 209px;
 }
 
 .formInputs {

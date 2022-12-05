@@ -67,8 +67,6 @@ public class DBServices {
     }
     protected int insertDBNewUser(User newUser)
     {
-
-
         if( checkUserExistence(newUser.getEmail()))
         {
             sql="INSERT INTO User (firstName, lastName, year, email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
@@ -84,8 +82,7 @@ public class DBServices {
     {
         sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-
-        return users.size() > 0;
+        return users.size() == 0;
     }
     protected Object DBcheckUserCredentials(String username, String password)
     {

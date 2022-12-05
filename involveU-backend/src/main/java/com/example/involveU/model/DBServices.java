@@ -102,7 +102,10 @@ public class DBServices {
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
-        eboardMembers = sortEboardArray(eboardMembers);
+
+        if(eboardMembers.size() > 0)
+         eboardMembers = sortEboardArray(eboardMembers);
+
         return eboardMembers;
     }
     protected List<EBoard> sortEboardArray(List<EBoard> listToSort)

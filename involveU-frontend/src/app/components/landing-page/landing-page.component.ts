@@ -23,6 +23,8 @@ export class LandingPageComponent implements OnInit {
   userID: number;
   todaysEvents: Events[];
 
+  viewMoreInfoDialog: boolean = false;
+
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
     this.fillUserInfo();
@@ -49,5 +51,13 @@ export class LandingPageComponent implements OnInit {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
     })
+  }
+
+  openViewMoreInfoDialog() {
+    this.viewMoreInfoDialog = true;
+  }
+
+  closeViewMoreInfoDialog() {
+    this.viewMoreInfoDialog = false;
   }
 }

@@ -1,26 +1,41 @@
+html {
+  background-color: #eeeeee;
+}
+
+.leftAdminDiv {
+  float: left;
+  width:50%;
+  background-color: #eeeeee;
+}
+
+.rightAdminDiv {
+  float: right;
+  width:50%;
+  background-color: #eeeeee;
+}
+
 .createClubInputs {
-  display: table;
   margin: auto;
 }
 
 .createClubDiv {
-  width: 96vw;
-  min-height: 83vh;
-  max-height: 86vh;
+  width: 48vw;
+  min-height: 82vh;
+  max-height: 82vh;
   display: block;
   margin-left: 2%;
-  background-color: #5c93cb;
+  background-color: white;
   border-radius: 10px;
 }
 
-.leftClubDiv {
+.leftDiv {
   float: left;
   width:50%;
   min-height: 86%;
   max-height: 86%;
 }
 
-.rightClubDiv {
+.rightDiv {
   float: right;
   width:50%;
   min-height: 86%;
@@ -44,17 +59,18 @@
 
 .centerButton {
   display: block;
-  margin: auto auto auto 42%;
+  margin: auto auto auto 37%;
   width: 58%;
 }
 
 .dialogTitle {
-  font-size: 4em;
+  font-size: 3em;
   text-align: center;
   font-weight: normal;
   margin-top: 2%;
-  margin-bottom: 1%;
-  padding-top: 54px;
+  margin-bottom: 2%;
+  padding-top: 30px;
+  color: #0667B3;
 }
 
 .createClubButton {
@@ -87,24 +103,28 @@
 }
 
 .form-control {
-  height: 60px;
-  width: 500px;
+  height: 50px;
+  width: 400px;
   border-radius: 10px;
   font-size: 1.5em;
+  margin-bottom: 4%;
+}
+
+.formInputs {
+  diplay: block;
+  margin: 30px auto auto;
 }
 
 .formLeftInputs {
-  border: 2px solid #0667B3;
   color: #0667B3;
-  margin-left: 270px;
-  margin-top: 1.5%;
+  margin-left: 40px;
+  border: 2px solid #0667B3;
 }
 
 .formRightInputs {
-  border: 2px solid #0667B3;
   color: #0667B3;
-  margin-right: 270px;
-  margin-top: 1.5%;
+  margin-right: 50px;
+  border: 2px solid #0667B3;
 }
 
 .formInputs::placeholder {
@@ -113,11 +133,11 @@
 
 .leftAlert {
   padding: 0 !important;
-  margin: 0 !important;
   text-align: center;
   border-radius: 10px;
-  width: 500px;
+  width: 400px;
   float: right;
+  margin-left: -3%;
 }
 
 .rightAlert {
@@ -125,7 +145,7 @@
   margin: 0 !important;
   text-align: center;
   border-radius: 10px;
-  width: 500px;
+  width: 400px;
   float: left;
 }
 
@@ -135,86 +155,98 @@
 }
 
 .assignRemoveAdvisorDiv {
-  width: 96vw;
+  width: 48vw;
   min-height: 50vh;
   max-height: 52vh;
   display: block;
   margin-left: 2%;
-  background-color: #5c93cb;
+  background-color: white;
   border-radius: 10px;
   margin-bottom: 2%;
 }
 
 .createUserDiv {
-  width: 96vw;
-  min-height: 85vh;
-  max-height: 88vh;
+  width: 48vw;
+  min-height: 56vh;
+  max-height: 56vh;
   display: block;
   margin-left: 2%;
-  background-color: #5c93cb;
+  background-color: white;
   border-radius: 10px;
   margin-top: 2%;
 }
 
 .deleteUserDiv {
-  width: 96vw;
+  width: 48vw;
   min-height: 45vh;
   max-height: 40vh;
   display: block;
   margin-left: 2%;
-  background-color: #5c93cb;
+  background-color: white;
   border-radius: 10px;
   margin-top: 2%;
 }
 
-.addRemoveEBoardDiv {
-  width: 96vw;
-  min-height: 55vh;
-  max-height: 58vh;
+.addEBoardDiv {
+  width: 48vw;
+  min-height: 50vh;
+  max-height: 50vh;
   display: block;
   margin-left: 2%;
-  background-color: #5c93cb;
+  background-color: white;
   border-radius: 10px;
+}
+
+.removeEBoardDiv {
+  width: 48vw;
+  min-height: 40vh;
+  max-height: 40vh;
+  display: block;
+  margin-left: 2%;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 2%;
 }
 
 .assignAdvisorDiv {
   float: left;
-  width: 96vw;
-  min-height: 50vh;
-  max-height: 52vh;
-}
-
-.removeAdvisorDiv {
-  float: right;
-  width:50%;
-  min-height: 86%;
-  max-height: 86%;
+  width: 48vw;
+  min-height: 45vh;
+  max-height: 45vh;
 }
 
 .assignAdvisor {
   float: left;
-  width:50%;
+  width:100%;
   min-height: 86%;
   max-height: 86%;
 }
 
 .removeAdvisor {
   float: right;
-  width:50%;
+  width:100%;
   min-height: 86%;
   max-height: 86%;
 }
 
 .addEBoard {
   float: left;
-  width:50%;
+  width:100%;
   min-height: 86%;
   max-height: 86%;
+  display: block;
 }
 
 .removeEBoard {
   float: right;
-  width:50%;
+  width:100%;
   min-height: 86%;
   max-height: 86%;
+}
+
+.dropdownLength {
+  height: 50px !important;
+  width: 400px !important;
+  margin:auto;
+  display: block;
 }

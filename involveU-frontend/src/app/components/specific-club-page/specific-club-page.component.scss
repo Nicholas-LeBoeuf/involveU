@@ -352,3 +352,35 @@ hr {
 ::ng-deep .p-dialog .p-dialog-content:last-of-type {
   overflow-x: hidden !important;
 }
+
+.eventSearchInput {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  float: left;
+}
+
+.captionContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.addEventButton {
+  position: absolute;
+  right: 0;
+  top : 5px;
+  float: left
+}
+
+::ng-deep .p-datatable-scrollable .p-datatable-tbody>tr>td{
+  justify-content: center !important;
+}
+
+::ng-deep .ui-table-scrollable-header-box {
+  margin-right: 17px !important;
+}
+
+::ng-deep .ui-table-scrollable-body {
+  margin-right: 17px !important;
+}

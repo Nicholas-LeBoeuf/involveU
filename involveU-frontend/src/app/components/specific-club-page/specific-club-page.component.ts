@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClubService} from "../../services/club.service";
 import {Club} from "../../objects/club";
@@ -8,6 +8,7 @@ import {User} from "../../objects/user";
 import {EventsService} from "../../services/events.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Eboard} from "../../objects/Eboard";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -61,6 +62,19 @@ export class SpecificClubPageComponent implements OnInit {
   editEventFailed: boolean = false;
   addEventSuccess: boolean = false;
   addEventFailed: boolean = false;
+
+  @ViewChild('clubEventTable') clubEventTable: Table;
+
+  cols = [
+    { field: 'eventName', header: 'Name' },
+    { field: 'eventDate', header: 'Date' },
+    { field: 'startTime', header: 'Start Time' },
+    { field: 'endTime', header: 'End Time' },
+    { field: 'eventLocation', header: 'Location' },
+    { field: 'eventDesc', header: 'Description' },
+    { field: 'ticketLink', header: 'Ticket Link' },
+    { field: 'isTransportation', header: 'Transportation' }
+  ];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -261,6 +275,10 @@ export class SpecificClubPageComponent implements OnInit {
     this.message = "Successfully Removed RSVP!";
     this.successMessage = true;
     location.reload();
+  }
+
+  onFilterEventName(event: Event) {
+    this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
 }
 

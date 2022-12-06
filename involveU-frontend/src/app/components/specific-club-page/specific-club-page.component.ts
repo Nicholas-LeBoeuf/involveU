@@ -59,6 +59,8 @@ export class SpecificClubPageComponent implements OnInit {
   userRSVPdEvents: Events[] = [];
   editEventSuccess: boolean = false;
   editEventFailed: boolean = false;
+  addEventSuccess: boolean = false;
+  addEventFailed: boolean = false;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -196,10 +198,11 @@ export class SpecificClubPageComponent implements OnInit {
 
     this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
       console.log(success);
-
+      this.addEventSuccess = true;
     },(error) =>{
       location.reload();
       console.log(error.text);
+      this.addEventFailed = true;
       })
   }
 

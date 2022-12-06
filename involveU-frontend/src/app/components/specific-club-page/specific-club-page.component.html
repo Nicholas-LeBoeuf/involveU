@@ -160,6 +160,14 @@
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeAddEventDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
+  <div *ngIf="addEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Event added successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="addEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error adding event.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <h1 class="text-center">Add Events</h1>
   <hr class="dialogLines">
   <form [formGroup]="createEventForm">
@@ -237,7 +245,14 @@
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
-
+  <div *ngIf="editEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Event edited successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="editEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error editing event.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
     <div *ngFor="let event of this.certainEvent" >
       <h1 class="text-center">Edit Event</h1>
       <hr class="dialogLines">

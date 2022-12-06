@@ -1,5 +1,6 @@
 html {
   background-color: #eeeeee;
+  height: 100%;
 }
 
 .leftAdminDiv {
@@ -82,7 +83,7 @@ html {
   color: white;
   width: 250px;
   font-size: 1.8em;
-  margin-top: 1.5%;
+  margin-top: 4%;
 }
 
 .adminButton {
@@ -154,10 +155,10 @@ html {
   overflow-wrap: inherit;
 }
 
-.assignRemoveAdvisorDiv {
+.assignAdvisorDiv {
   width: 48vw;
-  min-height: 50vh;
-  max-height: 52vh;
+  min-height: 45vh;
+  max-height: 45vh;
   display: block;
   margin-left: 2%;
   background-color: white;
@@ -178,8 +179,8 @@ html {
 
 .deleteUserDiv {
   width: 48vw;
-  min-height: 45vh;
-  max-height: 40vh;
+  min-height: 33vh;
+  max-height: 33vh;
   display: block;
   margin-left: 2%;
   background-color: white;
@@ -211,8 +212,10 @@ html {
 .assignAdvisorDiv {
   float: left;
   width: 48vw;
-  min-height: 45vh;
-  max-height: 45vh;
+  min-height: 40vh;
+  max-height: 40vh;
+  margin-top: 2%;
+  margin-bottom: 45vh;
 }
 
 .assignAdvisor {
@@ -249,4 +252,8 @@ html {
   width: 400px !important;
   margin:auto;
   display: block;
+}
+
+.p-dropdown {
+  font-size: 1.5em !important;
 }

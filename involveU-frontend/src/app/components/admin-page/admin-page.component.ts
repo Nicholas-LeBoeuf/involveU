@@ -48,9 +48,11 @@ export class AdminPageComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['',  Validators.required, Validators.minLength(8)],
+      password: ['',  Validators.required],
       year: ['', Validators.required],
-      pronouns: ['', Validators.required]
+      pronouns: ['', Validators.required],
+      isAdmin: [''],
+      isEboard: ['']
     });
 
     this.deleteUserForm = this.formBuilder.group({
@@ -72,6 +74,16 @@ export class AdminPageComponent implements OnInit {
   }
   createClubMessage: boolean = false;
   createClubFailed: boolean = false;
+  createUserSuccess: boolean = false;
+  createUserFailed: boolean = false;
+  deleteUserSuccess: boolean = false;
+  deleteUserFailed: boolean = false;
+  assignAdvisorSuccess: boolean = false;
+  assignAdvisorFailed: boolean = false;
+  assignEboardSuccess: boolean = false;
+  assignEboardFailed: boolean = false;
+  removeEboardSuccess: boolean = false;
+  removeEboardFailed: boolean = false;
 
   ngOnInit(): void {
     this.fillClubList();
@@ -136,9 +148,12 @@ export class AdminPageComponent implements OnInit {
   createUserSubmit(){
     const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.createUserForm.value.year, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
     this.adminService.createUser(newUser).subscribe(success =>{
+        this.createUserSuccess = true;
+        console.log(newUser);
         console.log(success);
       },
       (error) => {
+        this.createUserFailed = true;
         console.log(error);
       });
   }
@@ -146,18 +161,22 @@ export class AdminPageComponent implements OnInit {
   deleteUserSubmit(){
     this.adminService.deleteUser(this.deleteUserID.value).subscribe(success =>{
         console.log(success);
+        console.log(this.deleteUserID.value);
+        this.deleteUserSuccess = true;
       },
       (error) => {
         console.log(error);
+        this.deleteUserFailed = true;
       });
-    console.log(this.deleteUserID.value);
   }
 
   addEBoardSubmit(){
     this.adminService.addEBoardMember(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
         console.log(success);
+        this.assignEboardSuccess = true;
       },
       (error) => {
+        this.assignEboardFailed = true;
         console.log(error);
       });
     console.log(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role)
@@ -166,9 +185,11 @@ export class AdminPageComponent implements OnInit {
   removeEBoardSubmit(){
     this.adminService.removeEBoardMember(this.removeEBoardForm.value.userID).subscribe(success =>{
         console.log(success);
+        this.removeEboardSuccess = true;
       },
       (error) => {
         console.log(error);
+        this.removeEboardFailed = true;
       });
     console.log(this.removeEBoardForm.value.userID)
   }
@@ -176,9 +197,11 @@ export class AdminPageComponent implements OnInit {
   assignAdvisorSubmit(){
     this.adminService.assignNewAdvisor(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value).subscribe(success =>{
         console.log(success);
+        this.assignAdvisorSuccess = true;
       },
       (error) => {
         console.log(error);
+        this.assignAdvisorFailed = true;
       });
     console.log(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value)
   }

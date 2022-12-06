@@ -56,6 +56,7 @@ export class SpecificClubPageComponent implements OnInit {
   viewMoreInfoDialog: boolean = false;
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
+  userRSVPdEvents: Events[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -68,7 +69,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
-
+    this.getUserRSVPdEvents();
 
   }
 
@@ -120,21 +121,23 @@ export class SpecificClubPageComponent implements OnInit {
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
+
     })
+
+    this.message = "Event Successfully RSVPd!";
+    this.successMessage = true;
+    location.reload();
   }
   getEboard()
   {
     this.clubService.getClubEboard(this.clubID).subscribe(response => {
       this.clubEboard = response;
-      console.log(this.clubEboard);
     })
   }
   isInEboard()
   {
     //console.log(arr.find(e => e.foo === 'bar'))
     let studentID : number = +this.cookie.get('userID');
-    console.log(this.cookie.get('studentFName'));
-    console.log(this.clubEboard.some(e => e.studentID === this.userID));
     //console.log("Boolean value:", array1.includes(44));
     if(this.clubEboard.some(e => e.studentID === this.userID)=== false)
     {
@@ -230,6 +233,27 @@ export class SpecificClubPageComponent implements OnInit {
     this.eventsService.deleteEvent(eventID).subscribe(response => {
       console.log(response);
     })
+    location.reload();
+  }
+
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+    })
+  }
+
+  isUserRSVPd(eventID: number): boolean {
+    return this.userRSVPdEvents.some(event => event.eventID === eventID);
+  }
+
+  removeEventRSVP(eventID: number) {
+    this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
+      console.log(response);
+
+    })
+
+    this.message = "Successfully Removed RSVP!";
+    this.successMessage = true;
     location.reload();
   }
 }

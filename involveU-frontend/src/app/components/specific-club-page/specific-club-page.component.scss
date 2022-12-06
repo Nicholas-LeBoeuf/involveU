@@ -251,60 +251,25 @@ hr {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   text-align: center;
+  margin-top: 30px;
 
 }
 
-.eventTitle {
-  grid-area: 1 / 1 / 2 / 2;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
+.dialogLabels {
+  font-size: 20px;
+  font-weight: 600;
 }
-.eventDate {
-  grid-area: 1 / 2 / 2 / 3;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
+
+.containerContentSize {
+  height:50px;
 }
-.eventStart {
-  grid-area: 2 / 1 / 3 / 2;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
+
+.buttonSize {
+
+  margin: auto !important;
 }
-.eventEnd {
-  grid-area: 2 / 2 / 3 / 3;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-}
-.eventLocation {
-  grid-area: 3 / 1 / 4 / 2;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-}
-.eventLink {
-  grid-area: 3 / 2 / 4 / 3;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-}
-.eventDesc {
-  grid-area: 4 / 1 / 5 / 3;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-}
-.eventTransp {
-  grid-area: 5 / 1 / 6 / 3;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-}
-.eventButton {
-  grid-area: 6 / 1 / 7 / 3;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
+
+.transpMargin {
+  margin-top: 5%;
+  flex-direction: row;
 }

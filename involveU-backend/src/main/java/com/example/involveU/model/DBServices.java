@@ -67,17 +67,12 @@ public class DBServices {
     }
     protected int insertDBNewUser(User newUser)
     {
-        System.out.println(newUser.getEmail());
-
         if( checkUserExistence(newUser.getEmail()))
         {
-            System.out.println(newUser.getFirstName());
             sql="INSERT INTO User (firstName, lastName, year, email, isAdmin, isEboard, pronouns,userPassword) VALUES (?,?,?,?,?,?,?,?);";
             validQuery = JdbcTemplated.update(sql,newUser.getFirstName(),newUser.getLastName(), newUser.getYear(),newUser.getEmail(), 0,0,newUser.getPronouns(),newUser.getUserPassword());
-            System.out.println("Pass");
         }
         else {
-            System.out.println("Fail");
             validQuery = 0;
         }
         //Query executes and sends back an integer for error checking
@@ -87,7 +82,6 @@ public class DBServices {
     {
         sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
         users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-        System.out.println(users.size());
         return users.size() == 0;
     }
     protected Object DBcheckUserCredentials(String username, String password)
@@ -108,7 +102,10 @@ public class DBServices {
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
-        eboardMembers = sortEboardArray(eboardMembers);
+
+        if(eboardMembers.size() > 0)
+         eboardMembers = sortEboardArray(eboardMembers);
+
         return eboardMembers;
     }
     protected List<EBoard> sortEboardArray(List<EBoard> listToSort)

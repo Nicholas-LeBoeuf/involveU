@@ -121,6 +121,7 @@ hr {
 .bioandEboardContent {
   margin: 1% 6% !important;
   height: 200px;
+  overflow: auto;
 }
 
 .addTopMargin {
@@ -383,4 +384,11 @@ hr {
 
 ::ng-deep .ui-table-scrollable-body {
   margin-right: 17px !important;
+}
+
+.eboardTable {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }

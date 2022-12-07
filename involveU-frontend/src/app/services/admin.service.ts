@@ -43,4 +43,8 @@ export class AdminService {
   getAllNonEboard(): Observable<User[]> {
     return this.http.get<User[]>(environment.apiURL + `admin/getNonEboard`);
   }
+
+  getNonAdvisors(): Observable<User[]> {
+    return this.http.get<User[]>(environment.apiURL + `admin/getNonAdvisors`);
+  }
 }

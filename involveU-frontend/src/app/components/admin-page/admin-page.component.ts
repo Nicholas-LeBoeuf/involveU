@@ -21,6 +21,7 @@ export class AdminPageComponent implements OnInit {
   userList: User[] = [];
   nonEboardList: User[] = [];
   eboardList: User[] = [];
+  nonAdvisorList: User[] = [];
   assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
@@ -31,6 +32,7 @@ export class AdminPageComponent implements OnInit {
   deleteUserID: FormControl = new FormControl(null);
   nonEboardID: FormControl = new FormControl(null);
   eboardID: FormControl = new FormControl(null);
+  nonAdvisorID: FormControl = new FormControl(null);
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -94,6 +96,7 @@ export class AdminPageComponent implements OnInit {
     this.fillUserList();
     this.fillNonEboardList();
     this.fillEboardList();
+    this.fillNonAdvisorList();
   }
 
   fillClubList() {
@@ -129,6 +132,15 @@ export class AdminPageComponent implements OnInit {
     },
       (error) => {
       console.log(error)
+      });
+  }
+
+  fillNonAdvisorList() {
+    this.adminService.getNonAdvisors().subscribe((response: User[]) => {
+        this.nonAdvisorList = response;
+      },
+      (error) => {
+        console.log(error)
       });
   }
 
@@ -219,7 +231,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   assignAdvisorSubmit(){
-    this.adminService.assignNewAdvisor(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value).subscribe(success =>{
+    this.adminService.assignNewAdvisor(this.nonAdvisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
         console.log(success);
         this.assignAdvisorSuccess = true;
       },
@@ -227,6 +239,6 @@ export class AdminPageComponent implements OnInit {
         console.log(error);
         this.assignAdvisorFailed = true;
       });
-    console.log(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value)
+    console.log(this.nonAdvisorID.value, this.assignAdvisorClubID.value)
   }
 }

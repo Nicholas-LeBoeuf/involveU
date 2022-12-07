@@ -22,9 +22,12 @@ export class AdminPageComponent implements OnInit {
   nonEboardList: User[] = [];
   eboardList: User[] = [];
   nonAdvisorList: User[] = [];
+  clubEboard: User[] = [];
   assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
+  selectedClub: any = {};
+  clubID!: number;
 
   addEBoardClubID: FormControl = new FormControl(null);
   removeEBoardClubID: FormControl = new FormControl(null);
@@ -78,6 +81,8 @@ export class AdminPageComponent implements OnInit {
       userID: ['', Validators.required]
     });
   }
+  labelEboard: User[];
+  newUser: User;
   createClubMessage: boolean = false;
   createClubFailed: boolean = false;
   createUserSuccess: boolean = false;
@@ -90,6 +95,8 @@ export class AdminPageComponent implements OnInit {
   assignEboardFailed: boolean = false;
   removeEboardSuccess: boolean = false;
   removeEboardFailed: boolean = false;
+  disableUserDropdown = true;
+
 
   ngOnInit(): void {
     this.fillClubList();
@@ -97,6 +104,7 @@ export class AdminPageComponent implements OnInit {
     this.fillNonEboardList();
     this.fillEboardList();
     this.fillNonAdvisorList();
+    this.getEboardMembers();
   }
 
   fillClubList() {
@@ -240,5 +248,35 @@ export class AdminPageComponent implements OnInit {
         this.assignAdvisorFailed = true;
       });
     console.log(this.nonAdvisorID.value, this.assignAdvisorClubID.value)
+  }
+
+  getEboardMembers()
+  {
+    this.clubService.getClubEboard(this.removeEBoardClubID.value).subscribe(response => {
+      this.clubEboard = response;
+      console.log(response)
+      this.clubEboard.forEach(member =>
+        {
+          console.log(member);
+          member.firstName = member.firstName + ' ' + member.lastName;
+
+        }
+
+      );
+    })
+
+    console.log("List:"+this.labelEboard);
+
+
+  }
+
+  checkClubSelected() {
+    if(this.selectedClub!=='Select Club'){
+      this.disableUserDropdown = false;
+      this.getEboardMembers();
+    }
+    else {
+      this.disableUserDropdown = true;
+    }
   }
 }

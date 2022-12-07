@@ -300,6 +300,10 @@ public class DBServices {
     {
         sql = "DELETE FROM Eboard WHERE studentID = ?";
         validQuery = JdbcTemplated.update(sql,userID);
+
+        sql = "UPDATE User SET isEboard = 0 WHERE  studentID = ? ";
+        validQuery = JdbcTemplated.update(sql,userID);
+
         if(validQuery == 1)
         {
             return true;
@@ -308,6 +312,7 @@ public class DBServices {
         {
             return false;
         }
+
     }
     protected Boolean deleteAllFavorites(int userID)
     {

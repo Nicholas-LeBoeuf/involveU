@@ -66,7 +66,7 @@ public class AdminController extends DBServices {
     {
 
         deleteDBEboardMember(userID);
-        return new ResponseEntity<>("added user successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Deleted Eboard Memeber successfully", HttpStatus.OK);
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("admin/getAllAdvisors")

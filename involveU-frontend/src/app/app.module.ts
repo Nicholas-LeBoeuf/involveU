@@ -28,6 +28,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { TimeFormatPipe } from './pipes/time-format.pipe';
+import {FileUploadModule} from 'primeng/fileupload';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -65,6 +66,7 @@ FullCalendarModule.registerPlugins([
         ContextMenuModule,
         DropdownModule,
         FullCalendarModule,
+        FileUploadModule,
     ],
   providers: [
     CookieService

@@ -7,6 +7,8 @@ import com.example.involveU.model.DBServices;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class AdminController extends DBServices {
@@ -66,6 +68,24 @@ public class AdminController extends DBServices {
         deleteDBEboardMember(userID);
         return new ResponseEntity<>("added user successfully", HttpStatus.OK);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("admin/getAllAdvisors")
+    public ResponseEntity<List<User>> getAllAdvisors()
+    {
+        List<User> users = getDBAllAdmins();
+        return new ResponseEntity<>(users,HttpStatus.OK	);
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("admin/getNoneAdvisors")
+    public ResponseEntity<List<User>> getNoneAdvisors()
+    {
+        List<User> users = getDBNoneAdmins();
+        return new ResponseEntity<>(users,HttpStatus.OK	);
+
+    }
+
+
 }
 
 

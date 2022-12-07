@@ -148,6 +148,22 @@ public class DBServices {
            return listToSort;
        }
     }
+
+    protected List<User> getDBAllAdmins()
+    {
+        sql = "SELECT * FROM User WHERE isAdmin = 1";
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users;
+    }
+    protected List<User> getDBNoneAdmins()
+    {
+        sql = "SELECT * FROM User WHERE isAdmin = 0";
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users;
+    }
+
     protected List<Club> getAllDBClubs()
     {
         sql = "SELECT * FROM Club";

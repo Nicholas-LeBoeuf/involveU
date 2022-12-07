@@ -53,7 +53,7 @@ export class EventsService {
 
   updateEvent(event: Events)
   {
-    return this.http.post(environment.apiURL + `events/updateEvents`, event);
+    return this.http.post(environment.apiURL + `events/updateEvents`, event, {responseType: 'text'});
   }
 
   deleteEvent(eventID: number) {

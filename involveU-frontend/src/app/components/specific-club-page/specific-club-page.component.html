@@ -44,7 +44,7 @@
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
 
-      <table>
+      <table class="eboardTable">
         <div class = "eboardContainer" *ngFor="let member of clubEboard"  >
            <tr class = "eboardTableData">
              <td><h5>{{member.eboardPosition}} -> </h5></td>
@@ -121,38 +121,45 @@
   </p-carousel>
 </div>
 
-<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEventsDialog()">
+<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '90vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEventsDialog()">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEventsDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
-  <H1>EVENTS</H1>
-  <p-table [value]="clubEvents">
-    <ng-template pTemplate="header">
+
+  <h1 class="text-center">{{clubInfo.clubName}} Events</h1>
+  <p-table #clubEventTable [value]="clubEvents" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" [columns]="cols" [globalFilterFields]="['eventName', 'eventLocation']">
+    <ng-template pTemplate="caption">
+      <div class="captionContainer">
+        <div class="eventSearchInput">
+          <input class="form-control formInputs" style="width: 25%" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
+        </div>
+        <div class="addEventButton">
+          <button (click) = "showAddEventDialog()" class="blueButton"> Add Event</button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th></th>
-        <th></th>
+        <th style="text-align: center" *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
+        <th style="text-align: center">Edit</th>
+        <th style="text-align: center">Delete</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-event>
       <tr>
-
-        <td>{{event.eventName}}</td>
-        <td>{{event.eventLocation}}</td>
-        <td>{{event.eventDate | date:'MMMM dd, YYYY'}}</td>
-        <td>{{event.startTime | timeFormat}}</td>
-        <td>{{event.endTime  | timeFormat}}</td>
+        <td style="text-align: center">{{event.eventName}}</td>
+        <td style="text-align: center">{{event.eventDate | date:'MMMM dd, YYYY'}}</td>
+        <td style="text-align: center">{{event.startTime | timeFormat}}</td>
+        <td style="text-align: center">{{event.endTime  | timeFormat}}</td>
+        <td style="text-align: center">{{event.eventLocation}}</td>
+        <td style="text-align: center">{{event.eventDesc}}</td>
+        <td style="text-align: center">{{event.ticketLink}}</td>
+        <td style="text-align: center">{{event.isTransportation}}</td>
         <td><button (click) = "showEditDialog(event)" class="blueButton">Edit</button></td>
         <td><button (click)= "deleteEvent(event.eventID)" class="blueButton">Delete</button></td>
       </tr>
     </ng-template>
   </p-table>
-
-  <button (click) = "showAddEventDialog()" class="blueButton"> Add Event</button>
 
 </p-dialog>
 
@@ -160,6 +167,14 @@
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeAddEventDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
+  <div *ngIf="addEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Event added successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="addEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error adding event.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <h1 class="text-center">Add Events</h1>
   <hr class="dialogLines">
   <form [formGroup]="createEventForm">
@@ -237,7 +252,14 @@
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditDialog()">
     <span class="fa fa-fw fa-close fa-lg"></span>
   </a>
-
+  <div *ngIf="editEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Event edited successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="editEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error editing event.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
     <div *ngFor="let event of this.certainEvent" >
       <h1 class="text-center">Edit Event</h1>
       <hr class="dialogLines">

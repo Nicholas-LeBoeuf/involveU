@@ -84,6 +84,22 @@ public class AdminController extends DBServices {
         return new ResponseEntity<>(users,HttpStatus.OK	);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("admin/getAllEboard")
+    public ResponseEntity<List<User>> getAllEboard()
+    {
+        List<User> users = getDBAllEbaord();
+        return new ResponseEntity<>(users,HttpStatus.OK	);
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("admin/getNonEboard")
+    public ResponseEntity<List<User>> getNonEboard()
+    {
+        List<User> users = getDBNonEbaord();
+        return new ResponseEntity<>(users,HttpStatus.OK	);
+
+    }
 
 
 }

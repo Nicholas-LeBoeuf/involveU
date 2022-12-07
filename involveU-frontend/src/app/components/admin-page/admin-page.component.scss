@@ -254,6 +254,7 @@ html {
   display: block;
 }
 
-.p-dropdown {
+:host ::ng-deep .p-dropdown-label {
   font-size: 1.5em !important;
 }
+

@@ -1,4 +1,3 @@
-<html>
 <div class="leftAdminDiv">
   <div *ngIf="createClubMessage === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
     <p>Club creation successful!</p>
@@ -105,10 +104,10 @@
           </div>
         </div>
         <div class="form-group">
-          <input class="form-control formInputs" type="text" placeholder="User ID" formControlName="userID">
-          <div *ngIf="addEBoardFormInputs?.['userID']?.invalid && (addEBoardFormInputs?.['userID']?.dirty || addEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
-            <div *ngIf="addEBoardFormInputs?.['userID']?.errors?.['required']">
-              User ID is required
+          <p-dropdown [options]="nonEboardList" [formControl]="nonEboardID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+          <div *ngIf="addEBoardFormInputs?.['email']?.invalid && (addEBoardFormInputs?.['email']?.dirty || addEBoardFormInputs?.['email']?.touched)" class="leftAlert alert-danger">
+            <div *ngIf="addEBoardFormInputs?.['email']?.errors?.['required']">
+              User email is required
             </div>
           </div>
         </div>
@@ -147,10 +146,10 @@
           </div>
         </div>
         <div class="form-group">
-          <input class="form-control formInputs" type="text" placeholder="User ID" formControlName="userID">
+          <p-dropdown [options]="eboardList" [formControl]="eboardID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
           <div *ngIf="removeEBoardFormInputs?.['userID']?.invalid && (removeEBoardFormInputs?.['userID']?.dirty || removeEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="removeEBoardFormInputs?.['userID']?.errors?.['required']">
-              User ID is required
+              User email is required
             </div>
           </div>
         </div>
@@ -290,10 +289,10 @@
           </div>
         </div>
         <div class="form-group">
-          <input class="form-control formInputs" type="text" placeholder="Advisor ID" formControlName="advisorID">
-          <div *ngIf="assignAdvisorFormInputs?.['advisorID']?.invalid && (assignAdvisorFormInputs?.['advisorID']?.dirty || assignAdvisorFormInputs?.['advisorID']?.touched)" class="leftAlert alert-danger">
-            <div *ngIf="assignAdvisorFormInputs?.['advisorID']?.errors?.['required']">
-              Advisor ID is required
+          <p-dropdown [options]="nonAdvisorList" [formControl]="nonAdvisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+          <div *ngIf="assignAdvisorFormInputs?.['email']?.invalid && (assignAdvisorFormInputs?.['email']?.dirty || assignAdvisorFormInputs?.['email']?.touched)" class="leftAlert alert-danger">
+            <div *ngIf="assignAdvisorFormInputs?.['email']?.errors?.['required']">
+              Advisor email is required
             </div>
           </div>
         </div>
@@ -304,4 +303,3 @@
     </form>
   </div>
 </div>
-</html>

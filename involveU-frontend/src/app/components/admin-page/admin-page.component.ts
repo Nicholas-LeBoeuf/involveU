@@ -19,6 +19,9 @@ export class AdminPageComponent implements OnInit {
   assignAdvisorForm : FormGroup;
   clubNames: Club[] = [];
   userList: User[] = [];
+  nonEboardList: User[] = [];
+  eboardList: User[] = [];
+  nonAdvisorList: User[] = [];
   assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
@@ -27,6 +30,9 @@ export class AdminPageComponent implements OnInit {
   removeEBoardClubID: FormControl = new FormControl(null);
   assignAdvisorClubID: FormControl = new FormControl(null);
   deleteUserID: FormControl = new FormControl(null);
+  nonEboardID: FormControl = new FormControl(null);
+  eboardID: FormControl = new FormControl(null);
+  nonAdvisorID: FormControl = new FormControl(null);
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -88,6 +94,9 @@ export class AdminPageComponent implements OnInit {
   ngOnInit(): void {
     this.fillClubList();
     this.fillUserList();
+    this.fillNonEboardList();
+    this.fillEboardList();
+    this.fillNonAdvisorList();
   }
 
   fillClubList() {
@@ -102,6 +111,33 @@ export class AdminPageComponent implements OnInit {
   fillUserList() {
     this.userService.getAllUsers().subscribe((response: User[]) => {
         this.userList = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  fillEboardList() {
+    this.adminService.getAllEboard().subscribe((response: User[]) => {
+        this.eboardList = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  fillNonEboardList() {
+    this.adminService.getAllNonEboard().subscribe((response: User[]) => {
+      this.nonEboardList = response;
+    },
+      (error) => {
+      console.log(error)
+      });
+  }
+
+  fillNonAdvisorList() {
+    this.adminService.getNonAdvisors().subscribe((response: User[]) => {
+        this.nonAdvisorList = response;
       },
       (error) => {
         console.log(error)
@@ -171,7 +207,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   addEBoardSubmit(){
-    this.adminService.addEBoardMember(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
+    this.adminService.addEBoardMember(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
         console.log(success);
         this.assignEboardSuccess = true;
       },
@@ -179,11 +215,11 @@ export class AdminPageComponent implements OnInit {
         this.assignEboardFailed = true;
         console.log(error);
       });
-    console.log(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role)
+    console.log(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role)
   }
 
   removeEBoardSubmit(){
-    this.adminService.removeEBoardMember(this.removeEBoardForm.value.userID).subscribe(success =>{
+    this.adminService.removeEBoardMember(this.eboardID.value).subscribe(success =>{
         console.log(success);
         this.removeEboardSuccess = true;
       },
@@ -191,11 +227,11 @@ export class AdminPageComponent implements OnInit {
         console.log(error);
         this.removeEboardFailed = true;
       });
-    console.log(this.removeEBoardForm.value.userID)
+    console.log(this.eboardID.value)
   }
 
   assignAdvisorSubmit(){
-    this.adminService.assignNewAdvisor(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value).subscribe(success =>{
+    this.adminService.assignNewAdvisor(this.nonAdvisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
         console.log(success);
         this.assignAdvisorSuccess = true;
       },
@@ -203,6 +239,6 @@ export class AdminPageComponent implements OnInit {
         console.log(error);
         this.assignAdvisorFailed = true;
       });
-    console.log(this.assignAdvisorForm.value.advisorID, this.assignAdvisorClubID.value)
+    console.log(this.nonAdvisorID.value, this.assignAdvisorClubID.value)
   }
 }

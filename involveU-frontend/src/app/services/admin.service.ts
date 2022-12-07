@@ -35,4 +35,16 @@ export class AdminService {
   removeEBoardMember(userID: number){
     return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`, {responseType: 'text'});
   }
+
+  getAllEboard(): Observable<User[]> {
+  return this.http.get<User[]>(environment.apiURL + `admin/getAllEboard`);
+  }
+
+  getAllNonEboard(): Observable<User[]> {
+    return this.http.get<User[]>(environment.apiURL + `admin/getNonEboard`);
+  }
+
+  getNonAdvisors(): Observable<User[]> {
+    return this.http.get<User[]>(environment.apiURL + `admin/getNonAdvisors`);
+  }
 }

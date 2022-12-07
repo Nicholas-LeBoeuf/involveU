@@ -163,14 +163,14 @@ public class DBServices {
 
         return users;
     }
-    protected List<User> getDBAllEbaord()
+    protected List<User> getDBAllEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 1 ";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));
 
         return users;
     }
-    protected List<User> getDBNonEbaord()
+    protected List<User> getDBNonEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 0";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));

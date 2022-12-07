@@ -19,6 +19,7 @@ export class AdminPageComponent implements OnInit {
   assignAdvisorForm : FormGroup;
   clubNames: Club[] = [];
   userList: User[] = [];
+  nonEboardList: User[] = [];
   assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
@@ -27,6 +28,7 @@ export class AdminPageComponent implements OnInit {
   removeEBoardClubID: FormControl = new FormControl(null);
   assignAdvisorClubID: FormControl = new FormControl(null);
   deleteUserID: FormControl = new FormControl(null);
+  nonEboardID: FormControl = new FormControl(null);
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -88,6 +90,7 @@ export class AdminPageComponent implements OnInit {
   ngOnInit(): void {
     this.fillClubList();
     this.fillUserList();
+    this.fillNonEboardList();
   }
 
   fillClubList() {
@@ -105,6 +108,15 @@ export class AdminPageComponent implements OnInit {
       },
       (error) => {
         console.log(error)
+      });
+  }
+
+  fillNonEboardList() {
+    this.adminService.getAllNonEboard().subscribe((response: User[]) => {
+      this.nonEboardList = response;
+    },
+      (error) => {
+      console.log(error)
       });
   }
 
@@ -171,7 +183,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   addEBoardSubmit(){
-    this.adminService.addEBoardMember(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
+    this.adminService.addEBoardMember(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
         console.log(success);
         this.assignEboardSuccess = true;
       },
@@ -179,7 +191,7 @@ export class AdminPageComponent implements OnInit {
         this.assignEboardFailed = true;
         console.log(error);
       });
-    console.log(this.addEBoardForm.value.userID, this.addEBoardClubID.value, this.addEBoardForm.value.role)
+    console.log(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role)
   }
 
   removeEBoardSubmit(){

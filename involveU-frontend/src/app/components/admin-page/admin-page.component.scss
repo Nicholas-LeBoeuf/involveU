@@ -256,5 +256,10 @@ html {
 
 :host ::ng-deep .p-dropdown-label {
   font-size: 1.5em !important;
+  color: #0667B3 !important;
+}
+
+:host ::ng-deep .pi-chevron-down {
+  color: #0667B3 !important;
 }
 

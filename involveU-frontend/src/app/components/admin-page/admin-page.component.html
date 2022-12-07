@@ -97,7 +97,7 @@
     <form [formGroup]="addEBoardForm">
       <div class="addEBoard">
         <div class="form-group">
-          <p-dropdown [options]="clubNames" [formControl]="addEBoardClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'width':'400px', 'height':'50px'}"></p-dropdown>
+          <p-dropdown [options]="clubNames" [formControl]="addEBoardClubID" [filter]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
           <div *ngIf="addEBoardFormInputs?.['clubName']?.invalid && (addEBoardFormInputs?.['clubName']?.dirty || addEBoardFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="addEBoardFormInputs?.['clubName']?.errors?.['required']">
               Club Name is required
@@ -139,7 +139,7 @@
     <form [formGroup]="removeEBoardForm">
       <div class="removeEBoard">
         <div class="form-group">
-          <p-dropdown [options]="clubNames" [formControl]="removeEBoardClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'width':'400px', 'height':'50px'}"></p-dropdown>
+          <p-dropdown [options]="clubNames" [formControl]="removeEBoardClubID" [filter]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
           <div *ngIf="removeEBoardFormInputs?.['clubName']?.invalid && (removeEBoardFormInputs?.['clubName']?.dirty || removeEBoardFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="removeEBoardFormInputs?.['clubName']?.errors?.['required']">
               Club Name is required
@@ -239,7 +239,7 @@
         </div>
       </div>
       <div class="centerButton">
-        <button class="createUserButton adminButton" type="submit" (click)="createUserSubmit()">Create User</button>
+        <button class="createClubButton form-submit-button" type="submit" (click)="createUserSubmit()">Create User</button>
       </div>
     </form>
   </div>
@@ -256,7 +256,7 @@
     <form [formGroup]="deleteUserForm">
       <div class="assignAdvisor">
         <div class="form-group">
-          <p-dropdown [options]="userList" [formControl]="deleteUserID" optionValue="studentID" optionLabel="email" [filter]="true" [autoDisplayFirst]="false" placeholder="Search email" class="dropdownLength" [style]="{'width':'400px', 'height':'50px'}"></p-dropdown>
+          <p-dropdown [options]="userList" [formControl]="deleteUserID" optionValue="studentID" optionLabel="email" [filter]="true" [autoDisplayFirst]="false" placeholder="Search email" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
           <div *ngIf="deleteUserFormInputs?.['email']?.invalid && (deleteUserFormInputs?.['email']?.dirty || deleteUserFormInputs?.['email']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="deleteUserFormInputs?.['email']?.errors?.['required']">
               Email is required
@@ -282,7 +282,7 @@
     <form [formGroup]="assignAdvisorForm">
       <div class="assignAdvisor">
         <div class="form-group">
-          <p-dropdown [options]="clubNames" [formControl]="assignAdvisorClubID" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'width':'400px', 'height':'50px'}"></p-dropdown>
+          <p-dropdown [options]="clubNames" [formControl]="assignAdvisorClubID" [filter]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
           <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
               Club Name is required

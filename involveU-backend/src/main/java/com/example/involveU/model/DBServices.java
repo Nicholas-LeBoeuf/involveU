@@ -151,19 +151,25 @@ public class DBServices {
 
     protected List<User> getDBAllAdmins()
     {
-        sql = "SELECT * FROM User WHERE isAdmin = 1";
+        sql = "SELECT * FROM User JOIN Club C on User.studentID = C.advisorID";
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users;
     }
     protected List<User> getDBNoneAdmins()
     {
-        sql = "SELECT * FROM User WHERE isAdmin = 0";
+        sql = "SELECT * FROM User WHERE NOT EXISTS(SELECT * FROM Club WHERE Club.advisorID = User.studentID);";
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users;
     }
+    protected List<User> getDBAllEbaord()
+    {
+        sql = "SELECT * FROM User WHERE isEboard = 1 ";
+        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));
 
+        return users;
+    }
     protected List<Club> getAllDBClubs()
     {
         sql = "SELECT * FROM Club";

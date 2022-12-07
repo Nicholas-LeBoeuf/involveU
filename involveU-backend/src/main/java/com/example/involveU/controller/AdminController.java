@@ -77,7 +77,7 @@ public class AdminController extends DBServices {
 
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("admin/getNoneAdvisors")
+    @GetMapping("admin/getNonAdvisors")
     public ResponseEntity<List<User>> getNoneAdvisors()
     {
         List<User> users = getDBNoneAdmins();

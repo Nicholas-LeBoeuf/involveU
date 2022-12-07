@@ -170,6 +170,13 @@ public class DBServices {
 
         return users;
     }
+    protected List<User> getDBNonEbaord()
+    {
+        sql = "SELECT * FROM User WHERE isEboard = 0";
+        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));
+
+        return users;
+    }
     protected List<Club> getAllDBClubs()
     {
         sql = "SELECT * FROM Club";

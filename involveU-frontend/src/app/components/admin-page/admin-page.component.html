@@ -146,7 +146,7 @@
           </div>
         </div>
         <div class="form-group">
-          <input class="form-control formInputs" type="text" placeholder="User ID" formControlName="userID">
+          <p-dropdown [options]="eboardList" [formControl]="eboardID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
           <div *ngIf="removeEBoardFormInputs?.['userID']?.invalid && (removeEBoardFormInputs?.['userID']?.dirty || removeEBoardFormInputs?.['userID']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="removeEBoardFormInputs?.['userID']?.errors?.['required']">
               User ID is required

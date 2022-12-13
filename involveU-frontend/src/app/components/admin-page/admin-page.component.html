@@ -55,9 +55,9 @@
           </div>
         </div>
         <div class="form-group createClubInputs">
-          <input class="form-control formInputs" type="text" placeholder="Club Logo" formControlName="clubLogo">
-             <p-fileUpload name="fileToUpload" url="./upload.php"
-                        accept="image/*"></p-fileUpload>
+         <!-- <input class="form-control formInputs" type="text" placeholder="Club Logo" formControlName="clubLogo">-->
+             <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="onUpload($event)" accept="image/*"></p-fileUpload>
+         <!-- <input type="file" id="customFile" (change)="onUpload($event)">-->
 
           <!--          <div *ngIf="clubCreationFormInputs?.['clubLogo']?.invalid && (clubCreationFormInputs?.['clubLogo']?.dirty || clubCreationFormInputs?.['clubLogo']?.touched)" class="rightAlert alert-danger">-->
 <!--            <div *ngIf="clubCreationFormInputs?.['clubLogo']?.errors?.['required']">-->

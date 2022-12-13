@@ -35,4 +35,14 @@ export class AdminService {
   removeEBoardMember(userID: number){
     return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`, {responseType: 'text'});
   }
+
+  sendImage(file: File)
+  {
+    console.log(file);
+    const data: FormData = new FormData();
+    data.append('file', file);
+    console.log(data);
+    return this.http.post(environment.apiURL + `admin/testImage`, data);
+  }
+
 }

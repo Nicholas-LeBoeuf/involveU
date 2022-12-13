@@ -1,14 +1,18 @@
 package com.example.involveU.model;
 
-import com.fasterxml.jackson.databind.util.ArrayBuilders;
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
-import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.text.SimpleDateFormat;
@@ -400,9 +404,17 @@ public class DBServices {
 
         return events;
     }
-    protected  List<Events> getDBFavoriteClubEvents(int userID)
+    protected  List<Events> getDBFutureFavoriteClubEvents(int userID)
     {
         sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON eventDate >= DATE(NOW()) AND Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return  events;
+    }
+    protected  List<Events> getDBFavoriteClubEvents(int userID)
+    {
+        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
@@ -462,6 +474,34 @@ public class DBServices {
 
         return events;
     }
+
+    protected boolean uploadImage(MultipartFile file)
+    {
+
+        try {
+            Blob blob = new SerialBlob(file.getBytes());
+            System.out.println(file.getBytes()[0]);
+            sql = "INSERT INTO Images (imageName, Image, clubID) VALUES (?,?,?)";
+
+            validQuery = JdbcTemplated.update(sql, file.getName(), blob, 3);
+        }catch(IOException e) {
+            System.out.print("Failed");
+        } catch (SerialException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return validQuery == 1;
+    }
+    //COMMENTED OUT FOR FUTURE IMPLEMENTATION
+//    protected Image getDBClubFile()
+//    {
+//
+//        sql = "SELECT imageName, Image FROM Images WHERE clubID = 3";
+//        List<Image> clubFile = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Image.class));
+//
+//        return clubFile.get(0);
+//    }
 
 
 

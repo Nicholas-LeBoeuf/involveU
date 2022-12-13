@@ -47,4 +47,13 @@ export class AdminService {
   getNonAdvisors(): Observable<User[]> {
     return this.http.get<User[]>(environment.apiURL + `admin/getNonAdvisors`);
   }
+  sendImage(file: File)
+  {
+    console.log(file);
+    const data: FormData = new FormData();
+    data.append('file', file);
+    console.log(data);
+    return this.http.post(environment.apiURL + `admin/testImage`, data);
+  }
+
 }

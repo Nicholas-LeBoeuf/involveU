@@ -105,7 +105,7 @@
   </div>
   <div id="favoritedEvents">
     <ng-container *ngIf="isLoggedIn;else allEventsView">
-      <h1 class="text-center">Your Favorited Clubs Events</h1>
+      <h1 class="text-center">Your Favorited Clubs Events Coming Up</h1>
       <ng-template [ngIf]="favoritedClubsEvents.length === 0">
         <div class="noDataContent">
           <h2>There are no events to display!</h2>

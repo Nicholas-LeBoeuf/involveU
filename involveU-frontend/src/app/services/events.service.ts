@@ -64,4 +64,8 @@ export class EventsService {
     return this.http.get<Events>(environment.apiURL + `events/getSpecificEvent/${eventID}`);
   }
 
+  getFutureFavortedClubEvents(userID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getFutureFavoriteClubEvents/${userID}`);
+  }
+
 }

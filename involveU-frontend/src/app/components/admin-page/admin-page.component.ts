@@ -6,6 +6,7 @@ import {AdminService} from "../../services/admin.service";
 import {Club} from "../../objects/club";
 import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
+import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 
 @Component({
   selector: 'app-admin-page',
@@ -98,6 +99,7 @@ export class AdminPageComponent implements OnInit {
   disableUserDropdown = true;
 
 
+  uploadedFiles: any[] = [];
   ngOnInit(): void {
     this.fillClubList();
     this.fillUserList();
@@ -105,6 +107,29 @@ export class AdminPageComponent implements OnInit {
     this.fillEboardList();
     this.fillNonAdvisorList();
     this.getEboardMembers();
+  }
+  onUpload(event) {
+
+    //console.log(event.target.files[0])
+    console.log(event);
+
+    this.adminService.sendImage(event.files[0]).subscribe()
+   /* console.log("made it");
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+      this.fileName = file.name;
+
+      const formData = new FormData();
+
+      formData.append("thumbnail", file);
+
+      this.adminService.sendImage(formData).subscribe()*/
+      //const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+     // upload$.subscribe();
+
   }
 
   fillClubList() {

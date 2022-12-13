@@ -46,7 +46,6 @@ export class ScheduleComponent implements OnInit {
   activateFavoritedClubEvents() {
     this.eventsService.getFavoritedClubsEvents(this.userID).subscribe(response => {
       this.eventsToSend = response;
-      console.log(response);
     });
     this.optionSelected = true;
   }

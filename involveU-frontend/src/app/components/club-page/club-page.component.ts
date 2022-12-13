@@ -188,7 +188,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   getFavoritedClubEvents() {
-    this.eventsService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+    this.eventsService.getFutureFavortedClubEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
     })
   }

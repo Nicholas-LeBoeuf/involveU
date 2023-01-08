@@ -213,6 +213,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
       console.log(success);
       this.addEventSuccess = true;
+      location.reload();
     },(error) =>{
       location.reload();
       console.log(error.text);

@@ -61,7 +61,8 @@ button {
 .eventInfoContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+/*  grid-template-rows: repeat(4, 1fr);*/
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   text-align: center;

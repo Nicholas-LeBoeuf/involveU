@@ -101,6 +101,9 @@ export class SpecificClubPageComponent implements OnInit {
     this.getEboard();
     this.getUserRSVPdEvents();
 
+
+    console.log(this.isLoggedIn);
+    console.log(this.clubIsFav);
   }
 
   isUserLoggedIn() {

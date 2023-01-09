@@ -51,7 +51,7 @@ export class SpecificClubPageComponent implements OnInit {
     })
   }
 
-
+  isLoggedIn: boolean = false;
   clubID!: number;
   userID!: number;
 
@@ -94,13 +94,17 @@ export class SpecificClubPageComponent implements OnInit {
     });
 
     this.userID = +this.cookie.get('studentID');
-
+    this.isUserLoggedIn();
     this.getClubInfo();
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
     this.getUserRSVPdEvents();
 
+  }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
   }
 
   getClubInfo() {

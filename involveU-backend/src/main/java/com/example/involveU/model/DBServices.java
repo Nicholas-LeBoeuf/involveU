@@ -107,7 +107,7 @@ public class DBServices {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
 
-        if(eboardMembers.size() > 0)
+        if(eboardMembers.size() > 1)
          eboardMembers = sortEboardArray(eboardMembers);
 
         return eboardMembers;
@@ -287,18 +287,21 @@ public class DBServices {
     }
 
     protected Boolean deleteDBUser(int userID) {
-        sql = "DELETE FROM User WHERE studentID = ?";
 
-        validQuery = JdbcTemplated.update(sql,userID);
 
-        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
+        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && deleteAllRSVPS(userID))
         {
+            sql = "DELETE FROM User WHERE studentID = ?";
+
+            validQuery = JdbcTemplated.update(sql,userID);
+
             return true;
         }
         else
         {
             return false;
         }
+
     }
     protected Boolean deleteDBEboardMember(int userID)
     {
@@ -322,15 +325,15 @@ public class DBServices {
     {
         sql = "DELETE FROM Favorites WHERE userID = ?";
         validQuery = JdbcTemplated.update(sql,userID);
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
+    protected Boolean deleteAllRSVPS(int userID)
+    {
+        sql = "DELETE FROM RSVP WHERE studentID = ?";
+        validQuery = JdbcTemplated.update(sql,userID);
+        return true;
+    }
+
     //EVENTS CONTROLLER
     protected List<Events> getDBEvents()
     {

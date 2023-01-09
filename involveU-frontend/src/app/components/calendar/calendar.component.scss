@@ -51,3 +51,8 @@
 ::ng-deep .fc .fc-event, .fc .fc-scrollgrid table tr {
   cursor: pointer !important;
 }
+
+::ng-deep .fc-daygrid-dot-event .fc-event-title {
+  overflow: inherit !important;
+  white-space: normal !important;
+}

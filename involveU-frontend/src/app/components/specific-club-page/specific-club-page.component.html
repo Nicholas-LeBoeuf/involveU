@@ -13,7 +13,7 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true;">
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true || this.cookie.get('isAdmin') == '1';">
           <button class="clubButton blueButton" (click)="showEventsDialog()">Event Data</button>
         </ng-container>
         <ng-container *ngIf="isLoggedIn && this.clubIsFav; else NotFavorited">

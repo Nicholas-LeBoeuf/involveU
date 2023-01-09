@@ -305,4 +305,58 @@ export class AdminPageComponent implements OnInit {
       this.disableUserDropdown = true;
     }
   }
+
+  isCreateClubValid() {
+    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubForm.value.advisorID == '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isCreateUserValid() {
+    if (this.createUserForm.value.firstName == '' || this.createUserForm.value.lastName == '' || this.createUserForm.value.email == '' || this.createUserForm.value.password == '' || this.createUserForm.value.year == '' || this.createUserForm.value.pronouns == '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isDeleteUserValid() {
+    if (this.deleteUserID.value == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isAssignEboardValid() {
+    if (this.nonEboardID.value == null || this.addEBoardClubID.value == null || this.addEBoardForm.value.role == '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isAssignAdvisorValid() {
+    if (this.assignAdvisorClubID.value == null || this.nonAdvisorID.value == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isRemoveEboardValid() {
+    if (this.eboardID.value == null || this.removeEBoardClubID == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }

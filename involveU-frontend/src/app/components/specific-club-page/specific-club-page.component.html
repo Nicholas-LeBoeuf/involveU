@@ -16,11 +16,13 @@
         <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true;">
           <button class="clubButton blueButton" (click)="showEventsDialog()">Event Data</button>
         </ng-container>
-        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.clubIsFav;">
+        <ng-container *ngIf="isLoggedIn && this.clubIsFav; else NotFavorited">
           <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
         </ng-container>
-        <ng-template *ngIf=" this.cookie.get('userID') != undefined && !this.clubIsFav;">
-          <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
+        <ng-template #NotFavorited>
+          <ng-container *ngIf="isLoggedIn">
+            <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
+          </ng-container>
         </ng-template>
       </div>
     </div>

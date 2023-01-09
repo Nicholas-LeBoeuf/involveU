@@ -83,7 +83,6 @@ export class AdminPageComponent implements OnInit {
     });
   }
   labelEboard: User[];
-  newUser: User;
   createClubMessage: boolean = false;
   createClubFailed: boolean = false;
   createUserSuccess: boolean = false;
@@ -207,6 +206,7 @@ export class AdminPageComponent implements OnInit {
     this.adminService.insertNewClub(clubInfo).subscribe(success =>{
         this.createClubMessage = true;
         console.log(success);
+        location.reload();
       },
       (error) => {
         this.createClubFailed = true;
@@ -218,8 +218,8 @@ export class AdminPageComponent implements OnInit {
     const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.createUserForm.value.year, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
     this.adminService.createUser(newUser).subscribe(success =>{
         this.createUserSuccess = true;
-        console.log(newUser);
         console.log(success);
+        location.reload();
       },
       (error) => {
         this.createUserFailed = true;
@@ -230,8 +230,8 @@ export class AdminPageComponent implements OnInit {
   deleteUserSubmit(){
     this.adminService.deleteUser(this.deleteUserID.value).subscribe(success =>{
         console.log(success);
-        console.log(this.deleteUserID.value);
         this.deleteUserSuccess = true;
+        location.reload();
       },
       (error) => {
         console.log(error);
@@ -243,6 +243,7 @@ export class AdminPageComponent implements OnInit {
     this.adminService.addEBoardMember(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
         console.log(success);
         this.assignEboardSuccess = true;
+        location.reload();
       },
       (error) => {
         this.assignEboardFailed = true;
@@ -255,24 +256,24 @@ export class AdminPageComponent implements OnInit {
     this.adminService.removeEBoardMember(this.eboardID.value).subscribe(success =>{
         console.log(success);
         this.removeEboardSuccess = true;
+        location.reload();
       },
       (error) => {
         console.log(error);
         this.removeEboardFailed = true;
       });
-    console.log(this.eboardID.value)
   }
 
   assignAdvisorSubmit(){
     this.adminService.assignNewAdvisor(this.nonAdvisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
         console.log(success);
         this.assignAdvisorSuccess = true;
+        location.reload();
       },
       (error) => {
         console.log(error);
         this.assignAdvisorFailed = true;
       });
-    console.log(this.nonAdvisorID.value, this.assignAdvisorClubID.value)
   }
 
   getEboardMembers()

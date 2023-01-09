@@ -58,6 +58,19 @@ html {
   font-size: 1.8em;
 }
 
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  top: 35px;
+  position: sticky;
+}
+
 .centerButton {
   display: block;
   margin: auto auto auto 37%;

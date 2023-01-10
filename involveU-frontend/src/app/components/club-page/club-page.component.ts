@@ -1,10 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { ClubService } from "../../services/club.service";
-import { Club } from "../../objects/club";
-import { Router } from '@angular/router';
+import {ClubService} from "../../services/club.service";
+import {Club} from "../../objects/club";
+import {Router} from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
-import {ButtonModule} from "primeng/button";
-import {LazyLoadEvent} from "primeng/api";
 import {Table} from "primeng/table";
 import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
@@ -23,6 +21,7 @@ export class ClubPageComponent implements OnInit {
 
   displayClubSearchModal: boolean = false;
   displayClubSearchLoggedInModal: boolean = false;
+  viewMoreInfoDialog: boolean = false;
   isLoggedIn: boolean = false;
 
   timeout: boolean = false;
@@ -46,6 +45,8 @@ export class ClubPageComponent implements OnInit {
 
   favoritedClubsEvents: Events[] = [];
   allFutureEvents: Events[] = [];
+  certainEvent: Events[] = [];
+  userRSVPdEvents: Events[] = [];
 
   cols = [
     { field: 'clubName', header: 'Club Name' }
@@ -64,6 +65,7 @@ export class ClubPageComponent implements OnInit {
     this.getFavoritedClubEvents();
     this.getAllClubsForFeatured();
     this.getAllFutureEvents();
+    this.getUserRSVPdEvents();
     this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
@@ -105,6 +107,15 @@ export class ClubPageComponent implements OnInit {
 
   closeClubSearchLoggedInDialog() {
     this.displayClubSearchLoggedInModal = false;
+  }
+
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+  closeViewMoreInfoDialog(){
+    this.certainEvent = [];
+    this.viewMoreInfoDialog = false;
   }
 
   fillClubList() {
@@ -177,7 +188,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   getFavoritedClubEvents() {
-    this.eventsService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+    this.eventsService.getFutureFavortedClubEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
     })
   }
@@ -198,6 +209,33 @@ export class ClubPageComponent implements OnInit {
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
+
+    })
+
+    this.message = "Event Successfully RSVPd!";
+    this.successMessage = true;
+    location.reload();
+  }
+
+  removeEventRSVP(eventID: number) {
+    this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
+      console.log(response);
+
+    })
+
+    this.message = "Successfully Removed RSVP!";
+    this.successMessage = true;
+    location.reload();
+  }
+
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
     })
   }
+
+  isUserRSVPd(eventID: number): boolean {
+    return this.userRSVPdEvents.some(event => event.eventID === eventID);
+  }
+
 }

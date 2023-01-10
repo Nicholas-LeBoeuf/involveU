@@ -1,13 +1,8 @@
 package com.example.involveU.controller;
-import java.awt.image.RescaleOp;
-import java.io.IOException;
 import java.util.List;
+
 import com.example.involveU.model.DBServices;
-import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.Events;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/")
 public class EventController extends DBServices{
     List<Events> events;
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getEvents")
+    private ResponseEntity<List<Events>> getsEvents()
+    {
+        events = getDBEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/getTodaysEvents")
     private ResponseEntity<List<Events>> getTodaysEvents()
@@ -42,13 +44,21 @@ public class EventController extends DBServices{
 
     }
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getFutureFavoriteClubEvents/{userID}")
+    private ResponseEntity<List<Events>> getFutureFavoriteClubEvents(@PathVariable("userID") int userID)
+    {
+        events = getDBFutureFavoriteClubEvents(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/getFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFavoriteClubEvents(@PathVariable("userID") int userID)
     {
         events = getDBFavoriteClubEvents(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/rsvpEvent/{eventID}/{userID}")
@@ -82,6 +92,62 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+
+    @CrossOrigin (origins = "http://localhost:4200")
+    @PostMapping("events/createNewEvent")
+    private ResponseEntity<String> createNewEvent(@RequestBody Events newEvent)
+    {
+
+            if (insertNewEvent(newEvent)) {
+                return new ResponseEntity<>("success", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Missing Required Data", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+
+    }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/getAllEvents")
+    private ResponseEntity<List<Events>> getAllCalendarEvents()
+    {
+          events =  getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/deleteEvent/{eventID}")
+    private ResponseEntity<String> deleteEvent(@PathVariable("eventID") int eventID)
+    {
+
+          if(removeDBEvent(eventID))
+          {
+              return new ResponseEntity<>("success", HttpStatus.OK);
+          }
+          else
+          {
+              return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+          }
+
+    }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @PostMapping("events/updateEvents")
+    private ResponseEntity<String> updateEvents(@RequestBody Events eventToUpdate )
+    {
+        updateDBEvent(eventToUpdate);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+    @CrossOrigin (origins = "http://localhost:4200")
+    @GetMapping("events/getSpecificEvent/{eventID}")
+    private ResponseEntity<List<Events>> getSpecificEvent(@PathVariable("eventID") int eventID)
+    {
+        events = getEventByID(eventID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+
+
+
+
 
 
 }

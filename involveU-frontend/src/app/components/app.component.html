@@ -25,10 +25,7 @@
       <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
     </div>
     <div class="specificNavButton">
-      <a #sla="routerLinkActive" routerLinkActive="active"  [class.active-span]="sla.isActive">This Week</a>
-    </div>
-    <div class="specificNavButton">
-      <a #tla="routerLinkActive" routerLinkActive="active"  [class.active-span]="tla.isActive">Master Schedule</a>
+      <a #sla="routerLinkActive" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a>
     </div>
     <div class="specificNavButton">
       <a #ula="routerLinkActive" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a>
@@ -135,7 +132,7 @@
         </div>
       </div>
       <div class="form-group">
-        <select class="form-control formInputs" name="year" formControlName="year">
+        <select class="form-control formInputs formSelect" name="year" formControlName="year">
           <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Your Year...</option>
           <option value="Freshman">Freshman</option>
           <option value="Sophomore">Sophomore</option>

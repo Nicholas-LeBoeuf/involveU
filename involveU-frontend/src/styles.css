@@ -29,17 +29,24 @@ button {
   padding: 0 20px;
   margin: 10px;
   color: white;
-
 }
 
 .blueButton:hover {
   background-color: #3b88c4;
 }
 
+.blueButton:disabled {
+  background-color: #8d8d8d;
+}
+
 .form-control {
   height: 40px;
-  width: 250px;
+
   border-radius: 10px;
+}
+
+.formSelect {
+  width: 209px;
 }
 
 .formInputs {
@@ -49,4 +56,53 @@ button {
 
 .formInputs::placeholder {
   color: #0667B3;
+}
+
+.eventInfoContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: center;
+}
+
+.eventName {
+  grid-area: 1 / 1 / 2 / 2;
+  margin: 20px;
+}
+.eventDate {
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 20px;
+}
+.eventTime {
+  grid-area: 2 / 1 / 3 / 2;
+  margin: 20px;
+}
+.eventLocation {
+  grid-area: 2 / 2 / 3 / 3;
+  margin: 20px;
+}
+.eventDesc {
+  grid-area: 3 / 1 / 4 / 2;
+  margin: 20px;
+}
+.eventHost {
+  grid-area: 3 / 2 / 4 / 3;
+  margin: 20px;
+}
+
+.eventTransportation {
+  grid-area: 4 / 1 / 5 / 2;
+  margin: 20px;
+}
+
+.eventTicketLink {
+  grid-area: 4 / 2 / 5 / 3;
+  margin: 20px;
+}
+
+.dialogLines {
+  border-top: 2px solid black;
+  margin: 2% 8%;
 }

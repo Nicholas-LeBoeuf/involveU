@@ -22,9 +22,12 @@ export class LandingPageComponent implements OnInit {
   currentUser: User;
   userID: number;
   todaysEvents: Events[];
+  certainEvent: Events[] = [];
+
+  viewMoreInfoDialog: boolean = false;
 
   ngOnInit(): void {
-    this.userID = +this.cookie.get('studentID')
+    this.userID = +this.cookie.get('studentID');
     this.fillUserInfo();
     this.fillTodaysEvents();
   }
@@ -41,6 +44,7 @@ export class LandingPageComponent implements OnInit {
   fillTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
+      console.log(data);
     })
   }
 
@@ -48,5 +52,15 @@ export class LandingPageComponent implements OnInit {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
     })
+  }
+
+  openViewMoreInfoDialog(SpecificEvent: Events) {
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+
+  closeViewMoreInfoDialog() {
+    this.certainEvent = [];
+    this.viewMoreInfoDialog = false;
   }
 }

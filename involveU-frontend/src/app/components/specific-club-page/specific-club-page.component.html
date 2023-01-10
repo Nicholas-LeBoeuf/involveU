@@ -13,11 +13,16 @@
     <div class="sectionContent">
       <h1 class="clubsName">Welcome to {{clubInfo.clubName}}!</h1>
       <div class="buttonRow">
-        <ng-container *ngIf="this.clubIsFav;else notFav">
+        <ng-container *ngIf=" this.cookie.get('userID') != undefined && this.isInEboard() === true || this.cookie.get('isAdmin') == '1';">
+          <button class="clubButton blueButton" (click)="showEventsDialog()">Event Data</button>
+        </ng-container>
+        <ng-container *ngIf="isLoggedIn && this.clubIsFav; else NotFavorited">
           <button class="clubButton blueButton" (click)="removeFromFavorites(this.userID, this.clubID)">Unfavorite</button>
         </ng-container>
-        <ng-template #notFav>
-          <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
+        <ng-template #NotFavorited>
+          <ng-container *ngIf="isLoggedIn">
+            <button class="clubButton blueButton" (click)="favoriteClub(this.userID, this.clubID)">Favorite</button>
+          </ng-container>
         </ng-template>
       </div>
     </div>
@@ -34,13 +39,23 @@
   <div class="bioSection">
     <h1 class="text-center addTopMargin">Who Are We?</h1>
     <div class="sectionContent bioandEboardContent">
-      <h5 class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
+      <h5 class="text-center">{{clubInfo.clubBio}}</h5>
     </div>
   </div>
   <div class="eboardSection">
     <h1 class="text-center addTopMargin">The EBoard!</h1>
     <div class="sectionContent bioandEboardContent">
-      <h5 class="text-center">Testing this</h5>
+
+      <table class="eboardTable">
+        <div class = "eboardContainer" *ngFor="let member of clubEboard"  >
+           <tr class = "eboardTableData">
+             <td><h5>{{member.eboardPosition}} -> </h5></td>
+             <td><h5> {{member.firstName}} {{member.lastName}}</h5></td>
+           </tr>
+        </div>
+      </table>
+
+
     </div>
   </div>
 </div>
@@ -77,11 +92,11 @@
             <div class="parent">
               <div class="div1">
                 <h3 class="eventDataTitle">Date</h3>
-                <h5 class="eventData">{{event.eventDate}}</h5>
+                <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
               </div>
               <div class="div2">
                 <h3 class="eventDataTitle">Time</h3>
-                <h5 class="eventData">{{event.startTime}} - {{event.endTime}}</h5>
+                <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
               </div>
               <div class="div3">
                 <h3 class="eventDataTitle">Location</h3>
@@ -89,12 +104,17 @@
               </div>
               <div class="div4">
                 <h3 class="eventDataTitle">Hosted By</h3>
-                <h5 class="eventData">{{event.clubID}}</h5>
+                <h5 class="eventData">{{event.clubName}}</h5>
               </div>
               <div class="div5">
-                <button class="blueButton">View More Information</button>
-                <ng-container *ngIf="userID !== 0">
-                  <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                <button class="blueButton" (click)="showViewMoreInfoDialog(event)">View More Information</button>
+                <ng-container *ngIf="isLoggedIn">
+                  <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                    <button class="blueButton" (click)="removeEventRSVP(event.eventID)">Remove RSVP</button>
+                  </ng-container>
+                  <ng-template #ShowRSVP>
+                    <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
+                  </ng-template>
                 </ng-container>
               </div>
             </div>
@@ -104,3 +124,268 @@
     </ng-template>
   </p-carousel>
 </div>
+
+<p-dialog [(visible)]="eventDialog" [modal]="true" [style]="{width: '90vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEventsDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEventsDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+
+  <h1 class="text-center">{{clubInfo.clubName}} Events</h1>
+  <p-table #clubEventTable [value]="clubEvents" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" [columns]="cols" [globalFilterFields]="['eventName', 'eventLocation']">
+    <ng-template pTemplate="caption">
+      <div class="captionContainer">
+        <div class="eventSearchInput">
+          <input class="form-control formInputs" style="width: 25%" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
+        </div>
+        <div class="addEventButton">
+          <button (click) = "showAddEventDialog()" class="blueButton"> Add Event</button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="text-align: center" *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
+        <th style="text-align: center">Edit</th>
+        <th style="text-align: center">Delete</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-event>
+      <tr>
+        <td style="text-align: center">{{event.eventName}}</td>
+        <td style="text-align: center">{{event.eventDate | date:'MMMM dd, YYYY'}}</td>
+        <td style="text-align: center">{{event.startTime | timeFormat}}</td>
+        <td style="text-align: center">{{event.endTime  | timeFormat}}</td>
+        <td style="text-align: center">{{event.eventLocation}}</td>
+        <td style="text-align: center">{{event.eventDesc}}</td>
+        <td style="text-align: center">{{event.ticketLink}}</td>
+        <td style="text-align: center">{{event.isTransportation}}</td>
+        <td><button (click) = "showEditDialog(event)" class="blueButton">Edit</button></td>
+        <td><button (click)= "deleteEvent(event.eventID)" class="blueButton">Delete</button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</p-dialog>
+
+<p-dialog [(visible)]="addEventDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeAddEventDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeAddEventDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <div *ngIf="addEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Event added successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="addEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error adding event.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <h1 class="text-center">Add Events</h1>
+  <hr class="dialogLines">
+  <form [formGroup]="createEventForm">
+    <div class="addEditEventDialogContainer">
+      <div class="eventTitle containerContentSize">
+        <label class="dialogLabels">Event Name</label>
+        <input class="form-control formInputs" type="text" placeholder="Event Name" formControlName="createEventName">
+        <div *ngIf="getCreateEventsFormInputs?.['eventName']?.invalid && (getCreateEventsFormInputs?.['eventName']?.dirty || getCreateEventsFormInputs?.['eventName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['eventName']?.errors?.['required']">
+            Event Name is required
+          </div>
+        </div>
+      </div>
+      <div class="eventDate containerContentSize">
+        <label class="dialogLabels">Event Date</label>
+        <input class="form-control formInputs" type="date" placeholder="Event Date" formControlName="createEventDate">
+        <div *ngIf="getCreateEventsFormInputs?.['eventDate']?.invalid && (getCreateEventsFormInputs?.['eventDate']?.dirty || getCreateEventsFormInputs?.['eventDate']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['eventDate']?.errors?.['required']">
+            Event Date is required
+          </div>
+        </div>
+      </div>
+      <div class="eventStart containerContentSize">
+        <label class="dialogLabels">Start Time</label>
+        <input class="form-control formInputs" type="time" placeholder="Start Time" formControlName="createStartTime">
+        <div *ngIf="getCreateEventsFormInputs?.['startTime']?.invalid && (getCreateEventsFormInputs?.['startTime']?.dirty || getCreateEventsFormInputs?.['startTime']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['startTime']?.errors?.['required']">
+            Start time is required
+          </div>
+        </div>
+      </div>
+      <div class="eventEnd containerContentSize">
+        <label class="dialogLabels">End Time</label>
+        <input class="form-control formInputs" type="time" placeholder="End Time" formControlName="createEndTime">
+        <div *ngIf="getCreateEventsFormInputs?.['endTime']?.invalid && (getCreateEventsFormInputs?.['endTime']?.dirty || getCreateEventsFormInputs?.['endTime']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['endTime']?.errors?.['required']">
+            End time is required
+          </div>
+        </div>
+      </div>
+      <div class="eventLocation containerContentSize">
+        <label class="dialogLabels">Location</label>
+        <input class="form-control formInputs" type="text" placeholder="Location" formControlName="createEventLocation">
+        <div *ngIf="getCreateEventsFormInputs?.['eventLocation']?.invalid && (getCreateEventsFormInputs?.['eventLocation']?.dirty || getCreateEventsFormInputs?.['eventLocation']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['eventLocation']?.errors?.['required']">
+            Location is required
+          </div>
+        </div>
+      </div>
+      <div class="eventDesc containerDescContentSize">
+        <label class="dialogLabels">Description</label>
+        <textarea class="form-control formInputs" type="text" placeholder="Event Description" formControlName="createEventDesc"></textarea>
+        <div *ngIf="getCreateEventsFormInputs?.['eventDesc']?.invalid && (getCreateEventsFormInputs?.['eventDesc']?.dirty || getCreateEventsFormInputs?.['eventDesc']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['eventDesc']?.errors?.['required']">
+            Event Description is required
+          </div>
+        </div>
+      </div>
+      <div class="eventLink containerContentSize">
+        <label class="dialogLabels">Ticket Link (Optional)</label>
+        <input class="form-control formInputs" type="text" formControlName="createTicketLink">
+      </div>
+      <div class="eventTransp containerContentSize transpMargin">
+        <label style="padding: 8px" class="dialogLabels">Transportation?</label>
+        <input style="transform: scale(1.5)"type="checkbox" formControlName="createIsTransportation">
+      </div>
+      <div class="eventButton buttonSize">
+        <button class="blueButton" type="submit"  [disabled] = "areCreateFormInputsValid()" (click)="submitNewEvent()">Create Event</button>
+      </div>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog  [(visible)]="editDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <div *ngIf="editEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Event edited successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="editEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error editing event.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+    <div *ngFor="let event of this.certainEvent" >
+      <h1 class="text-center">Edit Event</h1>
+      <hr class="dialogLines">
+      <form [formGroup]="editEventForm">
+        <div class="addEditEventDialogContainer">
+          <div class="eventTitle containerContentSize">
+            <label class="dialogLabels">Event Name</label>
+            <input class="form-control formInputs" type="text" [(ngModel)] = "event.eventName" formControlName="editEventName">
+            <div *ngIf="getEditEventsFormInputs?.['eventName']?.invalid && (getEditEventsFormInputs?.['eventName']?.dirty || getEditEventsFormInputs?.['eventName']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="getEditEventsFormInputs?.['eventName']?.errors?.['required']">
+                Event Name is required
+              </div>
+            </div>
+          </div>
+          <div class="eventDate containerContentSize">
+            <label class="dialogLabels">Event Date</label>
+            <input class="form-control formInputs" type="date" [(ngModel)] = "event.eventDate" formControlName="editEventDate">
+            <div *ngIf="getEditEventsFormInputs?.['eventDate']?.invalid && (getEditEventsFormInputs?.['eventDate']?.dirty || getEditEventsFormInputs?.['eventDate']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="getEditEventsFormInputs?.['eventDate']?.errors?.['required']">
+                Event Date is required
+              </div>
+            </div>
+          </div>
+          <div class="eventStart containerContentSize">
+            <label class="dialogLabels">Start Time</label>
+            <input class="form-control formInputs" type="time" [(ngModel)]="event.startTime" formControlName="editStartTime">
+            <div *ngIf="getEditEventsFormInputs?.['startTime']?.invalid && (getEditEventsFormInputs?.['startTime']?.dirty || getEditEventsFormInputs?.['startTime']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="getEditEventsFormInputs?.['startTime']?.errors?.['required']">
+                Start time is required
+              </div>
+            </div>
+          </div>
+          <div class="eventEnd containerContentSize">
+            <label class="dialogLabels">End Time</label>
+            <input class="form-control formInputs" type="time" [(ngModel)] = "event.endTime" formControlName="editEndTime">
+            <div *ngIf="getEditEventsFormInputs?.['endTime']?.invalid && (getEditEventsFormInputs?.['endTime']?.dirty || getEditEventsFormInputs?.['endTime']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="getEditEventsFormInputs?.['endTime']?.errors?.['required']">
+                End time is required
+              </div>
+            </div>
+          </div>
+          <div class="eventLocation containerContentSize">
+            <label class="dialogLabels">Location</label>
+            <input class="form-control formInputs" type="text" [(ngModel)]  ="event.eventLocation" formControlName="editEventLocation">
+            <div *ngIf="getEditEventsFormInputs?.['eventLocation']?.invalid && (getEditEventsFormInputs?.['eventLocation']?.dirty || getEditEventsFormInputs?.['eventLocation']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="getEditEventsFormInputs?.['eventLocation']?.errors?.['required']">
+                Location is required
+              </div>
+            </div>
+          </div>
+          <div class="eventDesc containerDescContentSize">
+            <label class="dialogLabels">Description</label>
+            <textarea class="form-control formInputs" [(ngModel)] = "event.eventDesc" formControlName="editEventDesc"></textarea>
+            <div *ngIf="getEditEventsFormInputs?.['eventDesc']?.invalid && (getEditEventsFormInputs?.['eventDesc']?.dirty || getEditEventsFormInputs?.['eventDesc']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="getEditEventsFormInputs?.['eventDesc']?.errors?.['required']">
+                Event Description is required
+              </div>
+            </div>
+          </div>
+          <div class="eventLink containerContentSize">
+            <label class="dialogLabels">Ticket Link (Optional)</label>
+            <input class="form-control formInputs" type="text" [(ngModel)]  ="event.ticketLink" formControlName="editTicketLink">
+          </div>
+          <div class="eventTransp containerContentSize transpMargin">
+            <label style="padding: 8px" class="dialogLabels">Transportation?</label>
+            <input style="transform: scale(1.5)"type="checkbox" [(ngModel)] = "event.isTransportation" formControlName="editIsTransportation">
+          </div>
+          <div class="eventButton buttonSize">
+            <button class="blueButton" type="submit"  [disabled] = "areEditFormInputsValid()" (click)="updateEvent()">Edit</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+</p-dialog>
+
+<p-dialog [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1 class="text-center">Event Information</h1>
+  <hr class="dialogLines">
+  <div *ngFor="let event of this.certainEvent" >
+    <div class="eventInfoContainer">
+      <div class="eventName2">
+        <h3 class="eventDataTitle">Event Name: </h3>
+        <h5 class="eventData">{{event.eventName}}</h5>
+      </div>
+      <div class="eventDate2">
+        <h3 class="eventDataTitle">Event Date: </h3>
+        <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
+      </div>
+      <div class="eventTime2">
+        <h3 class="eventDataTitle">Time: </h3>
+        <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
+      </div>
+      <div class="eventLocation2">
+        <h3 class="eventDataTitle">Event Location: </h3>
+        <h5 class="eventData">{{event.eventLocation}}</h5>
+      </div>
+      <div class="eventDesc2">
+        <h3 class="eventDataTitle">Event Description: </h3>
+        <h5 class="eventData">{{event.eventDesc}}</h5>
+      </div>
+      <div class="eventHost2">
+        <h3 class="eventDataTitle">Hosted By:</h3>
+        <h5 class="eventData">{{event.clubName}}</h5>
+      </div>
+      <div class="eventTransportation2">
+        <h3 class="eventDataTitle">Transportation</h3>
+        <ng-container *ngIf="event.isTransportation; else noTransportation">
+          <h5 class="eventData">Transportation Provided</h5>
+        </ng-container>
+        <ng-template #noTransportation>
+          <h5 class="eventData">Transportation NOT provided</h5>
+        </ng-template>
+      </div>
+      <div class="eventTicketLink2">
+        <h3 class="eventDataTitle">Ticket Link:</h3>
+        <h5 class="eventData">{{event.ticketLink}}</h5>
+      </div>
+    </div>
+  </div>
+</p-dialog>

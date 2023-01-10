@@ -121,6 +121,7 @@ hr {
 .bioandEboardContent {
   margin: 1% 6% !important;
   height: 200px;
+  overflow: auto;
 }
 
 .addTopMargin {
@@ -238,4 +239,206 @@ hr {
 
 .clubEventsBackground:hover {
   transform: scale(1.01 );
+}
+.largeTextField {
+  height: 150px;
+  overflow-wrap: inherit;
+}
+
+.addEditEventDialogContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: center;
+  margin-top: 30px;
+
+}
+
+.dialogLabels {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.containerContentSize {
+  height:50px;
+}
+
+.buttonSize {
+
+  margin: auto !important;
+}
+
+.transpMargin {
+  margin-top: 5%;
+  flex-direction: row;
+}
+
+
+
+.eventInfoContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: center;
+}
+
+.eventTitle {
+  grid-area: 1 / 1 / 2 / 2;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventDate {
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventStart {
+  grid-area: 2 / 1 / 3 / 2;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventEnd {
+  grid-area: 2 / 2 / 3 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventLocation {
+  grid-area: 3 / 1 / 4 / 2;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventLink {
+  grid-area: 3 / 2 / 4 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventDesc {
+  grid-area: 4 / 1 / 5 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventTransp {
+  grid-area: 5 / 1 / 6 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.eventButton {
+  grid-area: 6 / 1 / 7 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  overflow-x: hidden !important;
+}
+
+.eventSearchInput {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  float: left;
+}
+
+.captionContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.addEventButton {
+  position: absolute;
+  right: 0;
+  top : 5px;
+  float: left
+}
+
+::ng-deep .p-datatable-scrollable .p-datatable-tbody>tr>td{
+  justify-content: center !important;
+}
+
+::ng-deep .ui-table-scrollable-header-box {
+  margin-right: 17px !important;
+}
+
+::ng-deep .ui-table-scrollable-body {
+  margin-right: 17px !important;
+}
+
+.eboardTable {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.eventInfoContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: center;
+}
+
+.eventName2 {
+  grid-area: 1 / 1 / 2 / 2;
+  margin: 20px;
+}
+.eventDate2 {
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 20px;
+}
+.eventTime2 {
+  grid-area: 2 / 1 / 3 / 2;
+  margin: 20px;
+}
+.eventLocation2 {
+  grid-area: 2 / 2 / 3 / 3;
+  margin: 20px;
+}
+.eventDesc2 {
+  grid-area: 3 / 1 / 4 / 2;
+  margin: 20px;
+}
+.eventHost2 {
+  grid-area: 3 / 2 / 4 / 3;
+  margin: 20px;
+}
+
+.eventTransportation2 {
+  grid-area: 4 / 1 / 5 / 2;
+  margin: 20px;
+}
+
+.eventTicketLink2 {
+  grid-area: 4 / 2 / 5 / 3;
+  margin: 20px;
+}
+
+.dialogLines {
+  border-top: 2px solid black;
+  margin: 2% 8%;
 }

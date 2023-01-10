@@ -29,6 +29,7 @@ import listPlugin from '@fullcalendar/list';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { TimeFormatPipe } from './pipes/time-format.pipe';
 import {FileUploadModule} from 'primeng/fileupload';
+import { EboardPageComponent } from './components/eboard-page/eboard-page.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -47,7 +48,8 @@ FullCalendarModule.registerPlugins([
     AdminPageComponent,
     ScheduleComponent,
     CalendarComponent,
-    TimeFormatPipe
+    TimeFormatPipe,
+    EboardPageComponent
   ],
     imports: [
         BrowserModule,

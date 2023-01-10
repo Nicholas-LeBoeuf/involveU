@@ -38,7 +38,6 @@ export class ClubPageComponent implements OnInit {
   imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];
   compareAllClubs: Club[] = [];
-  topClubs: Club[] = [];
   favoritedClubs: Club[] = [];
   notFavoritedClubs: Club[] = [];
   featuredClubs: Club[] = [];
@@ -59,7 +58,6 @@ export class ClubPageComponent implements OnInit {
     this.userID = +this.cookie.get('studentID')
     this.isUserLoggedIn();
     this.fillClubList();
-    this.getTopClubs();
     this.getUsersFavoritedClubs();
     this.getClubsThatArentFavorited();
     this.getFavoritedClubEvents();
@@ -141,15 +139,6 @@ export class ClubPageComponent implements OnInit {
 
       })
     }, 1000);
-  }
-
-  getTopClubs() {
-    this.clubService.getTopClubs().subscribe((response: Club[]) => {
-      this.topClubs = response;
-    },
-      (error) => {
-        console.log(error);
-      });
   }
 
   favoriteClub(userID: number, clubID: number) {

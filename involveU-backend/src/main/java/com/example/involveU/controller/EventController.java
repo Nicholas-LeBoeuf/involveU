@@ -3,6 +3,7 @@ import java.util.List;
 
 import com.example.involveU.model.DBServices;
 import com.example.involveU.model.Events;
+import com.example.involveU.model.Space;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/")
 public class EventController extends DBServices{
     List<Events> events;
+    List<Space> spaces;
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/getEvents")
     private ResponseEntity<List<Events>> getsEvents()
@@ -143,6 +145,19 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+
+    //LOCATIONS  ENDPOINTS
+
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("events/getAllLocations")
+    private ResponseEntity<List<Space>>getAllLocation()
+    {
+        spaces = getAllDBLocations();
+        
+        return new ResponseEntity<>(spaces,HttpStatus.OK);
+    }
+
+
 
 
 

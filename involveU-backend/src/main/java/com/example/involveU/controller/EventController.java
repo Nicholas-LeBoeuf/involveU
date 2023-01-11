@@ -153,9 +153,26 @@ public class EventController extends DBServices{
     private ResponseEntity<List<Space>>getAllLocation()
     {
         spaces = getAllDBLocations();
-        
+
         return new ResponseEntity<>(spaces,HttpStatus.OK);
     }
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("events/getLocationByID/{locationID}")
+    private ResponseEntity<List<Space>>getLocationID(@PathVariable("locationID") int locationID)
+    {
+        spaces = getDBLocationsByID(locationID);
+
+        return new ResponseEntity<>(spaces,HttpStatus.OK);
+    }
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("events/getSpacesByLocation/{locationID}")
+    private ResponseEntity<List<Space>>spacesByLocation(@PathVariable("locationID") int locationID)
+    {
+        spaces = getSpacesByLocation(locationID);
+
+        return new ResponseEntity<>(spaces,HttpStatus.OK);
+    }
+
 
 
 

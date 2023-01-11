@@ -505,8 +505,21 @@ public class DBServices {
         spaces = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Space.class));
         return spaces;
     }
+    protected List<Space> getDBLocationsByID(int locationID)
+    {
+        sql = "SELECT * FROM  Location WHERE location_ID = "+locationID+ ";";
 
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
 
+    protected  List<Space> getSpacesByLocation(int locationID)
+    {
+        sql = "SELECT * FROM Location JOIN Spaces S ON Location.location_ID = S.location_ID WHERE S.location_ID = " +locationID +"; ";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
 
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()

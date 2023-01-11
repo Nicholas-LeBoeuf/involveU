@@ -23,6 +23,7 @@ import java.util.*;
 
 public class DBServices {
     private List<User> users;
+    private List<Announcement> announcements;
     private List<EBoard> eboardMembers;
     private List<Space> spaces;
     private List<Events> events;
@@ -519,6 +520,17 @@ public class DBServices {
 
         spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
         return spaces;
+    }
+
+    //Announcements Controller
+
+    protected List<Announcement> getAllDBAnnouncements()
+    {
+        sql = "SELECT * FROM Announcements;";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+
+        return announcements;
     }
 
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION

@@ -24,7 +24,7 @@ import java.util.*;
 public class DBServices {
     private List<User> users;
     private List<EBoard> eboardMembers;
-
+    private List<Space> spaces;
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
@@ -496,6 +496,31 @@ public class DBServices {
         }
         return validQuery == 1;
     }
+    //LOCATIONS CONTROLLER
+
+   protected List<Space> getAllDBLocations()
+    {
+        sql = "SELECT * FROM Location;";
+
+        spaces = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+    protected List<Space> getDBLocationsByID(int locationID)
+    {
+        sql = "SELECT * FROM  Location WHERE location_ID = "+locationID+ ";";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    protected  List<Space> getSpacesByLocation(int locationID)
+    {
+        sql = "SELECT * FROM Location JOIN Spaces S ON Location.location_ID = S.location_ID WHERE S.location_ID = " +locationID +"; ";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

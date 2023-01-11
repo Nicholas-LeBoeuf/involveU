@@ -542,6 +542,15 @@ public class DBServices {
         return validQuery == 1;
     }
 
+    protected boolean deleteDBAnnouncement(int announcementID)
+    {
+        sql = "DELETE FROM Announcements WHERE announcementID = "+announcementID+";";
+
+        validQuery = JdbcTemplated.update(sql);
+
+        return validQuery == 1;
+    }
+
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

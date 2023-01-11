@@ -41,5 +41,22 @@ public class AnnouncementsController extends DBServices {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/announcements/deleteAnnouncement/{announcementID}")
+    private ResponseEntity<String> deleteAnnouncement(@PathVariable("announcementID") int announcementID)
+    {
+        validQuery = deleteDBAnnouncement(announcementID);
+
+        if(validQuery)
+        {
+            return new ResponseEntity<>( "succes", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>( "error", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 }

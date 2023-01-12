@@ -20,29 +20,45 @@
 }
 
 img {
-  height: 92vh;
+  height: 93vh;
   width: 100%;
 }
 
 .imageMask {
   z-index: 2;
 
-  height: 92vh;
-  background-color: rgba(0, 0, 0, 0.65);
+  height: 93vh;
+  background-color: rgba(0, 0, 0, 0.73);
 }
 
 .imageMask h1 {
-  color: white;
+  color: #FDB913;
   text-align: center;
   font-size: 75px;
   padding-top: 2%;
+
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .imageMask h3 {
-  color: white;
+  color: #FDB913;
   text-align: center;
   font-size: 25px;
-  padding-top: 5%;
+  padding-top: 4%;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .involveUDescription {

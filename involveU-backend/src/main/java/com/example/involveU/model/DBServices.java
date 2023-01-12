@@ -560,6 +560,14 @@ public class DBServices {
             return validQuery == 1;
 
     }
+
+    protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
+    {
+        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+        return announcements;
+    }
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

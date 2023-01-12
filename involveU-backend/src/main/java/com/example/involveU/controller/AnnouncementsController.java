@@ -74,6 +74,14 @@ public class AnnouncementsController extends DBServices {
         }
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/announcements/getFavoritedAnnouncements/{userID}")
+    private ResponseEntity<List<Announcement>> getFavoritedAnnouncements(@PathVariable("userID") int userID)
+    {
+        announcements = getDBFavoritedAnnouncements(userID);
+
+        return new ResponseEntity<>(announcements, HttpStatus.OK);
+    }
 
 
 }

@@ -58,5 +58,22 @@ public class AnnouncementsController extends DBServices {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/announcements/editAnnouncements")
+    private ResponseEntity<String> editAnnouncement(@RequestBody Announcement anounncementToEdit)
+    {
+        validQuery = editDBAnnouncement(anounncementToEdit);
+
+        if (validQuery)
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 }

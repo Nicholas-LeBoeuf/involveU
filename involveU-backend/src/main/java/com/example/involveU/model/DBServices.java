@@ -1,6 +1,7 @@
 package com.example.involveU.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
@@ -551,6 +552,14 @@ public class DBServices {
         return validQuery == 1;
     }
 
+    protected boolean editDBAnnouncement(Announcement announcementToEdit) {
+
+            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
+            validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle());
+
+            return validQuery == 1;
+
+    }
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

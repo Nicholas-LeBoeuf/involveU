@@ -23,8 +23,9 @@ import java.util.*;
 
 public class DBServices {
     private List<User> users;
+    private List<Announcement> announcements;
     private List<EBoard> eboardMembers;
-
+    private List<Space> spaces;
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
@@ -107,7 +108,7 @@ public class DBServices {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
 
-        if(eboardMembers.size() > 0)
+        if(eboardMembers.size() > 1)
          eboardMembers = sortEboardArray(eboardMembers);
 
         return eboardMembers;
@@ -167,14 +168,14 @@ public class DBServices {
 
         return users;
     }
-    protected List<User> getDBAllEbaord()
+    protected List<User> getDBAllEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 1 ";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));
 
         return users;
     }
-    protected List<User> getDBNonEbaord()
+    protected List<User> getDBNonEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 0";
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));
@@ -287,18 +288,21 @@ public class DBServices {
     }
 
     protected Boolean deleteDBUser(int userID) {
-        sql = "DELETE FROM User WHERE studentID = ?";
 
-        validQuery = JdbcTemplated.update(sql,userID);
 
-        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
+        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && deleteAllRSVPS(userID))
         {
+            sql = "DELETE FROM User WHERE studentID = ?";
+
+            validQuery = JdbcTemplated.update(sql,userID);
+
             return true;
         }
         else
         {
             return false;
         }
+
     }
     protected Boolean deleteDBEboardMember(int userID)
     {
@@ -322,15 +326,15 @@ public class DBServices {
     {
         sql = "DELETE FROM Favorites WHERE userID = ?";
         validQuery = JdbcTemplated.update(sql,userID);
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
+    protected Boolean deleteAllRSVPS(int userID)
+    {
+        sql = "DELETE FROM RSVP WHERE studentID = ?";
+        validQuery = JdbcTemplated.update(sql,userID);
+        return true;
+    }
+
     //EVENTS CONTROLLER
     protected List<Events> getDBEvents()
     {
@@ -493,6 +497,42 @@ public class DBServices {
         }
         return validQuery == 1;
     }
+    //LOCATIONS CONTROLLER
+
+   protected List<Space> getAllDBLocations()
+    {
+        sql = "SELECT * FROM Location;";
+
+        spaces = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+    protected List<Space> getDBLocationsByID(int locationID)
+    {
+        sql = "SELECT * FROM  Location WHERE location_ID = "+locationID+ ";";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    protected  List<Space> getSpacesByLocation(int locationID)
+    {
+        sql = "SELECT * FROM Location JOIN Spaces S ON Location.location_ID = S.location_ID WHERE S.location_ID = " +locationID +"; ";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    //Announcements Controller
+
+    protected List<Announcement> getAllDBAnnouncements()
+    {
+        sql = "SELECT * FROM Announcements;";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+
+        return announcements;
+    }
+
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

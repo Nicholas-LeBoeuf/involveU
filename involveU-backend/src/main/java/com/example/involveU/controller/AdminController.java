@@ -101,7 +101,7 @@ public class AdminController extends DBServices {
     @GetMapping("admin/getAllEboard")
     public ResponseEntity<List<User>> getAllEboard()
     {
-        List<User> users = getDBAllEbaord();
+        List<User> users = getDBAllEboard();
         return new ResponseEntity<>(users,HttpStatus.OK	);
 
     }
@@ -109,7 +109,7 @@ public class AdminController extends DBServices {
     @GetMapping("admin/getNonEboard")
     public ResponseEntity<List<User>> getNonEboard()
     {
-        List<User> users = getDBNonEbaord();
+        List<User> users = getDBNonEboard();
         return new ResponseEntity<>(users,HttpStatus.OK	);
 
     }

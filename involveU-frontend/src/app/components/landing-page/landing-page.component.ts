@@ -22,6 +22,7 @@ export class LandingPageComponent implements OnInit {
   currentUser: User;
   userID: number;
   todaysEvents: Events[];
+  certainEvent: Events[] = [];
 
   viewMoreInfoDialog: boolean = false;
 
@@ -53,11 +54,13 @@ export class LandingPageComponent implements OnInit {
     })
   }
 
-  openViewMoreInfoDialog() {
+  openViewMoreInfoDialog(SpecificEvent: Events) {
+    this.certainEvent.push(SpecificEvent);
     this.viewMoreInfoDialog = true;
   }
 
   closeViewMoreInfoDialog() {
+    this.certainEvent = [];
     this.viewMoreInfoDialog = false;
   }
 }

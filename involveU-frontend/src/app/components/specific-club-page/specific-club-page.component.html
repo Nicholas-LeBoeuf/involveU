@@ -228,6 +228,15 @@
           </div>
         </div>
       </div>
+      <div class="eventSpace containerContentSize">
+        <label class="dialogLabels">Space</label>
+        <p-dropdown [options]="spaces" [formControl]="spaceID" [filter]="true" [autoDisplayFirst]="false" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        <div *ngIf="getCreateEventsFormInputs?.['spaceName']?.invalid && (getCreateEventsFormInputs?.['spaceName']?.dirty || getCreateEventsFormInputs?.['spaceName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['spaceName']?.errors?.['required']">
+            Location is required
+          </div>
+        </div>
+      </div>
       <div class="eventDesc containerDescContentSize">
         <label class="dialogLabels">Description</label>
         <textarea class="form-control formInputs" type="text" placeholder="Event Description" formControlName="createEventDesc"></textarea>

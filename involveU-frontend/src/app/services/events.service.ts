@@ -70,7 +70,7 @@ export class EventsService {
   getLocations(): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getAllLocations`);
   }
-  getSpaceByLocation(): Observable<Events[]> {
-    return this.http.get<Events[]>(environment.apiURL + `events/getSpacesByLocation/{locationID}`);
+  getSpaceByLocation(locationID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getSpacesByLocation/${locationID}`);
   }
 }

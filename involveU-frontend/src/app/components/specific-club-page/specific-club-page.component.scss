@@ -321,6 +321,13 @@ hr {
   justify-content: center;
   flex-direction: column;
 }
+.eventSpace {
+  grid-area: 4 / 1 / 5 / 3;
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 .eventLink {
   grid-area: 3 / 2 / 4 / 3;
   margin: 0px 20px;
@@ -329,21 +336,21 @@ hr {
   flex-direction: column;
 }
 .eventDesc {
-  grid-area: 4 / 1 / 5 / 3;
+  grid-area: 5 / 1 / 5 / 3;
   margin: 0px 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 .eventTransp {
-  grid-area: 5 / 1 / 6 / 3;
+  grid-area: 6 / 1 / 6 / 3;
   margin: 0px 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 .eventButton {
-  grid-area: 6 / 1 / 7 / 3;
+  grid-area: 7 / 1 / 7 / 3;
   margin: 0px 20px;
   display: flex;
   justify-content: center;

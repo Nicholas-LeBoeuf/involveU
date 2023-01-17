@@ -70,10 +70,15 @@ export class SpecificClubPageComponent implements OnInit {
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
+  locations: Events[] = [];
+  spaces: Events[] = [];
   editEventSuccess: boolean = false;
   editEventFailed: boolean = false;
   addEventSuccess: boolean = false;
   addEventFailed: boolean = false;
+
+  locationID: FormControl = new FormControl(null);
+  spaceID : FormControl = new FormControl(null);
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 
@@ -100,8 +105,8 @@ export class SpecificClubPageComponent implements OnInit {
     this.getClubEvents();
     this.getEboard();
     this.getUserRSVPdEvents();
-
-
+    this.getLocations();
+    this.getSpacesByLocation();
     console.log(this.isLoggedIn);
     console.log(this.clubIsFav);
   }
@@ -312,6 +317,26 @@ export class SpecificClubPageComponent implements OnInit {
 
   onFilterEventName(event: Event) {
     this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
+
+  getLocations() {
+    this.eventsService.getLocations().subscribe((response: Events[]) => {
+        this.locations = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  getSpacesByLocation() {
+    this.eventsService.getSpaceByLocation(this.locationID.value).subscribe(response => {
+        this.spaces = response;
+        console.log(response);
+      },
+      (error) => {
+        console.log(error)
+      });
+    console.log(this.locationID.value);
   }
 }
 

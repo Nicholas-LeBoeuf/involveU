@@ -2,6 +2,7 @@ package com.example.involveU.model;
 
 import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
@@ -535,6 +536,40 @@ public class DBServices {
         return announcements;
     }
 
+    protected boolean createDBAnnouncement(Announcement newAnnouncement)
+    {
+        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (????);";
+
+        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle());
+
+        return validQuery == 1;
+    }
+
+    protected boolean deleteDBAnnouncement(int announcementID)
+    {
+        sql = "DELETE FROM Announcements WHERE announcementID = "+announcementID+";";
+
+        validQuery = JdbcTemplated.update(sql);
+
+        return validQuery == 1;
+    }
+
+    protected boolean editDBAnnouncement(Announcement announcementToEdit) {
+
+            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
+            validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle());
+
+            return validQuery == 1;
+
+    }
+
+    protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
+    {
+        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+        return announcements;
+    }
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

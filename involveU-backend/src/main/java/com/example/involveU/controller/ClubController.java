@@ -2,12 +2,12 @@ package com.example.involveU.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import com.example.involveU.model.Events;
 import com.example.involveU.model.Club;
+import com.example.involveU.model.RSVP;
 import com.example.involveU.model.DBServices;
 import com.example.involveU.model.EBoard;
 import com.example.involveU.model.User;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,37 +61,37 @@ public class ClubController extends DBServices{
       return new ResponseEntity<>(clubs, HttpStatus.OK);
   }
  @CrossOrigin(origins = "http://localhost:4200")
- @GetMapping("/club/getTopFavorite")
- private ResponseEntity<List<Club>> getTopFavorite()
+ @GetMapping("/club/getTopRSVP")
+ private ResponseEntity<List<Events>> getTopFavorite()
  {
      Map<String, Object> tempPosition;
-     List<Map<String,Object>> favoritesList;
-     List<Club> sortedFavoriteClubs = new ArrayList<>();
-     Club currentClub;
-     favoritesList = getMostFavoriteClubs();
-      for(int i = 0; i < favoritesList.size(); i++)
+     List<Map<String,Object>> rsvpList;
+     List<Events> sortedRSVPEvents = new ArrayList<>();
+     Events currentEvent;
+     rsvpList = getMostRSVPEvents();
+      for(int i = 0; i < rsvpList.size(); i++)
       {
-         int currentValue = Integer.parseInt(favoritesList.get(i).get("total").toString());
-          for(int j = 0; j < favoritesList.size(); j++)
+         int currentValue = Integer.parseInt(rsvpList.get(i).get("total").toString());
+          for(int j = 0; j < rsvpList.size(); j++)
           {
-              int checkValue =  Integer.parseInt(favoritesList.get(j).get("total").toString());
+              int checkValue =  Integer.parseInt(rsvpList.get(j).get("total").toString());
               if( currentValue > checkValue )
               {
-                tempPosition = favoritesList.get(i);
-                favoritesList.set(i, favoritesList.get(j));
-                favoritesList.set(j,tempPosition);
+                tempPosition = rsvpList.get(i);
+                rsvpList.set(i, rsvpList.get(j));
+                rsvpList.set(j,tempPosition);
 
               }
           }
       }
 
-      for(int i = 0; i < favoritesList.size(); i++)
+      for(int i = 0; i < rsvpList.size(); i++)
       {
-           currentClub = getSpecficClub(Integer.parseInt(favoritesList.get(i).get("clubID").toString()));
+           currentEvent = getEventByID(Integer.parseInt(rsvpList.get(i).get("eventID").toString()));
 
-          sortedFavoriteClubs.add(currentClub);
+          sortedRSVPEvents.add(currentEvent);
       }
-     return new ResponseEntity<>(sortedFavoriteClubs, HttpStatus.OK) ;
+     return new ResponseEntity<>(sortedRSVPEvents, HttpStatus.OK) ;
  }
 @CrossOrigin(origins = "http://localhost:4200")
 @GetMapping("/club/submitFavorite/{ID}/{clubID}")

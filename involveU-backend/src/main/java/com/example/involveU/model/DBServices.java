@@ -1,5 +1,6 @@
 package com.example.involveU.model;
 
+import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -219,10 +220,10 @@ public class DBServices {
 
         return clubs;
     }
-    protected List<Map<String,Object>> getMostFavoriteClubs()
+    protected List<Map<String,Object>> getMostRSVPEvents()
     {
         List<Map<String,Object>> results;
-        sql = "select Favorites.ClubID,count(*) as Total from Favorites group by clubID;";
+        sql = "select RSVP.eventID,count(*) as Total from RSVP group by eventID;";
         results = JdbcTemplated.queryForList(sql);
 
         return results;
@@ -371,13 +372,14 @@ public class DBServices {
         return validQuery == 1;
     }
 
-  protected List<Events> getEventByID(int eventID)
+  protected Events getEventByID(int eventID)
     {
+
         sql = "SELECT * FROM Events WHERE eventID = " + eventID + ";";
 
         events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
 
-        return events;
+        return events.get(0);
     }
 
 

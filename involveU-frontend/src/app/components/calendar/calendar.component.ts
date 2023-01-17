@@ -54,8 +54,6 @@ export class CalendarComponent implements OnInit {
   showEventInformation(clickInfo: EventClickArg) {
     this.eventsService.getSpecificEvent(+clickInfo.event.id).subscribe(response => {
       this.selectedEvent = response;
-      console.log(response);
-      console.log(this.selectedEvent);
     })
     this.openViewMoreInfoDialog();
   }

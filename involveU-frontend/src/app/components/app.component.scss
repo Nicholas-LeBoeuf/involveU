@@ -2,6 +2,9 @@
 
 .navbar {
   background-color: $HeritageBlue;
+  position: fixed;
+  width: 100%;
+  z-index: 20000;
 }
 
 li {

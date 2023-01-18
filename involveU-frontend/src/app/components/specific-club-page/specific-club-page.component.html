@@ -221,10 +221,19 @@
       </div>
       <div class="eventLocation containerContentSize">
         <label class="dialogLabels">Location</label>
-        <input class="form-control formInputs" type="text" placeholder="Location" formControlName="createEventLocation">
-        <div *ngIf="getCreateEventsFormInputs?.['eventLocation']?.invalid && (getCreateEventsFormInputs?.['eventLocation']?.dirty || getCreateEventsFormInputs?.['eventLocation']?.touched)" class="leftAlert alert-danger">
-          <div *ngIf="getCreateEventsFormInputs?.['eventLocation']?.errors?.['required']">
+        <p-dropdown [options]="locations" [formControl]="locationID" [filter]="true" [autoDisplayFirst]="false" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        <div *ngIf="getCreateEventsFormInputs?.['locationName']?.invalid && (getCreateEventsFormInputs?.['locationName']?.dirty || getCreateEventsFormInputs?.['locationName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['locationName']?.errors?.['required']">
             Location is required
+          </div>
+        </div>
+      </div>
+      <div class="eventSpace containerContentSize">
+        <label class="dialogLabels">Space</label>
+        <p-dropdown [options]="spaces" [formControl]="spaceID" [filter]="true" [autoDisplayFirst]="false" optionValue="location_ID" optionLabel="spaceName" placeholder="Select Space" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        <div *ngIf="getCreateEventsFormInputs?.['spaceName']?.invalid && (getCreateEventsFormInputs?.['spaceName']?.dirty || getCreateEventsFormInputs?.['spaceName']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['spaceName']?.errors?.['required']">
+            Space is required
           </div>
         </div>
       </div>

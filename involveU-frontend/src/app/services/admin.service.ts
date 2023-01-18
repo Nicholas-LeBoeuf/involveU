@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Club} from "../objects/club";
 import {User} from "../objects/user";
+import {Announcement} from "../objects/announcements";
 
 @Injectable({
   providedIn: 'root'
@@ -56,4 +57,7 @@ export class AdminService {
     return this.http.post(environment.apiURL + `admin/testImage`, data);
   }
 
+  createOSIAnnouncement(newAnnouncement: Announcement) {
+    return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
+  }
 }

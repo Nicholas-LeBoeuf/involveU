@@ -76,6 +76,7 @@ export class SpecificClubPageComponent implements OnInit {
   editEventFailed: boolean = false;
   addEventSuccess: boolean = false;
   addEventFailed: boolean = false;
+  selectedLocation: any = {};
 
   locationID: FormControl = new FormControl(null);
   spaceID : FormControl = new FormControl(null);
@@ -337,6 +338,12 @@ export class SpecificClubPageComponent implements OnInit {
         console.log(error)
       });
     console.log(this.locationID.value);
+  }
+
+  checkLocationSelected() {
+    if(this.selectedLocation!=='Select Location'){
+      this.getSpacesByLocation();
+    }
   }
 }
 

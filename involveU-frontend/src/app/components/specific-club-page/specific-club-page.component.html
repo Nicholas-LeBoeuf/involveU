@@ -221,7 +221,7 @@
       </div>
       <div class="eventLocation containerContentSize">
         <label class="dialogLabels">Location</label>
-        <p-dropdown [options]="locations" [formControl]="locationID" [filter]="true" [autoDisplayFirst]="false" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        <p-dropdown [options]="locations" [formControl]="locationID" [filter]="true" [autoDisplayFirst]="false" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" class="dropdownLength" (onChange)="checkLocationSelected()" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
         <div *ngIf="getCreateEventsFormInputs?.['locationName']?.invalid && (getCreateEventsFormInputs?.['locationName']?.dirty || getCreateEventsFormInputs?.['locationName']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="getCreateEventsFormInputs?.['locationName']?.errors?.['required']">
             Location is required

@@ -303,4 +303,25 @@
       </div>
     </form>
   </div>
+  <div class="osiAnnouncementsDiv">
+    <h1 class="dialogTitle">OSI Announcements</h1>
+    <form [formGroup]="osiAnnouncementForm">
+      <div class="form-group createClubInputs">
+        <input class="form-control formInputs" type="text" placeholder="Title" formControlName="announcementTitle">
+        <div *ngIf="clubCreationFormInputs?.['announcementTitle']?.invalid && (clubCreationFormInputs?.['announcementTitle']?.dirty || clubCreationFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
+          <div *ngIf="clubCreationFormInputs?.['announcementTitle']?.errors?.['required']">
+            Announcement Title is required
+          </div>
+        </div>
+      </div>
+      <!--<div class="form-group createClubInputs">
+        <input class="form-control formInputs" type="date" placeholder="Event Date" formControlName="createEventDate">
+        <div *ngIf="getCreateEventsFormInputs?.['eventDate']?.invalid && (getCreateEventsFormInputs?.['eventDate']?.dirty || getCreateEventsFormInputs?.['eventDate']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="getCreateEventsFormInputs?.['eventDate']?.errors?.['required']">
+            Expiration Date is required
+          </div>
+        </div>
+      </div>-->
+    </form>
+  </div>
 </div>

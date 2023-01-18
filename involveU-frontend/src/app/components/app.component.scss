@@ -1,5 +1,7 @@
+@import "src/styles";
+
 .navbar {
-  background-color: #0A3370;
+  background-color: $HeritageBlue;
 }
 
 li {
@@ -192,7 +194,7 @@ ul {
 }
 
 .specificNavButton a:hover {
-  color: #FDB913;
+  color: $GoldenYellow;
 }
 
 ::ng-deep .p-contextmenu {
@@ -200,5 +202,5 @@ ul {
 }
 
 .active-span {
-  color: #FDB913 !important;
+  color: $GoldenYellow !important;
 }

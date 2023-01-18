@@ -376,9 +376,11 @@ public class DBServices {
   protected Events getEventByID(int eventID)
     {
 
-        sql = "SELECT * FROM Events WHERE eventID = " + eventID + ";";
+        sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation AND eventID = "+eventID+";";
+
 
         events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
+        events.get(0).setEventLocation(getDBLocationsByID(events.get(0).getLocation_ID()).get(0).getLocationName());
 
         return events.get(0);
     }
@@ -406,7 +408,7 @@ public class DBServices {
 
     protected List<Events> getDBAllFutureEvents()
     {
-        sql = "SELECT * FROM Events WHERE eventDate >= DATE(NOW()) ORDER BY eventDate ,startTime ASC;";
+        sql = "SELECT * FROM Events WHERE eventDate >= DATE(NOW())  ORDER BY eventDate ,startTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;
@@ -421,7 +423,7 @@ public class DBServices {
     }
     protected  List<Events> getDBFavoriteClubEvents(int userID)
     {
-        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
+        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName, Spaces.space_ID, Spaces.spaceName from Events JOIN Spaces ON eventLocation = space_ID JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+ userID+" ORDER BY eventDate ,startTime ASC;\n ";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
@@ -470,15 +472,23 @@ public class DBServices {
         sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
 
     protected List<Events> getAllEvents()
     {
-        sql = "SELECT * FROM Events";
+        sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation ;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
 

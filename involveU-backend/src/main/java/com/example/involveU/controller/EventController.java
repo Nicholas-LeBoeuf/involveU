@@ -138,7 +138,7 @@ public class EventController extends DBServices{
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
     @CrossOrigin (origins = "http://localhost:4200")
-    @GetMapping("events/getSpecificEvent/{eventID}")
+        @GetMapping("events/getSpecificEvent/{eventID}")
     private ResponseEntity<Events> getSpecificEvent(@PathVariable("eventID") int eventID)
     {
         Events event;

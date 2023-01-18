@@ -1,16 +1,9 @@
 package com.example.involveU.controller;
-import java.awt.image.RescaleOp;
-import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import com.example.involveU.model.DBServices;
-import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.Events;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.involveU.model.Space;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/")
 public class EventController extends DBServices{
     List<Events> events;
+    List<Space> spaces;
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/getEvents")
     private ResponseEntity<List<Events>> getsEvents()
@@ -52,13 +46,21 @@ public class EventController extends DBServices{
 
     }
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("events/getFutureFavoriteClubEvents/{userID}")
+    private ResponseEntity<List<Events>> getFutureFavoriteClubEvents(@PathVariable("userID") int userID)
+    {
+        events = getDBFutureFavoriteClubEvents(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/getFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFavoriteClubEvents(@PathVariable("userID") int userID)
     {
         events = getDBFavoriteClubEvents(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/rsvpEvent/{eventID}/{userID}")
@@ -143,6 +145,36 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+
+    //LOCATIONS  ENDPOINTS
+
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("events/getAllLocations")
+    private ResponseEntity<List<Space>>getAllLocation()
+    {
+        spaces = getAllDBLocations();
+
+        return new ResponseEntity<>(spaces,HttpStatus.OK);
+    }
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("events/getLocationByID/{locationID}")
+    private ResponseEntity<List<Space>>getLocationID(@PathVariable("locationID") int locationID)
+    {
+        spaces = getDBLocationsByID(locationID);
+
+        return new ResponseEntity<>(spaces,HttpStatus.OK);
+    }
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("events/getSpacesByLocation/{locationID}")
+    private ResponseEntity<List<Space>>spacesByLocation(@PathVariable("locationID") int locationID)
+    {
+        spaces = getSpacesByLocation(locationID);
+
+        return new ResponseEntity<>(spaces,HttpStatus.OK);
+    }
+
+
+
 
 
 

@@ -6,7 +6,7 @@ export interface Events {
   endTime: string;
   eventDate: string;
   eventDesc: string;
-  isTransportation: boolean;
+  isTransportation: number;
   ticketLink?: string;
   clubName?: string;
   //derived

@@ -58,10 +58,23 @@ html {
   font-size: 1.8em;
 }
 
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  top: 35px;
+  position: fixed;
+}
+
 .centerButton {
-  display: block;
-  margin: auto auto auto 37%;
-  width: 58%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .dialogTitle {
@@ -72,30 +85,6 @@ html {
   margin-bottom: 2%;
   padding-top: 30px;
   color: #0667B3;
-}
-
-.createClubButton {
-  background-color: #0667B3;
-  border: 1px solid black;
-  border-radius: 14px;
-  height: 60px;
-  padding: 0 20px;
-  color: white;
-  width: 250px;
-  font-size: 1.8em;
-  margin-top: 4%;
-}
-
-.adminButton {
-  background-color: #0667B3;
-  border: 1px solid black;
-  border-radius: 14px;
-  height: 60px;
-  padding: 0 20px;
-  color: white;
-  width: 250px;
-  font-size: 1.8em;
-  margin-top: 1.5%;
 }
 
 .form-submit-button{
@@ -112,7 +101,7 @@ html {
 }
 
 .formInputs {
-  diplay: block;
+  display: block;
   margin: 30px auto auto;
 }
 
@@ -132,22 +121,13 @@ html {
   color: #0667B3;
 }
 
-.leftAlert {
-  padding: 0 !important;
+.requiredAlert {
+  padding: 5px !important;
+  margin: 0 auto !important;
   text-align: center;
   border-radius: 10px;
-  width: 400px;
-  float: right;
-  margin-left: -3%;
-}
-
-.rightAlert {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: center;
-  border-radius: 10px;
-  width: 400px;
-  float: left;
+  position: sticky;
+  width: 60%;
 }
 
 .largeTextField {
@@ -221,15 +201,15 @@ html {
 .assignAdvisor {
   float: left;
   width:100%;
-  min-height: 86%;
-  max-height: 86%;
+  min-height: 20vh;
+  max-height: 22vh;
 }
 
 .removeAdvisor {
   float: right;
   width:100%;
-  min-height: 86%;
-  max-height: 86%;
+  min-height: 20vh;
+  max-height: 22vh;
 }
 
 .addEBoard {
@@ -245,6 +225,16 @@ html {
   width:100%;
   min-height: 86%;
   max-height: 86%;
+}
+
+.osiAnnouncementsDiv {
+  width: 48vw;
+  min-height: 82vh;
+  max-height: 82vh;
+  display: block;
+  margin-left: 2%;
+  background-color: white;
+  border-radius: 10px;
 }
 
 .dropdownLength {

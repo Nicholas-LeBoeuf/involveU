@@ -18,6 +18,7 @@ import {Table} from "primeng/table";
 export class SpecificClubPageComponent implements OnInit {
 
   createEventForm : FormGroup;
+  editEventForm : FormGroup
 
   createNewEventForm: FormControl = new FormControl(null);
   constructor(private clubService: ClubService,
@@ -27,19 +28,30 @@ export class SpecificClubPageComponent implements OnInit {
               private router: Router,
               public cookie: CookieService) {
     this.createEventForm = this.formBuilder.group({
-      eventName: ['', Validators.required],
-      eventLocation: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      eventDate: ['', Validators.required],
-      eventDesc: ['', Validators.required],
-      isTransportation: ['', Validators.required],
-      ticketLink: ['', Validators.required],
+      createEventName: ['', Validators.required],
+      createEventLocation: ['', Validators.required],
+      createStartTime: ['', Validators.required],
+      createEndTime: ['', Validators.required],
+      createEventDate: ['', Validators.required],
+      createEventDesc: ['', Validators.required],
+      createIsTransportation: ['', Validators.required],
+      createTicketLink: ['', Validators.required],
+
+    })
+    this.editEventForm = this.formBuilder.group({
+      editEventName: ['', Validators.required],
+      editEventLocation: ['', Validators.required],
+      editStartTime: ['', Validators.required],
+      editEndTime: ['', Validators.required],
+      editEventDate: ['', Validators.required],
+      editEventDesc: ['', Validators.required],
+      editIsTransportation: ['', Validators.required],
+      editTicketLink: ['', Validators.required],
 
     })
   }
 
-
+  isLoggedIn: boolean = false;
   clubID!: number;
   userID!: number;
 
@@ -58,10 +70,15 @@ export class SpecificClubPageComponent implements OnInit {
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
+  locations: Events[] = [];
+  spaces: Events[] = [];
   editEventSuccess: boolean = false;
   editEventFailed: boolean = false;
   addEventSuccess: boolean = false;
   addEventFailed: boolean = false;
+
+  locationID: FormControl = new FormControl(null);
+  spaceID : FormControl = new FormControl(null);
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 
@@ -82,13 +99,20 @@ export class SpecificClubPageComponent implements OnInit {
     });
 
     this.userID = +this.cookie.get('studentID');
-
+    this.isUserLoggedIn();
     this.getClubInfo();
     this.getUsersFavoritedClubs();
     this.getClubEvents();
     this.getEboard();
     this.getUserRSVPdEvents();
+    this.getLocations();
+    this.getSpacesByLocation();
+    console.log(this.isLoggedIn);
+    console.log(this.clubIsFav);
+  }
 
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
   }
 
   getClubInfo() {
@@ -185,16 +209,12 @@ export class SpecificClubPageComponent implements OnInit {
   }
   showEditDialog(SpecficEvent: Events)
   {
-
-    console.log(SpecficEvent);
     this.certainEvent.push(SpecficEvent);
     this.editDialog = true;
-    console.log(this.certainEvent);
   }
   closeEditDialog() {
     this.certainEvent = [];
     this.editDialog = false;
-
    }
 
   showViewMoreInfoDialog(SpecificEvent: Events){
@@ -208,11 +228,12 @@ export class SpecificClubPageComponent implements OnInit {
 
   submitNewEvent()
   {
-    const eventInfo : Events = { eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+    const eventInfo : Events = { eventName: this.createEventForm.value.createEventName, eventLocation: this.createEventForm.value.createEventLocation, startTime: this.createEventForm.value.createStartTime, endTime: this.createEventForm.value.createEndTime, eventDate: this.createEventForm.value.createEventDate, eventDesc: this.createEventForm.value.createEventDesc, isTransportation: +this.createEventForm.value.createIsTransportation, ticketLink: this.createEventForm.value.createTicketLink, clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
 
     this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
       console.log(success);
       this.addEventSuccess = true;
+      location.reload();
     },(error) =>{
       location.reload();
       console.log(error.text);
@@ -222,30 +243,47 @@ export class SpecificClubPageComponent implements OnInit {
 
   updateEvent()
   {
-    const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.createEventForm.value.eventName,eventLocation: this.createEventForm.value.eventLocation, startTime: this.createEventForm.value.startTime, endTime: this.createEventForm.value.endTime, eventDate: this.createEventForm.value.eventDate, eventDesc: this.createEventForm.value.eventDesc, isTransportation: this.createEventForm.value.isTransportation, ticketLink: this.createEventForm.value.ticketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+    const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.editEventForm.value.editEventName,eventLocation: this.editEventForm.value.editEventLocation, startTime: this.editEventForm.value.editStartTime, endTime: this.editEventForm.value.editEndTime, eventDate: this.editEventForm.value.editEventDate, eventDesc: this.editEventForm.value.editEventDesc, isTransportation: +this.editEventForm.value.editIsTransportation, ticketLink: this.editEventForm.value.editTicketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+
+    console.log(eventInfo);
 
     this.eventsService.updateEvent(eventInfo).subscribe(success =>{
         console.log(success);
         this.editEventSuccess = true;
       },(error) =>{
-      location.reload();
+
         this.getClubEvents();
         console.log(error.text);
         this.editEventFailed = true;
       })
   }
-  get getEventsFormInputs()
+  get getCreateEventsFormInputs()
   {
     return this.createEventForm.controls;
   }
-  areFormInputsValid()
+  areCreateFormInputsValid()
   {
-    if(this.createEventForm.value.eventName == '' || this.createEventForm.value.eventLocation == '' ||this.createEventForm.value.startTime == '' || this.createEventForm.value.endTime == '' || this.createEventForm.value.eventDate == '' || this.createEventForm.value.eventDesc == '') {
+    if(this.createEventForm.value.createEventName == '' || this.createEventForm.value.createEventLocation == '' ||this.createEventForm.value.createStartTime == '' || this.createEventForm.value.createEndTime == '' || this.createEventForm.value.createEventDate == '' || this.createEventForm.value.createEventDesc == '') {
       return true;
     }
     else{
         return false;
       }
+
+  }
+
+  get getEditEventsFormInputs()
+  {
+    return this.editEventForm.controls;
+  }
+  areEditFormInputsValid()
+  {
+    if(this.editEventForm.value.editEventName == '' || this.editEventForm.value.editEventLocation == '' ||this.editEventForm.value.editStartTime == '' || this.editEventForm.value.editEndTime == '' || this.editEventForm.value.editEventDate == '' || this.editEventForm.value.editEventDesc == '') {
+      return true;
+    }
+    else{
+      return false;
+    }
 
   }
 
@@ -279,6 +317,26 @@ export class SpecificClubPageComponent implements OnInit {
 
   onFilterEventName(event: Event) {
     this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
+
+  getLocations() {
+    this.eventsService.getLocations().subscribe((response: Events[]) => {
+        this.locations = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  getSpacesByLocation() {
+    this.eventsService.getSpaceByLocation(this.locationID.value).subscribe(response => {
+        this.spaces = response;
+        console.log(response);
+      },
+      (error) => {
+        console.log(error)
+      });
+    console.log(this.locationID.value);
   }
 }
 

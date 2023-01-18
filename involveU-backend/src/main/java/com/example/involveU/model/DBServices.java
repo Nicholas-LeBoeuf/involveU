@@ -1,14 +1,19 @@
 package com.example.involveU.model;
 
-import com.fasterxml.jackson.databind.util.ArrayBuilders;
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
-import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.text.SimpleDateFormat;
@@ -19,8 +24,9 @@ import java.util.*;
 
 public class DBServices {
     private List<User> users;
+    private List<Announcement> announcements;
     private List<EBoard> eboardMembers;
-
+    private List<Space> spaces;
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
@@ -103,7 +109,7 @@ public class DBServices {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
 
-        if(eboardMembers.size() > 0)
+        if(eboardMembers.size() > 1)
          eboardMembers = sortEboardArray(eboardMembers);
 
         return eboardMembers;
@@ -283,18 +289,21 @@ public class DBServices {
     }
 
     protected Boolean deleteDBUser(int userID) {
-        sql = "DELETE FROM User WHERE studentID = ?";
 
-        validQuery = JdbcTemplated.update(sql,userID);
 
-        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && validQuery == 1)
+        if(deleteDBEboardMember(userID) && deleteAllFavorites(userID) && deleteAllRSVPS(userID))
         {
+            sql = "DELETE FROM User WHERE studentID = ?";
+
+            validQuery = JdbcTemplated.update(sql,userID);
+
             return true;
         }
         else
         {
             return false;
         }
+
     }
     protected Boolean deleteDBEboardMember(int userID)
     {
@@ -318,15 +327,15 @@ public class DBServices {
     {
         sql = "DELETE FROM Favorites WHERE userID = ?";
         validQuery = JdbcTemplated.update(sql,userID);
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
+    protected Boolean deleteAllRSVPS(int userID)
+    {
+        sql = "DELETE FROM RSVP WHERE studentID = ?";
+        validQuery = JdbcTemplated.update(sql,userID);
+        return true;
+    }
+
     //EVENTS CONTROLLER
     protected List<Events> getDBEvents()
     {
@@ -400,9 +409,17 @@ public class DBServices {
 
         return events;
     }
-    protected  List<Events> getDBFavoriteClubEvents(int userID)
+    protected  List<Events> getDBFutureFavoriteClubEvents(int userID)
     {
         sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON eventDate >= DATE(NOW()) AND Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
+
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return  events;
+    }
+    protected  List<Events> getDBFavoriteClubEvents(int userID)
+    {
+        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
@@ -462,6 +479,104 @@ public class DBServices {
 
         return events;
     }
+
+    protected boolean uploadImage(MultipartFile file)
+    {
+
+        try {
+            Blob blob = new SerialBlob(file.getBytes());
+            System.out.println(file.getBytes()[0]);
+            sql = "INSERT INTO Images (imageName, Image, clubID) VALUES (?,?,?)";
+
+            validQuery = JdbcTemplated.update(sql, file.getName(), blob, 3);
+        }catch(IOException e) {
+            System.out.print("Failed");
+        } catch (SerialException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return validQuery == 1;
+    }
+    //LOCATIONS CONTROLLER
+
+   protected List<Space> getAllDBLocations()
+    {
+        sql = "SELECT * FROM Location;";
+
+        spaces = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+    protected List<Space> getDBLocationsByID(int locationID)
+    {
+        sql = "SELECT * FROM  Location WHERE location_ID = "+locationID+ ";";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    protected  List<Space> getSpacesByLocation(int locationID)
+    {
+        sql = "SELECT * FROM Location JOIN Spaces S ON Location.location_ID = S.location_ID WHERE S.location_ID = " +locationID +"; ";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    //Announcements Controller
+
+    protected List<Announcement> getAllDBAnnouncements()
+    {
+        sql = "SELECT * FROM Announcements;";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+
+        return announcements;
+    }
+
+    protected boolean createDBAnnouncement(Announcement newAnnouncement)
+    {
+        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (????);";
+
+        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle());
+
+        return validQuery == 1;
+    }
+
+    protected boolean deleteDBAnnouncement(int announcementID)
+    {
+        sql = "DELETE FROM Announcements WHERE announcementID = "+announcementID+";";
+
+        validQuery = JdbcTemplated.update(sql);
+
+        return validQuery == 1;
+    }
+
+    protected boolean editDBAnnouncement(Announcement announcementToEdit) {
+
+            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
+            validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle());
+
+            return validQuery == 1;
+
+    }
+
+    protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
+    {
+        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+        return announcements;
+    }
+    //COMMENTED OUT FOR FUTURE IMPLEMENTATION
+//    protected Image getDBClubFile()
+//    {
+//
+//        sql = "SELECT imageName, Image FROM Images WHERE clubID = 3";
+//        List<Image> clubFile = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Image.class));
+//
+//        return clubFile.get(0);
+//    }
 
 
 

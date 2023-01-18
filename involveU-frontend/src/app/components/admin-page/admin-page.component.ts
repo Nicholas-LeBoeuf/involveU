@@ -82,6 +82,13 @@ export class AdminPageComponent implements OnInit {
     this.removeEBoardForm = this.formBuilder.group({
       userID: ['', Validators.required]
     });
+
+    this.osiAnnouncementForm = this.formBuilder.group({
+      clubID: 275,
+      contentOfAnnouncement: ['', Validators.required],
+      expiresOn: ['', Validators.required],
+      announcementTitle: ['', Validators.required]
+    });
   }
   labelEboard: User[];
   createClubMessage: boolean = false;
@@ -113,7 +120,7 @@ export class AdminPageComponent implements OnInit {
     //console.log(event.target.files[0])
     console.log(event);
 
-    this.adminService.sendImage(event.files[0]).subscribe()
+    //this.adminService.sendImage(event.files[0]).subscribe()
    /* console.log("made it");
     const file:File = event.target.files[0];
 
@@ -199,6 +206,10 @@ export class AdminPageComponent implements OnInit {
 
   get removeEBoardFormInputs() {
     return this.removeEBoardForm.controls;
+  }
+
+  get osiAnnouncementFormInputs() {
+    return this.osiAnnouncementForm.controls;
   }
 
   createClubSubmit(){

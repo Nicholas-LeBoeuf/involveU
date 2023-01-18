@@ -18,6 +18,7 @@ export class AdminPageComponent implements OnInit {
   deleteUserForm: FormGroup;
   createClubForm : FormGroup;
   assignAdvisorForm : FormGroup;
+  osiAnnouncementForm : FormGroup;
   clubNames: Club[] = [];
   userList: User[] = [];
   nonEboardList: User[] = [];

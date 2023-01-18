@@ -1,6 +1,7 @@
 package com.example.involveU.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
@@ -23,8 +24,9 @@ import java.util.*;
 
 public class DBServices {
     private List<User> users;
+    private List<Announcement> announcements;
     private List<EBoard> eboardMembers;
-
+    private List<Space> spaces;
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
@@ -495,6 +497,76 @@ public class DBServices {
             throw new RuntimeException(e);
         }
         return validQuery == 1;
+    }
+    //LOCATIONS CONTROLLER
+
+   protected List<Space> getAllDBLocations()
+    {
+        sql = "SELECT * FROM Location;";
+
+        spaces = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+    protected List<Space> getDBLocationsByID(int locationID)
+    {
+        sql = "SELECT * FROM  Location WHERE location_ID = "+locationID+ ";";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    protected  List<Space> getSpacesByLocation(int locationID)
+    {
+        sql = "SELECT * FROM Location JOIN Spaces S ON Location.location_ID = S.location_ID WHERE S.location_ID = " +locationID +"; ";
+
+        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
+        return spaces;
+    }
+
+    //Announcements Controller
+
+    protected List<Announcement> getAllDBAnnouncements()
+    {
+        sql = "SELECT * FROM Announcements;";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+
+        return announcements;
+    }
+
+    protected boolean createDBAnnouncement(Announcement newAnnouncement)
+    {
+        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (????);";
+
+        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle());
+
+        return validQuery == 1;
+    }
+
+    protected boolean deleteDBAnnouncement(int announcementID)
+    {
+        sql = "DELETE FROM Announcements WHERE announcementID = "+announcementID+";";
+
+        validQuery = JdbcTemplated.update(sql);
+
+        return validQuery == 1;
+    }
+
+    protected boolean editDBAnnouncement(Announcement announcementToEdit) {
+
+            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
+            validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle());
+
+            return validQuery == 1;
+
+    }
+
+    protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
+    {
+        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+        return announcements;
     }
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()

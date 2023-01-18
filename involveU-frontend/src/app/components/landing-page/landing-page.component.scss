@@ -20,14 +20,14 @@
 }
 
 img {
-  height: 93vh;
+  height: 100vh;
   width: 100%;
 }
 
 .imageMask {
   z-index: 2;
 
-  height: 93vh;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.73);
 }
 
@@ -35,7 +35,7 @@ img {
   color: #FDB913;
   text-align: center;
   font-size: 75px;
-  padding-top: 2%;
+  padding-top: 10%;
 
   animation: fadeInAnimation ease 3s;
   animation-iteration-count: 1;

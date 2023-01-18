@@ -1,5 +1,11 @@
+@import "src/styles";
+
 .navbar {
-  background-color: #0A3370;
+  background-color: $HeritageBlue;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 20000;
 }
 
 li {
@@ -26,8 +32,6 @@ ul {
 }
 
 
-
-
 /*Popup modal dialog styling*/
 
 .involveUModalScale {
@@ -51,6 +55,7 @@ ul {
 
 ::ng-deep .p-dialog .p-dialog-content {
   background-color: #AECDE6 !important;
+  border-radius: 20px;
 }
 
 ::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
@@ -152,7 +157,7 @@ ul {
 }
 
 ::ng-deep .p-dialog .p-dialog-content:last-of-type {
-  border-radius: 50px;
+  border-radius: 20px;
 }
 
 ::ng-deep .p-contextmenu {
@@ -191,7 +196,7 @@ ul {
 }
 
 .specificNavButton a:hover {
-  color: #FDB913;
+  color: $GoldenYellow;
 }
 
 ::ng-deep .p-contextmenu {
@@ -199,5 +204,5 @@ ul {
 }
 
 .active-span {
-  color: #FDB913 !important;
+  color: $GoldenYellow !important;
 }

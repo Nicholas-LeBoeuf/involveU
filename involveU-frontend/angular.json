@@ -27,11 +27,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               "./node_modules/@fullcalendar/common/main.css",
               "./node_modules/@fullcalendar/daygrid/main.css",
               "./node_modules/@fullcalendar/timegrid/main.css",
-              "./node_modules/@fullcalendar/list/main.css"
+              "./node_modules/@fullcalendar/list/main.css",
+              "node_modules/primeicons/primeicons.scss",
+              "node_modules/primeng/resources/themes/nova/theme.scss",
+              "node_modules/primeng/resources/primeng.min.scss"
             ],
             "scripts": []
           },
@@ -98,11 +101,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               "./node_modules/@fullcalendar/common/main.css",
               "./node_modules/@fullcalendar/daygrid/main.css",
               "./node_modules/@fullcalendar/timegrid/main.css",
-              "./node_modules/@fullcalendar/list/main.css"
+              "./node_modules/@fullcalendar/list/main.css",
+              "node_modules/primeicons/primeicons.scss",
+              "node_modules/primeng/resources/themes/nova/theme.scss",
+              "node_modules/primeng/resources/primeng.min.scss"
             ],
             "scripts": []
           }

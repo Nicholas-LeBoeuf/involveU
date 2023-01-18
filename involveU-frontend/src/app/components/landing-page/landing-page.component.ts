@@ -21,7 +21,7 @@ export class LandingPageComponent implements OnInit {
 
   currentUser: User;
   userID: number;
-  todaysEvents: Events[];
+  todaysEvents: Events[] = [];
   certainEvent: Events[] = [];
 
   viewMoreInfoDialog: boolean = false;
@@ -44,7 +44,6 @@ export class LandingPageComponent implements OnInit {
   fillTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
-      console.log(data);
     })
   }
 

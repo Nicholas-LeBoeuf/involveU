@@ -2,7 +2,8 @@
 
 .navbar {
   background-color: $HeritageBlue;
-  position: fixed;
+  position: sticky;
+  top: 0;
   width: 100%;
   z-index: 20000;
 }
@@ -29,11 +30,6 @@ ul {
   height: 59px;
   margin-left: 10px;
 }
-
-.router {
-  padding: 1em 0 3em;
-}
-
 
 
 /*Popup modal dialog styling*/

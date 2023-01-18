@@ -536,7 +536,7 @@ public class DBServices {
 
     protected boolean createDBAnnouncement(Announcement newAnnouncement)
     {
-        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (????);";
+        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (?,?,?,?);";
 
         validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle());
 

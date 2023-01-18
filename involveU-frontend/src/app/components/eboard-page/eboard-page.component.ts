@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Club} from "../../objects/club";
+import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-eboard-page',
@@ -49,7 +50,7 @@ export class EboardPageComponent implements OnInit {
     return this.announcementForm.controls;
   }
 
-  /*createAnnouncementSubmit() {
+  createAnnouncementSubmit() {
     const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle};
     console.log(newAnnouncement);
     this.eboardService.createAnnouncement(newAnnouncement).subscribe(success =>{
@@ -59,5 +60,5 @@ export class EboardPageComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-  }*/
+  }
 }

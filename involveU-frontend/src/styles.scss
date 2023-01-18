@@ -8,17 +8,24 @@
 html {
   font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
 }
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+h1, h2, h3 {
+  font-family: "Oswald", sans-serif;
+}
+h4, h5, h6 {
+  font-family: "Open Sans Condensed", sans-serif;
 }
 p {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+  font-family: "Open Sans", sans-serif;
 }
 li {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+  font-family: "Open Sans", sans-serif;
 }
-button {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+button, a {
+  font-family: "Open Sans", sans-serif;
+}
+
+em {
+  font-family: "Open Sans", sans-serif;
 }
 
 .blueButton {

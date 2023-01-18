@@ -33,7 +33,7 @@ const routes: Routes = [
     component: ScheduleComponent
   },
   {
-    path: 'eboard',
+    path: ':id/eboard',
     component: EboardPageComponent
   }
 ];

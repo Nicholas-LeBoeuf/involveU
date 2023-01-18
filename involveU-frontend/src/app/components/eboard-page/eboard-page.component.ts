@@ -5,6 +5,7 @@ import {EboardService} from "../../services/eboard.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Club} from "../../objects/club";
 
 @Component({
   selector: 'app-eboard-page',
@@ -27,8 +28,20 @@ export class EboardPageComponent implements OnInit {
     })
   }
   clubID!: number;
-
+  userID!: number;
+  clubInfo!: Club;
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.clubID = params['id'];
+    });
+    this.userID = +this.cookie.get('studentID');
+    this.getClubInfo();
+  }
+
+  getClubInfo() {
+    this.clubService.getSpecificClub(this.clubID).subscribe(response => {
+      this.clubInfo = response;
+    })
   }
 
   get announcementFormInputs()

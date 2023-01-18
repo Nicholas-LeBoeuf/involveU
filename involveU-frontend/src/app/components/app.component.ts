@@ -7,8 +7,7 @@ import {ClubService} from "../services/club.service";
 import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {Breakpoints} from "@angular/cdk/layout";
+import {ResponsiveService} from "../services/responsive.service";
 
 @Component({
   selector: 'app-root',
@@ -25,7 +24,8 @@ export class AppComponent {
               private userService: UserService,
               public cookie: CookieService,
               private clubService: ClubService,
-              private router: Router) {
+              private router: Router,
+              public responsiveService: ResponsiveService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],

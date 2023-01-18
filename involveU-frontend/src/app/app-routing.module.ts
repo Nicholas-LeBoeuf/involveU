@@ -5,6 +5,7 @@ import {LandingPageComponent} from "./components/landing-page/landing-page.compo
 import {SpecificClubPageComponent} from "./components/specific-club-page/specific-club-page.component";
 import {AdminPageComponent} from "./components/admin-page/admin-page.component";
 import {ScheduleComponent} from "./components/schedule/schedule.component";
+import {EboardPageComponent} from "./components/eboard-page/eboard-page.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'schedule',
     component: ScheduleComponent
+  },
+  {
+    path: 'eboard',
+    component: EboardPageComponent
   }
 ];
 

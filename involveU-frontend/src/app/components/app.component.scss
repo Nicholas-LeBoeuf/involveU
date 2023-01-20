@@ -206,3 +206,29 @@ ul {
 .active-span {
   color: $GoldenYellow !important;
 }
+
+.navButtonsForMobile {
+  display:table;
+  width:100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.mobileFlexSNHULogo {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1vh;
+}
+
+.mobileFlexNavButton {
+  float: left;
+}
+
+.mobileFlexInvolveULogo {
+  float: right
+}
+
+.dropdown-item {
+  text-align: center;
+  margin: 5px auto;
+}

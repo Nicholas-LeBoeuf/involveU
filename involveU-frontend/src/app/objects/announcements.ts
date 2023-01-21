@@ -3,5 +3,6 @@ export interface Announcement {
   clubID: number,
   contentOfAnnouncement: string,
   expiresOn: string,
-  announcementTitle: string
+  announcementTitle: string,
+  postedOn: string
 }

@@ -30,6 +30,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { TimeFormatPipe } from './pipes/time-format.pipe';
 import {FileUploadModule} from 'primeng/fileupload';
 import { EboardPageComponent } from './components/eboard-page/eboard-page.component';
+import { DatePipe } from '@angular/common';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -71,7 +72,8 @@ FullCalendarModule.registerPlugins([
         FileUploadModule,
     ],
   providers: [
-    CookieService
+    CookieService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import {ClubService} from "../services/club.service";
 import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
+import {ResponsiveService} from "../services/responsive.service";
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent {
               private userService: UserService,
               public cookie: CookieService,
               private clubService: ClubService,
-              private router: Router) {
+              private router: Router,
+              public responsiveService: ResponsiveService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -62,7 +64,22 @@ export class AppComponent {
     year: string = "";
   };
 
+  isDesktop: boolean = false;
+  isMobileOrTablet: boolean = false;
+
   ngOnInit(): void {
+    console.log(this.responsiveService.deviceDesktop(), "Desktop");
+    console.log(this.responsiveService.deviceMobile(), "Mobile");
+    console.log(this.responsiveService.deviceTablet(), "Tablet");
+
+    if (this.responsiveService.deviceDesktop()) {
+      this.isDesktop= true;
+      this.isMobileOrTablet = false;
+    }
+    else {
+      this.isMobileOrTablet = true;
+      this.isDesktop = false;
+    }
   }
 
   private prevContextMenu!: ContextMenu;
@@ -71,17 +88,7 @@ export class AppComponent {
     {
       label: 'Logout',
       command: () => {
-        this.cookie.delete('studentID');
-        this.cookie.delete('studentFName');
-        this.cookie.delete('studentLName');
-        this.cookie.delete('isAdmin');
-        this.cookie.delete('isEboard');
-
-        this.router.navigateByUrl('/home').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });;
+        this.logoutUser();
       }
     }
   ]
@@ -153,6 +160,20 @@ export class AppComponent {
     },
       (error) => {
       this.signUpFailMessage = true;
+    });
+  }
+
+  logoutUser() {
+    this.cookie.delete('studentID');
+    this.cookie.delete('studentFName');
+    this.cookie.delete('studentLName');
+    this.cookie.delete('isAdmin');
+    this.cookie.delete('isEboard');
+
+    this.router.navigateByUrl('/home').then(nav => {
+      console.log(nav); // true if navigation is successful
+    }, err => {
+      console.log(err) // when there's an error
     });
   }
 

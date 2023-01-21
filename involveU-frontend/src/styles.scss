@@ -3,22 +3,48 @@
 @import '../node_modules/primeicons/primeicons.scss';
 @import "~primeng/resources/themes/nova/theme.scss";
 @import "~primeng/resources/primeng.min.scss";
-@import "~primeicons/primeicons.scss";
+@import '~primeicons/primeicons.scss';
+
+$InkBlue: #00244E;
+$GoldenYellow: #FDB913;
+$SkyBlue: #009DEA;
+$HeritageBlue: #0A3370;
 
 html {
   font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
 }
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+h1, h2, h3 {
+  font-family: "Oswald", sans-serif;
+}
+
+.blueHeaders {
+  color: $HeritageBlue;
+  font-weight: 700;
+}
+
+h4, h5, h6 {
+  font-family: "Open Sans Condensed", sans-serif;
 }
 p {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+  font-family: "Open Sans", sans-serif;
 }
 li {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+  font-family: "Open Sans", sans-serif;
 }
-button {
-  font-family: 'Merriweather Sans', 'Segoe UI', sans-serif !important;
+button, a {
+  font-family: "Open Sans", sans-serif;
+}
+
+em {
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  min-width: 500px;
+}
+
+.container {
+  margin-top: 15px;
 }
 
 .blueButton {
@@ -105,4 +131,9 @@ button {
 .dialogLines {
   border-top: 2px solid black;
   margin: 2% 8%;
+}
+
+.blueTitleBar {
+  background-color: $HeritageBlue;
+  height: 210px;
 }

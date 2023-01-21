@@ -138,12 +138,13 @@ public class EventController extends DBServices{
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
     @CrossOrigin (origins = "http://localhost:4200")
-    @GetMapping("events/getSpecificEvent/{eventID}")
-    private ResponseEntity<List<Events>> getSpecificEvent(@PathVariable("eventID") int eventID)
+        @GetMapping("events/getSpecificEvent/{eventID}")
+    private ResponseEntity<Events> getSpecificEvent(@PathVariable("eventID") int eventID)
     {
-        events = getEventByID(eventID);
+        Events event;
+        event = getEventByID(eventID);
 
-        return new ResponseEntity<>(events, HttpStatus.OK);
+        return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
     //LOCATIONS  ENDPOINTS

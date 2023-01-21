@@ -83,5 +83,13 @@ public class AnnouncementsController extends DBServices {
         return new ResponseEntity<>(announcements, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/announcements/getClubAnnouncements/{clubID}")
+    private ResponseEntity<List<Announcement>> getClubAnnouncements(@PathVariable("clubID") int clubID)
+    {
+        announcements = getDBClubAnnouncements(clubID);
+
+        return new ResponseEntity<>(announcements, HttpStatus.OK);
+    }
 
 }

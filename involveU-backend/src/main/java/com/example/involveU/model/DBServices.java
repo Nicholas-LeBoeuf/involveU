@@ -580,6 +580,14 @@ public class DBServices {
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
+
+    protected  List<Announcement> getDBClubAnnouncements(int clubID)
+    {
+        sql = "select * from Announcements WHERE Announcements.clubID = " + clubID +";";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+        return announcements;
+    }
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

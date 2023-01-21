@@ -16,6 +16,33 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="clubInfoLeft">
+    <ng-container *ngIf="clubInfo.clubBio !== null">
+      <h2 class="blueHeaders">About Us</h2>
+      <p>{{clubInfo.clubBio}}</p>
+    </ng-container>
+    <ng-container *ngIf="clubInfo.clubMission !== null">
+      <h2 class="blueHeaders">Mission</h2>
+      <p>{{clubInfo.clubMission}}</p>
+    </ng-container>
+    <ng-container *ngIf="clubInfo.clubValues !== null">
+      <h2 class="blueHeaders">Values</h2>
+      <p>{{clubInfo.clubValues}}</p>
+    </ng-container>
+    <ng-container *ngIf="clubInfo.clubVision !== null">
+      <h2 class="blueHeaders">Vision</h2>
+      <p>{{clubInfo.clubVision}}</p>
+    </ng-container>
+  </div>
+  <div class="clubAnnouncementsRight">
+    <h3 class="blueHeaders">Announcements</h3>
+    <hr>
+    <ng-template>
+
+    </ng-template>
+  </div>
+</div>
 
 
 

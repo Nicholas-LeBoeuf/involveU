@@ -7,6 +7,7 @@ import {Club} from "../../objects/club";
 import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
 import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
+import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-admin-page',
@@ -82,6 +83,13 @@ export class AdminPageComponent implements OnInit {
     this.removeEBoardForm = this.formBuilder.group({
       userID: ['', Validators.required]
     });
+
+    this.osiAnnouncementForm = this.formBuilder.group({
+      clubID: [''],
+      contentOfAnnouncement: ['', Validators.required],
+      expiresOn: [''],
+      announcementTitle: ['', Validators.required]
+    });
   }
   labelEboard: User[];
   createClubMessage: boolean = false;
@@ -113,7 +121,7 @@ export class AdminPageComponent implements OnInit {
     //console.log(event.target.files[0])
     console.log(event);
 
-    this.adminService.sendImage(event.files[0]).subscribe()
+    //this.adminService.sendImage(event.files[0]).subscribe()
    /* console.log("made it");
     const file:File = event.target.files[0];
 
@@ -201,6 +209,10 @@ export class AdminPageComponent implements OnInit {
     return this.removeEBoardForm.controls;
   }
 
+  get osiAnnouncementFormInputs() {
+    return this.osiAnnouncementForm.controls;
+  }
+
   createClubSubmit(){
     const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubForm.value.advisorID}
     console.log(clubInfo);
@@ -274,6 +286,18 @@ export class AdminPageComponent implements OnInit {
       (error) => {
         console.log(error);
         this.assignAdvisorFailed = true;
+      });
+  }
+
+  createOSIAnnouncementSubmit(){
+    const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle};
+    console.log(newAnnouncement);
+    this.adminService.createOSIAnnouncement(newAnnouncement).subscribe(success =>{
+        console.log(success);
+        location.reload();
+      },
+      (error) => {
+        console.log(error);
       });
   }
 
@@ -354,6 +378,15 @@ export class AdminPageComponent implements OnInit {
 
   isRemoveEboardValid() {
     if (this.eboardID.value == null || this.removeEBoardClubID == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isOSIAnnouncementValid() {
+    if(this.osiAnnouncementForm.value.announcementTitle == '' || this.osiAnnouncementForm.value.contentOfAnnouncement == '' || this.osiAnnouncementForm.value.expiresOn == null) {
       return true;
     }
     else {

@@ -1,1 +1,35 @@
-<p>eboard-page works!</p>
+<h1>{{clubInfo.clubName}}</h1>
+<div class="osiAnnouncementsDiv">
+  <h1 class="dialogTitle">Create Announcement</h1>
+  <form [formGroup]="announcementForm">
+    <div class="osiAnnouncements">
+      <div class="form-group">
+        <input class="form-control formInputs" type="text" placeholder="Title" formControlName="announcementTitle">
+        <div *ngIf="announcementFormInputs?.['announcementTitle']?.invalid && (announcementFormInputs?.['announcementTitle']?.dirty || announcementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
+          <div *ngIf="announcementFormInputs?.['announcementTitle']?.errors?.['required']">
+            Announcement Title is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control formInputs" type="date" placeholder="Expiration Date" formControlName="expiresOn">
+        <div *ngIf="announcementFormInputs?.['expiresOn']?.invalid && (announcementFormInputs?.['expiresOn']?.dirty || announcementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
+          <div *ngIf="announcementFormInputs?.['expiresOn']?.errors?.['required']">
+            Expiration Date is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control formInputs largeTextField"placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
+        <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.invalid && (announcementFormInputs?.['contentOfAnnouncement']?.dirty || announcementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
+          <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
+            Announcement content is required
+          </div>
+        </div>
+      </div>
+      <div class="centerButton">
+        <button class="form-submit-button blueButton" type="submit" (click)="createAnnouncementSubmit()">Create Announcement</button>
+      </div>
+    </div>
+  </form>
+</div>

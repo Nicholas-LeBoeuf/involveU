@@ -88,7 +88,8 @@ export class AdminPageComponent implements OnInit {
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
       expiresOn: [''],
-      announcementTitle: ['', Validators.required]
+      announcementTitle: ['', Validators.required],
+      postedOn: ['']
     });
   }
   labelEboard: User[];
@@ -290,7 +291,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createOSIAnnouncementSubmit(){
-    const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle};
+    const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle, postedOn: this.osiAnnouncementForm.value.postedOn};
     console.log(newAnnouncement);
     this.adminService.createOSIAnnouncement(newAnnouncement).subscribe(success =>{
         console.log(success);
@@ -386,7 +387,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isOSIAnnouncementValid() {
-    if(this.osiAnnouncementForm.value.announcementTitle == '' || this.osiAnnouncementForm.value.contentOfAnnouncement == '' || this.osiAnnouncementForm.value.expiresOn == null) {
+    if(this.osiAnnouncementForm.value.announcementTitle == '' || this.osiAnnouncementForm.value.contentOfAnnouncement == '' || this.osiAnnouncementForm.value.expiresOn == null || this.osiAnnouncementForm.value.postedOn == null) {
       return true;
     }
     else {

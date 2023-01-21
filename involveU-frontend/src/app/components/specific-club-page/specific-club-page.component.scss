@@ -395,12 +395,12 @@ hr {
   margin-right: 17px !important;
 }
 
-.eboardTable {
+/*.eboardTable {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-}
+}*/
 
 
 .eventInfoContainer {
@@ -468,16 +468,52 @@ hr {
 }
 
 .clubInfoLeft {
-  width: 50%;
+  width: 65%;
   float: left;
 }
 .clubAnnouncementsRight {
   padding: 10px;
   margin-left: 30px;
+  max-width: 30%;
   float: left;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
+  flex-direction: column;
   border: 1px solid black;
+
+  width:100%;
+}
+
+.mobileTabletClubAnnouncementWidth {
+  max-width: 100%;
+  margin-left: 0;
+}
+
+.announcementContent {
+  width: 99%;
+}
+
+.announcementLine {
+  margin-top: 0 !important;
+  margin-bottom: 5px !important;
+}
+
+.announcementDate {
+  color: gray;
+}
+
+.announcementTitle {
+  margin-top: 3px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .eboardTable {
+  margin-bottom: 1.5rem !important;
 }

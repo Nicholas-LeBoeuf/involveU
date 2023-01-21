@@ -14,4 +14,8 @@ export class EboardService {
   createAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
+
+  getClubAnnouncements(clubID: number) {
+    return this.http.get(environment.apiURL + `announcements/getClubAnnouncements/${clubID}`);
+  }
 }

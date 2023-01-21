@@ -17,7 +17,7 @@
 </div>
 
 <div class="container">
-  <div class="clubInfoLeft">
+  <div [ngClass]="{'mobileTabletClubInfoLeft' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubInfoLeft' : responsiveService.deviceDesktop()}">
     <ng-container *ngIf="clubInfo.clubBio !== null">
       <h2 class="blueHeaders">About Us</h2>
       <p>{{clubInfo.clubBio}}</p>
@@ -30,17 +30,34 @@
       <h2 class="blueHeaders">Values</h2>
       <p>{{clubInfo.clubValues}}</p>
     </ng-container>
-    <ng-container *ngIf="clubInfo.clubVision !== null">
-      <h2 class="blueHeaders">Vision</h2>
-      <p>{{clubInfo.clubVision}}</p>
+    <ng-container *ngIf="clubEboard !== null">
+      <h2 class="blueHeaders">Executive Board</h2>
+      <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="text-center">Position</th>
+            <th class="text-center">Name</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-member>
+          <tr>
+            <td class="text-center">{{member.eboardPosition}}</td>
+            <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </ng-container>
   </div>
-  <div class="clubAnnouncementsRight">
-    <h3 class="blueHeaders">Announcements</h3>
-    <hr>
-    <ng-template>
-
-    </ng-template>
+  <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+    <h3 class="blueHeaders text-center">Announcements</h3>
+    <hr class="announcementLine">
+    <div class="announcementContent" *ngFor="let announcement of clubAnnouncements; index as index; last as last">
+      <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+      <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
+      <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
+      <hr class="announcementLine" *ngIf="index < 5">
+    </div>
+    <button class="blueButton">Show More</button>
   </div>
 </div>
 

@@ -25,7 +25,8 @@ export class EboardPageComponent implements OnInit {
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
       expiresOn: [''],
-      announcementTitle: ['', Validators.required]
+      announcementTitle: ['', Validators.required],
+      postedOn: ['']
     })
   }
   clubID!: number;
@@ -51,7 +52,7 @@ export class EboardPageComponent implements OnInit {
   }
 
   createAnnouncementSubmit() {
-    const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle};
+    const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle, postedOn: this.announcementForm.value.postedOn};
     console.log(newAnnouncement);
     this.eboardService.createAnnouncement(newAnnouncement).subscribe(success =>{
         console.log(success);

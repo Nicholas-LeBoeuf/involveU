@@ -7,6 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Club} from "../../objects/club";
 import {Announcement} from "../../objects/announcements";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-eboard-page',
@@ -15,12 +16,14 @@ import {Announcement} from "../../objects/announcements";
 })
 export class EboardPageComponent implements OnInit {
   announcementForm : FormGroup;
+  todaysDate = new Date().toString();
   constructor(private clubService: ClubService,
               private formBuilder: FormBuilder,
               private eboardService: EboardService,
               private route: ActivatedRoute,
               private router: Router,
-              public cookie: CookieService) {
+              public cookie: CookieService,
+              private datePipe: DatePipe) {
     this.announcementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
@@ -28,6 +31,7 @@ export class EboardPageComponent implements OnInit {
       announcementTitle: ['', Validators.required],
       postedOn: ['']
     })
+    this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
   clubID!: number;
   userID!: number;
@@ -52,7 +56,7 @@ export class EboardPageComponent implements OnInit {
   }
 
   createAnnouncementSubmit() {
-    const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle, postedOn: this.announcementForm.value.postedOn};
+    const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle, postedOn: this.todaysDate};
     console.log(newAnnouncement);
     this.eboardService.createAnnouncement(newAnnouncement).subscribe(success =>{
         console.log(success);

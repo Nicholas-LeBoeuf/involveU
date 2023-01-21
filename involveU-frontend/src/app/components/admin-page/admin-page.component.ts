@@ -8,6 +8,7 @@ import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
 import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {Announcement} from "../../objects/announcements";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-admin-page',
@@ -39,12 +40,14 @@ export class AdminPageComponent implements OnInit {
   nonEboardID: FormControl = new FormControl(null);
   eboardID: FormControl = new FormControl(null);
   nonAdvisorID: FormControl = new FormControl(null);
+  todaysDate = new Date().toString();
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private clubService: ClubService,
               public cookie: CookieService,
-              private adminService: AdminService) {
+              private adminService: AdminService,
+              private datePipe: DatePipe) {
     this.createClubForm = this.formBuilder.group({
       clubName: ['', Validators.required],
       clubAffiliation: ['', Validators.required],
@@ -91,6 +94,7 @@ export class AdminPageComponent implements OnInit {
       announcementTitle: ['', Validators.required],
       postedOn: ['']
     });
+    this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
   labelEboard: User[];
   createClubMessage: boolean = false;
@@ -291,7 +295,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createOSIAnnouncementSubmit(){
-    const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle, postedOn: this.osiAnnouncementForm.value.postedOn};
+    const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle, postedOn: this.todaysDate};
     console.log(newAnnouncement);
     this.adminService.createOSIAnnouncement(newAnnouncement).subscribe(success =>{
         console.log(success);

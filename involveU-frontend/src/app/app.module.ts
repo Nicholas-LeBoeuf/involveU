@@ -77,7 +77,7 @@ FullCalendarModule.registerPlugins([
     ],
   providers: [
     CookieService,
-    ResponsiveService
+    ResponsiveService,
     DatePipe
   ],
   bootstrap: [AppComponent]

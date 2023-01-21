@@ -141,3 +141,7 @@ body {
   background-color: $HeritageBlue;
   height: 210px;
 }
+
+.dateInputLabel:before {
+  content: attr(placeholder) !important;
+}

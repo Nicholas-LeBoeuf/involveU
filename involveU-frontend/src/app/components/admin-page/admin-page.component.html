@@ -316,7 +316,7 @@
           </div>
         </div>
         <div class="form-group">
-          <input class="form-control formInputs" type="date" placeholder="Expiration Date" formControlName="expiresOn">
+          <input class="form-control formInputs dateInputLabel" type="date" placeholder="Expiration Date: &nbsp;" formControlName="expiresOn">
           <div *ngIf="osiAnnouncementFormInputs?.['expiresOn']?.invalid && (osiAnnouncementFormInputs?.['expiresOn']?.dirty || osiAnnouncementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
             <div *ngIf="osiAnnouncementFormInputs?.['expiresOn']?.errors?.['required']">
               Expiration Date is required

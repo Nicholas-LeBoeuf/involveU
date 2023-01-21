@@ -548,9 +548,9 @@ public class DBServices {
 
     protected boolean createDBAnnouncement(Announcement newAnnouncement)
     {
-        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (?,?,?,?);";
+        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle, postedOn) VALUES (?,?,?,?,?);";
 
-        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle());
+        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle(), newAnnouncement.getPostedOn());
 
         return validQuery == 1;
     }
@@ -566,7 +566,7 @@ public class DBServices {
 
     protected boolean editDBAnnouncement(Announcement announcementToEdit) {
 
-            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
+            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ?, postedOn = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
             validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle());
 
             return validQuery == 1;

@@ -377,8 +377,6 @@ public class DBServices {
     {
 
         sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation AND eventID = "+eventID+";";
-
-
         events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
         events.get(0).setEventLocation(getDBLocationsByID(events.get(0).getLocation_ID()).get(0).getLocationName());
 
@@ -399,10 +397,14 @@ public class DBServices {
     }
     protected  List<Events> getDBClubEvents(int clubID)
     {
-        sql = "SELECT * FROM Events WHERE clubID = " + clubID + " ORDER BY eventDate, startTime ASC ;";
+        sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation AND clubID = " + clubID + " ORDER BY eventDate, startTime ASC ;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
 

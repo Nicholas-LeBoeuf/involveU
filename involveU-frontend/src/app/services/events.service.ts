@@ -71,4 +71,7 @@ export class EventsService {
   getSpaceByLocation(locationID: number): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getSpacesByLocation/${locationID}`);
   }
+  getTopRSVP():Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getTopRSVP`);
+  }
 }

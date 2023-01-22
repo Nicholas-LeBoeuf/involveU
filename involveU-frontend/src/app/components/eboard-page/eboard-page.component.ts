@@ -130,6 +130,7 @@ export class EboardPageComponent implements OnInit {
     this.getClubEvents();
     this.getSpacesByLocation();
     this.getClubAnnouncements();
+    this.getLocations();
   }
 
   getClubInfo() {
@@ -221,6 +222,15 @@ export class EboardPageComponent implements OnInit {
   get getCreateEventsFormInputs()
   {
     return this.createEventForm.controls;
+  }
+
+  getLocations() {
+    this.eventsService.getLocations().subscribe((response: Events[]) => {
+        this.locations = response;
+      },
+      (error) => {
+        console.log(error)
+      });
   }
 
   getSpacesByLocation() {

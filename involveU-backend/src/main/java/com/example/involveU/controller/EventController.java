@@ -211,7 +211,7 @@ public class EventController extends DBServices{
     }
     @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("events/getEventsBySpace/{locationID}")
-    private ResponseEntity<List<Events>>getEventBySpace(@PathVariable("locationID") int locationID)
+    private ResponseEntity<List<Events>>getEventBySpace(@PathVariable("locationID") String locationID)
     {
         events = getEventsByLocationID(locationID);
 

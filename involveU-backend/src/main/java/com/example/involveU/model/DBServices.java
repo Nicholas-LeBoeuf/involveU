@@ -514,7 +514,7 @@ public class DBServices {
         }
         return events;
     }
-    protected List<Events>  getEventsByLocationID(int locationID)
+    protected List<Events>  getEventsByLocationID(String locationID)
     {
         sql = "SELECT * FROM Events JOIN Spaces WHERE Events.eventLocation = "+locationID+" AND Events.eventLocation = Spaces.space_ID;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));

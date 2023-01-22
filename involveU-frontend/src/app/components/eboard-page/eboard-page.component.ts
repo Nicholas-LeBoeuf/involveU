@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Events} from "../../objects/events";
 import {Table} from "primeng/table";
+import {EboardService} from "../../services/eboard.service";
 
 
 @Component({

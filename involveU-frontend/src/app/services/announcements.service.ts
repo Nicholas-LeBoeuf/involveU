@@ -15,8 +15,8 @@ export class AnnouncementsService {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
 
-  getClubAnnouncements(clubID: number):Observable<Announcement> {
-    return this.http.get<Announcement>(environment.apiURL + `announcements/getClubAnnouncements/${clubID}`);
+  getClubAnnouncements(clubID: number):Observable<Announcement[]> {
+    return this.http.get<Announcement[]>(environment.apiURL + `announcements/getClubAnnouncements/${clubID}`);
   }
 
 }

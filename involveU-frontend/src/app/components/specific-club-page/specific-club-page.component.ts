@@ -53,7 +53,7 @@ export class SpecificClubPageComponent implements OnInit {
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
-  clubAnnouncements: any;
+  clubAnnouncements: Announcement[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 

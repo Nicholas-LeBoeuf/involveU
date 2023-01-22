@@ -8,7 +8,6 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-
 <div class="blueTitleBar">
   <div class="logoAndName">
     <img class="clubLogo" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
@@ -62,11 +61,9 @@
         </div>
         <button class="blueButton">Show More</button>
       </div>
-
     </div>
     <div class="eventsCaroContainer" [ngClass]="{'eventsCaroContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsCaroContainerGridWeb' : responsiveService.deviceDesktop()}">
       <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
-
       <div class="eventCardContainer" [ngClass]="{'eventCardContainerWrap' : responsiveService.deviceDesktop(), 'eventCardContainerColumn' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
         <div class="eventCard" *ngFor="let event of clubEvents" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <div class="eventCardPicture">
@@ -85,3 +82,52 @@
     </div>
   </div>
 </div>
+
+<p-dialog [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1 class="text-center">Event Information</h1>
+  <hr class="dialogLines">
+  <div *ngFor="let event of this.certainEvent" >
+    <div class="eventInfoContainer">
+      <div class="eventName2">
+        <h3 class="eventDataTitle">Event Name: </h3>
+        <h5 class="eventData">{{event.eventName}}</h5>
+      </div>
+      <div class="eventDate2">
+        <h3 class="eventDataTitle">Event Date: </h3>
+        <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
+      </div>
+      <div class="eventTime2">
+        <h3 class="eventDataTitle">Time: </h3>
+        <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
+      </div>
+      <div class="eventLocation2">
+        <h3 class="eventDataTitle">Event Location: </h3>
+        <h5 class="eventData">{{event.eventLocation}}</h5>
+      </div>
+      <div class="eventDesc2">
+        <h3 class="eventDataTitle">Event Description: </h3>
+        <h5 class="eventData">{{event.eventDesc}}</h5>
+      </div>
+      <div class="eventHost2">
+        <h3 class="eventDataTitle">Hosted By:</h3>
+        <h5 class="eventData">{{event.clubName}}</h5>
+      </div>
+      <div class="eventTransportation2">
+        <h3 class="eventDataTitle">Transportation</h3>
+        <ng-container *ngIf="event.isTransportation; else noTransportation">
+          <h5 class="eventData">Transportation Provided</h5>
+        </ng-container>
+        <ng-template #noTransportation>
+          <h5 class="eventData">Transportation NOT provided</h5>
+        </ng-template>
+      </div>
+      <div class="eventTicketLink2">
+        <h3 class="eventDataTitle">Ticket Link:</h3>
+        <h5 class="eventData">{{event.ticketLink}}</h5>
+      </div>
+    </div>
+  </div>
+</p-dialog>

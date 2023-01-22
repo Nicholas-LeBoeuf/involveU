@@ -85,12 +85,14 @@ export class EboardPageComponent implements OnInit {
   //OBJECTS
   clubInfo: Club;
   clubEvents: Events[] = [];
+  clubAnnouncements: any = {};
   certainEvent: Events[] = [];
   locations: Events[] = [];
   spaces: Events[] = [];
   selectedLocation: any = {};
 
   @ViewChild('clubEventTable') clubEventTable: Table;
+  @ViewChild('clubAnnouncementTable') clubAnnouncementTable: Table;
   locationID: FormControl = new FormControl(null);
   spaceID : FormControl = new FormControl(null);
   cols = [
@@ -103,6 +105,12 @@ export class EboardPageComponent implements OnInit {
     { field: 'ticketLink', header: 'Ticket Link' },
     { field: 'isTransportation', header: 'Transportation' }
   ];
+  announcementCols = [
+    { field: 'announcementTitle', header: 'Title' },
+    { field: 'contentOfAnnouncement', header: 'Announcement Content' },
+    { field: 'postedOn', header: 'Date Posted' },
+    { field: 'expiresOn', header: 'Date Expired' }
+  ]
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -112,6 +120,7 @@ export class EboardPageComponent implements OnInit {
     this.getClubInfo();
     this.getClubEvents();
     this.getSpacesByLocation();
+    this.getClubAnnouncements();
   }
 
   getClubInfo() {
@@ -123,6 +132,12 @@ export class EboardPageComponent implements OnInit {
   getClubEvents() {
     this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
       this.clubEvents = response;
+    })
+  }
+
+  getClubAnnouncements() {
+    this.announcementsService.getClubAnnouncements(this.clubID).subscribe(response => {
+      this.clubAnnouncements = response;
     })
   }
 
@@ -146,6 +161,10 @@ export class EboardPageComponent implements OnInit {
   onFilterEventName(event: Event) {
     this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
+
+  /*onFilterAnnouncements(announcement: Announcement) {
+    this.clubAnnouncementTable.filterGlobal((announcement.target as HTMLInputElement).value.toString(), 'contains');
+  }*/
 
   showAddEventDialog()
   {

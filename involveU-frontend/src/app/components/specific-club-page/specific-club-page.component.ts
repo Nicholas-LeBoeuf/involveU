@@ -12,7 +12,6 @@ import {EboardService} from "../../services/eboard.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
-import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -54,7 +53,7 @@ export class SpecificClubPageComponent implements OnInit {
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
-  clubAnnouncements: any;
+  clubAnnouncements: Announcement[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 

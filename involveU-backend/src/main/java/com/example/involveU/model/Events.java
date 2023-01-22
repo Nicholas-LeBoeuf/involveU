@@ -2,30 +2,41 @@ package com.example.involveU.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "events")
-public class Events {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class Events{
+
     private long eventID;
-    @Column(name = "eventName")
+
     private  String eventName;
-    @Column(name = "eventLocation")
+
     private  String eventLocation;
-    @Column(name = "startTime")
+
     private  String startTime;
-    @Column(name = "endTime")
+
     private  String endTime;
-    @Column(name = "eventDate")
+
     private  String eventDate;
-    @Column(name = "eventDesc")
+
     private  String eventDesc;
-    @Column(name = "isTransportation")
+
     private  int isTransportation;
-    @Column(name = "ticketLink")
+
     private  String ticketLink;
-    @Column(name = "clubID")
+
+    private String clubName;
+    private String spaceName;
+
+    private  int space_ID;
+    private int location_ID;
+
     private  int clubID;
+    public long getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(long eventID) {
+        this.eventID = eventID;
+    }
 
     public String getEventName() {return eventName;}
 
@@ -45,7 +56,11 @@ public class Events {
 
     public String getEventDate() {return eventDate;}
 
-    public void setEventDate(String eventDate) {this.eventDate = eventDate;}
+    public void setEventDate(String eventDate) {
+
+        this.eventDate = eventDate;
+
+    }
 
     public String getEventDesc() {return eventDesc;}
 
@@ -59,7 +74,25 @@ public class Events {
 
     public void setTicketLink(String ticketLink) {this.ticketLink = ticketLink;}
 
+    public String getClubName() {return clubName;}
+
+    public void setClubName(String clubName) {this.clubName = clubName;}
+
     public int getClubID() {return clubID;}
 
     public void setClubID(int clubID) {this.clubID = clubID;}
+
+    public String getSpaceName() {return spaceName;}
+
+    public void setSpaceName(String spaceName) {this.spaceName = spaceName;}
+
+    public int getSpace_ID() {return space_ID;}
+
+    public void setSpace_ID(int space_ID) {this.space_ID = space_ID;}
+
+    public int getLocation_ID() {return location_ID;}
+
+    public void setLocation_ID(int location_ID) {this.location_ID = location_ID;}
+
+
 }

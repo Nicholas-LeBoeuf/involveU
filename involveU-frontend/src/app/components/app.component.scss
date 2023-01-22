@@ -1,9 +1,13 @@
-
+@import "src/styles";
 
 .navbar {
-  background-color: #AECDE6;
-  justify-content: flex-start;
+  background-color: $HeritageBlue;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 20000;
 }
+
 li {
   display: inline;
 }
@@ -17,8 +21,8 @@ ul {
 }
 
 .SNHUlogoScale {
-  width: 150px;
-  height: 43px;
+  height: 45px;
+  cursor: pointer;
 }
 
 .involveULogoScale {
@@ -26,8 +30,6 @@ ul {
   height: 59px;
   margin-left: 10px;
 }
-
-
 
 
 /*Popup modal dialog styling*/
@@ -39,11 +41,6 @@ ul {
   margin: 4% auto;
 }
 
-.dialogLines {
-  border-top: 2px solid black;
-  margin: 2% 8%;
-}
-
 .dialogTitle {
   font-size: 1.8em;
   text-align: center;
@@ -52,8 +49,21 @@ ul {
 }
 
 ::ng-deep .p-dialog {
-  background-color: #AECDE6;
+  background-color: #AECDE6 !important;
   border-radius: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: #AECDE6 !important;
+  border-radius: 20px;
+}
+
+::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
+  display:none;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  display: none;
 }
 
 .inputField {
@@ -102,15 +112,6 @@ ul {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.loginSignupFormInputs {
-  border: 2px solid #0667B3;
-  color: #0667B3
-}
-
-.loginSignupFormInputs::placeholder {
-  color: #0667B3;
-}
-
 :host ::ng-deep .p-dialog-header-icons {
   display:none!important;
 }
@@ -120,21 +121,114 @@ ul {
   margin: 0 !important;
   text-align: center;
   border-radius: 10px;
-}
-
-.form-control {
-  height: 40px;
-  width: 250px;
-  border-radius: 10px;
+  position: sticky;
 }
 
 .closeButtonDialog {
   float: right;
-  transform: translate(-10px, 10px);
   color: black;
 }
 
 .loginInputs {
   display: table;
   margin: 0 auto 4%;
+}
+
+.loginSignupAlerts {
+  position: absolute;
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.loginSignupAlerts p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 20px;
+}
+
+::ng-deep .p-contextmenu {
+  width: 90px;
+}
+
+::ng-deep .p-contextmenu ul {
+  text-align: center;
+}
+
+::ng-deep .p-contextmenu .p-menuitem-link {
+  justify-content: center;
+}
+
+.profileIcon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+
+.navButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.specificNavButton {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.specificNavButton a {
+  text-decoration: none;
+  color: white;
+}
+
+.specificNavButton a:hover {
+  color: $GoldenYellow;
+}
+
+::ng-deep .p-contextmenu {
+  width: 120px !important;
+}
+
+.active-span {
+  color: $GoldenYellow !important;
+}
+
+.navButtonsForMobile {
+  display:table;
+  width:100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.mobileFlexSNHULogo {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1vh;
+}
+
+.mobileFlexNavButton {
+  float: left;
+}
+
+.mobileFlexInvolveULogo {
+  float: right
+}
+
+.dropdown-item {
+  text-align: center;
+  margin: 5px auto;
 }

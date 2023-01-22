@@ -1,0 +1,289 @@
+.container {
+  width: 100vw !important;
+  margin: 0 !important;
+  padding: 0;
+  height: 92vh;
+
+}
+
+.gridContainer {
+  display: grid;
+
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  margin: 1.5%;
+
+  height: 100vh;
+
+}
+
+#titleDiv {
+  border-radius: 10px;
+  margin: 2%;
+  background-color: #5c93cb;
+  grid-row-start: 1;
+  grid-column-start: 1;
+
+  grid-row-end: 2;
+  grid-column-end: 3;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+#titleDiv:hover {
+  transform: scale(1.04);
+}
+
+#topClubsDiv {
+  border-radius: 10px;
+  margin: 2%;
+  background-color: #5c93cb;
+  grid-row-start: 1;
+  grid-column-start: 3;
+
+  grid-row-end: 2;
+  grid-column-end: 5;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+
+}
+
+#topClubsDiv:hover {
+  transform: scale(1.04);
+}
+
+#favoritedClubs {
+  border-radius: 10px;
+  margin: 1%;
+  background-color: #5c93cb;
+  grid-row-start: 2;
+  grid-column-start: 1;
+
+  grid-row-end: 3;
+  grid-column-end: 5;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+
+}
+
+#favoritedClubs:hover {
+  transform: scale(1.04);
+}
+
+#favoritedEvents {
+  border-radius: 10px;
+  margin: 1%;
+  background-color: #5c93cb;
+  grid-row-start: 3;
+  grid-column-start: 1;
+
+  grid-row-end: 4;
+  grid-column-end: 5;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+
+}
+
+#favoritedEvents:hover {
+  transform: scale(1.04);
+}
+
+#item-4 {
+  border-radius: 10px;
+  margin: 1%;
+  background-color: #5c93cb;
+  grid-row-start: 4;
+  grid-column-start: 1;
+
+  grid-row-end: 5;
+  grid-column-end: 5;
+  transition: all ease-in-out 300ms;
+  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+
+}
+
+#item-4:hover {
+  transform: scale(1.04);
+}
+
+.pageTitle {
+  font-size: 45px;
+}
+
+.clubSearch {
+  width: 250px !important;
+  height: 60px;
+  font-size: 25px;
+  margin-top: 8%;
+}
+
+.topClubsTitle {
+  font-size: 45px;
+}
+
+.clubContent {
+  height: 350px;
+  background-color: #AECDE6;
+  border-radius: 5px;
+  margin: 0.6rem;
+  text-align: center;
+  padding-top: 20px;
+  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.clubContent h3 {
+  font-weight: bold;
+}
+
+::ng-deep .p-carousel .p-carousel-content .p-carousel-prev, ::ng-deep .p-carousel .p-carousel-content .p-carousel-next {
+  color: black !important;
+  background-color: white;
+}
+
+.logoMargin {
+  margin-bottom: 6%;
+}
+
+::ng-deep #pr_id_4 .p-carousel-item {
+  text-align: center;
+}
+
+.textMargin {
+  margin-bottom: 6%;
+}
+
+.firstPlace {
+  background-color: gold;
+  margin-bottom: 15px;
+}
+
+.secondPlace {
+  background-color: #a2a2a2;
+  margin-bottom: 15px;
+}
+
+.thirdPlace {
+  background-color: #CD7F32;
+  margin-bottom: 15px;
+}
+
+.fourthPlace, .fifthPlace {
+  background-color: #AECDE6;
+  margin-bottom: 15px;
+}
+
+:host ::ng-deep .p-carousel-items-container {
+  text-align: center;
+}
+
+::ng-deep .p-dialog {
+  background-color: #AECDE6 !important;
+  border-radius: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: #AECDE6 !important;
+}
+
+.form-group {
+  display: block;
+  margin: 15px auto;
+}
+
+.closeButtonDialog {
+  float: right;
+}
+
+.card {
+  margin-top: 7%;
+  background-color: #AECDE6;
+  border: none;
+  overflow: hidden;
+}
+
+.clubSearchTitle {
+  font-size: 2.5em;
+  margin-bottom: 4%;
+  font-weight: normal;
+}
+
+.clubNameCell {
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 250ms all ease-in-out;
+}
+
+.clubNameCell:hover {
+  background-color: #d1e8ff;
+}
+
+.eventAlerts {
+  position: absolute;
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.eventAlerts p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  top: 35px;
+  position: sticky;
+}
+
+.clubSearchInput {
+  width: 300px;
+  margin: auto;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+  margin-bottom: 20px;
+}
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
+  margin-bottom: 20px;
+}
+.div3 { grid-area: 2 / 1 / 3 / 2; }
+.div4 { grid-area: 2 / 2 / 3 / 3; }
+.div5 { grid-area: 3 / 1 / 4 / 3; }
+
+.eventData {
+  font-weight: bolder !important;
+}
+
+.eventDataTitle {
+  font-weight: 400 !important;
+}
+.noDataContent {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+
+}

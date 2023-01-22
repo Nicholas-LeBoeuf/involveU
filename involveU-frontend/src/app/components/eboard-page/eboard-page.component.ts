@@ -70,12 +70,15 @@ export class EboardPageComponent implements OnInit {
   editEventSuccess: boolean = false;
   editEventFailed: boolean = false;
   disableUserDropdown: boolean = true;
+  successMessage: boolean = false;
+  failMessage: boolean = false;
 
   //NUMBERS
   clubID: number;
   userID: number;
 
   //STRINGS
+  message: string;
 
   //OBJECTS
   clubInfo: Club;

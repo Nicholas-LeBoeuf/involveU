@@ -1,3 +1,13 @@
+<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <h1>{{clubInfo.clubName}}</h1>
 <div class="osiAnnouncementsDiv">
   <h1 class="dialogTitle">Create Announcement</h1>

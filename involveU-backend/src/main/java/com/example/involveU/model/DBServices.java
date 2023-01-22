@@ -405,8 +405,6 @@ public class DBServices {
 
         return events.get(0);
     }
-
-
     protected List<Events> getDBTodaysEvents()
      {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -510,6 +508,16 @@ public class DBServices {
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
+        return events;
+    }
+    protected List<Events>  getEventsByLocationID(int locationID)
+    {
+        sql = "SELECT * FROM Events JOIN Spaces WHERE Events.eventLocation = "+locationID+" AND Events.eventLocation = Spaces.space_ID;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
         for(Events event: events)
         {
             event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());

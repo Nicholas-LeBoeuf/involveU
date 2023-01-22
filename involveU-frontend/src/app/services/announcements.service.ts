@@ -19,4 +19,8 @@ export class AnnouncementsService {
     return this.http.get<Announcement[]>(environment.apiURL + `announcements/getClubAnnouncements/${clubID}`);
   }
 
+  updateAnnouncement(updatedAnnouncement: Announcement) {
+    return this.http.post(environment.apiURL + `announcements/editAnnouncements`, updatedAnnouncement, {responseType: 'text'});
+  }
+
 }

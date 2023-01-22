@@ -20,6 +20,7 @@ import {EboardService} from "../../services/eboard.service";
 })
 export class EboardPageComponent implements OnInit {
   announcementForm : FormGroup;
+  editAnnouncementForm: FormGroup;
   createEventForm : FormGroup;
   editEventForm : FormGroup
   todaysDate = new Date().toString();
@@ -37,6 +38,12 @@ export class EboardPageComponent implements OnInit {
       expiresOn: [''],
       announcementTitle: ['', Validators.required],
       postedOn: ['']
+    })
+
+    this.editAnnouncementForm = this.formBuilder.group({
+      editAnnouncementTitle: ['', Validators.required],
+      editContentOfAnnouncement: ['', Validators.required],
+      editExpiresOn: ['']
     })
 
     this.createEventForm = this.formBuilder.group({
@@ -67,6 +74,7 @@ export class EboardPageComponent implements OnInit {
   //BOOLEANS
   addEventDialog: boolean = false;
   editDialog: boolean = false;
+  editAnnouncementDialog
   addEventSuccess: boolean = false;
   addEventFailed: boolean = false;
   editEventSuccess: boolean = false;
@@ -87,6 +95,7 @@ export class EboardPageComponent implements OnInit {
   clubEvents: Events[] = [];
   clubAnnouncements: any = {};
   certainEvent: Events[] = [];
+  certainAnnouncement: Announcement[] = [];
   locations: Events[] = [];
   spaces: Events[] = [];
   selectedLocation: any = {};
@@ -158,6 +167,18 @@ export class EboardPageComponent implements OnInit {
       });
   }
 
+  updateClubAnnouncementSubmit() {
+    const updatedAnnouncement: Announcement = {announcementID: this.certainAnnouncement[0].announcementID, clubID: this.clubID, contentOfAnnouncement: this.editAnnouncementForm.value.editContentOfAnnouncement, expiresOn: this.editAnnouncementForm.value.editExpiresOn, announcementTitle: this.editAnnouncementForm.value.editAnnouncementTitle, postedOn: this.todaysDate};
+    this.announcementsService.updateAnnouncement(updatedAnnouncement).subscribe(success => {
+      console.log(success);
+      location.reload();
+    },
+      (error) => {
+      console.log(updatedAnnouncement);
+      console.log(error);
+    });
+  }
+
   onFilterEventName(event: Event) {
     this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
@@ -173,6 +194,11 @@ export class EboardPageComponent implements OnInit {
   closeAddEventDialog()
   {
     this.addEventDialog = false;
+  }
+
+  showEditAnnouncementDialog(SpecificAnnouncement: Announcement) {
+    this.certainAnnouncement.push(SpecificAnnouncement);
+    this.editAnnouncementDialog = true;
   }
 
   showEditDialog(SpecficEvent: Events)

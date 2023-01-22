@@ -69,11 +69,51 @@
       <td style="text-align: center">{{announcement.contentOfAnnouncement}}</td>
       <td style="text-align: center">{{announcement.postedOn | date:'MMMM dd, YYYY'}}</td>
       <td style="text-align: center">{{announcement.expiresOn | date:'MMMM dd, YYYY'}}</td>
-      <!--<td><button (click) = "showEditAnnouncementDialog(announcement)" class="blueButton">Edit</button></td>
-      <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>-->
+      <td><button (click) = "showEditAnnouncementDialog(announcement)" class="blueButton">Edit</button></td>
+<!--      <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>&ndash;&gt;-->
     </tr>
   </ng-template>
 </p-table>
+
+<p-dialog [(visible)]="editAnnouncementDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeAddEventDialog()">
+  <h1>{{clubInfo.clubName}}</h1>
+  <div class="osiAnnouncementsDiv">
+    <div *ngFor="let announcement of this.certainAnnouncement" >
+      <h1 class="dialogTitle">Edit Announcement</h1>
+      <form [formGroup]="editAnnouncementForm">
+        <div class="osiAnnouncements">
+          <div class="form-group">
+            <input class="form-control formInputs" type="text" [(ngModel)] = "announcement.announcementTitle" formControlName="editAnnouncementTitle">
+            <div *ngIf="announcementFormInputs?.['announcementTitle']?.invalid && (announcementFormInputs?.['announcementTitle']?.dirty || announcementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="announcementFormInputs?.['announcementTitle']?.errors?.['required']">
+                Announcement Title is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs" type="date" [(ngModel)] = "announcement.expiresOn" formControlName="editExpiresOn">
+            <div *ngIf="announcementFormInputs?.['expiresOn']?.invalid && (announcementFormInputs?.['expiresOn']?.dirty || announcementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="announcementFormInputs?.['expiresOn']?.errors?.['required']">
+                Expiration Date is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control formInputs largeTextField" [(ngModel)] = "announcement.contentOfAnnouncement" formControlName="editContentOfAnnouncement"></textarea>
+            <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.invalid && (announcementFormInputs?.['contentOfAnnouncement']?.dirty || announcementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
+                Announcement content is required
+              </div>
+            </div>
+          </div>
+          <div class="centerButton">
+            <button class="form-submit-button blueButton" type="submit" (click)="updateClubAnnouncementSubmit()">Edit Announcement</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</p-dialog>
 
 <h1 class="text-center">{{clubInfo.clubName}} Events</h1>
 <p-table #clubEventTable [value]="clubEvents" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" [columns]="cols" [globalFilterFields]="['eventName', 'eventLocation']">

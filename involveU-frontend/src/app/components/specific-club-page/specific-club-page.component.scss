@@ -126,10 +126,6 @@ hr {
   overflow: auto;
 }
 
-.addTopMargin {
-  margin-top: 2%;
-}
-
 .missionValueVision {
   width: 100%;
   height: 300px;
@@ -566,6 +562,7 @@ hr {
 .eventCard {
   margin: 2%;
   border: 2px solid black;
+  border-radius: 20px;
   float: left;
 }
 
@@ -587,9 +584,19 @@ hr {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   height: 130px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 }
 
 .imageCenter {
   display: flex;
   justify-content: center;
+}
+
+.addTopMargin {
+  margin-top: 0.5rem;
+}
+
+.eventClubName {
+  margin-bottom: 15px;
 }

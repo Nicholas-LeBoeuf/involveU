@@ -9,7 +9,7 @@ import {EventsService} from "../../services/events.service";
 import {FormBuilder} from "@angular/forms";
 import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
-import {Announcement} from "../../objects/announcements";
+import {AnnouncementsService} from "../../services/announcements.service";
 import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
@@ -23,6 +23,7 @@ export class SpecificClubPageComponent implements OnInit {
               private eventsService: EventsService,
               private eboardService: EboardService,
               public responsiveService: ResponsiveService,
+              private announcementsService: AnnouncementsService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
@@ -186,7 +187,7 @@ export class SpecificClubPageComponent implements OnInit {
 
 
   getClubAnnouncements() {
-    this.eboardService.getClubAnnouncements(+this.clubID).subscribe(response => {
+    this.announcementsService.getClubAnnouncements(+this.clubID).subscribe(response => {
       this.clubAnnouncements = response;
       },
       (error) => {

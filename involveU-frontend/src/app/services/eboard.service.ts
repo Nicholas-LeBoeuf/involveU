@@ -12,11 +12,5 @@ export class EboardService {
 
   constructor(private http: HttpClient) { }
 
-  createAnnouncement(newAnnouncement: Announcement) {
-    return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
-  }
 
-  getClubAnnouncements(clubID: number): Observable<Announcement[]>  {
-    return this.http.get<Announcement[]>(environment.apiURL + `announcements/getClubAnnouncements/${clubID}`);
-  }
 }

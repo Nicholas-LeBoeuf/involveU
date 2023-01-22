@@ -120,6 +120,19 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
          EboardList = getDBClubEboardMembers(clubID);
          return new ResponseEntity<>(EboardList,HttpStatus.OK);
      }
+
+     @CrossOrigin(origins = "http://localhost:4200")
+     @GetMapping("/club/checkIfEboard/{userID}")
+     private ResponseEntity<Object>  checkIfEboard(@PathVariable("userID") int userID) {
+         Club eboardClub;
+         if (checkIfClubEboard(userID)) {
+
+             eboardClub = getEboardClub(userID);
+             return new ResponseEntity<>(eboardClub, HttpStatus.OK);
+
+         }
+            return new ResponseEntity<>("not eboard", HttpStatus.OK);
+     }
 }
 
 

@@ -1,6 +1,7 @@
 package com.example.involveU.model;
 
 import jdk.jfr.Event;
+import org.hibernate.dialect.lock.PessimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -176,6 +177,28 @@ public class DBServices {
         users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(com.example.involveU.model.User.class));
 
         return users;
+    }
+    protected Boolean checkIfClubEboard(int userID)
+    {
+        sql = "SELECT * FROM User WHERE studentID = " + userID + " AND isEboard = 1;";
+        users = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(User.class));
+
+        if(users.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    protected Club getEboardClub(int userID)
+    {
+        Club foundClub;
+        sql = "SELECT * FROM Club JOIN Eboard WHERE studentID = "+ userID +" AND Club.clubID = Eboard.clubID;";
+        clubs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
+
+        return clubs.get(0);
     }
     protected List<User> getDBNonEboard()
     {
@@ -538,7 +561,6 @@ public class DBServices {
     }
 
     //Announcements Controller
-
     protected List<Announcement> getAllDBAnnouncements()
     {
         sql = "SELECT * FROM Announcements;";
@@ -590,6 +612,9 @@ public class DBServices {
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
+
+
+
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

@@ -7,9 +7,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.involveU.model.User;
 import java.util.List;
 
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 @SpringBootApplication
-public class InvolveUBackendApplication implements CommandLineRunner {
+public class InvolveUBackendApplication extends SpringBootServletInitializer {
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(InvolveUBackendApplication.class);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(InvolveUBackendApplication.class, args);
 	}
@@ -17,9 +23,9 @@ public class InvolveUBackendApplication implements CommandLineRunner {
 
 	private UserRepository userRepo;
 
-	@Override
-	public void run(String... args) throws Exception {
-//		List<User> Results = db_Handler.getAllUsers();
-//		Results.forEach(System.out :: println);
-	}
+
+//	public void run(String... args) throws Exception {
+////		List<User> Results = db_Handler.getAllUsers();
+////		Results.forEach(System.out :: println);
+//	}
 }

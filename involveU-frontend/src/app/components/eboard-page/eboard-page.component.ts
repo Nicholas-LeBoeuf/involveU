@@ -36,6 +36,7 @@ export class EboardPageComponent implements OnInit {
       announcementTitle: ['', Validators.required],
       postedOn: ['']
     })
+
     this.createEventForm = this.formBuilder.group({
       createEventName: ['', Validators.required],
       createEventLocation: ['', Validators.required],
@@ -45,8 +46,8 @@ export class EboardPageComponent implements OnInit {
       createEventDesc: ['', Validators.required],
       createIsTransportation: ['', Validators.required],
       createTicketLink: ['', Validators.required],
-
     })
+
     this.editEventForm = this.formBuilder.group({
       editEventName: ['', Validators.required],
       editEventLocation: ['', Validators.required],
@@ -56,11 +57,37 @@ export class EboardPageComponent implements OnInit {
       editEventDesc: ['', Validators.required],
       editIsTransportation: ['', Validators.required],
       editTicketLink: ['', Validators.required],
-
     })
+
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
+  //BOOLEANS
+  addEventDialog: boolean = false;
+  editDialog: boolean = false;
+  addEventSuccess: boolean = false;
+  addEventFailed: boolean = false;
+  editEventSuccess: boolean = false;
+  editEventFailed: boolean = false;
+  disableUserDropdown: boolean = true;
+
+  //NUMBERS
+  clubID: number;
+  userID: number;
+
+  //STRINGS
+
+  //OBJECTS
+  clubInfo: Club;
+  clubEvents: Events[] = [];
+  certainEvent: Events[] = [];
+  locations: Events[] = [];
+  spaces: Events[] = [];
+  selectedLocation: any = {};
+
+  @ViewChild('clubEventTable') clubEventTable: Table;
+  locationID: FormControl = new FormControl(null);
+  spaceID : FormControl = new FormControl(null);
   cols = [
     { field: 'eventName', header: 'Name' },
     { field: 'eventDate', header: 'Date' },
@@ -71,25 +98,6 @@ export class EboardPageComponent implements OnInit {
     { field: 'ticketLink', header: 'Ticket Link' },
     { field: 'isTransportation', header: 'Transportation' }
   ];
-  @ViewChild('clubEventTable') clubEventTable: Table;
-  clubID: number;
-  userID: number;
-  clubInfo: Club;
-  clubEvents: Events[] = [];
-  certainEvent: Events[] = [];
-  locations: Events[] = [];
-  spaces: Events[] = [];
-  addEventDialog: boolean = false;
-  editDialog: boolean = false;
-  addEventSuccess: boolean = false;
-  addEventFailed: boolean = false;
-  editEventSuccess: boolean = false;
-  editEventFailed: boolean = false;
-  disableUserDropdown = true;
-  selectedLocation: any = {};
-
-  locationID: FormControl = new FormControl(null);
-  spaceID : FormControl = new FormControl(null);
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

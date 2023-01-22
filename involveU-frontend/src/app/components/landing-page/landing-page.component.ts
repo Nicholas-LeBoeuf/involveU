@@ -5,6 +5,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
 import {ResponsiveService} from "../../services/responsive.service";
+import {AnnouncementsService} from "../../services/announcements.service";
 
 @Component({
   selector: 'app-landing-page',
@@ -16,6 +17,7 @@ export class LandingPageComponent implements OnInit {
   public users: User[] = [];
   constructor(private userService: UserService,
               private eventsService: EventsService,
+              private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
               public cookie: CookieService) { }
 
@@ -32,6 +34,7 @@ export class LandingPageComponent implements OnInit {
     this.userID = +this.cookie.get('studentID');
     this.fillUserInfo();
     this.fillTodaysEvents();
+    this.getOSIAnnouncements();
   }
 
   ngAfterViewInit(): void {
@@ -65,12 +68,12 @@ export class LandingPageComponent implements OnInit {
     this.viewMoreInfoDialog = false;
   }
 
-  /*getOSIAnnouncements() {
-    this.eboardService.getClubAnnouncements(+this.clubID).subscribe(response => {
-        this.clubAnnouncements = response;
+  getOSIAnnouncements() {
+    this.announcementsService.getClubAnnouncements(275).subscribe(response => {
+        this.osiAnnouncements = response;
       },
       (error) => {
         console.log(error)
       });
-  }*/
+  }
 }

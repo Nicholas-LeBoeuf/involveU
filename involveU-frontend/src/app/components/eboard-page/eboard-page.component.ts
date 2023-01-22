@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ClubService} from "../../services/club.service";
 import {EventsService} from "../../services/events.service";
-import {EboardService} from "../../services/eboard.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Club} from "../../objects/club";
 import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
+import {AnnouncementsService} from "../../services/announcements.service";
 
 @Component({
   selector: 'app-eboard-page',
@@ -19,9 +19,9 @@ export class EboardPageComponent implements OnInit {
   todaysDate = new Date().toString();
   constructor(private clubService: ClubService,
               private formBuilder: FormBuilder,
-              private eboardService: EboardService,
               private route: ActivatedRoute,
               private router: Router,
+              private announcementsService: AnnouncementsService,
               public cookie: CookieService,
               private datePipe: DatePipe) {
     this.announcementForm = this.formBuilder.group({
@@ -58,7 +58,7 @@ export class EboardPageComponent implements OnInit {
   createAnnouncementSubmit() {
     const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle, postedOn: this.todaysDate};
     console.log(newAnnouncement);
-    this.eboardService.createAnnouncement(newAnnouncement).subscribe(success =>{
+    this.announcementsService.createAnnouncement(newAnnouncement).subscribe(success =>{
         console.log(success);
         location.reload();
       },

@@ -68,10 +68,6 @@ export class AppComponent {
   isMobileOrTablet: boolean = false;
 
   ngOnInit(): void {
-    console.log(this.responsiveService.deviceDesktop(), "Desktop");
-    console.log(this.responsiveService.deviceMobile(), "Mobile");
-    console.log(this.responsiveService.deviceTablet(), "Tablet");
-
     if (this.responsiveService.deviceDesktop()) {
       this.isDesktop= true;
       this.isMobileOrTablet = false;

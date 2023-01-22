@@ -395,12 +395,12 @@ hr {
   margin-right: 17px !important;
 }
 
-.eboardTable {
+/*.eboardTable {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-}
+}*/
 
 
 .eventInfoContainer {
@@ -467,17 +467,129 @@ hr {
   color: $GoldenYellow;
 }
 
+.specificClubContainer {
+  display: grid;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+}
+
+.specificClubContainerColumnsWeb {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.specificClubContainerColumnsMobileTablet {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.clubInfoLeftGridWeb {
+  grid-area: 1 / 1 / 2 / 3;
+}
+.clubAnnouncementsRightGridWeb {
+  grid-area: 1 / 3 / 2 / 4;
+}
+.eventsCaroContainerGridWeb {
+  grid-area: 2 / 1 / 3 / 4;
+}
+
+.clubInfoLeftGridMobileTablet {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.clubAnnouncementsRightGridMobileTablet {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.eventsCaroContainerGridMobileTablet {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
 .clubInfoLeft {
-  width: 50%;
   float: left;
 }
 .clubAnnouncementsRight {
-  padding: 10px;
   margin-left: 30px;
   float: left;
+  width:100%;
+}
+
+.announcementBorders {
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.mobileTabletClubAnnouncementWidth {
+/*  max-width: 100%;*/
+  margin-left: 0;
+}
+
+.announcementContent {
+  width: 99%;
+}
+
+.announcementLine {
+  margin-top: 0 !important;
+  margin-bottom: 5px !important;
+}
+
+.announcementDate {
+  color: gray;
+}
+
+.announcementTitle {
+  margin-top: 3px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .eboardTable {
+  margin-bottom: 1.5rem !important;
+}
+
+.eventCardContainer {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
+}
 
-  border: 1px solid black;
+.eventCardContainerWrap {
+  flex-wrap: wrap;
+}
+
+.eventCardContainerColumn {
+  flex-direction: column;
+}
+
+.eventCard {
+  margin: 2%;
+  border: 2px solid black;
+  float: left;
+}
+
+.eventCardSizeWeb {
+  width: 45%;
+}
+
+.eventCardSizeTabletMobile {
+  width: 90%;
+}
+
+.eventImage {
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+}
+
+.imageMask {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  height: 130px;
+}
+
+.imageCenter {
+  display: flex;
+  justify-content: center;
 }

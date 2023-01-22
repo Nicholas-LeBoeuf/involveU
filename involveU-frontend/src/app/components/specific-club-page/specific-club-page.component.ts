@@ -9,6 +9,9 @@ import {EventsService} from "../../services/events.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Eboard} from "../../objects/Eboard";
 import {Table} from "primeng/table";
+import {EboardService} from "../../services/eboard.service";
+import {Announcement} from "../../objects/announcements";
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -24,6 +27,8 @@ export class SpecificClubPageComponent implements OnInit {
   constructor(private clubService: ClubService,
               private formBuilder: FormBuilder,
               private eventsService: EventsService,
+              private eboardService: EboardService,
+              public responsiveService: ResponsiveService,
               private route: ActivatedRoute,
               private router: Router,
               public cookie: CookieService) {
@@ -82,6 +87,11 @@ export class SpecificClubPageComponent implements OnInit {
   locationID: FormControl = new FormControl(null);
   spaceID : FormControl = new FormControl(null);
 
+  clubAnnouncements: any;
+  showMore = false;
+
+  currDate = new Date();
+
   @ViewChild('clubEventTable') clubEventTable: Table;
 
   cols = [
@@ -109,8 +119,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getUserRSVPdEvents();
     this.getLocations();
     this.getSpacesByLocation();
-    console.log(this.isLoggedIn);
-    console.log(this.clubIsFav);
+    this.getClubAnnouncements();
   }
 
   isUserLoggedIn() {
@@ -247,8 +256,6 @@ export class SpecificClubPageComponent implements OnInit {
   {
     const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.editEventForm.value.editEventName,eventLocation: this.editEventForm.value.editEventLocation, startTime: this.editEventForm.value.editStartTime, endTime: this.editEventForm.value.editEndTime, eventDate: this.editEventForm.value.editEventDate, eventDesc: this.editEventForm.value.editEventDesc, isTransportation: this.editEventForm.value.editIsTransportation, ticketLink: this.editEventForm.value.editTicketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
 
-    console.log(eventInfo);
-
     this.eventsService.updateEvent(eventInfo).subscribe(success =>{
         console.log(success);
         this.editEventSuccess = true;
@@ -333,12 +340,10 @@ export class SpecificClubPageComponent implements OnInit {
   getSpacesByLocation() {
     this.eventsService.getSpaceByLocation(this.locationID.value).subscribe(response => {
         this.spaces = response;
-        console.log(response);
       },
       (error) => {
         console.log(error)
       });
-    console.log(this.locationID.value);
   }
 
   checkLocationSelected() {
@@ -349,6 +354,15 @@ export class SpecificClubPageComponent implements OnInit {
     else {
       this.disableUserDropdown = true;
     }
+  }
+
+  getClubAnnouncements() {
+    this.eboardService.getClubAnnouncements(+this.clubID).subscribe(response => {
+      this.clubAnnouncements = response;
+      },
+      (error) => {
+        console.log(error)
+      });
   }
 }
 

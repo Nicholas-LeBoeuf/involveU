@@ -39,6 +39,10 @@ em {
   font-family: "Open Sans", sans-serif;
 }
 
+.convertToOswald {
+  font-family: "Oswald", sans-serif !important;
+}
+
 body {
   min-width: 500px;
 }
@@ -136,4 +140,8 @@ body {
 .blueTitleBar {
   background-color: $HeritageBlue;
   height: 210px;
+}
+
+.dateInputLabel:before {
+  content: attr(placeholder) !important;
 }

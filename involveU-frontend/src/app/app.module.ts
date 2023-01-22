@@ -32,6 +32,8 @@ import {FileUploadModule} from 'primeng/fileupload';
 import { EboardPageComponent } from './components/eboard-page/eboard-page.component';
 import {LayoutModule} from "@angular/cdk/layout";
 import {ResponsiveService} from "./services/responsive.service";
+import { DatePipe } from '@angular/common';
+
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -75,7 +77,8 @@ FullCalendarModule.registerPlugins([
     ],
   providers: [
     CookieService,
-    ResponsiveService
+    ResponsiveService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

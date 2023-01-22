@@ -36,6 +36,11 @@
           <a #vla="routerLinkActive" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a>
         </ng-template>
       </div>
+      <div class="specificNavButton">
+        <ng-template [ngIf]="isEboard !== false">
+          <a #ela="routerLinkActive" routerLinkActive="active" routerLink="/{{usersEboardInfo.clubID}}/eboard" [class.active-span]="ela.isActive" >{{usersEboardInfo.clubName}} Eboard</a>
+        </ng-template>
+      </div>
     </div>
     <div class="buttons">
       <ng-template [ngIf]="this.cookie.get('studentID') == ''">
@@ -60,6 +65,9 @@
           <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
           <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
             <li><a #vla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a></li>
+          </ng-template>
+          <ng-template [ngIf]="isEboard !== false">
+            <a #ela="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/{{usersEboardInfo.clubID}}/eboard" [class.active-span]="ela.isActive" >{{usersEboardInfo.clubName}} Eboard</a>
           </ng-template>
           <ng-template [ngIf]="this.cookie.get('studentID') == ''">
             <li><a class="dropdown-item" (click)="showSignupDialog()">Sign Up</a></li>

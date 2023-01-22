@@ -56,7 +56,7 @@ export class ClubPageComponent implements OnInit {
   @ViewChild('dtLoggedIn') dtLoggedIn: Table;
 
   ngOnInit(): void {
-    this.userID = +this.cookie.get('studentID')
+    this.userID = +this.cookie.get('studentID');
     this.isUserLoggedIn();
     this.fillClubList();
     this.getUsersFavoritedClubs();

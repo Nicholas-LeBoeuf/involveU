@@ -38,8 +38,10 @@ export class ClubService {
   unfavoriteClub(clubID: number, id: number) {
     return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`);
   }
-  getClubEboard(clubID: number): Observable<User[]>
-  {
+  getClubEboard(clubID: number): Observable<User[]> {
     return this.http.get<User[]>(environment.apiURL + `club/getClubsEboard/${clubID}`);
+  }
+  checkIfEboard(userID: number): Observable<any> {
+    return this.http.get<any>(environment.apiURL + `club/checkIfEboard/${userID}`);
   }
 }

@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
+import {Club} from "../objects/club";
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,7 @@ export class AppComponent {
 
     });
   }
-
+  userID: number;
   title = 'involveU';
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
@@ -51,6 +52,8 @@ export class AppComponent {
   loggedInFailedMessage: boolean = false;
   signUpMessage: boolean = false;
   signUpFailMessage: boolean = false;
+  usersEboardInfo: any;
+  isEboard: boolean = false;
 
   loggedInUser: User = new class implements User {
     email: string = "";
@@ -76,6 +79,8 @@ export class AppComponent {
       this.isMobileOrTablet = true;
       this.isDesktop = false;
     }
+    this.userID = +this.cookie.get('studentID');
+    this.checkIfUserInEboard();
   }
 
   private prevContextMenu!: ContextMenu;
@@ -165,6 +170,8 @@ export class AppComponent {
     this.cookie.delete('studentLName');
     this.cookie.delete('isAdmin');
     this.cookie.delete('isEboard');
+    this.usersEboardInfo = {};
+    this.isEboard = false;
 
     this.router.navigateByUrl('/home').then(nav => {
       console.log(nav); // true if navigation is successful
@@ -215,5 +222,20 @@ export class AppComponent {
       { 'view': window, 'bubbles': true, 'cancelable': true, 'clientX': event.clientX-event.offsetX+xOffset, 'clientY': event.clientY-event.offsetY+yOffset}
     ));
     this.prevContextMenu = contextMenu;
+  }
+
+  checkIfUserInEboard() {
+    this.clubService.checkIfEboard(this.userID).subscribe(response => {
+      if (response === "not eboard") {
+        this.isEboard = false;
+      }
+      else {
+        this.isEboard = true;
+        this.usersEboardInfo = response;
+      }
+    },
+      (error) => {
+        console.log(error);
+      })
   }
 }

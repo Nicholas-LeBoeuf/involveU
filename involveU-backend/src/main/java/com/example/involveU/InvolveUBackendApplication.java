@@ -12,6 +12,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class InvolveUBackendApplication extends SpringBootServletInitializer {
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(InvolveUBackendApplication.class);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(InvolveUBackendApplication.class, args);
 	}
@@ -19,10 +23,7 @@ public class InvolveUBackendApplication extends SpringBootServletInitializer {
 
 	private UserRepository userRepo;
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(InvolveUBackendApplication.class);
-	}
+
 //	public void run(String... args) throws Exception {
 ////		List<User> Results = db_Handler.getAllUsers();
 ////		Results.forEach(System.out :: println);

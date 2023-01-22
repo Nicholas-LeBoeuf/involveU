@@ -1,5 +1,7 @@
 package com.example.involveU.controller;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.example.involveU.model.DBServices;
 import com.example.involveU.model.Events;
@@ -61,6 +63,40 @@ public class EventController extends DBServices{
         events = getDBFavoriteClubEvents(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/events/getTopRSVP")
+    private ResponseEntity<List<Events>> getTopFavorite()
+    {
+        Map<String, Object> tempPosition;
+        List<Map<String,Object>> rsvpList;
+        List<Events> sortedRSVPEvents = new ArrayList<>();
+        Events currentEvent;
+        rsvpList = getMostRSVPEvents();
+        for(int i = 0; i < rsvpList.size(); i++)
+        {
+            int currentValue = Integer.parseInt(rsvpList.get(i).get("total").toString());
+            for(int j = 0; j < rsvpList.size(); j++)
+            {
+                int checkValue =  Integer.parseInt(rsvpList.get(j).get("total").toString());
+                if( currentValue > checkValue )
+                {
+                    tempPosition = rsvpList.get(i);
+                    rsvpList.set(i, rsvpList.get(j));
+                    rsvpList.set(j,tempPosition);
+
+                }
+            }
+        }
+
+        for(int i = 0; i < rsvpList.size(); i++)
+        {
+            currentEvent = getEventByID(Integer.parseInt(rsvpList.get(i).get("eventID").toString()));
+
+            sortedRSVPEvents.add(currentEvent);
+        }
+        return new ResponseEntity<>(sortedRSVPEvents, HttpStatus.OK) ;
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("events/rsvpEvent/{eventID}/{userID}")

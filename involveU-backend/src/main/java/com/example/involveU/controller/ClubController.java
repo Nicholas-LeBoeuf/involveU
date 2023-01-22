@@ -60,39 +60,6 @@ public class ClubController extends DBServices{
           clubs = searchDBClub(searchContent);
       return new ResponseEntity<>(clubs, HttpStatus.OK);
   }
- @CrossOrigin(origins = "http://localhost:4200")
- @GetMapping("/club/getTopRSVP")
- private ResponseEntity<List<Events>> getTopFavorite()
- {
-     Map<String, Object> tempPosition;
-     List<Map<String,Object>> rsvpList;
-     List<Events> sortedRSVPEvents = new ArrayList<>();
-     Events currentEvent;
-     rsvpList = getMostRSVPEvents();
-      for(int i = 0; i < rsvpList.size(); i++)
-      {
-         int currentValue = Integer.parseInt(rsvpList.get(i).get("total").toString());
-          for(int j = 0; j < rsvpList.size(); j++)
-          {
-              int checkValue =  Integer.parseInt(rsvpList.get(j).get("total").toString());
-              if( currentValue > checkValue )
-              {
-                tempPosition = rsvpList.get(i);
-                rsvpList.set(i, rsvpList.get(j));
-                rsvpList.set(j,tempPosition);
-
-              }
-          }
-      }
-
-      for(int i = 0; i < rsvpList.size(); i++)
-      {
-           currentEvent = getEventByID(Integer.parseInt(rsvpList.get(i).get("eventID").toString()));
-
-          sortedRSVPEvents.add(currentEvent);
-      }
-     return new ResponseEntity<>(sortedRSVPEvents, HttpStatus.OK) ;
- }
 @CrossOrigin(origins = "http://localhost:4200")
 @GetMapping("/club/submitFavorite/{ID}/{clubID}")
  private ResponseEntity<String> submitFavorite(@PathVariable("ID") int userID, @PathVariable("clubID") int clubID)

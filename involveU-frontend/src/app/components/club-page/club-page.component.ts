@@ -46,6 +46,7 @@ export class ClubPageComponent implements OnInit {
   allFutureEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
+  topRSVPdEvents: Events[] = [];
 
   cols = [
     { field: 'clubName', header: 'Club Name' }
@@ -64,6 +65,7 @@ export class ClubPageComponent implements OnInit {
     this.getAllClubsForFeatured();
     this.getAllFutureEvents();
     this.getUserRSVPdEvents();
+    this.getTopRSVP();
     this.loading = false;
 
     if (!localStorage.getItem('isReloaded')) {
@@ -89,6 +91,16 @@ export class ClubPageComponent implements OnInit {
     else {
       this.showClubSearchDialog();
     }
+  }
+
+  getTopRSVP() {
+    this.eventsService.getTopRSVP().subscribe(response => {
+      this.topRSVPdEvents = response;
+      console.log(response);
+    },
+    (error) => {
+      console.log(error);
+    })
   }
 
   showClubSearchDialog() {

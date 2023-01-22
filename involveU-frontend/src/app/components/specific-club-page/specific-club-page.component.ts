@@ -11,6 +11,7 @@ import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {ResponsiveService} from "../../services/responsive.service";
+import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-specific-club-page',

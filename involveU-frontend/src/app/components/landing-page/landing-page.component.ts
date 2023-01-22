@@ -4,6 +4,7 @@ import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
   selector: 'app-landing-page',
@@ -15,6 +16,7 @@ export class LandingPageComponent implements OnInit {
   public users: User[] = [];
   constructor(private userService: UserService,
               private eventsService: EventsService,
+              public responsiveService: ResponsiveService,
               public cookie: CookieService) { }
 
   imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
@@ -23,7 +25,7 @@ export class LandingPageComponent implements OnInit {
   userID: number;
   todaysEvents: Events[] = [];
   certainEvent: Events[] = [];
-
+  osiAnnouncements: any;
   viewMoreInfoDialog: boolean = false;
 
   ngOnInit(): void {
@@ -62,4 +64,13 @@ export class LandingPageComponent implements OnInit {
     this.certainEvent = [];
     this.viewMoreInfoDialog = false;
   }
+
+  /*getOSIAnnouncements() {
+    this.eboardService.getClubAnnouncements(+this.clubID).subscribe(response => {
+        this.clubAnnouncements = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }*/
 }

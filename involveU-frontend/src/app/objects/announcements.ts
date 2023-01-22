@@ -5,5 +5,4 @@ export interface Announcement {
   contentOfAnnouncement: string;
   expiresOn: string;
   postedOn: string;
-
 }

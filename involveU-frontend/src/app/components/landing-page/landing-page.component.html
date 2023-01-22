@@ -124,6 +124,18 @@
       </div>
     </div>
   </p-dialog>
+  <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
+    <div class="announcementBorders">
+      <h2 class="blueHeaders text-center">OSI Announcements</h2>
+      <hr class="announcementLine">
+      <div class="announcementContent" *ngFor="let announcement of osiAnnouncements; index as index; last as last">
+        <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+        <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
+        <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
+        <hr class="announcementLine" *ngIf="index < 5">
+      </div>
+      <button class="blueButton">Show More</button>
+    </div>
 
-
+  </div>
 </div>

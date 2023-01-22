@@ -10,6 +10,7 @@ import {FormBuilder} from "@angular/forms";
 import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
 import {AnnouncementsService} from "../../services/announcements.service";
+import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
 import {Announcement} from "../../objects/announcements";
 
@@ -53,7 +54,7 @@ export class SpecificClubPageComponent implements OnInit {
   clubEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
-  clubAnnouncements: Announcement[] = [];
+  clubAnnouncements: any;
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 

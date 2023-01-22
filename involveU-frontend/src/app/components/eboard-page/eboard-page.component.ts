@@ -25,7 +25,6 @@ export class EboardPageComponent implements OnInit {
   todaysDate = new Date().toString();
   constructor(private clubService: ClubService,
               private formBuilder: FormBuilder,
-              private eboardService: EboardService,
               private eventsService: EventsService,
               private route: ActivatedRoute,
               private router: Router,

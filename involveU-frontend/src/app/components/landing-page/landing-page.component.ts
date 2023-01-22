@@ -29,6 +29,7 @@ export class LandingPageComponent implements OnInit {
   certainEvent: Events[] = [];
   osiAnnouncements: any;
   viewMoreInfoDialog: boolean = false;
+  showMore = false;
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');

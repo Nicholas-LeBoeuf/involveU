@@ -38,10 +38,12 @@ export class SpecificClubPageComponent implements OnInit {
   failMessage: boolean = false;
   viewMoreInfoDialog: boolean = false;
   showMore: boolean = false;
+  isloading: boolean = true;
 
   //NUMBERS
   clubID: number;
   userID: number;
+  numberOfRows: number;
 
   //STRINGS
   message: string;
@@ -59,19 +61,32 @@ export class SpecificClubPageComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.isloading = true;
+
     this.route.params.subscribe(params => {
       this.clubID = params['id'];
     });
 
     this.userID = +this.cookie.get('studentID');
 
+    if (this.responsiveService.deviceDesktop()) {
+      this.numberOfRows = 2;
+    }
+    else {
+      this.numberOfRows = 1;
+    }
+
+    this.getClubEvents();
     this.isUserLoggedIn();
     this.getClubInfo();
     this.getUsersFavoritedClubs();
-    this.getClubEvents();
     this.getEboard();
     this.getUserRSVPdEvents();
     this.getClubAnnouncements();
+
+    setTimeout(() => {
+      this.isloading = false;
+    }, 1000);
   }
 
   isUserLoggedIn() {

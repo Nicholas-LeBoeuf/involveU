@@ -202,6 +202,11 @@ export class EboardPageComponent implements OnInit {
     this.editAnnouncementDialog = true;
   }
 
+  closeEditAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.editAnnouncementDialog = false;
+  }
+
   showEditDialog(SpecficEvent: Events)
   {
     this.certainEvent.push(SpecficEvent);

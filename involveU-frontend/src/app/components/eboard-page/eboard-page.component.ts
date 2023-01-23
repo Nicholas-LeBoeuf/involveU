@@ -224,6 +224,13 @@ export class EboardPageComponent implements OnInit {
     location.reload();
   }
 
+  deleteAnnouncement(announcementID: number) {
+    this.announcementsService.deleteAnnouncement(announcementID).subscribe(response => {
+      console.log(response);
+    })
+    location.reload();
+  }
+
   get getCreateEventsFormInputs()
   {
     return this.createEventForm.controls;

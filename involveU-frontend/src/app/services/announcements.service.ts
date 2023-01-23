@@ -23,4 +23,8 @@ export class AnnouncementsService {
     return this.http.post(environment.apiURL + `announcements/editAnnouncements`, updatedAnnouncement, {responseType: 'text'});
   }
 
+  deleteAnnouncement(announcementID: number) {
+    return this.http.get(environment.apiURL + `announcements/deleteAnnouncement/${announcementID}`);
+  }
+
 }

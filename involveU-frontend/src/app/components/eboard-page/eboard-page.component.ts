@@ -202,6 +202,11 @@ export class EboardPageComponent implements OnInit {
     this.editAnnouncementDialog = true;
   }
 
+  closeEditAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.editAnnouncementDialog = false;
+  }
+
   showEditDialog(SpecficEvent: Events)
   {
     this.certainEvent.push(SpecficEvent);
@@ -214,6 +219,13 @@ export class EboardPageComponent implements OnInit {
 
   deleteEvent(eventID: number) {
     this.eventsService.deleteEvent(eventID).subscribe(response => {
+      console.log(response);
+    })
+    location.reload();
+  }
+
+  deleteAnnouncement(announcementID: number) {
+    this.announcementsService.deleteAnnouncement(announcementID).subscribe(response => {
       console.log(response);
     })
     location.reload();

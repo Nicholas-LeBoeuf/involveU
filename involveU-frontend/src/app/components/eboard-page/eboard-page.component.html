@@ -70,12 +70,23 @@
       <td style="text-align: center">{{announcement.postedOn | date:'MMMM dd, YYYY'}}</td>
       <td style="text-align: center">{{announcement.expiresOn | date:'MMMM dd, YYYY'}}</td>
       <td><button (click) = "showEditAnnouncementDialog(announcement)" class="blueButton">Edit</button></td>
-<!--      <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>&ndash;&gt;-->
+      <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>
     </tr>
   </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="editAnnouncementDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeAddEventDialog()">
+<p-dialog [(visible)]="editAnnouncementDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditAnnouncementDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditAnnouncementDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <div *ngIf="addEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Announcement created successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="addEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error creating announcement.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <h1>{{clubInfo.clubName}}</h1>
   <div class="osiAnnouncementsDiv">
     <div *ngFor="let announcement of this.certainAnnouncement" >

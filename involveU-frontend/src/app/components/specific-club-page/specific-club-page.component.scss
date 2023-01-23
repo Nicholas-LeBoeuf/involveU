@@ -248,3 +248,36 @@
 .eventClubName {
   margin-bottom: 15px;
 }
+
+
+//Prime Table Paginator Styling
+::ng-deep {
+  .p-datatable .p-paginator-bottom {
+    margin-bottom: 2%;
+  }
+  .p-paginator {
+    background: transparent;
+    border: none;
+  }
+  .p-paginator .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last {
+    color: $GoldenYellow !important;
+    background-color: $InkBlue !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    background-color: $HeritageBlue !important;
+    border-radius: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: $GoldenYellow;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+    background-color: $SkyBlue !important;
+    color: $GoldenYellow !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background-color: $GoldenYellow !important;
+    color: $HeritageBlue;
+  }
+}

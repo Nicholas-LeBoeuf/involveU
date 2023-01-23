@@ -26,10 +26,13 @@ export class ScheduleComponent implements OnInit {
 
   optionSelected: boolean = false;
 
-  locationID: number;
+  locationID = null;
+  spaceID = null;
   disableSpaceDropdown: boolean = false;
   locationsList: Events[] = [];
   spacesList: Events[] = [];
+
+
 
   ngOnInit() {
     this.userID = +this.cookie.get('studentID');
@@ -69,9 +72,7 @@ export class ScheduleComponent implements OnInit {
     location.reload();
   }
 
-  checkLocationSelected(selectedLocation: number) {
-    console.log(selectedLocation);
-      this.locationID = selectedLocation;
+  checkLocationSelected() {
       this.disableSpaceDropdown = false;
       this.getSpacesByLocation();
   }
@@ -94,9 +95,8 @@ export class ScheduleComponent implements OnInit {
       });
   }
 
-  onSpaceSelected(spaceID: number) {
-    console.log(spaceID);
-    this.eventsService.getEventsBySpace(spaceID.toString()).subscribe(response => {
+  onSpaceSelected() {
+    this.eventsService.getEventsBySpace(this.spaceID).subscribe(response => {
       this.eventsToSend = response;
     });
     this.optionSelected = true;

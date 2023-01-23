@@ -70,7 +70,7 @@
       <td style="text-align: center">{{announcement.postedOn | date:'MMMM dd, YYYY'}}</td>
       <td style="text-align: center">{{announcement.expiresOn | date:'MMMM dd, YYYY'}}</td>
       <td><button (click) = "showEditAnnouncementDialog(announcement)" class="blueButton">Edit</button></td>
-<!--      <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>&ndash;&gt;-->
+      <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>
     </tr>
   </ng-template>
 </p-table>

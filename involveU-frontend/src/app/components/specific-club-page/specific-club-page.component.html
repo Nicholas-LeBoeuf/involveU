@@ -62,7 +62,8 @@
         <button class="blueButton">Show More</button>
       </div>
     </div>
-    <div class="eventsCaroContainer" [ngClass]="{'eventsCaroContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsCaroContainerGridWeb' : responsiveService.deviceDesktop()}">
+    <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">
+      <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
       <p-table [value]="clubEvents" [paginator]="true" [rows]="numberOfRows"  [showCurrentPageReport]="true"
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [loading]="isloading">
         <ng-template pTemplate="body" let-event>
@@ -82,24 +83,6 @@
         </ng-template>
       </p-table>
     </div>
-    <!--<div class="eventsCaroContainer" [ngClass]="{'eventsCaroContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsCaroContainerGridWeb' : responsiveService.deviceDesktop()}">
-      <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
-      <div class="eventCardContainer" [ngClass]="{'eventCardContainerWrap' : responsiveService.deviceDesktop(), 'eventCardContainerColumn' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-        <div class="eventCard" *ngFor="let event of clubEvents" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-          <div class="eventCardPicture">
-            <div class="imageCenter">
-              <img class="eventImage" src="assets/{{clubInfo.clubLogo}}">
-            </div>
-            <div class="imageMask"></div>
-            <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-            <h4 class="text-center eventClubName">{{event.clubName}}</h4>
-            <h4 class="text-center">Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</h4>
-            <h4 class="text-center">Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h4>
-            <h4 class="text-center">Location: {{event.eventLocation}} {{event.spaceName}}</h4>
-          </div>
-        </div>
-      </div>
-    </div>-->
   </div>
 </div>
 

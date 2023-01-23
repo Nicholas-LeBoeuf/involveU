@@ -210,6 +210,10 @@
   float: left;
 }
 
+.eventCard:hover {
+  cursor: pointer;
+}
+
 .eventCardSizeWeb {
   width: 45%;
 }

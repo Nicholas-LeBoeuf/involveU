@@ -16,6 +16,7 @@ public class InvolveUBackendApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(InvolveUBackendApplication.class);
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(InvolveUBackendApplication.class, args);
 	}

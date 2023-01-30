@@ -31,68 +31,6 @@
   position: sticky;
 }
 
-.eventData {
-  font-weight: bolder !important;
-}
-
-.eventDataTitle {
-  font-weight: 400 !important;
-}
-
-.eventInfoContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  text-align: center;
-}
-
-.eventName2 {
-  grid-area: 1 / 1 / 2 / 2;
-  margin: 20px;
-}
-
-.eventDate2 {
-  grid-area: 1 / 2 / 2 / 3;
-  margin: 20px;
-}
-
-.eventTime2 {
-  grid-area: 2 / 1 / 3 / 2;
-  margin: 20px;
-}
-
-.eventLocation2 {
-  grid-area: 2 / 2 / 3 / 3;
-  margin: 20px;
-}
-
-.eventDesc2 {
-  grid-area: 3 / 1 / 4 / 2;
-  margin: 20px;
-}
-
-.eventHost2 {
-  grid-area: 3 / 2 / 4 / 3;
-  margin: 20px;
-}
-
-.eventTransportation2 {
-  grid-area: 4 / 1 / 5 / 2;
-  margin: 20px;
-}
-
-.eventTicketLink2 {
-  grid-area: 4 / 2 / 5 / 3;
-  margin: 20px;
-}
-
-.dialogLines {
-  border-top: 2px solid black;
-  margin: 2% 8%;
-}
-
 //Actual Page
 
 .clubLogo {
@@ -187,20 +125,6 @@
 
 ::ng-deep .eboardTable {
   margin-bottom: 1.5rem !important;
-}
-
-.eventCardContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.eventCardContainerWrap {
-  flex-wrap: wrap;
-}
-
-.eventCardContainerColumn {
-  flex-direction: column;
 }
 
 .eventCard {

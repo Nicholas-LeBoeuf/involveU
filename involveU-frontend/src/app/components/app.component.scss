@@ -48,24 +48,6 @@ ul {
   margin-bottom: 5%;
 }
 
-::ng-deep .p-dialog {
-  background-color: #AECDE6 !important;
-  border-radius: 20px;
-}
-
-::ng-deep .p-dialog .p-dialog-content {
-  background-color: #AECDE6 !important;
-  border-radius: 20px;
-}
-
-::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
-  display:none;
-}
-
-::ng-deep .p-dialog .p-dialog-footer {
-  display: none;
-}
-
 .inputField {
   display: block;
   margin: auto;
@@ -154,10 +136,6 @@ ul {
 
 .alert-dismissible .btn-close {
   padding: 1rem  1rem;
-}
-
-::ng-deep .p-dialog .p-dialog-content:last-of-type {
-  border-radius: 20px;
 }
 
 ::ng-deep .p-contextmenu {

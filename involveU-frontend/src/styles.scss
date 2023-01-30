@@ -145,3 +145,77 @@ body {
 .dateInputLabel:before {
   content: attr(placeholder) !important;
 }
+
+::ng-deep {
+
+
+
+  .p-dialog {
+    border-radius: 20px;
+    border: none !important;
+  }
+
+  .p-dialog .p-dialog-content {
+    border-radius: 20px;
+    padding: 0 !important;
+
+  }
+
+  .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
+    display:none;
+  }
+
+  .p-dialog .p-dialog-footer {
+    display: none;
+  }
+
+  .p-dialog .p-dialog-content:last-of-type {
+    border-radius: 20px !important;
+  }
+
+  .p-dialog-mask.p-component-overlay {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+}
+
+//Event popup
+.eventCardDialog {
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 20px;
+  float: left;
+  height: 100%;
+}
+
+.eventImageDialog {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+}
+
+.eventInformationDialogContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+}
+
+.eventDateDialog {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.eventTimeDialog {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.eventTransportationDialog {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.eventTicketLinkDialog {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.eventDescriptionDialog {
+  grid-area: 3 / 1 / 4 / 2;
+}
+.eventLocationDialog {
+  grid-area: 3 / 2 / 4 / 3;
+}

@@ -192,6 +192,15 @@ body {
   text-align: center;
 }
 
+.imageMaskDialog {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+  height: 130px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
 .eventInformationDialogContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

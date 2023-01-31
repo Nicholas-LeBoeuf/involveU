@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL : "http://localhost:5000/api/"
+  apiURL : "http://involveubackend.us-east-1.elasticbeanstalk.com/api/"
 };
 
 /*

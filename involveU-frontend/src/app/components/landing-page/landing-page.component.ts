@@ -6,6 +6,7 @@ import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
 import {ResponsiveService} from "../../services/responsive.service";
 import {AnnouncementsService} from "../../services/announcements.service";
+import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-landing-page',
@@ -13,37 +14,42 @@ import {AnnouncementsService} from "../../services/announcements.service";
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
-
-  public users: User[] = [];
   constructor(private userService: UserService,
               private eventsService: EventsService,
               private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
               public cookie: CookieService) { }
 
-  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
-
-  currentUser: User;
-  userID: number;
-  todaysEvents: Events[] = [];
-  certainEvent: Events[] = [];
-  osiAnnouncements: any;
+  //BOOLEANS
   viewMoreInfoDialog: boolean = false;
-  showMore = false;
-  numberOfRows: number;
+  showMore: boolean = false;
   isLoading: boolean = true;
   isLoggedIn: boolean = false;
-  message: string;
   successMessage: boolean = false;
   failMessage: boolean = false;
+
+  //NUMBERS
+  userID: number;
+  numberOfRows: number;
+
+  //STRINGS
+  message: string;
+
+  //OBJECTS or ARRAYS
+  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
+  currentUser: User;
+  todaysEvents: Events[] = [];
+  certainEvent: Events[] = [];
+  osiAnnouncements: Announcement[] =[];
   userRSVPdEvents: Events[] = [];
 
   ngOnInit(): void {
     this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
+
     this.isUserLoggedIn();
-    this.fillUserInfo();
-    this.fillTodaysEvents();
+    this.getUserInfo();
+    this.getTodaysEvents();
     this.getOSIAnnouncements();
     this.getUserRSVPdEvents();
 
@@ -59,23 +65,29 @@ export class LandingPageComponent implements OnInit {
     }, 1000);
   }
 
-  ngAfterViewInit(): void {
-  }
-
   isUserLoggedIn() {
     this.isLoggedIn = this.userID !== 0;
   }
 
-  fillUserInfo() {
+  getUserInfo() {
     this.currentUser = {studentID: +this.cookie.get('studentID'), firstName: this.cookie.get('studentFName'), lastName: this.cookie.get('studentLName')};
     this.currentUser.firstName = this.currentUser.firstName.replace(/['"]/g, '');
     this.currentUser.lastName = this.currentUser.lastName.replace(/['"]/g, '');
   }
 
-  fillTodaysEvents() {
+  getTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
     })
+  }
+
+  getOSIAnnouncements() {
+    this.announcementsService.getClubAnnouncements(275).subscribe(response => {
+        this.osiAnnouncements = response;
+      },
+      (error) => {
+        console.log(error)
+      });
   }
 
   getUserRSVPdEvents() {
@@ -84,10 +96,8 @@ export class LandingPageComponent implements OnInit {
     })
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
+  isUserRSVPd(eventID: number): boolean {
+    return this.userRSVPdEvents.some(event => event.eventID === eventID);
   }
 
   showViewMoreInfoDialog(SpecificEvent: Events){
@@ -100,17 +110,10 @@ export class LandingPageComponent implements OnInit {
     this.viewMoreInfoDialog = false;
   }
 
-  getOSIAnnouncements() {
-    this.announcementsService.getClubAnnouncements(275).subscribe(response => {
-        this.osiAnnouncements = response;
-      },
-      (error) => {
-        console.log(error)
-      });
-  }
-
-  isUserRSVPd(eventID: number): boolean {
-    return this.userRSVPdEvents.some(event => event.eventID === eventID);
+  eventRSVP(eventID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+      console.log(response);
+    })
   }
 
   removeEventRSVP(eventID: number) {

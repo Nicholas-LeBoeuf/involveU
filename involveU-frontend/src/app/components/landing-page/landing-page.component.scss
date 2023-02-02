@@ -49,15 +49,6 @@ img.carouselImages {
   animation-fill-mode: forwards;
 }
 
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .imageMask h3 {
   color: #FDB913;
   text-align: center;
@@ -191,6 +182,3 @@ img.carouselImages {
   overflow: hidden;
   -webkit-box-orient: vertical;
 }
-
-
-

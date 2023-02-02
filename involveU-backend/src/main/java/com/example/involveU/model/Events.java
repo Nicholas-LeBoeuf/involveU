@@ -1,8 +1,4 @@
-package com.example.involveU.model;
-
-import javax.persistence.*;
-
-
+package com.example.involveU.model; 
 public class Events{
 
     private long eventID;

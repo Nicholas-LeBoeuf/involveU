@@ -38,7 +38,7 @@
 </div>
 
 <div class="container">
-  <div class="todaysEventsHeader">
+  <div class="headerMargin">
     <h1 class="blueHeaders text-center">What’s Going On Today at Southern New Hampshire University</h1>
   </div>
 
@@ -50,36 +50,34 @@
 
 
   <ng-template [ngIf]="todaysEvents.length !== 0">
-    <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">
-      <p-table [value]="todaysEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
-        <ng-template pTemplate="body" let-event>
-          <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-            <div class="eventCardPicture">
-              <div class="imageCenter">
-                <img class="eventImage" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
-              </div>
-              <div class="imageMaskEvent"></div>
-              <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-              <h5 class="eventClubName">{{event.clubName}}</h5>
-              <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
-              <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
-              <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
-              <ng-container *ngIf="isLoggedIn">
-                <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-                  <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
-                </ng-container>
-                <ng-template #ShowRSVP>
-                  <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
-                </ng-template>
-              </ng-container>
+    <p-table [value]="todaysEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+      <ng-template pTemplate="body" let-event>
+        <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+          <div class="eventCardPicture">
+            <div class="imageCenter">
+              <img class="eventImage" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
             </div>
+            <div class="imageMaskEvent"></div>
+            <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+            <h5 class="eventClubName">{{event.clubName}}</h5>
+            <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+            <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+            <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+            <ng-container *ngIf="isLoggedIn">
+              <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+              </ng-container>
+              <ng-template #ShowRSVP>
+                <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+              </ng-template>
+            </ng-container>
           </div>
-        </ng-template>
-      </p-table>
-    </div>
+        </div>
+      </ng-template>
+    </p-table>
   </ng-template>
 
-  <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
+  <!--<div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
     <div class="announcementBorders">
       <h2 class="blueHeaders text-center">OSI Announcements</h2>
       <hr class="announcementLine">
@@ -91,9 +89,31 @@
       </div>
       <button class="blueButton">Show More</button>
     </div>
+  </div>-->
+
+
+  <div class="headerMargin">
+    <h1 class="blueHeaders text-center">Announcements From the Office of Student Involvement</h1>
   </div>
 
+    <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+      <ng-template pTemplate="body" let-announcement>
+        <div class="announcementCard" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+          <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+          <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+          <p [ngClass]="{ 'line-clamp': !showMore }">{{announcement.contentOfAnnouncement}}</p>
+        </div>
+      </ng-template>
+
+    </p-table>
+
 </div>
+
+
+
+
+
+
 
 <p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
   <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
@@ -152,5 +172,4 @@
       <button class="blueButton" (click)="closeViewMoreInfoDialog()">Close</button>
     </div>
   </div>
-
 </p-dialog>

@@ -311,3 +311,37 @@ body {
     color: $HeritageBlue;
   }
 }
+
+//Announcement Cards "Caro"
+.announcementCard {
+  padding: 15px;
+  margin: 2%;
+  border: 2px solid black;
+  border-radius: 20px;
+  float: left;
+}
+
+.announcementCardSizeWeb {
+  width: 45%;
+  height: 175px;
+}
+
+.announcementCardSizeTabletMobile {
+  width: 90%;
+  height: 175px;
+}
+
+.announcementDate {
+  color: gray;
+}
+
+.announcementTitle {
+  margin-top: 3px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}

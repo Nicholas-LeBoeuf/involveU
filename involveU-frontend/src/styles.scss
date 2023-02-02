@@ -147,7 +147,6 @@ body {
 }
 
 
-
 //Event popup
 ::ng-deep {
   .p-dialog {
@@ -190,6 +189,7 @@ body {
   position: absolute;
   z-index: 1;
   text-align: center;
+  margin-top: 2px;
 }
 
 .imageMaskDialog {
@@ -231,12 +231,7 @@ body {
 }
 
 
-
-
-
-
-
-
+//Event Card "Carousel"
 .eventCard {
   margin: 2%;
   border: 2px solid black;
@@ -283,8 +278,6 @@ body {
 .eventClubName {
   margin-bottom: 15px;
 }
-
-
 
 
 //Prime Table Paginator Styling

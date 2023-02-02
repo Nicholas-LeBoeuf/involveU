@@ -10,7 +10,7 @@
 
 <div class="imagesContainer">
   <div class="images">
-      <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
+      <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
         <img class="carouselImages" src="assets/landingPageImages/{{image}}">
       </ng-template>
@@ -18,7 +18,7 @@
   </div>
 
 
-  <div class="imageMask">
+  <div class="carouselImageMask">
     <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
       <h1>Welcome to involveU, {{this.currentUser.firstName}}!</h1>
     </ng-template>

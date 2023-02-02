@@ -33,6 +33,7 @@ import { EboardPageComponent } from './components/eboard-page/eboard-page.compon
 import {LayoutModule} from "@angular/cdk/layout";
 import {ResponsiveService} from "./services/responsive.service";
 import { DatePipe } from '@angular/common';
+import { MoreInfoComponent } from './components/more-info/more-info.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -53,7 +54,8 @@ FullCalendarModule.registerPlugins([
     ScheduleComponent,
     CalendarComponent,
     TimeFormatPipe,
-    EboardPageComponent
+    EboardPageComponent,
+    MoreInfoComponent
   ],
     imports: [
         BrowserModule,

@@ -74,7 +74,8 @@ export class EboardPageComponent implements OnInit {
   //BOOLEANS
   addEventDialog: boolean = false;
   editDialog: boolean = false;
-  editAnnouncementDialog
+  createAnnouncementDialog: boolean = false;
+  editAnnouncementDialog: boolean = false;
   addEventSuccess: boolean = false;
   addEventFailed: boolean = false;
   editEventSuccess: boolean = false;
@@ -195,6 +196,16 @@ export class EboardPageComponent implements OnInit {
   closeAddEventDialog()
   {
     this.addEventDialog = false;
+  }
+
+  showCreateAnnouncementDialog()
+  {
+    this.createAnnouncementDialog = true;
+  }
+
+  closeCreateAnnouncementDialog()
+  {
+    this.createAnnouncementDialog = false;
   }
 
   showEditAnnouncementDialog(SpecificAnnouncement: Announcement) {

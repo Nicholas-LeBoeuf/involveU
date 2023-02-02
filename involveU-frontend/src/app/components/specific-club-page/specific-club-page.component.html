@@ -64,7 +64,7 @@
     </div>
     <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">
       <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
-      <p-table [value]="clubEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isloading">
+      <p-table [value]="clubEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
         <ng-template pTemplate="body" let-event>
           <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
             <div class="eventCardPicture">

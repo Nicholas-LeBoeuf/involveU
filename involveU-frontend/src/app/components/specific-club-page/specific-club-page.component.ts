@@ -38,7 +38,7 @@ export class SpecificClubPageComponent implements OnInit {
   failMessage: boolean = false;
   viewMoreInfoDialog: boolean = false;
   showMore: boolean = false;
-  isloading: boolean = true;
+  isLoading: boolean = true;
 
   //NUMBERS
   clubID: number;
@@ -61,7 +61,7 @@ export class SpecificClubPageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.isloading = true;
+    this.isLoading = true;
 
     this.route.params.subscribe(params => {
       this.clubID = params['id'];
@@ -85,7 +85,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getClubAnnouncements();
 
     setTimeout(() => {
-      this.isloading = false;
+      this.isLoading = false;
     }, 1000);
   }
 

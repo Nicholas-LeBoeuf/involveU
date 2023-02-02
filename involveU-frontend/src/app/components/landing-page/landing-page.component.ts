@@ -30,15 +30,40 @@ export class LandingPageComponent implements OnInit {
   osiAnnouncements: any;
   viewMoreInfoDialog: boolean = false;
   showMore = false;
+  numberOfRows: number;
+  isLoading: boolean = true;
+  isLoggedIn: boolean = false;
+  message: string;
+  successMessage: boolean = false;
+  failMessage: boolean = false;
+  userRSVPdEvents: Events[] = [];
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
+    this.isUserLoggedIn();
     this.fillUserInfo();
     this.fillTodaysEvents();
     this.getOSIAnnouncements();
+    this.getUserRSVPdEvents();
+
+    if (this.responsiveService.deviceDesktop()) {
+      this.numberOfRows = 2;
+    }
+    else {
+      this.numberOfRows = 1;
+    }
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   }
 
   ngAfterViewInit(): void {
+  }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
   }
 
   fillUserInfo() {
@@ -53,18 +78,24 @@ export class LandingPageComponent implements OnInit {
     })
   }
 
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+    })
+  }
+
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
     })
   }
 
-  openViewMoreInfoDialog(SpecificEvent: Events) {
+  showViewMoreInfoDialog(SpecificEvent: Events){
     this.certainEvent.push(SpecificEvent);
     this.viewMoreInfoDialog = true;
   }
 
-  closeViewMoreInfoDialog() {
+  closeViewMoreInfoDialog(){
     this.certainEvent = [];
     this.viewMoreInfoDialog = false;
   }
@@ -76,5 +107,20 @@ export class LandingPageComponent implements OnInit {
       (error) => {
         console.log(error)
       });
+  }
+
+  isUserRSVPd(eventID: number): boolean {
+    return this.userRSVPdEvents.some(event => event.eventID === eventID);
+  }
+
+  removeEventRSVP(eventID: number) {
+    this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
+      console.log(response);
+
+    })
+
+    this.message = "Successfully Removed RSVP!";
+    this.successMessage = true;
+    location.reload();
   }
 }

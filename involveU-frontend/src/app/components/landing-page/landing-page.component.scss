@@ -1,3 +1,5 @@
+@import "src/styles";
+
 .imageContainer {
   .imageContent {
     width: 100%;
@@ -6,12 +8,16 @@
   }
 }
 
-.container {
+.imagesContainer {
   padding: 0;
   margin: 0;
   max-width: 100%;
   overflow-x: hidden !important;
   position: relative;
+}
+
+.container {
+  max-width: 1220px !important;
 }
 
 ::ng-deep .p-carousel {
@@ -20,7 +26,7 @@
 
 }
 
-img {
+img.carouselImages {
   height: 100vh;
   width: 100%;
 }
@@ -82,26 +88,7 @@ img {
 }
 
 .todaysEventsHeader {
-  width: 100vw;
-  margin-top: 2%;
-}
-
-.todaysEventsHeader h1 {
-  color: #0667B3;
-  text-align: center;
-}
-
-.todaysEventsContainer {
-  border-radius: 10px;
-  margin: 1%;
-  background-color: #5c93cb;
-  grid-row-start: 2;
-  grid-column-start: 1;
-
-  grid-row-end: 3;
-  grid-column-end: 5;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  margin-top: 1%;
 }
 
 .clubContent {
@@ -204,3 +191,6 @@ img {
   overflow: hidden;
   -webkit-box-orient: vertical;
 }
+
+
+

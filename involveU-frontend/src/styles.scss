@@ -229,3 +229,92 @@ body {
 .eventLocationDialog {
   grid-area: 3 / 2 / 4 / 3;
 }
+
+
+
+
+
+
+
+
+.eventCard {
+  margin: 2%;
+  border: 2px solid black;
+  border-radius: 20px;
+  float: left;
+}
+.eventCard:hover {
+  cursor: pointer;
+}
+
+.eventCardSizeWeb {
+  width: 45%;
+}
+
+.eventCardSizeTabletMobile {
+  width: 90%;
+}
+
+
+.eventImage {
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+  margin-top: 2px;
+}
+.imageMaskEvent {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  height: 130px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.imageCenter {
+  display: flex;
+  justify-content: center;
+}
+
+
+.addTopMargin {
+  margin-top: 0.5rem;
+}
+
+.eventClubName {
+  margin-bottom: 15px;
+}
+
+
+
+
+//Prime Table Paginator Styling
+::ng-deep {
+  .p-datatable .p-paginator-bottom {
+    margin-bottom: 2%;
+  }
+  .p-paginator {
+    background: transparent;
+    border: none;
+  }
+  .p-paginator .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last {
+    color: $GoldenYellow !important;
+    background-color: $InkBlue !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    background-color: $HeritageBlue !important;
+    border-radius: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: $GoldenYellow;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+    background-color: $SkyBlue !important;
+    color: $GoldenYellow !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background-color: $GoldenYellow !important;
+    color: $HeritageBlue;
+  }
+}

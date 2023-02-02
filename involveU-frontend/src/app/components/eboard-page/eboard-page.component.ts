@@ -185,9 +185,9 @@ export class EboardPageComponent implements OnInit {
     this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
 
-  /*onFilterAnnouncements(announcement: Announcement) {
+  onFilterAnnouncements(announcement: Event) {
     this.clubAnnouncementTable.filterGlobal((announcement.target as HTMLInputElement).value.toString(), 'contains');
-  }*/
+  }
 
   showAddEventDialog()
   {

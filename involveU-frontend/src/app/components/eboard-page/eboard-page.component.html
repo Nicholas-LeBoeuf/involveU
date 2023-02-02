@@ -8,11 +8,11 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <h1 class="text-center">{{clubInfo.clubName}} Announcements</h1>
-<p-table #clubAnnouncementTable [value]="clubAnnouncements" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" [columns]="announcementCols" [globalFilterFields]="['announcementTitle']">
+<p-table #clubAnnouncementTable [value]="clubAnnouncements" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
   <ng-template pTemplate="caption">
     <div class="captionContainer">
       <div class="eventSearchInput">
-        <input class="form-control formInputs" style="width: 25%" pInputText type="text" placeholder="Search" />  <!--(input)="onFilterAnnouncements($announcement)"-->
+        <input class="form-control formInputs" style="width: 25%" pInputText type="text" (input)="onFilterAnnouncements($event)" placeholder="Search" />
       </div>
       <div class="addEventButton">
         <button (click) = "showCreateAnnouncementDialog()" class="blueButton">Create Announcement</button>

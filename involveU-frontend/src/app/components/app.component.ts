@@ -8,7 +8,6 @@ import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
-import {Club} from "../objects/club";
 
 @Component({
   selector: 'app-root',
@@ -40,45 +39,29 @@ export class AppComponent {
       password: ['',  Validators.required, Validators.minLength(8)],
       year: ['', Validators.required],
       pronouns: ['', Validators.required]
-
     });
   }
-  userID: number;
-  title = 'involveU';
-  displayLoginDialog: boolean = false;
-  displaySignupDialog: boolean = false;
 
+  //BOOLEANS
+  isEboard: boolean = false;
   loggedInMessage: boolean = false;
   loggedInFailedMessage: boolean = false;
   signUpMessage: boolean = false;
   signUpFailMessage: boolean = false;
+  displayLoginDialog: boolean = false;
+  displaySignupDialog: boolean = false;
+
+  //NUMBERS
+  userID: number;
+
+  //STRINGS
+  title: string = 'involveU';
+
+  //OBJECTS or ARRAYS
+  loggedInUser: User;
   usersEboardInfo: any;
-  isEboard: boolean = false;
-
-  loggedInUser: User = new class implements User {
-    email: string = "";
-    firstName: string = "";
-    isAdmin: number = -1;
-    isEboard: number = -1;
-    lastName: string = "";
-    pronouns: string = "";
-    studentID: number = -1;
-    userPassword: string = "";
-    year: string = "";
-  };
-
-  isDesktop: boolean = false;
-  isMobileOrTablet: boolean = false;
 
   ngOnInit(): void {
-    if (this.responsiveService.deviceDesktop()) {
-      this.isDesktop= true;
-      this.isMobileOrTablet = false;
-    }
-    else {
-      this.isMobileOrTablet = true;
-      this.isDesktop = false;
-    }
     this.userID = +this.cookie.get('studentID');
     this.checkIfUserInEboard();
   }

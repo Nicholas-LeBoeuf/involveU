@@ -11,6 +11,7 @@ import {AnnouncementsService} from "../../services/announcements.service";
 import {Events} from "../../objects/events";
 import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -31,7 +32,9 @@ export class EboardPageComponent implements OnInit {
               private router: Router,
               private announcementsService: AnnouncementsService,
               public cookie: CookieService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private title: Title) {
+    this.title.setTitle("involveU | E-Board")
     this.announcementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],

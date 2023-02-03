@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Table} from "primeng/table";
 import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-club-page',
@@ -17,7 +18,11 @@ export class ClubPageComponent implements OnInit {
   constructor(private clubService: ClubService,
               private eventsService: EventsService,
               private router: Router,
-              public cookie: CookieService) { }
+              private title: Title,
+              public cookie: CookieService
+              ) {
+    this.title.setTitle("involveU | Clubs")
+}
 
   displayClubSearchModal: boolean = false;
   displayClubSearchLoggedInModal: boolean = false;
@@ -34,6 +39,7 @@ export class ClubPageComponent implements OnInit {
   message!: string;
 
   clubName: string;
+
 
   imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
   allClubs: Club[] = [];

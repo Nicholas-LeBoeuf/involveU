@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
 import {Club} from "../../objects/club";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-schedule',
@@ -17,7 +18,9 @@ export class ScheduleComponent implements OnInit {
   constructor(private clubService: ClubService,
               private eventsService: EventsService,
               private router: Router,
-              public cookie: CookieService) {
+              public cookie: CookieService,
+              private title: Title) {
+    this.title.setTitle("involveU | Schedule")
   }
 
   userID: number;

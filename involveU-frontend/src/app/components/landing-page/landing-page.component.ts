@@ -7,6 +7,7 @@ import {EventsService} from "../../services/events.service";
 import {ResponsiveService} from "../../services/responsive.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-landing-page',
@@ -18,7 +19,10 @@ export class LandingPageComponent implements OnInit {
               private eventsService: EventsService,
               private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
-              public cookie: CookieService) { }
+              public cookie: CookieService,
+              private title: Title) {
+    this.title.setTitle("involveU")
+  }
 
   //BOOLEANS
   viewMoreInfoDialog: boolean = false;

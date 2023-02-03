@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -78,7 +78,8 @@ FullCalendarModule.registerPlugins([
   providers: [
     CookieService,
     ResponsiveService,
-    DatePipe
+    DatePipe,
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -9,6 +9,7 @@ import {CookieService} from "ngx-cookie-service";
 import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-admin-page',
@@ -47,7 +48,10 @@ export class AdminPageComponent implements OnInit {
               private clubService: ClubService,
               public cookie: CookieService,
               private adminService: AdminService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private title: Title) {
+    this.title.setTitle("involveU | Admin")
+
     this.createClubForm = this.formBuilder.group({
       clubName: ['', Validators.required],
       clubAffiliation: ['', Validators.required],

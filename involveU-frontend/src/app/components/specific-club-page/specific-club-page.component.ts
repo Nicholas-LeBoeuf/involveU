@@ -12,6 +12,7 @@ import {EboardService} from "../../services/eboard.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -28,7 +29,10 @@ export class SpecificClubPageComponent implements OnInit {
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              public cookie: CookieService) {}
+              public cookie: CookieService,
+              private title: Title) {
+    this.title.setTitle("involveU | Club")
+  }
 
   //BOOLEANS
   isLoggedIn: boolean = false;

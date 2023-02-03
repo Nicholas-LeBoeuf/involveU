@@ -230,7 +230,7 @@
       </div>
       <div class="eventSpace containerContentSize">
         <label class="dialogLabels">Space</label>
-        <p-dropdown [options]="spaces" [formControl]="spaceID" [filter]="true" [autoDisplayFirst]="false" [disabled]="disableUserDropdown" optionValue="location_ID" optionLabel="spaceName" placeholder="Select Space" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        <p-dropdown [options]="spaces" [formControl]="spaceID" [filter]="true" [autoDisplayFirst]="false" [disabled]="disableUserDropdown" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" class="dropdownLength" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
         <div *ngIf="getCreateEventsFormInputs?.['spaceName']?.invalid && (getCreateEventsFormInputs?.['spaceName']?.dirty || getCreateEventsFormInputs?.['spaceName']?.touched)" class="leftAlert alert-danger">
           <div *ngIf="getCreateEventsFormInputs?.['spaceName']?.errors?.['required']">
             Space is required
@@ -255,7 +255,7 @@
         <input style="transform: scale(1.5)"type="checkbox" formControlName="createIsTransportation">
       </div>
       <div class="eventButton buttonSize">
-        <button class="blueButton" type="submit"  [disabled] = "areCreateFormInputsValid()" (click)="submitNewEvent()">Create Event</button>
+        <button class="blueButton" type="submit"  [disabled]="areCreateFormInputsValid()" (click)="submitNewEvent()">Create Event</button>
       </div>
     </div>
   </form>

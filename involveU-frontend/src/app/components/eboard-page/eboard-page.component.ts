@@ -253,6 +253,7 @@ export class EboardPageComponent implements OnInit {
   getLocations() {
     this.eventsService.getLocations().subscribe((response: Events[]) => {
         this.locations = response;
+        console.log(response);
       },
       (error) => {
         console.log(error)
@@ -280,18 +281,12 @@ export class EboardPageComponent implements OnInit {
 
   areCreateFormInputsValid()
   {
-    if(this.createEventForm.value.createEventName == '' || this.createEventForm.value.createEventLocation == '' ||this.createEventForm.value.createStartTime == '' || this.createEventForm.value.createEndTime == '' || this.createEventForm.value.createEventDate == '' || this.createEventForm.value.createEventDesc == '') {
-      return true;
-    }
-    else{
-      return false;
-    }
-
+    return this.createEventForm.value.createEventName === '' || this.locationID.value === null || this.spaceID.value === null || this.createEventForm.value.createStartTime === '' || this.createEventForm.value.createEndTime === '' || this.createEventForm.value.createEventDate === '' || this.createEventForm.value.createEventDesc === '';
   }
 
   submitNewEvent()
   {
-    const eventInfo : Events = { eventName: this.createEventForm.value.createEventName, eventLocation: this.createEventForm.value.createEventLocation, startTime: this.createEventForm.value.createStartTime, endTime: this.createEventForm.value.createEndTime, eventDate: this.createEventForm.value.createEventDate, eventDesc: this.createEventForm.value.createEventDesc, isTransportation: this.createEventForm.value.createIsTransportation, ticketLink: this.createEventForm.value.createTicketLink, clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
+    const eventInfo : Events = { eventName: this.createEventForm.value.createEventName, eventLocation: this.spaceID.value, startTime: this.createEventForm.value.createStartTime, endTime: this.createEventForm.value.createEndTime, eventDate: this.createEventForm.value.createEventDate, eventDesc: this.createEventForm.value.createEventDesc, isTransportation: this.createEventForm.value.createIsTransportation, ticketLink: this.createEventForm.value.createTicketLink, clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
 
     this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
       console.log(success);

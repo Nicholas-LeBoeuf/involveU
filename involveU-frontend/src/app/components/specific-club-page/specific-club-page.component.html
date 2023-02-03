@@ -30,7 +30,10 @@
         <h2 class="blueHeaders">Values</h2>
         <p>{{clubInfo.clubValues}}</p>
       </ng-container>
-      <ng-container *ngIf=""></ng-container>
+      <ng-container *ngIf="clubInfo.clubVision !== null">
+        <h2 class="blueHeaders">Vision</h2>
+        <p>{{clubInfo.clubVision}}</p>
+      </ng-container>
       <ng-container *ngIf="clubEboard !== null">
         <h2 class="blueHeaders">Executive Board</h2>
         <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">

@@ -23,6 +23,11 @@ img.carouselImages {
   width: 100%;
 }
 
+img.carouselImagesSmall {
+  height: 30vh;
+  width: 100%;
+}
+
 .carouselImageMask {
   z-index: 2;
 
@@ -70,12 +75,29 @@ img.carouselImages {
   height: 50px;
 }
 
-.headerMargin {
+.desktopTabletMargin {
   margin-top: 1%;
 }
 
-.noEventsContent {
-  width: 50%;
+.mobileMargin {
+  margin-top: 7%;
+}
+
+.noContent {
   margin: auto;
   text-align: center;
 }
+
+.blueBackground {
+  background-color: $HeritageBlue;
+  padding: 20px;
+}
+
+.yellow-text {
+  color: $GoldenYellow;
+}
+
+.welcomeMessage, .descriptionMessage {
+  margin-bottom: 20px;
+}
+

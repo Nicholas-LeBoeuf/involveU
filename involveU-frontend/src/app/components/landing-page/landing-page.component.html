@@ -8,48 +8,82 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<div class="imagesContainer">
-  <div class="images">
+<ng-container *ngIf="responsiveService.deviceDesktop() || responsiveService.deviceTablet(); else MobileView">
+  <div class="imagesContainer">
+    <div class="images">
       <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
+        <ng-template let-image pTemplate="item">
+          <img class="carouselImages" src="assets/landingPageImages/{{image}}">
+        </ng-template>
+      </p-carousel>
+    </div>
+
+
+    <div class="carouselImageMask">
+      <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
+        <h1>Welcome to involveU, {{this.currentUser.firstName}}!</h1>
+      </ng-template>
+      <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
+        <h1>Welcome to involveU!</h1>
+      </ng-template>
+      <div class="involveUDescription">
+        <h3>involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h3>
+      </div>
+      <div class="involveUNext">
+        <h3>See What is going on this week at Southern New Hampshire University</h3>
+      </div>
+      <div class="thisWeekButton">
+        <button class="blueButton" routerLink="/schedule">View Events</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #MobileView>
+  <div class="images">
+    <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
-        <img class="carouselImages" src="assets/landingPageImages/{{image}}">
+        <img class="carouselImagesSmall" src="assets/landingPageImages/{{image}}">
       </ng-template>
     </p-carousel>
   </div>
 
+  <div class="blueBackground">
+    <div class="welcomeMessage">
+      <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
+        <h1 class="text-center yellow-text span-width">Welcome to involveU, {{this.currentUser.firstName}}!</h1>
+      </ng-template>
+      <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
+        <h1 class="text-center yellow-text span-width">Welcome to involveU!</h1>
+      </ng-template>
+    </div>
 
-  <div class="carouselImageMask">
-    <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
-      <h1>Welcome to involveU, {{this.currentUser.firstName}}!</h1>
-    </ng-template>
-    <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
-      <h1>Welcome to involveU!</h1>
-    </ng-template>
-    <div class="involveUDescription">
-      <h3>involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h3>
+    <div class="descriptionMessage">
+      <h5 class="text-center yellow-text span-width">involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h5>
     </div>
-    <div class="involveUNext">
-      <h3>See What is going on this week at Southern New Hampshire University</h3>
-    </div>
+
+    <h5 class="text-center yellow-text span-width">See What is going on this week at Southern New Hampshire University</h5>
+
     <div class="thisWeekButton">
       <button class="blueButton" routerLink="/schedule">View Events</button>
     </div>
   </div>
-</div>
+</ng-template>
+
 
 <div class="container">
-  <div class="headerMargin">
-    <h1 class="blueHeaders text-center">What’s Going On Today at Southern New Hampshire University</h1>
+  <div [ngClass]="{'desktopTabletMargin' : responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'mobileMargin' : responsiveService.deviceMobile()}">
+    <h2 class="blueHeaders text-center">What’s Going On Today at Southern New Hampshire University</h2>
   </div>
 
-  <ng-template [ngIf]="todaysEvents.length === 0">
-    <div class="noEventsContent">
-      <h2>There are no events occurring today!</h2>
+  <ng-container *ngIf="todaysEvents.length === 0; else eventsPresent">
+    <div class="noContent">
+      <h3>There are no events occurring today!</h3>
     </div>
-  </ng-template>
+  </ng-container>
 
 
-  <ng-template [ngIf]="todaysEvents.length !== 0">
+  <ng-template #eventsPresent>
     <p-table [value]="todaysEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-event>
         <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
@@ -77,25 +111,17 @@
     </p-table>
   </ng-template>
 
-  <!--<div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
-    <div class="announcementBorders">
-      <h2 class="blueHeaders text-center">OSI Announcements</h2>
-      <hr class="announcementLine">
-      <div class="announcementContent" *ngFor="let announcement of osiAnnouncements; index as index; last as last">
-        <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
-        <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
-        <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
-        <hr class="announcementLine" *ngIf="index < 5">
-      </div>
-      <button class="blueButton">Show More</button>
-    </div>
-  </div>-->
-
-
-  <div class="headerMargin">
-    <h1 class="blueHeaders text-center">Announcements From the Office of Student Involvement</h1>
+  <div [ngClass]="{'desktopTabletMargin' : responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'mobileMargin' : responsiveService.deviceMobile()}">
+    <h2 class="blueHeaders text-center">Announcements From the Office of Student Involvement</h2>
   </div>
 
+  <ng-container *ngIf="osiAnnouncements.length === 0; else announcementsPresent">
+    <div class="noContent">
+      <h3>There are no announcements to display!</h3>
+    </div>
+  </ng-container>
+
+  <ng-template #announcementsPresent>
     <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-announcement>
         <div class="announcementCard" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
@@ -104,8 +130,8 @@
           <p [ngClass]="{ 'line-clamp': !showMore }">{{announcement.contentOfAnnouncement}}</p>
         </div>
       </ng-template>
-
     </p-table>
+  </ng-template>
 
 </div>
 

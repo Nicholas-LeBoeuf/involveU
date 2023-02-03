@@ -53,6 +53,17 @@ export class LandingPageComponent implements OnInit {
     this.getOSIAnnouncements();
     this.getUserRSVPdEvents();
 
+/*
+    if (this.responsiveService.deviceDesktop()) {
+      this.isDesktop= true;
+      this.isMobileOrTablet = false;
+    }
+    else {
+      this.isMobileOrTablet = true;
+      this.isDesktop = false;
+    }
+*/
+
     if (this.responsiveService.deviceDesktop()) {
       this.numberOfRows = 2;
     }

@@ -103,7 +103,6 @@ public class AdminController extends DBServices {
     {
         List<User> users = getDBAllEboard();
         return new ResponseEntity<>(users,HttpStatus.OK	);
-
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("admin/getNonEboard")
@@ -111,7 +110,6 @@ public class AdminController extends DBServices {
     {
         List<User> users = getDBNonEboard();
         return new ResponseEntity<>(users,HttpStatus.OK	);
-
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("admin/testImage")
@@ -120,7 +118,6 @@ public class AdminController extends DBServices {
         uploadImage(newImage);
         System.out.println(newImage);
         return new ResponseEntity<>("Success",HttpStatus.OK	);
-
     }
 //    @CrossOrigin(origins = "http://localhost:4200")
 //    @GetMapping("admin/getClubImage")

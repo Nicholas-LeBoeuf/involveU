@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.0",
+    "@angular/cdk": "^15.1.1",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
@@ -33,6 +34,7 @@
     "primeng": "^14.1.2",
     "rxjs": "~7.5.0",
     "save": "^2.9.0",
+    "source-map-support": "^0.5.21",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

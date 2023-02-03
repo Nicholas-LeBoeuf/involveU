@@ -195,21 +195,21 @@ html {
   min-height: 40vh;
   max-height: 40vh;
   margin-top: 2%;
-  margin-bottom: 45vh;
+  margin-bottom: 2%;
 }
 
 .assignAdvisor {
   float: left;
   width:100%;
-  min-height: 86%;
-  max-height: 86%;
+  min-height: 20vh;
+  max-height: 22vh;
 }
 
 .removeAdvisor {
   float: right;
   width:100%;
-  min-height: 86%;
-  max-height: 86%;
+  min-height: 20vh;
+  max-height: 22vh;
 }
 
 .addEBoard {
@@ -225,6 +225,24 @@ html {
   width:100%;
   min-height: 86%;
   max-height: 86%;
+}
+
+.osiAnnouncementsDiv {
+  width: 48vw;
+  min-height: 82vh;
+  max-height: 82vh;
+  display: block;
+  margin-left: 2%;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 2%;
+}
+
+.osiAnnouncements {
+  float: left;
+  width:100%;
+  min-height: 20vh;
+  max-height: 22vh;
 }
 
 .dropdownLength {

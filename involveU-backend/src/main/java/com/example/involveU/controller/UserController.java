@@ -24,7 +24,7 @@ public class UserController extends DBServices{
 		List<User> Results = getAllUsers();
 		return Results;
 	}
-	@CrossOrigin(origins = "http://localhost:4200")
+	//@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/{id}")
 	public List<User> getSpecificUser(@PathVariable("id") int id )
 	{

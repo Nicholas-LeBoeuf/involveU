@@ -7,6 +7,7 @@ public class Announcement {
    String contentOfAnnouncement;
    String announcementTitle;
    String  expiresOn;
+    String postedOn;
 
     public int getAnnouncementID() {
         return announcementID;
@@ -47,5 +48,6 @@ public class Announcement {
     public void setExpiresOn(String expiresOn) {
         this.expiresOn = expiresOn;
     }
-
+    public String getPostedOn() {return postedOn;}
+    public void setPostedOn(String postedOn) {this.postedOn = postedOn;}
 }

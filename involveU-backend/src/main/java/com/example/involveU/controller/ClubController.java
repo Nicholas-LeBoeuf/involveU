@@ -2,12 +2,12 @@ package com.example.involveU.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import com.example.involveU.model.Events;
 import com.example.involveU.model.Club;
+import com.example.involveU.model.RSVP;
 import com.example.involveU.model.DBServices;
 import com.example.involveU.model.EBoard;
 import com.example.involveU.model.User;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,39 +60,6 @@ public class ClubController extends DBServices{
           clubs = searchDBClub(searchContent);
       return new ResponseEntity<>(clubs, HttpStatus.OK);
   }
- @CrossOrigin(origins = "http://localhost:4200")
- @GetMapping("/club/getTopFavorite")
- private ResponseEntity<List<Club>> getTopFavorite()
- {
-     Map<String, Object> tempPosition;
-     List<Map<String,Object>> favoritesList;
-     List<Club> sortedFavoriteClubs = new ArrayList<>();
-     Club currentClub;
-     favoritesList = getMostFavoriteClubs();
-      for(int i = 0; i < favoritesList.size(); i++)
-      {
-         int currentValue = Integer.parseInt(favoritesList.get(i).get("total").toString());
-          for(int j = 0; j < favoritesList.size(); j++)
-          {
-              int checkValue =  Integer.parseInt(favoritesList.get(j).get("total").toString());
-              if( currentValue > checkValue )
-              {
-                tempPosition = favoritesList.get(i);
-                favoritesList.set(i, favoritesList.get(j));
-                favoritesList.set(j,tempPosition);
-
-              }
-          }
-      }
-
-      for(int i = 0; i < favoritesList.size(); i++)
-      {
-           currentClub = getSpecficClub(Integer.parseInt(favoritesList.get(i).get("clubID").toString()));
-
-          sortedFavoriteClubs.add(currentClub);
-      }
-     return new ResponseEntity<>(sortedFavoriteClubs, HttpStatus.OK) ;
- }
 @CrossOrigin(origins = "http://localhost:4200")
 @GetMapping("/club/submitFavorite/{ID}/{clubID}")
  private ResponseEntity<String> submitFavorite(@PathVariable("ID") int userID, @PathVariable("clubID") int clubID)
@@ -152,6 +119,19 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
      {
          EboardList = getDBClubEboardMembers(clubID);
          return new ResponseEntity<>(EboardList,HttpStatus.OK);
+     }
+
+     @CrossOrigin(origins = "http://localhost:4200")
+     @GetMapping("/club/checkIfEboard/{userID}")
+     private ResponseEntity<Object>  checkIfEboard(@PathVariable("userID") int userID) {
+         Club eboardClub;
+         if (checkIfClubEboard(userID)) {
+
+             eboardClub = getEboardClub(userID);
+             return new ResponseEntity<>(eboardClub, HttpStatus.OK);
+
+         }
+            return new ResponseEntity<>("not eboard", HttpStatus.OK);
      }
 }
 

@@ -7,6 +7,7 @@ import {ClubService} from "../services/club.service";
 import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
+import {ResponsiveService} from "../services/responsive.service";
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent {
               private userService: UserService,
               public cookie: CookieService,
               private clubService: ClubService,
-              private router: Router) {
+              private router: Router,
+              public responsiveService: ResponsiveService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -37,32 +39,31 @@ export class AppComponent {
       password: ['',  Validators.required, Validators.minLength(8)],
       year: ['', Validators.required],
       pronouns: ['', Validators.required]
-
     });
   }
 
-  title = 'involveU';
-  displayLoginDialog: boolean = false;
-  displaySignupDialog: boolean = false;
-
+  //BOOLEANS
+  isEboard: boolean = false;
   loggedInMessage: boolean = false;
   loggedInFailedMessage: boolean = false;
   signUpMessage: boolean = false;
   signUpFailMessage: boolean = false;
+  displayLoginDialog: boolean = false;
+  displaySignupDialog: boolean = false;
 
-  loggedInUser: User = new class implements User {
-    email: string = "";
-    firstName: string = "";
-    isAdmin: number = -1;
-    isEboard: number = -1;
-    lastName: string = "";
-    pronouns: string = "";
-    studentID: number = -1;
-    userPassword: string = "";
-    year: string = "";
-  };
+  //NUMBERS
+  userID: number;
+
+  //STRINGS
+  title: string = 'involveU';
+
+  //OBJECTS or ARRAYS
+  loggedInUser: User;
+  usersEboardInfo: any;
 
   ngOnInit(): void {
+    this.userID = +this.cookie.get('studentID');
+    this.checkIfUserInEboard();
   }
 
   private prevContextMenu!: ContextMenu;
@@ -71,17 +72,7 @@ export class AppComponent {
     {
       label: 'Logout',
       command: () => {
-        this.cookie.delete('studentID');
-        this.cookie.delete('studentFName');
-        this.cookie.delete('studentLName');
-        this.cookie.delete('isAdmin');
-        this.cookie.delete('isEboard');
-
-        this.router.navigateByUrl('/home').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });;
+        this.logoutUser();
       }
     }
   ]
@@ -156,6 +147,22 @@ export class AppComponent {
     });
   }
 
+  logoutUser() {
+    this.cookie.delete('studentID');
+    this.cookie.delete('studentFName');
+    this.cookie.delete('studentLName');
+    this.cookie.delete('isAdmin');
+    this.cookie.delete('isEboard');
+    this.usersEboardInfo = {};
+    this.isEboard = false;
+
+    this.router.navigateByUrl('/home').then(nav => {
+      console.log(nav); // true if navigation is successful
+    }, err => {
+      console.log(err) // when there's an error
+    });
+  }
+
   get signupFormInputs() {
     return this.signupForm.controls;
   }
@@ -198,5 +205,20 @@ export class AppComponent {
       { 'view': window, 'bubbles': true, 'cancelable': true, 'clientX': event.clientX-event.offsetX+xOffset, 'clientY': event.clientY-event.offsetY+yOffset}
     ));
     this.prevContextMenu = contextMenu;
+  }
+
+  checkIfUserInEboard() {
+    this.clubService.checkIfEboard(this.userID).subscribe(response => {
+      if (response === "not eboard") {
+        this.isEboard = false;
+      }
+      else {
+        this.isEboard = true;
+        this.usersEboardInfo = response;
+      }
+    },
+      (error) => {
+        console.log(error);
+      })
   }
 }

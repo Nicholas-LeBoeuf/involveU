@@ -19,34 +19,74 @@
 </div>
 
 <nav class="navbar">
-  <div class="navButtons">
-    <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
-    <div class="specificNavButton">
-      <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
+  <ng-container *ngIf="responsiveService.deviceDesktop(); else MobileAndTabletView">
+    <div class="navButtons">
+      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+      <div class="specificNavButton">
+        <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
+      </div>
+      <div class="specificNavButton">
+        <a #sla="routerLinkActive" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a>
+      </div>
+      <div class="specificNavButton">
+        <a #ula="routerLinkActive" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a>
+      </div>
+      <div class="specificNavButton">
+        <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
+          <a #vla="routerLinkActive" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a>
+        </ng-template>
+      </div>
+      <div class="specificNavButton">
+        <ng-template [ngIf]="isEboard !== false">
+          <a #ela="routerLinkActive" routerLinkActive="active" routerLink="/{{usersEboardInfo.clubID}}/eboard" [class.active-span]="ela.isActive" >{{usersEboardInfo.clubName}} Eboard</a>
+        </ng-template>
+      </div>
     </div>
-    <div class="specificNavButton">
-      <a #sla="routerLinkActive" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a>
-    </div>
-    <div class="specificNavButton">
-      <a #ula="routerLinkActive" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a>
-    </div>
-    <div class="specificNavButton">
-      <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
-        <a #vla="routerLinkActive" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a>
+    <div class="buttons">
+      <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+        <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
+        <button class="blueButton" (click)="showLoginDialog()">Login</button>
       </ng-template>
+      <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg">
+      </ng-template>
+      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
     </div>
-  </div>
-  <div class="buttons">
-    <ng-template [ngIf]="this.cookie.get('studentID') == ''">
-      <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
-      <button class="blueButton" (click)="showLoginDialog()">Login</button>
-    </ng-template>
-    <ng-template [ngIf]="this.cookie.get('studentID') != ''">
-      <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg">
-    </ng-template>
-    <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
-  </div>
+  </ng-container>
+  <ng-template #MobileAndTabletView>
+    <div class="navButtonsForMobile">
+      <div class="dropdown mobileFlexNavButton">
+        <button class="blueButton" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          &#9776;
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li> <a #rla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a></li>
+          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a></li>
+          <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
+          <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
+            <li><a #vla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a></li>
+          </ng-template>
+          <ng-template [ngIf]="isEboard !== false">
+            <a #ela="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/{{usersEboardInfo.clubID}}/eboard" [class.active-span]="ela.isActive" >{{usersEboardInfo.clubName}} Eboard</a>
+          </ng-template>
+          <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+            <li><a class="dropdown-item" (click)="showSignupDialog()">Sign Up</a></li>
+            <li><a class="dropdown-item" (click)="showLoginDialog()">Login</a></li>
+          </ng-template>
+          <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+            <li><a class="dropdown-item" (click)="logoutUser()">Logout</a></li>
+          </ng-template>
+
+        </ul>
+      </div>
+      <div class="mobileFlexSNHULogo">
+        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+      </div>
+      <img class="involveULogoScale mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png">
+    </div>
+  </ng-template>
 </nav>
+
 <main class="router">
   <router-outlet></router-outlet>
 </main>

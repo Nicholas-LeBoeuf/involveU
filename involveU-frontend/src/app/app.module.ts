@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -30,6 +30,10 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { TimeFormatPipe } from './pipes/time-format.pipe';
 import {FileUploadModule} from 'primeng/fileupload';
 import { EboardPageComponent } from './components/eboard-page/eboard-page.component';
+import {LayoutModule} from "@angular/cdk/layout";
+import {ResponsiveService} from "./services/responsive.service";
+import { DatePipe } from '@angular/common';
+
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -69,9 +73,13 @@ FullCalendarModule.registerPlugins([
         DropdownModule,
         FullCalendarModule,
         FileUploadModule,
+        LayoutModule,
     ],
   providers: [
-    CookieService
+    CookieService,
+    ResponsiveService,
+    DatePipe,
+    Title
   ],
   bootstrap: [AppComponent]
 })

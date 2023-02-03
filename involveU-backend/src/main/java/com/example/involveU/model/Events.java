@@ -24,6 +24,10 @@ public class Events{
     private  String ticketLink;
 
     private String clubName;
+    private String spaceName;
+
+    private  int space_ID;
+    private int location_ID;
 
     private  int clubID;
     public long getEventID() {
@@ -78,47 +82,17 @@ public class Events{
 
     public void setClubID(int clubID) {this.clubID = clubID;}
 
-    public void milTimeToReg(String str)
-    {
-        String finalTime;
-        int h1 = (int)str.charAt(0) - '0';
-        int h2 = (int)str.charAt(1)- '0';
+    public String getSpaceName() {return spaceName;}
 
-        int hh = h1 * 10 + h2;
+    public void setSpaceName(String spaceName) {this.spaceName = spaceName;}
 
-        // Finding out the Meridien of time
-        // ie. AM or PM
-        String Meridien;
-        if (hh < 12) {
-            Meridien = "AM";
-        }
-        else
-            Meridien = "PM";
+    public int getSpace_ID() {return space_ID;}
 
-        hh %= 12;
+    public void setSpace_ID(int space_ID) {this.space_ID = space_ID;}
 
-        // Handle 00 and 12 case separately
-        if (hh == 0) {
-            finalTime = "12";
+    public int getLocation_ID() {return location_ID;}
 
-            // Printing minutes and seconds
-            for (int i = 2; i < 8; ++i) {
-               finalTime += str.charAt(i);
-            }
-        }
-        else {
-            finalTime = String.valueOf(hh);
-            // Printing minutes and seconds
-            for (int i = 2; i < 8; ++i) {
-                finalTime += str.charAt(i);
-            }
-        }
+    public void setLocation_ID(int location_ID) {this.location_ID = location_ID;}
 
-        // After time is printed
-        // cout Meridien
-        finalTime += " "+Meridien;
-
-
-    }
 
 }

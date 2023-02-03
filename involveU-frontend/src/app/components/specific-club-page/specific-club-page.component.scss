@@ -1,152 +1,4 @@
-.clubContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "clubNameSection clubLogoSection"
-/*    "clubBioSection clubAffSection clubEboardSection"
-    "clubEventsSection clubEventsSection clubEventsSection"
-    "clubAnnouncementsSection clubAnnouncementsSection clubAnnouncementsSection"*/;
-}
-
-.clubGridStyle {
-  display: flex;
-  justify-content: center;
-
-  border-radius: 10px;
-  margin: 2%;
-  background-color: #5c93cb;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-}
-
-.clubNameSection {
-  grid-area: clubNameSection;
-}
-
-.clubNameSection:hover {
-  transform: scale(1.02);
-}
-
-.clubLogoSection {
-  grid-area: clubLogoSection;
-}
-
-.clubLogoSection:hover {
-  transform: scale(1.02);
-}
-
-.clubBioSection {
-  grid-area: clubBioSection;
-}
-
-.clubAffSection {
-  grid-area: clubAffSection;
-}
-
-.clubEboardSection {
-  grid-area: clubEboardSection;
-}
-
-.clubEventsSection {
-  grid-area: clubEventsSection;
-}
-
-.clubAnnouncementsSection {
-  grid-area: clubAnnouncementsSection;
-}
-
-.clubsName {
-  height: 60%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 50px;
-  margin-bottom: 20px;
-}
-
-.clubsLogo {
-  margin: 0 auto;
-  display: block;
-  width: 100%;
-}
-
-.clubButton {
-  float: left;
-}
-
-.buttonRow {
-  display: flex;
-  justify-content: center;
-}
-
-.sectionContent {
-  background-color: #AECDE6;
-  text-align: center;
-  border-radius: 10px;
-  font-size: 25px;
-  padding: 2%;
-  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-  margin: 5%;
-}
-
-.spanScreen {
-  width: 100%;
-}
-
-.bioAndEboard {
-  width: 100%;
-  height: 300px;
-}
-
-.bioSection {
-  width: 50%;
-  float: left;
-
-}
-
-.eboardSection {
-  width: 50%;
-  float: left;
-}
-
-hr {
-  margin-top: 1rem;
-  margin-bottom: 0 !important;
-}
-
-.bioandEboardContent {
-  margin: 1% 6% !important;
-  height: 200px;
-  overflow: auto;
-}
-
-.addTopMargin {
-  margin-top: 2%;
-}
-
-.missionValueVision {
-  width: 100%;
-  height: 300px;
-}
-
-.mission {
-  width: 33%;
-  float: left;
-}
-
-.values {
-  width: 33%;
-  float: left;
-}
-
-.vision {
-  width: 33%;
-  float: left;
-}
+@import "src/styles";
 
 .eventAlerts {
   position: absolute;
@@ -179,266 +31,100 @@ hr {
   position: sticky;
 }
 
-.clubContent {
-  background-color: #AECDE6;
-  border-radius: 5px;
-  margin: 0.6rem;
-  text-align: center;
-  padding-top: 20px;
-  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+//Actual Page
+
+.clubLogo {
+  margin-bottom: 10px;
 }
 
-.clubContent h3 {
-  font-weight: bold;
-}
-
-::ng-deep .p-carousel.eventsCaro {
-  overflow-x: hidden !important;
-}
-
-.parent {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-}
-
-.div1 {
-  grid-area: 1 / 1 / 2 / 2;
-  margin-bottom: 20px;
-}
-.div2 {
-  grid-area: 1 / 2 / 2 / 3;
-  margin-bottom: 20px;
-}
-.div3 { grid-area: 2 / 1 / 3 / 2; }
-.div4 { grid-area: 2 / 2 / 3 / 3; }
-.div5 { grid-area: 3 / 1 / 4 / 3; }
-
-.eventData {
-  font-weight: bolder !important;
-}
-
-.eventDataTitle {
-  font-weight: 400 !important;
-}
-
-.clubEventsBackground {
-  border-radius: 10px;
-  margin: 1%;
-  background-color: #5c93cb;
-  grid-row-start: 3;
-  grid-column-start: 1;
-
-  grid-row-end: 4;
-  grid-column-end: 5;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-}
-
-.clubEventsBackground:hover {
-  transform: scale(1.01 );
-}
-.largeTextField {
-  height: 150px;
-  overflow-wrap: inherit;
-}
-
-.addEditEventDialogContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  text-align: center;
-  margin-top: 30px;
-
-}
-
-.dialogLabels {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.containerContentSize {
-  height:50px;
-}
-
-.buttonSize {
-
-  margin: auto !important;
-}
-
-.transpMargin {
-  margin-top: 5%;
-  flex-direction: row;
-}
-
-
-
-.eventInfoContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  text-align: center;
-}
-
-.eventTitle {
-  grid-area: 1 / 1 / 2 / 2;
-  margin: 0px 20px;
+.logoAndName {
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-.eventDate {
-  grid-area: 1 / 2 / 2 / 3;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventStart {
-  grid-area: 2 / 1 / 3 / 2;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventEnd {
-  grid-area: 2 / 2 / 3 / 3;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventLocation {
-  grid-area: 3 / 1 / 4 / 2;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventLink {
-  grid-area: 3 / 2 / 4 / 3;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventDesc {
-  grid-area: 4 / 1 / 5 / 3;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventTransp {
-  grid-area: 5 / 1 / 6 / 3;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.eventButton {
-  grid-area: 6 / 1 / 7 / 3;
-  margin: 0px 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-::ng-deep .p-dialog .p-dialog-content:last-of-type {
-  overflow-x: hidden !important;
-}
-
-.eventSearchInput {
-  width: 60%;
-  display: flex;
-  flex-direction: row;
   align-items: center;
+  color: $GoldenYellow;
+}
+
+.specificClubContainer {
+  display: grid;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+}
+
+.specificClubContainerColumnsWeb {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.specificClubContainerColumnsMobileTablet {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.clubInfoLeftGridWeb {
+  grid-area: 1 / 1 / 2 / 3;
+}
+.clubAnnouncementsRightGridWeb {
+  grid-area: 1 / 3 / 2 / 4;
+}
+.eventsTableContainerGridWeb {
+  grid-area: 2 / 1 / 3 / 4;
+}
+
+.clubInfoLeftGridMobileTablet {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.clubAnnouncementsRightGridMobileTablet {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.eventsTableContainerGridMobileTablet {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.clubInfoLeft {
   float: left;
 }
-
-.captionContainer {
-  display: flex;
-  flex-direction: row;
+.clubAnnouncementsRight {
+  margin-left: 30px;
+  float: left;
+  width:100%;
 }
 
-.addEventButton {
-  position: absolute;
-  right: 0;
-  top : 5px;
-  float: left
+.announcementBorders {
+  padding: 10px;
+  border: 1px solid black;
 }
 
-::ng-deep .p-datatable-scrollable .p-datatable-tbody>tr>td{
-  justify-content: center !important;
+.mobileTabletClubAnnouncementWidth {
+/*  max-width: 100%;*/
+  margin-left: 0;
 }
 
-::ng-deep .ui-table-scrollable-header-box {
-  margin-right: 17px !important;
+.announcementContent {
+  width: 99%;
 }
 
-::ng-deep .ui-table-scrollable-body {
-  margin-right: 17px !important;
+.announcementLine {
+  margin-top: 0 !important;
+  margin-bottom: 5px !important;
 }
 
-.eboardTable {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+.announcementDate {
+  color: gray;
+}
+
+.announcementTitle {
+  margin-top: 3px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .eboardTable {
+  margin-bottom: 1.5rem !important;
 }
 
 
-.eventInfoContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  text-align: center;
-}
-
-.eventName2 {
-  grid-area: 1 / 1 / 2 / 2;
-  margin: 20px;
-}
-.eventDate2 {
-  grid-area: 1 / 2 / 2 / 3;
-  margin: 20px;
-}
-.eventTime2 {
-  grid-area: 2 / 1 / 3 / 2;
-  margin: 20px;
-}
-.eventLocation2 {
-  grid-area: 2 / 2 / 3 / 3;
-  margin: 20px;
-}
-.eventDesc2 {
-  grid-area: 3 / 1 / 4 / 2;
-  margin: 20px;
-}
-.eventHost2 {
-  grid-area: 3 / 2 / 4 / 3;
-  margin: 20px;
-}
-
-.eventTransportation2 {
-  grid-area: 4 / 1 / 5 / 2;
-  margin: 20px;
-}
-
-.eventTicketLink2 {
-  grid-area: 4 / 2 / 5 / 3;
-  margin: 20px;
-}
-
-.dialogLines {
-  border-top: 2px solid black;
-  margin: 2% 8%;
-}

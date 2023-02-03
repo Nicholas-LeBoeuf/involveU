@@ -1,5 +1,7 @@
 package com.example.involveU.model;
 
+import jdk.jfr.Event;
+import org.hibernate.dialect.lock.PessimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -176,6 +178,28 @@ public class DBServices {
 
         return users;
     }
+    protected Boolean checkIfClubEboard(int userID)
+    {
+        sql = "SELECT * FROM User WHERE studentID = " + userID + " AND isEboard = 1;";
+        users = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(User.class));
+
+        if(users.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    protected Club getEboardClub(int userID)
+    {
+        Club foundClub;
+        sql = "SELECT * FROM Club JOIN Eboard WHERE studentID = "+ userID +" AND Club.clubID = Eboard.clubID;";
+        clubs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
+
+        return clubs.get(0);
+    }
     protected List<User> getDBNonEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 0";
@@ -220,10 +244,10 @@ public class DBServices {
 
         return clubs;
     }
-    protected List<Map<String,Object>> getMostFavoriteClubs()
+    protected List<Map<String,Object>> getMostRSVPEvents()
     {
         List<Map<String,Object>> results;
-        sql = "select Favorites.ClubID,count(*) as Total from Favorites group by clubID;";
+        sql = "select RSVP.eventID,count(*) as Total from RSVP group by eventID;";
         results = JdbcTemplated.queryForList(sql);
 
         return results;
@@ -372,16 +396,15 @@ public class DBServices {
         return validQuery == 1;
     }
 
-  protected List<Events> getEventByID(int eventID)
+  protected Events getEventByID(int eventID)
     {
-        sql = "SELECT * FROM Events WHERE eventID = " + eventID + ";";
 
+        sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation AND eventID = "+eventID+";";
         events = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
+        events.get(0).setEventLocation(getDBLocationsByID(events.get(0).getLocation_ID()).get(0).getLocationName());
 
-        return events;
+        return events.get(0);
     }
-
-
     protected List<Events> getDBTodaysEvents()
      {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -395,16 +418,20 @@ public class DBServices {
     }
     protected  List<Events> getDBClubEvents(int clubID)
     {
-        sql = "SELECT * FROM Events WHERE clubID = " + clubID + " ORDER BY eventDate, startTime ASC ;";
+        sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation AND clubID = " + clubID + " ORDER BY eventDate, startTime ASC ;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
 
     protected List<Events> getDBAllFutureEvents()
     {
-        sql = "SELECT * FROM Events WHERE eventDate >= DATE(NOW()) ORDER BY eventDate ,startTime ASC;";
+        sql = "SELECT * FROM Events WHERE eventDate >= DATE(NOW())  ORDER BY eventDate ,startTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;
@@ -419,7 +446,7 @@ public class DBServices {
     }
     protected  List<Events> getDBFavoriteClubEvents(int userID)
     {
-        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
+        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName, Spaces.space_ID, Spaces.spaceName from Events JOIN Spaces ON eventLocation = space_ID JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+ userID+" ORDER BY eventDate ,startTime ASC;\n ";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
@@ -468,15 +495,33 @@ public class DBServices {
         sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
 
     protected List<Events> getAllEvents()
     {
-        sql = "SELECT * FROM Events";
+        sql = "SELECT * FROM Events JOIN Spaces WHERE space_ID = eventLocation ;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
+        return events;
+    }
+    protected List<Events>  getEventsByLocationID(String locationID)
+    {
+        sql = "SELECT * FROM Events JOIN Spaces WHERE Events.eventLocation = "+locationID+" AND Events.eventLocation = Spaces.space_ID;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
 
@@ -524,10 +569,9 @@ public class DBServices {
     }
 
     //Announcements Controller
-
     protected List<Announcement> getAllDBAnnouncements()
     {
-        sql = "SELECT * FROM Announcements;";
+        sql = "SELECT * FROM Announcements ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
 
@@ -536,9 +580,9 @@ public class DBServices {
 
     protected boolean createDBAnnouncement(Announcement newAnnouncement)
     {
-        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle) VALUES (????);";
+        sql = "INSERT INTO Announcements (clubID, contentOfAnnouncement, expiresOn, announcementTitle, postedOn) VALUES (?,?,?,?,?);";
 
-        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle());
+        validQuery = JdbcTemplated.update(sql,newAnnouncement.getClubID(), newAnnouncement.getContentOfAnnouncement(),newAnnouncement.getExpiresOn(),newAnnouncement.getAnnouncementTitle(), newAnnouncement.getPostedOn());
 
         return validQuery == 1;
     }
@@ -554,8 +598,8 @@ public class DBServices {
 
     protected boolean editDBAnnouncement(Announcement announcementToEdit) {
 
-            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
-            validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle());
+            sql = "UPDATE Announcements SET contentOfAnnouncement = ?, expiresOn = ?, announcementTitle = ?, postedOn = ? WHERE announcementID = " + announcementToEdit.getAnnouncementID() +";";
+            validQuery = JdbcTemplated.update(sql, announcementToEdit.getContentOfAnnouncement(),announcementToEdit.getExpiresOn(),announcementToEdit.getAnnouncementTitle(), announcementToEdit.getPostedOn());
 
             return validQuery == 1;
 
@@ -563,11 +607,22 @@ public class DBServices {
 
     protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
     {
-        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +" ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
+
+    protected  List<Announcement> getDBClubAnnouncements(int clubID)
+    {
+        sql = "select * from Announcements WHERE Announcements.clubID = " + clubID +" ORDER BY postedOn DESC;";
+
+        announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
+        return announcements;
+    }
+
+
+
     //COMMENTED OUT FOR FUTURE IMPLEMENTATION
 //    protected Image getDBClubFile()
 //    {

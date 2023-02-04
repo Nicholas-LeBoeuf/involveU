@@ -33,6 +33,7 @@ import { EboardPageComponent } from './components/eboard-page/eboard-page.compon
 import {LayoutModule} from "@angular/cdk/layout";
 import {ResponsiveService} from "./services/responsive.service";
 import { DatePipe } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 FullCalendarModule.registerPlugins([
@@ -74,6 +75,7 @@ FullCalendarModule.registerPlugins([
         FullCalendarModule,
         FileUploadModule,
         LayoutModule,
+        FontAwesomeModule,
     ],
   providers: [
     CookieService,

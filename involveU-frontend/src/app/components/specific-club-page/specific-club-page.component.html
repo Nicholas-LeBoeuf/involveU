@@ -70,7 +70,9 @@
           <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
           <hr class="announcementLine" *ngIf="index < 5">
         </div>
-        <button class="blueButton">Show More</button>
+        <div class="text-center">
+          <button class="blueButton">Show More</button>
+        </div>
       </div>
     </div>
     <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">

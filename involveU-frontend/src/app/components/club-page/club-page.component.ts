@@ -34,7 +34,6 @@ export class ClubPageComponent implements OnInit {
 
   //BOOLEANS
   displayClubSearchModal: boolean = false;
-  displayClubSearchLoggedInModal: boolean = false;
   viewMoreInfoDialog: boolean = false;
   isLoggedIn: boolean = false;
   loading: boolean = true;
@@ -54,9 +53,8 @@ export class ClubPageComponent implements OnInit {
 
   //OBJECTS or ARRAYS
   allClubs: Club[] = [];
-  compareAllClubs: Club[] = [];
   favoritedClubs: Club[] = [];
-  notFavoritedClubs: Club[] = [];
+
   featuredClubs: Club[] = [];
 
   favoritedClubsEvents: Events[] = [];
@@ -83,7 +81,6 @@ export class ClubPageComponent implements OnInit {
     this.isUserLoggedIn();
     this.getClubList();
     this.getUsersFavoritedClubs();
-    this.getClubsThatArentFavorited();
     this.getFavoritedClubEvents();
     this.getAllClubsForFeatured();
     this.getAllFutureEvents();
@@ -110,17 +107,7 @@ export class ClubPageComponent implements OnInit {
     this.isLoggedIn = this.userID !== 0;
   }
 
-  checkLogin() {
-    if (this.isLoggedIn) {
-      this.showClubSearchLoggedInDialog();
-    }
-    else {
-      this.showClubSearchDialog();
-    }
-  }
-
   //Get Functions
-
   getTopRSVP() {
     this.eventsService.getTopRSVP().subscribe(response => {
       this.topRSVPdEvents = response;
@@ -137,22 +124,6 @@ export class ClubPageComponent implements OnInit {
       (error) => {
         console.log(error)
       });
-  }
-
-  getClubsThatArentFavorited() {
-    this.loading = true;
-
-    this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
-      this.compareAllClubs = response;
-    });
-
-    setTimeout(() => {
-      this.clubService.getAllClubs().subscribe(response => {
-        this.notFavoritedClubs = response.filter(allClubs => !this.compareAllClubs.find(x => x.clubID === allClubs.clubID));
-        this.loading = false;
-
-      })
-    }, 1000);
   }
 
   getUsersFavoritedClubs() {
@@ -208,13 +179,6 @@ export class ClubPageComponent implements OnInit {
   }
 
   //Actions
-  favoriteClub(clubID: number) {
-    this.clubService.favoriteClub(this.userID, clubID).subscribe()
-    this.message = 'Club successfully favorited!';
-    this.successMessage = true;
-    location.reload();
-  }
-
   removeFromFavorites(clubID: number) {
     this.clubService.unfavoriteClub(clubID, this.userID).subscribe()
     this.message = 'Club successfully unfavorited!';
@@ -228,9 +192,8 @@ export class ClubPageComponent implements OnInit {
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-
+      console.log(response);
     })
-
     this.message = "Event Successfully RSVPd!";
     this.successMessage = true;
     location.reload();
@@ -240,7 +203,6 @@ export class ClubPageComponent implements OnInit {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
       console.log(response);
     })
-
     this.message = "Successfully Removed RSVP!";
     this.successMessage = true;
     location.reload();
@@ -257,14 +219,6 @@ export class ClubPageComponent implements OnInit {
 
   closeClubSearchDialog() {
     this.displayClubSearchModal = false;
-  }
-
-  showClubSearchLoggedInDialog() {
-    this.displayClubSearchLoggedInModal = true;
-  }
-
-  closeClubSearchLoggedInDialog() {
-    this.displayClubSearchLoggedInModal = false;
   }
 
   showViewMoreInfoDialog(SpecificEvent: Events){

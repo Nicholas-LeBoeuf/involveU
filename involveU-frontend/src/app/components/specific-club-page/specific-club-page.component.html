@@ -1,9 +1,9 @@
-<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
+<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show" role="alert">
   <p>{{this.message}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
+<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show" role="alert">
   <p>{{this.message}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -12,6 +12,14 @@
   <div class="logoAndName">
     <img class="clubLogo" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
     <h1 class="clubNameMargin">{{clubInfo.clubName}}</h1>
+    <ng-container *ngIf="userID !== 0">
+      <ng-container *ngIf="clubIsFav; else ClubNotFavorited">
+        <button class="blueButton" (click)="removeFromFavorites()">Unfavorite Club</button>
+      </ng-container>
+      <ng-template #ClubNotFavorited>
+        <button class="blueButton" (click)="favoriteClub()">Favorite Club</button>
+      </ng-template>
+    </ng-container>
   </div>
 </div>
 

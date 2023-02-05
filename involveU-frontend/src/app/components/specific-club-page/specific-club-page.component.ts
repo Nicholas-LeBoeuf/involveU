@@ -122,15 +122,15 @@ export class SpecificClubPageComponent implements OnInit {
     }
   }
 
-  favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe()
+  favoriteClub() {
+    this.clubService.favoriteClub(this.userID, this.clubID).subscribe()
     this.message = 'Club successfully favorited!';
     this.successMessage = true;
     location.reload();
   }
 
-  removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe()
+  removeFromFavorites() {
+    this.clubService.unfavoriteClub(this.clubID, this.userID).subscribe()
     this.message = 'Club successfully unfavorited!';
     this.successMessage = true;
     location.reload();

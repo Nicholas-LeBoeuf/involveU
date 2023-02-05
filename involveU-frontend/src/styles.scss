@@ -43,6 +43,10 @@ em {
   font-family: "Oswald", sans-serif !important;
 }
 
+.yellow-text {
+  color: $GoldenYellow;
+}
+
 body {
   min-width: 500px;
 }
@@ -139,7 +143,6 @@ body {
 
 .blueTitleBar {
   background-color: $HeritageBlue;
-  height: 210px;
 }
 
 .dateInputLabel:before {

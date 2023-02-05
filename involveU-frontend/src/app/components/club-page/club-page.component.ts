@@ -7,6 +7,10 @@ import {Table} from "primeng/table";
 import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
 import {Title} from "@angular/platform-browser";
+import {ResponsiveService} from "../../services/responsive.service";
+import {faTrophy, faMedal} from "@fortawesome/free-solid-svg-icons";
+import {AnnouncementsService} from "../../services/announcements.service";
+import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-club-page',
@@ -14,9 +18,13 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./club-page.component.scss']
 })
 export class ClubPageComponent implements OnInit {
+  trophy: typeof faTrophy;
+  faMedal: typeof faMedal;
 
   constructor(private clubService: ClubService,
               private eventsService: EventsService,
+              private announcementsService: AnnouncementsService,
+              public responsiveService: ResponsiveService,
               private router: Router,
               private title: Title,
               public cookie: CookieService
@@ -32,13 +40,17 @@ export class ClubPageComponent implements OnInit {
   loading: boolean = true;
   successMessage: boolean = false;
   failMessage: boolean = false;
+  isLoading: boolean = true;
+  showMore: boolean = false;
 
   //NUMBERS
   userID: number;
+  numberOfRows: number;
 
   //STRINGS
   message: string;
   clubName: string;
+  userFirstName: string;
 
   //OBJECTS or ARRAYS
   allClubs: Club[] = [];
@@ -53,12 +65,17 @@ export class ClubPageComponent implements OnInit {
   userRSVPdEvents: Events[] = [];
   topRSVPdEvents: Events[] = [];
 
+  osiAnnouncements: Announcement[] = [];
+  favoritedClubAnnouncements: Announcement[] = [];
 
   @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
   @ViewChild('dtLoggedIn') dtLoggedIn: Table;
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
+    this.userFirstName = this.cookie.get('studentFName');
+    this.userFirstName = this.userFirstName.replace(/['"]/g, '');
 
     this.isUserLoggedIn();
     this.getClubList();
@@ -69,9 +86,21 @@ export class ClubPageComponent implements OnInit {
     this.getAllFutureEvents();
     this.getUserRSVPdEvents();
     this.getTopRSVP();
+    this.getOSIAnnouncements();
+    this.getFavoritedClubAnnouncements();
+
+    if (this.responsiveService.deviceDesktop()) {
+      this.numberOfRows = 2;
+    }
+    else {
+      this.numberOfRows = 1;
+    }
 
     this.loading = false;
 
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   }
 
   isUserLoggedIn() {
@@ -158,6 +187,22 @@ export class ClubPageComponent implements OnInit {
     })
   }
 
+  getFavoritedClubAnnouncements() {
+    this.announcementsService.getFavoritedClubAnnouncements(this.userID).subscribe(response => {
+      this.favoritedClubAnnouncements = response;
+    })
+  }
+
+  getOSIAnnouncements() {
+    this.announcementsService.getClubAnnouncements(275).subscribe(response => {
+        this.osiAnnouncements = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  //Actions
   favoriteClub(userID: number, clubID: number) {
     this.clubService.favoriteClub(userID, clubID).subscribe()
     this.message = 'Club successfully favorited!';

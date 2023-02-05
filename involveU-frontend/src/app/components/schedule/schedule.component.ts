@@ -29,8 +29,8 @@ export class ScheduleComponent implements OnInit {
 
   optionSelected: boolean = false;
 
-  locationID = null;
-  spaceID = null;
+  locationID: number;
+  spaceID: number;
   disableSpaceDropdown: boolean = false;
   locationsList: Events[] = [];
   spacesList: Events[] = [];

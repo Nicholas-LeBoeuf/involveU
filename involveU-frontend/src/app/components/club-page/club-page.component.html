@@ -7,6 +7,330 @@
   <p>{{this.message}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
+<div class="blueTitleBar">
+  <div class="logoAndName text-center">
+    <img class="SNHULogoClubPage clubPageTitleMargin" src="assets/SNHU-Logo-White.png" alt="Southern New Hampshire University logo with white text">
+    <h1 class="yellow-text clubPageTitleMargin">View and Manage Clubs</h1>
+    <button class="blueButton clubPageTitleMargin">Search for Clubs</button>
+  </div>
+</div>
+
+<div class="container">
+  <ng-container *ngIf="userID !== 0; else NotLoggedIn">
+    <div [ngClass]="{'desktopClubGrid' : responsiveService.deviceDesktop(), 'mobileTabletClubGrid' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+      <div class="grayBackground bottomMargin" [ngClass]="{'desktopFeaturedClub' : responsiveService.deviceDesktop(), 'mobileTabletFeaturedClub' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders text-center topMargin">Featured Club</h2>
+        <hr>
+        <div class="text-center">
+          <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
+          <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
+          <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
+          <button class="blueButton">Learn More</button>
+        </div>
+      </div>
+
+      <div class="grayBackground bottomMargin" [ngClass]="{'desktopTopFive' : responsiveService.deviceDesktop(), 'mobileTabletTopFive' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
+        <hr>
+        <table class="top5Table">
+          <tbody>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="userID !== 0;" [ngClass]="{'desktopFavoritedClubs' : responsiveService.deviceDesktop(), 'mobileTabletFavoritedClubs' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders">{{userFirstName}}'s Favorited Clubs</h2>
+        <p-table styleClass="favoritedClubsTable" [value]="favoritedClubs" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="text-center">Club</th>
+              <th class="text-center">View Club</th>
+              <th class="text-center">Unfavorite Club</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-club>
+            <tr>
+              <td class="text-center">{{club.clubName}}</td>
+              <td class="text-center"><button class="blueButton">View</button></td>
+              <td class="text-center"><button class="blueButton">Unfavorite</button></td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div [ngClass]="{'desktopAnnouncements' : responsiveService.deviceDesktop(), 'mobileTabletAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders">Recent Favorited Club Announcements</h2>
+        <p-table [value]="favoritedClubAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <ng-template pTemplate="body" let-announcement>
+            <div class="announcementCard" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+              <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+              <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+              <p [ngClass]="{ 'line-clamp': !showMore }">{{announcement.contentOfAnnouncement}}</p>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div [ngClass]="{'desktopClubEvents' : responsiveService.deviceDesktop(), 'mobileTabletClubEvents' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders">{{userFirstName}}'s Favorited Club's Events</h2>
+        <ng-container *ngIf="favoritedClubsEvents.length === 0; else eventsPresent">
+          <div class="noContent">
+            <h3>There are no events to display!</h3>
+          </div>
+        </ng-container>
+
+        <ng-template #eventsPresent>
+          <p-table [value]="favoritedClubsEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+            <ng-template pTemplate="body" let-event>
+              <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <div class="eventCardPicture">
+                  <div class="imageCenter">
+                    <img class="eventImage" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
+                  </div>
+                  <div class="imageMaskEvent"></div>
+                  <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+                  <h5 class="eventClubName">{{event.clubName}}</h5>
+                  <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+                  <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                  <ng-container *ngIf="isLoggedIn">
+                    <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+                    </ng-container>
+                    <ng-template #ShowRSVP>
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-template>
+      </div>
+
+      <div [ngClass]="{'desktopRSVPdEvents' : responsiveService.deviceDesktop(), 'mobileTabletRSVPdEvents' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders">{{userFirstName}}'s RSVP'd Events</h2>
+        <ng-container *ngIf="userRSVPdEvents.length === 0; else eventsPresent">
+          <div class="noContent">
+            <h3>There are no events that you are RSVP'd to!</h3>
+          </div>
+        </ng-container>
+
+        <ng-template #eventsPresent>
+          <p-table [value]="userRSVPdEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+            <ng-template pTemplate="body" let-event>
+              <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <div class="eventCardPicture">
+                  <div class="imageCenter">
+                    <img class="eventImage" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
+                  </div>
+                  <div class="imageMaskEvent"></div>
+                  <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+                  <h5 class="eventClubName">{{event.clubName}}</h5>
+                  <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+                  <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                  <ng-container *ngIf="isLoggedIn">
+                    <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+                    </ng-container>
+                    <ng-template #ShowRSVP>
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+
+
+
+
+
+
+
+
+
+
+  <ng-template #NotLoggedIn>
+    <div [ngClass]="{'notLoggedInDesktopClubGrid' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletClubGrid' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+      <div class="grayBackground bottomMargin" [ngClass]="{'notLoggedInDesktopFeaturedClub' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletFeaturedClub' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders text-center topMargin">Featured Club</h2>
+        <hr>
+        <div class="text-center">
+          <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
+          <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
+          <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
+          <button class="blueButton">Learn More</button>
+        </div>
+      </div>
+
+      <div class="grayBackground bottomMargin" [ngClass]="{'notLoggedInDesktopTopFive' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletTopFive' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
+        <hr>
+        <table class="top5Table">
+          <tbody>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-3x fa-trophy iconMargin"></i>
+            </td>
+            <td>
+              <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div [ngClass]="{'notLoggedInDesktopOSIAnnouncements' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletOSIAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders">Recent Office of Student Involvement Announcements</h2>
+        <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <ng-template pTemplate="body" let-announcement>
+            <div class="announcementCard" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+              <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+              <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+              <p [ngClass]="{ 'line-clamp': !showMore }">{{announcement.contentOfAnnouncement}}</p>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div [ngClass]="{'notLoggedInDesktopClubEvents' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletClubEvents' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <ng-container *ngIf="allFutureEvents.length === 0; else eventsPresent">
+          <div class="noContent">
+            <h3>There are no events that you are RSVP'd to!</h3>
+          </div>
+        </ng-container>
+
+        <ng-template #eventsPresent>
+          <h2 class="blueHeaders">Club Events Coming Up</h2>
+          <p-table [value]="allFutureEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+            <ng-template pTemplate="body" let-event>
+              <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <div class="eventCardPicture">
+                  <div class="imageCenter">
+                    <img class="eventImage" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
+                  </div>
+                  <div class="imageMaskEvent"></div>
+                  <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+                  <h5 class="eventClubName">{{event.clubName}}</h5>
+                  <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+                  <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                  <ng-container *ngIf="isLoggedIn">
+                    <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+                    </ng-container>
+                    <ng-template #ShowRSVP>
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--
 <div class="gridContainer">
   <div id="titleDiv">

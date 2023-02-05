@@ -297,3 +297,164 @@
 
 
 //New Page
+.desktopClubGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+
+}
+
+.desktopFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.desktopTopFive {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.desktopFavoritedClubs {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.desktopAnnouncements {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+.desktopClubEvents {
+  grid-area: 4 / 1 / 5 / 3;
+}
+
+.desktopRSVPdEvents {
+  grid-area: 5 / 1 / 6 / 3;
+}
+
+.mobileTabletClubGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
+.mobileTabletFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.mobileTabletTopFive {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.mobileTabletFavoritedClubs {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.mobileTabletAnnouncements {
+  grid-area: 4 / 1 / 5 / 2;
+}
+
+.mobileTabletClubEvents {
+  grid-area: 5 / 1 / 6 / 2;
+}
+
+.mobileTabletRSVPdEvents {
+  grid-area: 6 / 1 / 7 / 2;
+}
+
+.notLoggedInDesktopClubGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
+.notLoggedInDesktopFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.notLoggedInDesktopTopFive {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.notLoggedInDesktopOSIAnnouncements {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.notLoggedInDesktopClubEvents {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+.notLoggedInMobileTabletClubGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
+.notLoggedInMobileTabletFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.notLoggedInMobileTabletTopFive {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.notLoggedInMobileTabletOSIAnnouncements {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.notLoggedInMobileTabletClubEvents {
+  grid-area: 4 / 1 / 5 / 2;
+}
+
+.SNHULogoClubPage {
+  width: 300px;
+  height: auto;
+}
+
+.clubPageTitleMargin {
+  margin-bottom: 20px;
+}
+
+.grayBackground {
+  background-color: #f4f4f4;
+  border: 1px solid #c8c8c8;
+}
+
+.topMargin {
+  margin-top: 10px;
+}
+
+.clubBioMargin {
+  padding: 0 45px;
+}
+
+.top5Table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.iconMargin {
+  margin: 0 30px;
+}
+
+.goldTrophy {
+  color: #ffc60a;
+}
+
+.silverTrophy {
+  color: #b3b3bf;
+}
+
+.bronzeTrophy {
+  color: #ab4f12;
+}
+
+::ng-deep .favoritedClubsTable {
+  margin-bottom: 1.5rem !important;
+}

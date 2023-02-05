@@ -68,8 +68,11 @@ export class ClubPageComponent implements OnInit {
   osiAnnouncements: Announcement[] = [];
   favoritedClubAnnouncements: Announcement[] = [];
 
-  @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
-  @ViewChild('dtLoggedIn') dtLoggedIn: Table;
+  cols = [
+    { field: 'clubName', header: 'Club Name' }
+  ];
+
+  @ViewChild('dtClubSearch') dtClubSearch: Table;
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -121,7 +124,6 @@ export class ClubPageComponent implements OnInit {
   getTopRSVP() {
     this.eventsService.getTopRSVP().subscribe(response => {
       this.topRSVPdEvents = response;
-      console.log(response);
     },
     (error) => {
       console.log(error);
@@ -165,6 +167,7 @@ export class ClubPageComponent implements OnInit {
   getFavoritedClubEvents() {
     this.eventsService.getFutureFavortedClubEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
+      console.log(response);
     })
   }
 
@@ -178,12 +181,14 @@ export class ClubPageComponent implements OnInit {
   getAllFutureEvents() {
     this.eventsService.getAllFutureEvents().subscribe(response => {
       this.allFutureEvents = response;
+      console.log(response);
     })
   }
 
   getUserRSVPdEvents() {
     this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
+      console.log(response);
     })
   }
 
@@ -203,15 +208,15 @@ export class ClubPageComponent implements OnInit {
   }
 
   //Actions
-  favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe()
+  favoriteClub(clubID: number) {
+    this.clubService.favoriteClub(this.userID, clubID).subscribe()
     this.message = 'Club successfully favorited!';
     this.successMessage = true;
     location.reload();
   }
 
-  removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe()
+  removeFromFavorites(clubID: number) {
+    this.clubService.unfavoriteClub(clubID, this.userID).subscribe()
     this.message = 'Club successfully unfavorited!';
     this.successMessage = true;
     location.reload();
@@ -223,7 +228,6 @@ export class ClubPageComponent implements OnInit {
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
 
     })
 
@@ -235,7 +239,6 @@ export class ClubPageComponent implements OnInit {
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
       console.log(response);
-
     })
 
     this.message = "Successfully Removed RSVP!";
@@ -275,11 +278,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   //Filters
-  onFilterNotLoggedInTable(event: Event) {
-    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
-  }
-
-  onFilterLoggedInTable(event: Event) {
-    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  onFilterClubSearchTable(event: Event) {
+    this.dtClubSearch.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
 }

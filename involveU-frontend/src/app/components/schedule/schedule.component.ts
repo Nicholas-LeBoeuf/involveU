@@ -66,7 +66,6 @@ export class ScheduleComponent implements OnInit {
     this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
       this.eventsToSend = response;
       this.eventsToSend = this.eventsToSend.slice();
-      console.log(this.eventsToSend);
     })
     this.optionSelected = true;
   }

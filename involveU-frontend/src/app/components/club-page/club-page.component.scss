@@ -187,19 +187,6 @@
   float: right;
 }
 
-.card {
-  margin-top: 7%;
-  background-color: #AECDE6;
-  border: none;
-  overflow: hidden;
-}
-
-.clubSearchTitle {
-  font-size: 2.5em;
-  margin-bottom: 4%;
-  font-weight: normal;
-}
-
 .clubNameCell {
   font-size: 20px;
   font-weight: 500;
@@ -242,10 +229,7 @@
   position: sticky;
 }
 
-.clubSearchInput {
-  width: 300px;
-  margin: auto;
-}
+
 
 .parent {
   display: grid;
@@ -457,4 +441,35 @@
 
 ::ng-deep .favoritedClubsTable {
   margin-bottom: 1.5rem !important;
+}
+
+
+//Club Search Styling
+.clubSearchTitle {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.card {
+  border: 3px solid black;
+  overflow: hidden;
+  padding-bottom: 5%;
+}
+
+.clubSearchInput {
+  width: 300px;
+  margin: auto;
+}
+
+::ng-deep {
+  .searchClubsDialog.p-dialog {
+    width: 50%;
+  }
+
+  .clubSearchTable.p-datatable {
+    margin: 0 10%;
+  }
+  .clubSearchTable.p-datatable-scrollable .p-datatable-tbody>tr>td {
+    text-align: center
+  }
 }

@@ -182,7 +182,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   fillNonAdvisorList() {
-    this.adminService.getNonAdvisors().subscribe((response: User[]) => {
+    this.userService.getAllFaculty().subscribe((response: User[]) => {
         this.nonAdvisorList = response;
       },
       (error) => {

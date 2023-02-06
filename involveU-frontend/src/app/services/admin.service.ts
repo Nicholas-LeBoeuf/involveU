@@ -62,7 +62,7 @@ export class AdminService {
   }
 
   getClubLogo(){
-    return this.http.get("http://localhost:8080/api/club/downloadImage/Javalogo.png", {responseType: 'blob'});
+    return this.http.get("http://localhost:8080/api/club/downloadImage/1675329967Roblox Face.svg", {responseType: 'blob'});
 
   }
 

@@ -135,7 +135,7 @@ export class AdminPageComponent implements OnInit {
     console.log(event.files[0])
     console.log(event);
 
-    this.adminService.sendImage(event.files[0]).subscribe()
+    //this.adminService.sendImage(event.files[0]).subscribe()
    console.log("made it");
     const file:File = event.target.files[0];
     this.adminService.sendImage(file).subscribe(response => {

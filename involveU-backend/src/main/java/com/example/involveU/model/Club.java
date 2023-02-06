@@ -1,6 +1,8 @@
 package com.example.involveU.model;
 
+import java.io.File;
 public class Club {
+
 
     private int clubID;
     private String clubName;
@@ -13,6 +15,7 @@ public class Club {
     private String clubLogo;
     private int ownerID;
     private int advisorID;
+
 
     public int getClubID() {
         return clubID;
@@ -69,9 +72,7 @@ public class Club {
         this.clubValues = clubValues;
     }
 
-    public String getClubLogo() {
-        return clubLogo;
-    }
+    public String getClubLogo() {return clubLogo;}
 
     public void setClubLogo(String clubLogo) {
         this.clubLogo = clubLogo;

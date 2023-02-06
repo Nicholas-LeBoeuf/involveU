@@ -137,22 +137,13 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
      }
 
 
-     @GetMapping("/club/downloadImage/{fileName}")
-     private ResponseEntity<byte[]> downloadImage(@PathVariable("fileName") String fileName) throws IOException {
+     @GetMapping("/club/getClubLogo/{clubID}")
+     private ResponseEntity<byte[]> downloadImage(@PathVariable("clubID") int clubID) throws IOException {
 
+
+        String fileName = getClubLogo(clubID);
         S3Util bucket = new S3Util();
          byte[] test = bucket.downloadFile(fileName);
-
-
-//
-//         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-//
-//         int nRead;
-//         byte[] data = new byte[16384];
-//
-//         while ((nRead = clubLogo.read(data, 0, data.length)) != -1) {
-//             buffer.write(data, 0, nRead);
-//         }
 
          return new ResponseEntity<>(test,HttpStatus.OK);
 

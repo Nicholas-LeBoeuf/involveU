@@ -157,7 +157,7 @@ export class AdminPageComponent implements OnInit {
   }
   getClubLogo()
   {
-    this.adminService.getClubLogo().subscribe(response => {
+    this.adminService.getClubLogo(3).subscribe(response => {
       console.log(response);
       this. retrievedResponse = response;
 

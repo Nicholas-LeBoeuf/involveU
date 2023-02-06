@@ -61,8 +61,8 @@ export class AdminService {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
 
-  getClubLogo(){
-    return this.http.get("http://localhost:8080/api/club/downloadImage/1675329967Roblox Face.svg", {responseType: 'blob'});
+  getClubLogo(clubID : number){
+    return this.http.get(`http://localhost:8080/api/club/getClubLogo/${clubID}`, {responseType: 'blob'});
 
   }
 

@@ -139,7 +139,6 @@ export class SpecificClubPageComponent implements OnInit {
   getClubEvents() {
     this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
       this.clubEvents = response;
-      console.log(response);
     })
   }
 

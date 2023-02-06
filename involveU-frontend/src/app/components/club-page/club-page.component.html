@@ -22,7 +22,7 @@
       <div class="grayBackground bottomMargin" [ngClass]="{'desktopFeaturedClub' : responsiveService.deviceDesktop(), 'mobileTabletFeaturedClub' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders text-center topMargin">Featured Club</h2>
         <hr>
-        <div class="text-center">
+        <div *ngIf="featuredClubs.length > 0" class="text-center">
           <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
           <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
@@ -31,52 +31,54 @@
       </div>
 
       <div class="grayBackground bottomMargin" [ngClass]="{'desktopTopFive' : responsiveService.deviceDesktop(), 'mobileTabletTopFive' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
-        <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
-        <hr>
-        <table class="top5Table">
-          <tbody>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <ng-container *ngIf="topRSVPdEvents.length > 0">
+          <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
+          <hr>
+          <table class="top5Table">
+            <tbody>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
       </div>
 
       <div *ngIf="userID !== 0;" [ngClass]="{'desktopFavoritedClubs' : responsiveService.deviceDesktop(), 'mobileTabletFavoritedClubs' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
@@ -189,7 +191,7 @@
       <div class="grayBackground bottomMargin" [ngClass]="{'notLoggedInDesktopFeaturedClub' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletFeaturedClub' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders text-center topMargin">Featured Club</h2>
         <hr>
-        <div class="text-center">
+        <div *ngIf="featuredClubs.length > 0" class="text-center">
           <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
           <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
@@ -198,52 +200,54 @@
       </div>
 
       <div class="grayBackground bottomMargin" [ngClass]="{'notLoggedInDesktopTopFive' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletTopFive' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
-        <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
-        <hr>
-        <table class="top5Table">
-          <tbody>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-3x fa-trophy iconMargin"></i>
-            </td>
-            <td>
-              <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <ng-container *ngIf="topRSVPdEvents.length > 0">
+          <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
+          <hr>
+          <table class="top5Table">
+            <tbody>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-3x fa-trophy iconMargin"></i>
+              </td>
+              <td>
+                <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
       </div>
 
       <div [ngClass]="{'notLoggedInDesktopOSIAnnouncements' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletOSIAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">

@@ -138,7 +138,6 @@ export class ClubPageComponent implements OnInit {
   getFavoritedClubEvents() {
     this.eventsService.getFutureFavortedClubEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
-      console.log(response);
     })
   }
 
@@ -152,14 +151,12 @@ export class ClubPageComponent implements OnInit {
   getAllFutureEvents() {
     this.eventsService.getAllFutureEvents().subscribe(response => {
       this.allFutureEvents = response;
-      console.log(response);
     })
   }
 
   getUserRSVPdEvents() {
     this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
-      console.log(response);
     })
   }
 

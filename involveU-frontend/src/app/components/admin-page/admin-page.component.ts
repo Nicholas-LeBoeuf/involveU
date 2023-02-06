@@ -33,6 +33,10 @@ export class AdminPageComponent implements OnInit {
   addEBoardForm : FormGroup;
   selectedClub: any = {};
   clubID!: number;
+  base64Data: any;
+  retrivedFile:any;
+  retrievedResponse: any;
+  fileName: string;
 
   addEBoardClubID: FormControl = new FormControl(null);
   removeEBoardClubID: FormControl = new FormControl(null);
@@ -42,6 +46,7 @@ export class AdminPageComponent implements OnInit {
   eboardID: FormControl = new FormControl(null);
   nonAdvisorID: FormControl = new FormControl(null);
   todaysDate = new Date().toString();
+
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -127,27 +132,43 @@ export class AdminPageComponent implements OnInit {
   }
   onUpload(event) {
 
-    //console.log(event.target.files[0])
+    console.log(event.files[0])
     console.log(event);
 
-    //this.adminService.sendImage(event.files[0]).subscribe()
-   /* console.log("made it");
+    this.adminService.sendImage(event.files[0]).subscribe()
+   console.log("made it");
     const file:File = event.target.files[0];
+    this.adminService.sendImage(file).subscribe(response => {
 
-    if (file) {
-
-      this.fileName = file.name;
-
-      const formData = new FormData();
-
-      formData.append("thumbnail", file);
-
-      this.adminService.sendImage(formData).subscribe()*/
-      //const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-     // upload$.subscribe();
+      console.log(response);
+    })
+    // if (file) {
+    //
+    //   this.fileName = file.name;
+    //
+    //   const formData = new FormData();
+    //
+    //   formData.append("thumbnail", file);
+    //
+    //   //this.adminService.sendImage(formData).subscribe()
+    //
+    // }
 
   }
+  getClubLogo()
+  {
+    this.adminService.getClubLogo().subscribe(response => {
+      console.log(response);
+      this. retrievedResponse = response;
+
+      const reader = new FileReader();
+      reader.onload = (e) => this.retrievedResponse = e.target.result;
+      reader.readAsDataURL(new Blob([response]));
+      console.log(this.retrievedResponse);
+    })
+
+  }
+
 
   fillClubList() {
     this.clubService.getAllClubs().subscribe((response: Club[]) => {

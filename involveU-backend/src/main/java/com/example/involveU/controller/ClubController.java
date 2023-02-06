@@ -1,17 +1,20 @@
 package com.example.involveU.controller;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.example.involveU.model.Events;
-import com.example.involveU.model.Club;
-import com.example.involveU.model.RSVP;
-import com.example.involveU.model.DBServices;
-import com.example.involveU.model.EBoard;
-import com.example.involveU.model.User;
+
+import com.example.involveU.model.*;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
- @RestController
+import org.springframework.web.multipart.MultipartFile;
+
+@RestController
 @RequestMapping("/api")
 public class ClubController extends DBServices{
   private List<Club>  clubs;
@@ -133,6 +136,29 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
          }
             return new ResponseEntity<>("not eboard", HttpStatus.OK);
      }
+
+     @CrossOrigin(origins = "http://localhost:4200")
+     @GetMapping("/club/downloadImage/{fileName}")
+     private ResponseEntity<byte[]> downloadImage(@PathVariable("fileName") String fileName) throws IOException {
+
+        S3Util bucket = new S3Util();
+         byte[] test = bucket.downloadFile(fileName);
+
+
+//
+//         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+//
+//         int nRead;
+//         byte[] data = new byte[16384];
+//
+//         while ((nRead = clubLogo.read(data, 0, data.length)) != -1) {
+//             buffer.write(data, 0, nRead);
+//         }
+
+         return new ResponseEntity<>(test,HttpStatus.OK);
+
+     }
+
 }
 
 

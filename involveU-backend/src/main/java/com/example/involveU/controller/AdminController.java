@@ -1,4 +1,5 @@
 package com.example.involveU.controller;
+import com.example.involveU.model.S3Util;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.involveU.model.Image;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
+
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -113,9 +107,14 @@ public class AdminController extends DBServices {
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("admin/testImage")
-    public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile newImage)
-    {
-        uploadImage(newImage);
+    public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile newImage) throws IOException {
+        //InputStream inputStream =  new BufferedInputStream(newImage.getInputStream());
+        S3Util s3 = new S3Util();
+        String filename = newImage.getOriginalFilename();
+        System.out.println(filename);
+
+       s3.uploadFile(filename, newImage.getInputStream());
+
         System.out.println(newImage);
         return new ResponseEntity<>("Success",HttpStatus.OK	);
     }

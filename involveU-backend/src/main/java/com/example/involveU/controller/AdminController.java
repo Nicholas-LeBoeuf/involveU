@@ -1,4 +1,5 @@
 package com.example.involveU.controller;
+import com.example.involveU.model.S3Util;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,21 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.involveU.model.Image;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
+
+import java.io.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class AdminController extends DBServices {
-    @CrossOrigin(origins = "http://localhost:4200")
+   
     @PostMapping("/admin/addAdmin/{newAdmin}")
     private ResponseEntity<String> addAdmin (@PathVariable("newAdmin") User newAdmin) {
 
@@ -38,7 +32,7 @@ public class AdminController extends DBServices {
         }
 
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+ 
     @GetMapping("/admin/assignNewAdvisor/{advisorID}/{clubID}")
     private ResponseEntity<String> assignNewAdvisor(@PathVariable("advisorID") int advisorID,@PathVariable("clubID") int clubID)
     {
@@ -51,21 +45,21 @@ public class AdminController extends DBServices {
             return new ResponseEntity<>("duplicate entry", HttpStatus.BAD_REQUEST);
         }
     }
-   @CrossOrigin(origins = "http://localhost:4200")
+   
    @GetMapping("/admin/addNewEboard/{userID}/{clubID}/{role}")
     private ResponseEntity<String> addNewEboard(@PathVariable("userID") int userID, @PathVariable("clubID") int clubID,@PathVariable("role") String position)
     {
         addDBEboardMember(userID, clubID,position);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+   
     @GetMapping("/admin/deleteUser/{userID}")
     private ResponseEntity<String> deleteUser(@PathVariable("userID") int userID)
     {
         deleteDBUser(userID);
         return new ResponseEntity<>("user is deleted", HttpStatus.OK);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @PostMapping("/admin/createUser")
     private ResponseEntity<String>createUser(@RequestBody User newUser)
     {
@@ -73,7 +67,7 @@ public class AdminController extends DBServices {
             insertDBNewUser(newUser);
         return new ResponseEntity<>("added user successfully", HttpStatus.OK);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @GetMapping("/admin/deleteEboard/{userID}")
     private ResponseEntity<String>deleteEboard(@PathVariable("userID") int userID )
     {
@@ -81,7 +75,7 @@ public class AdminController extends DBServices {
         deleteDBEboardMember(userID);
         return new ResponseEntity<>("Deleted Eboard Memeber successfully", HttpStatus.OK);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @GetMapping("admin/getAllAdvisors")
     public ResponseEntity<List<User>> getAllAdvisors()
     {
@@ -89,7 +83,7 @@ public class AdminController extends DBServices {
         return new ResponseEntity<>(users,HttpStatus.OK	);
 
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @GetMapping("admin/getNonAdvisors")
     public ResponseEntity<List<User>> getNoneAdvisors()
     {
@@ -97,29 +91,34 @@ public class AdminController extends DBServices {
         return new ResponseEntity<>(users,HttpStatus.OK	);
 
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @GetMapping("admin/getAllEboard")
     public ResponseEntity<List<User>> getAllEboard()
     {
         List<User> users = getDBAllEboard();
         return new ResponseEntity<>(users,HttpStatus.OK	);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @GetMapping("admin/getNonEboard")
     public ResponseEntity<List<User>> getNonEboard()
     {
         List<User> users = getDBNonEboard();
         return new ResponseEntity<>(users,HttpStatus.OK	);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    
     @PostMapping("admin/testImage")
-    public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile newImage)
-    {
-        uploadImage(newImage);
+    public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile newImage) throws IOException {
+        //InputStream inputStream =  new BufferedInputStream(newImage.getInputStream());
+        S3Util s3 = new S3Util();
+        String filename = newImage.getOriginalFilename();
+        System.out.println(filename);
+
+       s3.uploadFile(filename, newImage.getInputStream());
+
         System.out.println(newImage);
         return new ResponseEntity<>("Success",HttpStatus.OK	);
     }
-//    @CrossOrigin(origins = "http://localhost:4200")
+//    
 //    @GetMapping("admin/getClubImage")
 ////    public ResponseEntity<String> testImage() throws SQLException, IOException {
 ////        Image clubFile;

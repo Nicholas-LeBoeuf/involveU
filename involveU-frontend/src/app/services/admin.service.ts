@@ -54,10 +54,16 @@ export class AdminService {
     const data: FormData = new FormData();
     data.append('file', file);
     console.log(data);
-    return this.http.post(environment.apiURL + `admin/testImage`, data);
+    return this.http.post( `http://localhost:8080/api/admin/testImage`, data);
   }
 
   createOSIAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
+
+  getClubLogo(){
+    return this.http.get("http://localhost:8080/api/club/downloadImage/Javalogo.png", {responseType: 'blob'});
+
+  }
+
 }

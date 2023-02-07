@@ -59,8 +59,8 @@ export class AdminService {
   }
 
 
-  getClubLogo(clubID : number){
+  getClubLogo(clubID : number) {
     return this.http.get(environment.apiURL + `api/club/getClubLogo/${clubID}`, {responseType: 'blob'});
-
+  }
 
 }

@@ -9,13 +9,14 @@ import {Observable} from "rxjs";
 })
 export class AnnouncementsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   createAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
 
-  getClubAnnouncements(clubID: number):Observable<Announcement[]> {
+  getClubAnnouncements(clubID: number): Observable<Announcement[]> {
     return this.http.get<Announcement[]>(environment.apiURL + `announcements/getClubAnnouncements/${clubID}`);
   }
 
@@ -27,4 +28,7 @@ export class AnnouncementsService {
     return this.http.get(environment.apiURL + `announcements/deleteAnnouncement/${announcementID}`);
   }
 
+  getFavoritedClubAnnouncements(userID: number): Observable<Announcement[]> {
+    return this.http.get<Announcement[]>(environment.apiURL + `announcements/getFavoritedAnnouncements/${userID}`);
+  }
 }

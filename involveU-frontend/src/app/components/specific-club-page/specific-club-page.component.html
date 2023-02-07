@@ -1,97 +1,112 @@
-<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
+<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show" role="alert">
   <p>{{this.message}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
+<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show" role="alert">
   <p>{{this.message}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<div class="blueTitleBar">
-  <div class="logoAndName">
-    <img class="clubLogo" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
-    <h1>{{clubInfo.clubName}}</h1>
+<ng-container *ngIf="clubInfo">
+  <div class="blueTitleBar">
+    <div class="logoAndName">
+      <img class="clubLogo" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
+      <h1 class="clubNameMargin">{{clubInfo.clubName}}</h1>
+      <ng-container *ngIf="userID !== 0">
+        <ng-container *ngIf="clubIsFav; else ClubNotFavorited">
+          <button class="blueButton" (click)="removeFromFavorites()">Unfavorite Club</button>
+        </ng-container>
+        <ng-template #ClubNotFavorited>
+          <button class="blueButton" (click)="favoriteClub()">Favorite Club</button>
+        </ng-template>
+      </ng-container>
+    </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="specificClubContainer" [ngClass]="{'specificClubContainerColumnsWeb' : responsiveService.deviceDesktop(), 'specificClubContainerColumnsMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-    <div [ngClass]="{'mobileTabletClubInfoLeft clubInfoLeftGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubInfoLeft clubInfoLeftGridWeb' : responsiveService.deviceDesktop()}">
-      <ng-container *ngIf="clubInfo.clubBio !== null">
-        <h2 class="blueHeaders">About Us</h2>
-        <p>{{clubInfo.clubBio}}</p>
-      </ng-container>
-      <ng-container *ngIf="clubInfo.clubMission !== null">
-        <h2 class="blueHeaders">Mission</h2>
-        <p>{{clubInfo.clubMission}}</p>
-      </ng-container>
-      <ng-container *ngIf="clubInfo.clubValues !== null">
-        <h2 class="blueHeaders">Values</h2>
-        <p>{{clubInfo.clubValues}}</p>
-      </ng-container>
-      <ng-container *ngIf=""></ng-container>
-      <ng-container *ngIf="clubEboard !== null">
-        <h2 class="blueHeaders">Executive Board</h2>
-        <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
-          <ng-template pTemplate="header">
-            <tr>
-              <th class="text-center">Position</th>
-              <th class="text-center">Name</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-member>
-            <tr>
-              <td class="text-center">{{member.eboardPosition}}</td>
-              <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
-            </tr>
+  <div class="container">
+    <div class="specificClubContainer" [ngClass]="{'specificClubContainerColumnsWeb' : responsiveService.deviceDesktop(), 'specificClubContainerColumnsMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+      <div [ngClass]="{'mobileTabletClubInfoLeft clubInfoLeftGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubInfoLeft clubInfoLeftGridWeb' : responsiveService.deviceDesktop()}">
+        <ng-container *ngIf="clubInfo.clubBio !== null">
+          <h2 class="blueHeaders">About Us</h2>
+          <p>{{clubInfo.clubBio}}</p>
+        </ng-container>
+        <ng-container *ngIf="clubInfo.clubMission !== null">
+          <h2 class="blueHeaders">Mission</h2>
+          <p>{{clubInfo.clubMission}}</p>
+        </ng-container>
+        <ng-container *ngIf="clubInfo.clubValues !== null">
+          <h2 class="blueHeaders">Values</h2>
+          <p>{{clubInfo.clubValues}}</p>
+        </ng-container>
+        <ng-container *ngIf="clubInfo.clubVision !== null">
+          <h2 class="blueHeaders">Vision</h2>
+          <p>{{clubInfo.clubVision}}</p>
+        </ng-container>
+        <ng-container *ngIf="clubEboard !== null">
+          <h2 class="blueHeaders">Executive Board</h2>
+          <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="text-center">Position</th>
+                <th class="text-center">Name</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-member>
+              <tr>
+                <td class="text-center">{{member.eboardPosition}}</td>
+                <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-container>
+      </div>
+      <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
+        <div class="announcementBorders">
+          <h2 class="blueHeaders text-center">Announcements</h2>
+          <hr class="announcementLine">
+          <div class="announcementContent" *ngFor="let announcement of clubAnnouncements; index as index; last as last">
+            <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+            <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
+            <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
+            <hr class="announcementLine" *ngIf="index < 5">
+          </div>
+          <div class="text-center">
+            <button class="blueButton">Show More</button>
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">
+        <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
+        <p-table [value]="clubEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <ng-template pTemplate="body" let-event>
+            <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+              <div class="eventCardPicture">
+                <div class="imageCenter">
+                  <img class="eventImage" src="assets/{{clubInfo.clubLogo}}">
+                </div>
+                <div class="imageMaskEvent"></div>
+                <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+                <h5 class="eventClubName">{{event.clubName}}</h5>
+                <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+                <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+                <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                <ng-container *ngIf="isLoggedIn">
+                  <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                    <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+                  </ng-container>
+                  <ng-template #ShowRSVP>
+                    <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                  </ng-template>
+                </ng-container>
+              </div>
+            </div>
           </ng-template>
         </p-table>
-      </ng-container>
-    </div>
-    <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
-      <div class="announcementBorders">
-        <h2 class="blueHeaders text-center">Announcements</h2>
-        <hr class="announcementLine">
-        <div class="announcementContent" *ngFor="let announcement of clubAnnouncements; index as index; last as last">
-          <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
-          <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
-          <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
-          <hr class="announcementLine" *ngIf="index < 5">
-        </div>
-        <button class="blueButton">Show More</button>
       </div>
     </div>
-    <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">
-      <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
-      <p-table [value]="clubEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
-        <ng-template pTemplate="body" let-event>
-          <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-            <div class="eventCardPicture">
-              <div class="imageCenter">
-                <img class="eventImage" src="assets/{{clubInfo.clubLogo}}">
-              </div>
-              <div class="imageMaskEvent"></div>
-              <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-              <h5 class="eventClubName">{{event.clubName}}</h5>
-              <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
-              <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
-              <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
-              <ng-container *ngIf="isLoggedIn">
-                <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-                  <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
-                </ng-container>
-                <ng-template #ShowRSVP>
-                  <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
-                </ng-template>
-              </ng-container>
-            </div>
-          </div>
-        </ng-template>
-      </p-table>
-    </div>
   </div>
-</div>
+</ng-container>
 
 
 <p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">

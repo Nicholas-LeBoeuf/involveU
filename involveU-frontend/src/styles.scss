@@ -43,8 +43,8 @@ em {
   font-family: "Oswald", sans-serif !important;
 }
 
-body {
-  min-width: 500px;
+.yellow-text {
+  color: $GoldenYellow;
 }
 
 .container {
@@ -139,7 +139,6 @@ body {
 
 .blueTitleBar {
   background-color: $HeritageBlue;
-  height: 210px;
 }
 
 .dateInputLabel:before {
@@ -344,4 +343,32 @@ body {
   -webkit-line-clamp: 3;
   overflow: hidden;
   -webkit-box-orient: vertical;
+}
+
+//Alerts
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  position: fixed !important;
+
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.alert p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
 }

@@ -245,6 +245,17 @@ public class DBServices {
         return validQuery == 1;
 
     }
+    protected String getClubLogo(int clubID)
+    {
+        String clubLogoPath;
+        sql = "SELECT clubLogo FROM Club WHERE clubID = ?;";
+
+        clubLogoPath = JdbcTemplated.queryForObject(sql,new Object[]{clubID}, String.class);
+
+        return clubLogoPath;
+
+
+    }
     protected List<Club> searchDBClub(String searchContent)
     {
         sql = "SELECT * FROM Club WHERE Club.clubName LIKE '%" + searchContent +"%';";
@@ -579,7 +590,7 @@ public class DBServices {
     //Announcements Controller
     protected List<Announcement> getAllDBAnnouncements()
     {
-        sql = "SELECT * FROM Announcements;";
+        sql = "SELECT * FROM Announcements WHERE expiresON > DATE(NOW()) ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
 
@@ -615,7 +626,7 @@ public class DBServices {
 
     protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
     {
-        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +" AND expiresON > DATE(NOW()) ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
@@ -623,7 +634,7 @@ public class DBServices {
 
     protected  List<Announcement> getDBClubAnnouncements(int clubID)
     {
-        sql = "select * from Announcements WHERE Announcements.clubID = " + clubID +";";
+        sql = "select * from Announcements WHERE Announcements.clubID = " + clubID +" AND expiresON > DATE(NOW()) ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;

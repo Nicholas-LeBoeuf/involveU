@@ -3,6 +3,7 @@ import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
 import {EventClickArg} from "@fullcalendar/angular";
 import {EventsService} from "../../services/events.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-calendar',
@@ -12,9 +13,9 @@ import {EventsService} from "../../services/events.service";
 export class CalendarComponent implements OnInit {
 
   constructor(private eventsService: EventsService,
-              private cd: ChangeDetectorRef) {}
-
-/*  options: any;*/
+              private title: Title) {
+    this.title.setTitle("involveU | Calendar")
+  }
 
   viewMoreInfoDialog: boolean = false;
 

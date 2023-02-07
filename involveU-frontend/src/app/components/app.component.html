@@ -19,7 +19,7 @@
 </div>
 
 <nav class="navbar">
-  <ng-container *ngIf="this.isDesktop; else MobileAndTabletView">
+  <ng-container *ngIf="responsiveService.deviceDesktop(); else MobileAndTabletView">
     <div class="navButtons">
       <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
       <div class="specificNavButton">

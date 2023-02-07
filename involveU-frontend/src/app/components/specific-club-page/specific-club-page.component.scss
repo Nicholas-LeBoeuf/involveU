@@ -63,9 +63,11 @@
 .clubInfoLeftGridWeb {
   grid-area: 1 / 1 / 2 / 3;
 }
+
 .clubAnnouncementsRightGridWeb {
   grid-area: 1 / 3 / 2 / 4;
 }
+
 .eventsTableContainerGridWeb {
   grid-area: 2 / 1 / 3 / 4;
 }
@@ -73,9 +75,11 @@
 .clubInfoLeftGridMobileTablet {
   grid-area: 1 / 1 / 2 / 2;
 }
+
 .clubAnnouncementsRightGridMobileTablet {
   grid-area: 2 / 1 / 3 / 2;
 }
+
 .eventsTableContainerGridMobileTablet {
   grid-area: 3 / 1 / 4 / 2;
 }
@@ -83,6 +87,11 @@
 .clubInfoLeft {
   float: left;
 }
+
+.clubNameMargin {
+  margin-bottom: 20px;
+}
+
 .clubAnnouncementsRight {
   margin-left: 30px;
   float: left;
@@ -95,7 +104,6 @@
 }
 
 .mobileTabletClubAnnouncementWidth {
-/*  max-width: 100%;*/
   margin-left: 0;
 }
 

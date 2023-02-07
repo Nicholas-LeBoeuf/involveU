@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
 import {Club} from "../../objects/club";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-schedule',
@@ -17,7 +18,9 @@ export class ScheduleComponent implements OnInit {
   constructor(private clubService: ClubService,
               private eventsService: EventsService,
               private router: Router,
-              public cookie: CookieService) {
+              public cookie: CookieService,
+              private title: Title) {
+    this.title.setTitle("involveU | Schedule")
   }
 
   userID: number;
@@ -26,8 +29,8 @@ export class ScheduleComponent implements OnInit {
 
   optionSelected: boolean = false;
 
-  locationID = null;
-  spaceID = null;
+  locationID: number;
+  spaceID: number;
   disableSpaceDropdown: boolean = false;
   locationsList: Events[] = [];
   spacesList: Events[] = [];
@@ -63,7 +66,6 @@ export class ScheduleComponent implements OnInit {
     this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
       this.eventsToSend = response;
       this.eventsToSend = this.eventsToSend.slice();
-      console.log(this.eventsToSend);
     })
     this.optionSelected = true;
   }

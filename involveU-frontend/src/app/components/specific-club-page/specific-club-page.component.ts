@@ -12,6 +12,7 @@ import {EboardService} from "../../services/eboard.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -28,7 +29,10 @@ export class SpecificClubPageComponent implements OnInit {
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              public cookie: CookieService) {}
+              public cookie: CookieService,
+              private title: Title) {
+    this.title.setTitle("involveU | Club")
+  }
 
   //BOOLEANS
   isLoggedIn: boolean = false;
@@ -118,15 +122,15 @@ export class SpecificClubPageComponent implements OnInit {
     }
   }
 
-  favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe()
+  favoriteClub() {
+    this.clubService.favoriteClub(this.userID, this.clubID).subscribe()
     this.message = 'Club successfully favorited!';
     this.successMessage = true;
     location.reload();
   }
 
-  removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe()
+  removeFromFavorites() {
+    this.clubService.unfavoriteClub(this.clubID, this.userID).subscribe()
     this.message = 'Club successfully unfavorited!';
     this.successMessage = true;
     location.reload();
@@ -135,7 +139,6 @@ export class SpecificClubPageComponent implements OnInit {
   getClubEvents() {
     this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
       this.clubEvents = response;
-      console.log(response);
     })
   }
 

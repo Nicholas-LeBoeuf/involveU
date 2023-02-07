@@ -88,7 +88,7 @@
         <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <div class="eventCardPicture">
             <div class="imageCenter">
-              <img class="eventImage" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
+              <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
             </div>
             <div class="imageMaskEvent"></div>
             <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
@@ -141,27 +141,27 @@
 
 
 <p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
-  <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
+  <div class="eventCardDialog text-center" *ngFor="let certainEvent of certainEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
-        <img class="eventImageDialog" src="assets/snhuLogoStock.png"> <!--CHANGE TO CLUB LOGO-->
+        <img class="eventImage" [src]="certainEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
       </div>
       <div class="imageMaskDialog"></div>
-      <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-      <h5 class="eventClubName">{{event.clubName}}</h5>
+      <h3 class="blueHeaders text-center">{{certainEvent.eventName}}</h3>
+      <h5 class="eventClubName">{{certainEvent.clubName}}</h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
-          <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+          <p>{{certainEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
-          <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+          <p>{{certainEvent.startTime | timeFormat}} - {{certainEvent.endTime | timeFormat}}</p>
         </div>
         <div class="eventTransportationDialog">
           <h3 class="blueHeaders text-center">Transportation</h3>
-          <ng-container *ngIf="event.isTransportation; else noTransportation">
+          <ng-container *ngIf="certainEvent.isTransportation; else noTransportation">
             <p>Transportation Provided</p>
           </ng-container>
           <ng-template #noTransportation>
@@ -170,8 +170,8 @@
         </div>
         <div class="eventTicketLinkDialog">
           <h3 class="blueHeaders text-center">Ticket Link</h3>
-          <ng-container *ngIf="event.ticketLink !== null && event.ticketLink !== ''; else noTicketLink">
-            <p>{{event.ticketLink}}</p>
+          <ng-container *ngIf="certainEvent.ticketLink !== null && certainEvent.ticketLink !== ''; else noTicketLink">
+            <p>{{certainEvent.ticketLink}}</p>
           </ng-container>
           <ng-template #noTicketLink>
             <p>N/A</p>
@@ -179,19 +179,19 @@
         </div>
         <div class="eventDescriptionDialog">
           <h3 class="blueHeaders text-center">Description</h3>
-          <p>{{event.eventDesc}}</p>
+          <p>{{certainEvent.eventDesc}}</p>
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
-          <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+          <p>{{certainEvent.eventLocation}} -> {{certainEvent.spaceName}}</p>
         </div>
       </div>
       <ng-container *ngIf="isLoggedIn">
-        <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+        <ng-container *ngIf="isUserRSVPd(certainEvent.eventID) === true; else ShowRSVP">
+          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(certainEvent.eventID)">Remove RSVP</button>
         </ng-container>
         <ng-template #ShowRSVP>
-          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(certainEvent.eventID)">RSVP</button>
         </ng-template>
       </ng-container>
       <button class="blueButton" (click)="closeViewMoreInfoDialog()">Close</button>

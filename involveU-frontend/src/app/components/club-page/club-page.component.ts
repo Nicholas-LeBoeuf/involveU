@@ -138,6 +138,14 @@ export class ClubPageComponent implements OnInit {
   getFavoritedClubEvents() {
     this.eventsService.getFutureFavortedClubEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
+      for(let i = 0; i < this.favoritedClubsEvents.length; i++) {
+        this.clubService.getClubLogo(this.favoritedClubsEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.favoritedClubsEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.favoritedClubsEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 
@@ -151,12 +159,29 @@ export class ClubPageComponent implements OnInit {
   getAllFutureEvents() {
     this.eventsService.getAllFutureEvents().subscribe(response => {
       this.allFutureEvents = response;
+      for(let i = 0; i < this.allFutureEvents.length; i++) {
+        this.clubService.getClubLogo(this.allFutureEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.allFutureEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.allFutureEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 
   getUserRSVPdEvents() {
     this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
+      console.log(response);
+      for(let i = 0; i < this.userRSVPdEvents.length; i++) {
+        this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.userRSVPdEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 

@@ -252,13 +252,14 @@ em {
 
 .eventImage {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   text-align: center;
   margin-top: 2px;
 }
 .imageMaskEvent {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
+  position: sticky;
   height: 130px;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;

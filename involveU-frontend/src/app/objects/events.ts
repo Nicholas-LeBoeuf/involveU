@@ -16,4 +16,5 @@ export interface Events {
   locationName?: string;
   space_ID?: number;
   location_ID?: number;
+  clubLogo?: any;
 }

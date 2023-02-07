@@ -171,6 +171,14 @@ public class DBServices {
 
         return users;
     }
+
+    protected List<User> getDBAllFaculty()
+    {
+        sql = "SELECT * FROM User WHERE year = 'Faculty';";
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users;
+    }
     protected List<User> getDBAllEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 1 ";

@@ -57,6 +57,13 @@ public class UserController extends DBServices{
 		else {return new ResponseEntity<>( HttpStatus.BAD_REQUEST);}
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("user/getAllFaculty")
+	public List<User>getAllFaculty()
+	{
+		foundUser = getDBAllFaculty();
 
+		return foundUser;
+	}
 
 }

@@ -33,6 +33,7 @@ import { EboardPageComponent } from './components/eboard-page/eboard-page.compon
 import {LayoutModule} from "@angular/cdk/layout";
 import {ResponsiveService} from "./services/responsive.service";
 import { DatePipe } from '@angular/common';
+import { MoreInfoComponent } from './components/more-info/more-info.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {AdminService} from "./services/admin.service";
 import {AnnouncementsService} from "./services/announcements.service";
@@ -40,6 +41,7 @@ import {ClubService} from "./services/club.service";
 import {EboardService} from "./services/eboard.service";
 import {EventsService} from "./services/events.service";
 import {UserService} from "./services/user.service";
+
 
 
 FullCalendarModule.registerPlugins([
@@ -60,7 +62,8 @@ FullCalendarModule.registerPlugins([
     ScheduleComponent,
     CalendarComponent,
     TimeFormatPipe,
-    EboardPageComponent
+    EboardPageComponent,
+    MoreInfoComponent
   ],
     imports: [
         BrowserModule,

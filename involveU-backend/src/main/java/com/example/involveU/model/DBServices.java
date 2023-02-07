@@ -504,7 +504,7 @@ public class DBServices {
 
     protected List<Events> getAllUserRsvp(int userID)
     {
-        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + ";";
+        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink,clubName, clubID FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + ";";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;

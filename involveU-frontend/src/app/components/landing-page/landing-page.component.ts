@@ -8,6 +8,7 @@ import {ResponsiveService} from "../../services/responsive.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {Title} from "@angular/platform-browser";
+import {ClubService} from "../../services/club.service";
 
 @Component({
   selector: 'app-landing-page',
@@ -17,6 +18,7 @@ import {Title} from "@angular/platform-browser";
 export class LandingPageComponent implements OnInit {
   constructor(private userService: UserService,
               private eventsService: EventsService,
+              private clubService: ClubService,
               private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
               public cookie: CookieService,
@@ -82,6 +84,14 @@ export class LandingPageComponent implements OnInit {
   getTodaysEvents() {
     this.eventsService.getTodaysEvents().subscribe((data: Events[]) => {
       this.todaysEvents = data;
+      for(let i = 0; i < this.todaysEvents.length; i++) {
+        this.clubService.getClubLogo(this.todaysEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.todaysEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.todaysEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 

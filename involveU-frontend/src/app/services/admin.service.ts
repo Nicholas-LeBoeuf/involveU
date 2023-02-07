@@ -58,9 +58,6 @@ export class AdminService {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
 
-  getClubLogo(clubID : number){
-    return this.http.get(`http://localhost:8080/api/club/getClubLogo/${clubID}`, {responseType: 'blob'});
 
-  }
 
 }

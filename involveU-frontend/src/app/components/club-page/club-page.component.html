@@ -192,7 +192,7 @@
         <h2 class="blueHeaders text-center topMargin">Featured Club</h2>
         <hr>
         <div *ngIf="featuredClubs.length > 0" class="text-center">
-          <img class="eventImage" [src]="featuredClubs[0].clubLogo" alt="Featured Club Logo - {{featuredClubs[0].clubName}}"/>
+          <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}"/>
           <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
           <button class="blueButton" (click)="goToClubPage(featuredClubs[0].clubID)">Learn More</button>

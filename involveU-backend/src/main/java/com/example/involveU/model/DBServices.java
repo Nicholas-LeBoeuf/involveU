@@ -321,6 +321,10 @@ public class DBServices {
 
         validQuery = JdbcTemplated.update(sql,clubID,userId,position);
 
+        sql = "UPDATE User SET isEboard = ? WHERE studentID = ? ";
+
+        validQuery = JdbcTemplated.update(sql,1, userId);
+
         if(validQuery == 1)
         {
             return true;
@@ -513,7 +517,7 @@ public class DBServices {
 
     protected List<Events> getAllUserRsvp(int userID)
     {
-       
+        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Spaces.location_ID, Spaces.spaceName FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + " JOIN Spaces WHERE space_ID = Events.eventLocation ORDER BY eventDate ,startTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         for(Events event: events)

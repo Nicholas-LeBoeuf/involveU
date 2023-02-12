@@ -38,7 +38,7 @@ export class EventsService {
 
   rsvpToEvent(eventID: number, userID: number) {
     return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
-  }
+  } 
 
   removeEventRSVP(eventID: number, userID: number) {
     return this.http.get(environment.apiURL + `events/removeRsvpEvent/${eventID}/${userID}`);

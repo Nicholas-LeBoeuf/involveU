@@ -118,20 +118,6 @@ public class AdminController extends DBServices {
         System.out.println(newImage);
         return new ResponseEntity<>("Success",HttpStatus.OK	);
     }
-//    
-//    @GetMapping("admin/getClubImage")
-////    public ResponseEntity<String> testImage() throws SQLException, IOException {
-////        Image clubFile;
-////        clubFile = getDBClubFile();
-////        Blob blob = clubFile.getImage();
-////        InputStream is = blob.getBinaryStream(0, blob.length());
-////        try (FileOutputStream fos = new FileOutputStream("./src/resources/tempFile.jpg")) {
-////            fos.write(is.readAllBytes());
-////            //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
-////        }
-////        return new ResponseEntity<>("success",HttpStatus.OK	);
-////
-////    }
 
 
 

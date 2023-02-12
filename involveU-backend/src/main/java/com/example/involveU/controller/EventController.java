@@ -114,7 +114,7 @@ public class EventController extends DBServices{
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @GetMapping("events/getUserRsvpEvent/{userID}")
+        @GetMapping("events/getUserRsvpEvent/{userID}")
     private  ResponseEntity<List<Events>> getUserRsvpEvents(@PathVariable("userID") int userID)
     {
         events = getAllUserRsvp(userID);

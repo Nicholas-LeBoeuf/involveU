@@ -32,6 +32,9 @@
         <a #ula="routerLinkActive" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a>
       </div>
       <div class="specificNavButton">
+        <a #ula="routerLinkActive" routerLink="/moreinfo" routerLinkActive="active" [class.active-span]="ula.isActive">More Information</a>
+      </div>
+      <div class="specificNavButton">
         <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
           <a #vla="routerLinkActive" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a>
         </ng-template>

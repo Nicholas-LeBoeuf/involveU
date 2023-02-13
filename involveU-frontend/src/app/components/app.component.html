@@ -44,8 +44,8 @@
     </div>
     <div class="buttons">
       <ng-template [ngIf]="this.cookie.get('studentID') == ''">
-        <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
-        <button class="blueButton" (click)="showLoginDialog()">Login</button>
+        <button class="yellowButton" (click)="showSignupDialog()">Sign Up</button>
+        <button class="yellowButton" (click)="showLoginDialog()">Login</button>
       </ng-template>
       <ng-template [ngIf]="this.cookie.get('studentID') != ''">
         <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg">
@@ -56,7 +56,7 @@
   <ng-template #MobileAndTabletView>
     <div class="navButtonsForMobile">
       <div class="dropdown mobileFlexNavButton">
-        <button class="blueButton" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="yellowButton" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           &#9776;
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -115,7 +115,7 @@
         </div>
       </div>
     </div>
-    <button class="blueButton centerButton" type="submit" (click)="onLoginSubmit()">Login</button>
+    <button class="yellowButton centerButton" type="submit" (click)="onLoginSubmit()">Login</button>
   </form>
   <hr class="dialogLines">
   <div class="bottomModal">
@@ -195,7 +195,7 @@
         </div>
       </div>
     </div>
-    <button class="blueButton centerButton" type="submit" (click)="onSignupSubmit()">Signup</button>
+    <button class="yellowButton centerButton" type="submit" (click)="onSignupSubmit()">Signup</button>
   </form>
   <hr class="dialogLines">
   <div class="bottomModal">

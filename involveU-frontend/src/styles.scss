@@ -51,21 +51,22 @@ em {
   margin-top: 15px;
 }
 
-.blueButton {
-  background-color: #0667B3;
-  border: 1px solid black;
+.yellowButton {
+  background-color: $GoldenYellow;
+  border: none;
   border-radius: 14px;
   height: 40px;
   padding: 0 20px;
   margin: 10px;
-  color: white;
+  color: $HeritageBlue;
+  font-weight: 900;
 }
 
-.blueButton:hover {
-  background-color: #3b88c4;
+.yellowButton:hover {
+  background-color: #fdcb54;
 }
 
-.blueButton:disabled {
+.yellowButton:disabled {
   background-color: #8d8d8d;
 }
 

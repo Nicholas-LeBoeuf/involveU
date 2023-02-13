@@ -334,7 +334,7 @@
           </div>
         </div>
         <div class="centerButton">
-          <button class="form-submit-button yellowButton" type="submit" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
+          <button class="form-submit-button yellowButton" type="submit" [disabled]="isOSIAnnouncementValid()" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
         </div>
       </div>
     </form>

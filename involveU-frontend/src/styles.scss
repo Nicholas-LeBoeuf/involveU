@@ -72,12 +72,25 @@ em {
 
 .form-control {
   height: 40px;
-
+  width: 165px;
+  margin: 0 auto;
   border-radius: 10px;
 }
 
 .formSelect {
-  width: 209px;
+  width: 165px;
+}
+
+.form-control-mobile {
+  width: 100px;
+  margin: 0 auto;
+  border-radius: 10px;
+  height: 40px;
+}
+
+.formSelectMobile {
+  width: 100px;
+  padding: 1px 2px;
 }
 
 .formInputs {

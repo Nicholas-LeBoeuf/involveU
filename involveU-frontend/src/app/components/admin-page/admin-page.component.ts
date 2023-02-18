@@ -20,31 +20,11 @@ export class AdminPageComponent implements OnInit {
   createUserForm: FormGroup;
   deleteUserForm: FormGroup;
   createClubForm : FormGroup;
+  deleteClubForm: FormGroup;
   assignAdvisorForm : FormGroup;
   osiAnnouncementForm : FormGroup;
-  clubNames: Club[] = [];
-  userList: User[] = [];
-  nonEboardList: User[] = [];
-  eboardList: User[] = [];
-  advisorList: User[] = [];
-  clubEboard: User[] = [];
-  assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
-  selectedClub: any = {};
-  clubID!: number;
-  retrievedResponse: any;
-
-  addEBoardClubID: FormControl = new FormControl(null);
-  removeEBoardClubID: FormControl = new FormControl(null);
-  assignAdvisorClubID: FormControl = new FormControl(null);
-  deleteUserID: FormControl = new FormControl(null);
-  nonEboardID: FormControl = new FormControl(null);
-  eboardID: FormControl = new FormControl(null);
-  advisorID: FormControl = new FormControl(null);
-  createClubAdvisorID: FormControl = new FormControl(null);
-  todaysDate = new Date().toString();
-
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -82,6 +62,10 @@ export class AdminPageComponent implements OnInit {
       userID: ['', Validators.required]
     })
 
+    this.deleteClubForm = this.formBuilder.group({
+      clubID: ['', Validators.required]
+    })
+
     this.assignAdvisorForm = this.formBuilder.group({
       advisorID: ['', Validators.required]
     });
@@ -104,20 +88,52 @@ export class AdminPageComponent implements OnInit {
     });
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
-  labelEboard: User[];
+
+  //BOOLEANS
   createClubMessage: boolean = false;
   createClubFailed: boolean = false;
   createUserSuccess: boolean = false;
   createUserFailed: boolean = false;
   deleteUserSuccess: boolean = false;
+  deleteClubSuccess: boolean = false;
   deleteUserFailed: boolean = false;
+  deleteClubFailed: boolean = false;
   assignAdvisorSuccess: boolean = false;
   assignAdvisorFailed: boolean = false;
   assignEboardSuccess: boolean = false;
   assignEboardFailed: boolean = false;
   removeEboardSuccess: boolean = false;
   removeEboardFailed: boolean = false;
-  disableUserDropdown = true;
+  disableUserDropdown:boolean = true;
+  assign: boolean = true;
+
+  //NUMBERS
+  clubID!: number;
+
+  //STRINGS
+
+
+  //OBJECTS
+  labelEboard: User[];
+  clubNames: Club[] = [];
+  userList: User[] = [];
+  nonEboardList: User[] = [];
+  eboardList: User[] = [];
+  advisorList: User[] = [];
+  clubEboard: User[] = [];
+  selectedClub: any = {};
+
+  //FORM CONTROLSc
+  addEBoardClubID: FormControl = new FormControl(null);
+  removeEBoardClubID: FormControl = new FormControl(null);
+  removeClubID: FormControl = new FormControl(null);
+  assignAdvisorClubID: FormControl = new FormControl(null);
+  deleteUserID: FormControl = new FormControl(null);
+  nonEboardID: FormControl = new FormControl(null);
+  eboardID: FormControl = new FormControl(null);
+  advisorID: FormControl = new FormControl(null);
+  createClubAdvisorID: FormControl = new FormControl(null);
+  todaysDate = new Date().toString();
 
 
   ngOnInit(): void {
@@ -194,6 +210,10 @@ export class AdminPageComponent implements OnInit {
     return this.deleteUserForm.controls;
   }
 
+  get deleteClubFormInputs() {
+    return this.deleteClubForm.controls;
+  }
+
   get assignAdvisorFormInputs() {
     return this.assignAdvisorForm.controls;
   }
@@ -246,6 +266,24 @@ export class AdminPageComponent implements OnInit {
       (error) => {
         console.log(error);
         this.deleteUserFailed = true;
+      });
+  }
+
+  deleteClubSubmit(){
+    this.adminService.deleteClub(this.removeClubID.value).subscribe(success =>{
+        console.log(success);
+        console.log("test");
+        this.deleteClubSuccess = true;
+        location.reload();
+      },
+      (error) => {
+        console.log(error);
+        if(error.status === 200)
+        {
+          this.deleteClubSuccess = true;
+          location.reload();
+        }
+        this.deleteClubFailed = true;
       });
   }
 
@@ -348,6 +386,15 @@ export class AdminPageComponent implements OnInit {
 
   isDeleteUserValid() {
     if (this.deleteUserID.value == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isDeleteClubValid() {
+    if (this.removeClubID.value == null) {
       return true;
     }
     else {

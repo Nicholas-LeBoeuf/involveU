@@ -117,7 +117,22 @@
     </p-tabPanel>
 
     <p-tabPanel header="Delete Club">
-      Content 3
+      <h1 class="text-center blueHeaders adminPageTitleMargin">Delete Club</h1>
+      <form [formGroup]="deleteClubForm">
+        <div class="assignAdvisor">
+          <div class="form-group text-center">
+            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="removeClubID" optionValue="clubID" optionLabel="clubName" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            <div *ngIf="deleteUserFormInputs?.['email']?.invalid && (deleteUserFormInputs?.['email']?.dirty || deleteUserFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="deleteUserFormInputs?.['email']?.errors?.['required']">
+                Email is required
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteClubValid()" (click)="deleteClubSubmit()">Delete Club</button>
+          </div>
+        </div>
+      </form>
     </p-tabPanel>
 
     <p-tabPanel header="Add User">

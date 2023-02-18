@@ -18,6 +18,10 @@ export class AdminService {
     return this.http.post(environment.apiURL + `club/insertClub`, newClub, {responseType: 'text'});
   }
 
+  deleteClub(clubID: number) {
+    return this.http.delete(environment.apiURL + `club/deleteClub/${clubID}`);
+  }
+
   createUser(newUser: User) {
     return this.http.post(environment.apiURL + `admin/createUser`, newUser, {responseType: 'text'});
   }

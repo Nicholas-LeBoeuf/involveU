@@ -657,5 +657,13 @@ public class DBServices {
 
         return validQuery == 1;
     }
+    protected boolean insertDBNewSocialMedia(SocialMedia newSM)
+    {
+        sql = "INSERT INTO SocialMedia (Platform,profileName,link, clubID) VALUES (?,?,?,?);";
+
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(), newSM.getProfileName(), newSM.getLink(), newSM.getClubID());
+
+        return validQuery == 1;
+    }
 
 }

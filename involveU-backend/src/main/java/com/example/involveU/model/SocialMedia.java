@@ -6,6 +6,7 @@ public class SocialMedia {
   String platform;
   String link;
   String profileName;
+  int clubID;
 
   public int getSocialMediaID() {
     return socialMediaID;
@@ -38,7 +39,13 @@ public class SocialMedia {
   public void setProfileName(String profileName) {
     this.profileName = profileName;
   }
+  public int getClubID() {
+    return clubID;
+  }
 
+  public void setClubID(int clubID) {
+    this.clubID = clubID;
+  }
 
 
 }

@@ -170,6 +170,20 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
     }
 
+    @PostMapping("/club/insertNewSocialMedia")
+    private ResponseEntity<String> insertNewSocialMedia(@RequestBody SocialMedia newSM)
+    {
+
+        if(insertDBNewSocialMedia(newSM))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);        }
+
+    }
+
 
 
 }

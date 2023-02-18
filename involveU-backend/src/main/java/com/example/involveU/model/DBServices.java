@@ -237,6 +237,15 @@ public class DBServices {
             return clubs.get(0);
         }
     }
+    protected  Boolean deleteDBClub(int clubID)
+    {
+        sql = "DELETE FROM Club WHERE clubID = ?";
+
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery ==1;
+    }
+
     protected Boolean insertNewClub(Club newClub)
     {
         sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, advisorID) Values (?,?,?,?,?,?,?,?,?);";
@@ -636,11 +645,7 @@ public class DBServices {
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
-
-
-
     //SOCIAL MEDIA
-
     protected List<SocialMedia> getDBClubSocialMedia(int clubID)
     {
         sql = "SELECT * FROM SocialMedia WHERE clubID = " + clubID + ";";

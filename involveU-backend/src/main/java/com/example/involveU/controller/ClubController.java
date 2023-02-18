@@ -48,6 +48,21 @@ public class ClubController extends DBServices{
 
   }
 
+  @DeleteMapping ("/club/deleteClub/{clubID}")
+  private ResponseEntity<String> deleteClub(@PathVariable("clubID") int clubID)
+  {
+      if(deleteDBClub(clubID))
+      {
+          return new ResponseEntity<>("success", HttpStatus.OK);
+      }
+      else
+      {
+          return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+      }
+
+  }
+
+
   @PostMapping ("/club/insertClub")
   private ResponseEntity<String> insertClub(@RequestBody Club newClub)
   {

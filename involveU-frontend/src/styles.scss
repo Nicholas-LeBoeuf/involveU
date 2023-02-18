@@ -51,32 +51,46 @@ em {
   margin-top: 15px;
 }
 
-.blueButton {
-  background-color: #0667B3;
-  border: 1px solid black;
+.yellowButton {
+  background-color: $GoldenYellow;
+  border: none;
   border-radius: 14px;
   height: 40px;
   padding: 0 20px;
   margin: 10px;
-  color: white;
+  color: $HeritageBlue;
+  font-weight: 900;
 }
 
-.blueButton:hover {
-  background-color: #3b88c4;
+.yellowButton:hover {
+  background-color: #fdcb54;
 }
 
-.blueButton:disabled {
+.yellowButton:disabled {
   background-color: #8d8d8d;
 }
 
 .form-control {
   height: 40px;
-
+  width: 165px;
+  margin: 0 auto;
   border-radius: 10px;
 }
 
 .formSelect {
-  width: 209px;
+  width: 165px;
+}
+
+.form-control-mobile {
+  width: 100px;
+  margin: 0 auto;
+  border-radius: 10px;
+  height: 40px;
+}
+
+.formSelectMobile {
+  width: 100px;
+  padding: 1px 2px;
 }
 
 .formInputs {

@@ -1,7 +1,7 @@
 <div class="buttonContainer" *ngIf="!optionSelected">
   <h1>Filter Calendar</h1>
-  <button class="blueButton" (click)="activateAllEvents()">Show All Events</button>
-  <button class="blueButton" (click)="activateFavoritedClubEvents()" [disabled]="!userID">Show Favorited Club Events</button>
+  <button class="yellowButton" (click)="activateAllEvents()">Show All Events</button>
+  <button class="yellowButton" (click)="activateFavoritedClubEvents()" [disabled]="!userID">Show Favorited Club Events</button>
   <p-dropdown class="clubDropdown" [options]="dropdownOptions" optionLabel="clubName" placeholder="Select a Club to View Events" (onChange)="onClubSelected($event)"></p-dropdown>
   <div class="filterByLocation">
     <h3>Filter by Location</h3>
@@ -18,7 +18,7 @@
 
 <ng-template [ngIf]="eventsToSend && optionSelected">
   <div class="centerButton">
-    <button class="blueButton" *ngIf="optionSelected" (click)="returnToFilter()">Return to Filters</button>
+    <button class="yellowButton" *ngIf="optionSelected" (click)="returnToFilter()">Return to Filters</button>
   </div>
   <app-calendar [eventsToDisplay]="eventsToSend"></app-calendar>
 </ng-template>

@@ -36,7 +36,7 @@ ul {
 
 .involveUModalScale {
   width: 200px;
-  height: 174px;
+  height: auto;
   display: block;
   margin: 4% auto;
 }
@@ -58,6 +58,11 @@ ul {
   margin: auto;
 }
 
+.centerButtonDiv {
+  display: flex;
+  justify-content: center;
+}
+
 .signupGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -65,6 +70,8 @@ ul {
   grid-column-gap: 0;
   grid-row-gap: 0;
   justify-items: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .input1 { grid-area: 1 / 1 / 2 / 2; }
@@ -202,4 +209,8 @@ ul {
 .dropdown-item {
   text-align: center;
   margin: 5px auto;
+}
+
+.buttonMargin {
+  margin-bottom: 10px;
 }

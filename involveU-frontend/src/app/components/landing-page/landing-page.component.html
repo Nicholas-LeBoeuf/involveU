@@ -32,7 +32,7 @@
         <h3>See What is going on this week at Southern New Hampshire University</h3>
       </div>
       <div class="thisWeekButton">
-        <button class="blueButton" routerLink="/schedule">View Events</button>
+        <button class="yellowButton" routerLink="/schedule">View Events</button>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
     <h5 class="text-center yellow-text span-width">See What is going on this week at Southern New Hampshire University</h5>
 
     <div class="thisWeekButton">
-      <button class="blueButton" routerLink="/schedule">View Events</button>
+      <button class="yellowButton" routerLink="/schedule">View Events</button>
     </div>
   </div>
 </ng-template>
@@ -98,10 +98,10 @@
             <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
             <ng-container *ngIf="isLoggedIn">
               <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-                <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+                <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
               </ng-container>
               <ng-template #ShowRSVP>
-                <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
               </ng-template>
             </ng-container>
           </div>
@@ -140,7 +140,7 @@
 
 
 
-<p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
+<p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
   <div class="eventCardDialog text-center" *ngFor="let certainEvent of certainEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
@@ -188,13 +188,13 @@
       </div>
       <ng-container *ngIf="isLoggedIn">
         <ng-container *ngIf="isUserRSVPd(certainEvent.eventID) === true; else ShowRSVP">
-          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(certainEvent.eventID)">Remove RSVP</button>
+          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(certainEvent.eventID)">Remove RSVP</button>
         </ng-container>
         <ng-template #ShowRSVP>
-          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(certainEvent.eventID)">RSVP</button>
+          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(certainEvent.eventID)">RSVP</button>
         </ng-template>
       </ng-container>
-      <button class="blueButton" (click)="closeViewMoreInfoDialog()">Close</button>
+      <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
     </div>
   </div>
 </p-dialog>

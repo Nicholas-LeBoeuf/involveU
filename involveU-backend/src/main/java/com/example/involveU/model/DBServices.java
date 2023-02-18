@@ -665,5 +665,13 @@ public class DBServices {
 
         return validQuery == 1;
     }
+    protected boolean updateSocialMedia(SocialMedia newSM)
+    {
+        sql = "UPDATE SocialMedia SET Platform = ?, link = ?, profileName = ?, link = ?";
+
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName());
+
+        return validQuery == 1;
+    }
 
 }

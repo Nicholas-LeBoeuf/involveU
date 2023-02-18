@@ -184,6 +184,21 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
     }
 
+    @PutMapping("/club/editSocialMedia")
+    private ResponseEntity<String> eidtSocialMedia(@RequestBody SocialMedia newSM)
+    {
+        if(updateSocialMedia(newSM))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
 
 
 }

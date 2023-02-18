@@ -52,7 +52,6 @@ public class DBServices {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
@@ -253,7 +252,6 @@ public class DBServices {
         clubLogoPath = JdbcTemplated.queryForObject(sql,new Object[]{clubID}, String.class);
 
         return clubLogoPath;
-
 
     }
     protected List<Club> searchDBClub(String searchContent)
@@ -561,25 +559,6 @@ public class DBServices {
         }
         return events;
     }
-
-    protected boolean uploadImage(MultipartFile file)
-    {
-
-        try {
-            Blob blob = new SerialBlob(file.getBytes());
-            System.out.println(file.getBytes()[0]);
-            sql = "INSERT INTO Images (imageName, Image, clubID) VALUES (?,?,?)";
-
-            validQuery = JdbcTemplated.update(sql, file.getName(), blob, 3);
-        }catch(IOException e) {
-            System.out.print("Failed");
-        } catch (SerialException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return validQuery == 1;
-    }
     //LOCATIONS CONTROLLER
 
    protected List<Space> getAllDBLocations()
@@ -656,19 +635,6 @@ public class DBServices {
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
-
-
-
-    //COMMENTED OUT FOR FUTURE IMPLEMENTATION
-//    protected Image getDBClubFile()
-//    {
-//
-//        sql = "SELECT imageName, Image FROM Images WHERE clubID = 3";
-//        List<Image> clubFile = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Image.class));
-//
-//        return clubFile.get(0);
-//    }
-
 
 
 }

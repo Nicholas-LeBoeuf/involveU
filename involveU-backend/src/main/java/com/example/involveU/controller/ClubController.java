@@ -20,6 +20,7 @@ public class ClubController extends DBServices{
   private List<EBoard> EboardList;
   private Club currentClub;
   private String repsonse;
+  private List <SocialMedia> clubSMs;
 
 
   @GetMapping("/clubs")
@@ -148,7 +149,27 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
          return new ResponseEntity<>(test,HttpStatus.OK);
 
      }
-    // @GetMapping("/club/getClubSocialMedia/{clubID}")
+    @GetMapping("/club/getClubSocialMedia/{clubID}")
+    private ResponseEntity<List<SocialMedia>> getSocialMedia(@PathVariable("clubID") int clubID)
+    {
+        clubSMs = getDBClubSocialMedia(clubID);
+        return new ResponseEntity<>(clubSMs, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/club/deleteClubSocialMedia/{socialMediaID}")
+    private ResponseEntity<String> deleteSocialMedia(@PathVariable("socialMediaID") int smID)
+    {
+        if(deleteDBSocialMedia(smID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 
 }

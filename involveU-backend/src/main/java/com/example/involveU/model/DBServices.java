@@ -32,6 +32,7 @@ public class DBServices {
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
+    private List<SocialMedia> clubSMs;
     private String sql;
     private int validQuery;
     @Autowired
@@ -636,5 +637,25 @@ public class DBServices {
         return announcements;
     }
 
+
+
+    //SOCIAL MEDIA
+
+    protected List<SocialMedia> getDBClubSocialMedia(int clubID)
+    {
+        sql = "SELECT * FROM SocialMedia WHERE clubID = " + clubID + ";";
+
+        clubSMs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(SocialMedia.class));
+
+        return clubSMs;
+    }
+    protected boolean deleteDBSocialMedia(int smID)
+    {
+        sql = "DELETE FROM SocialMedia WHERE socialMediaID = ?;";
+
+        validQuery = JdbcTemplated.update(sql,smID);
+
+        return validQuery == 1;
+    }
 
 }

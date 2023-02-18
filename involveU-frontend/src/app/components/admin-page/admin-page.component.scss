@@ -67,3 +67,18 @@
     border-bottom-left-radius: 10px;
   }
 }
+
+//Dropdown input
+.adminDropdown::ng-deep {
+  .p-dropdown {
+    width: 50%;
+    text-align: left;
+  }
+}
+
+.adminDropdownMobile::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    width: 80%;
+  }
+}

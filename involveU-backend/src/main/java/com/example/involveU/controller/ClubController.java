@@ -148,6 +148,8 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
          return new ResponseEntity<>(test,HttpStatus.OK);
 
      }
+     @GetMapping("/club/getClubSocialMedia/{clubID}")
+
 
 }
 

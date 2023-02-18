@@ -108,14 +108,12 @@ public class AdminController extends DBServices {
     
     @PostMapping("admin/testImage")
     public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile newImage) throws IOException {
-        //InputStream inputStream =  new BufferedInputStream(newImage.getInputStream());
+
         S3Util s3 = new S3Util();
         String filename = newImage.getOriginalFilename();
         System.out.println(filename);
+        s3.uploadFile(filename, newImage.getInputStream());
 
-       s3.uploadFile(filename, newImage.getInputStream());
-
-        System.out.println(newImage);
         return new ResponseEntity<>("Success",HttpStatus.OK	);
     }
 

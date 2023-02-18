@@ -19,13 +19,13 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 public class S3Util {
 
-
     private static final String BUCKET = "involveu-images";
-
+    private static final String accessKeyId = "AKIAUBDAJ3HECCK266H7";
+    private static final String secretAccessKey = "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";
+    Region region = Region.US_EAST_1;
     public void uploadFile(String fileName, InputStream inputStream) throws IOException {
 
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create("AKIAUBDAJ3HECCK266H7", "SC7ZmhmcqGU5pRVHsVJSE/5VGWj/zIiopnP0IMb+");
-        Region region = Region.US_EAST_1;
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
         S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 
         PutObjectRequest request = PutObjectRequest.builder().bucket(BUCKET).key(fileName).acl("public-read").build();
@@ -35,24 +35,12 @@ public class S3Util {
 
     public byte[] downloadFile(String keyName) throws IOException {
 
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create("AKIAUBDAJ3HECCK266H7", "SC7ZmhmcqGU5pRVHsVJSE/5VGWj/zIiopnP0IMb+");
-        Region region = Region.US_EAST_1;
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
         S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
-
 
         GetObjectRequest request = GetObjectRequest.builder().bucket(BUCKET).key(keyName).build();
 
         ResponseInputStream<GetObjectResponse> inputStream = client.getObject(request);
-
-        //  BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream((keyName)));
-//        byte[] buffer = new byte[1000000000];
-//        int bytesRead = -1;
-
-//        File targetFile = new File("src/main/resources/targetFile.png");
-//        java.nio.file.Files.copy(
-//                inputStream,
-//                targetFile.toPath(),
-//                StandardCopyOption.REPLACE_EXISTING);
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -60,12 +48,7 @@ public class S3Util {
         byte[] data = new byte[16384];
 
         ByteArrayOutputStream outputStream = null;
-        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, nRead);
-        }
-
-
-
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {buffer.write(data, 0, nRead);}
 
         return buffer.toByteArray();
     }

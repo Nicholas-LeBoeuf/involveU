@@ -93,10 +93,12 @@
           </div>
         </div>
         <div class="form-group ">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Advisor" formControlName="advisorID">
-          <div *ngIf="clubCreationFormInputs?.['advisorID']?.invalid && (clubCreationFormInputs?.['advisorID']?.dirty || clubCreationFormInputs?.['advisorID']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['advisorID']?.errors?.['required']">
-              Club Advisor is required
+          <div class="text-center">
+            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="advisorList" [formControl]="createClubAdvisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            <div *ngIf="assignAdvisorFormInputs?.['email']?.invalid && (assignAdvisorFormInputs?.['email']?.dirty || assignAdvisorFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="assignAdvisorFormInputs?.['email']?.errors?.['required']">
+                Advisor email is required
+              </div>
             </div>
           </div>
         </div>
@@ -281,7 +283,7 @@
             </div>
           </div>
           <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="nonAdvisorList" [formControl]="nonAdvisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="advisorList" [formControl]="advisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
             <div *ngIf="assignAdvisorFormInputs?.['email']?.invalid && (assignAdvisorFormInputs?.['email']?.dirty || assignAdvisorFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
               <div *ngIf="assignAdvisorFormInputs?.['email']?.errors?.['required']">
                 Advisor email is required

@@ -6,7 +6,6 @@ import {AdminService} from "../../services/admin.service";
 import {Club} from "../../objects/club";
 import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
-import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
 import {Title} from "@angular/platform-browser";
@@ -27,17 +26,14 @@ export class AdminPageComponent implements OnInit {
   userList: User[] = [];
   nonEboardList: User[] = [];
   eboardList: User[] = [];
-  nonAdvisorList: User[] = [];
+  advisorList: User[] = [];
   clubEboard: User[] = [];
   assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
   selectedClub: any = {};
   clubID!: number;
-  base64Data: any;
-  retrivedFile:any;
   retrievedResponse: any;
-  fileName: string;
 
   addEBoardClubID: FormControl = new FormControl(null);
   removeEBoardClubID: FormControl = new FormControl(null);
@@ -45,7 +41,8 @@ export class AdminPageComponent implements OnInit {
   deleteUserID: FormControl = new FormControl(null);
   nonEboardID: FormControl = new FormControl(null);
   eboardID: FormControl = new FormControl(null);
-  nonAdvisorID: FormControl = new FormControl(null);
+  advisorID: FormControl = new FormControl(null);
+  createClubAdvisorID: FormControl = new FormControl(null);
   todaysDate = new Date().toString();
 
 
@@ -123,54 +120,22 @@ export class AdminPageComponent implements OnInit {
   disableUserDropdown = true;
 
 
-  uploadedFiles: any[] = [];
   ngOnInit(): void {
     this.fillClubList();
     this.fillUserList();
     this.fillNonEboardList();
     this.fillEboardList();
-    this.fillNonAdvisorList();
+    this.fillAdvisorList();
     this.getEboardMembers();
   }
   onUpload(event) {
+    const file:File = event.files[0];
 
-    console.log(event.files[0])
-    console.log(event);
-
-    //this.adminService.sendImage(event.files[0]).subscribe()
-   console.log("made it");
-    const file:File = event.target.files[0];
     this.adminService.sendImage(file).subscribe(response => {
-
       console.log(response);
-    })
-    // if (file) {
-    //
-    //   this.fileName = file.name;
-    //
-    //   const formData = new FormData();
-    //
-    //   formData.append("thumbnail", file);
-    //
-    //   //this.adminService.sendImage(formData).subscribe()
-    //
-    // }
-
-  }
-  getClubLogo()
-  {
-    this.clubService.getClubLogo(3).subscribe(response => {
-      console.log(response);
-      this. retrievedResponse = response;
-
-      const reader = new FileReader();
-      reader.onload = (e) => this.retrievedResponse = e.target.result;
-      reader.readAsDataURL(new Blob([response]));
-      console.log(this.retrievedResponse);
     })
 
   }
-
 
   fillClubList() {
     this.clubService.getAllClubs().subscribe((response: Club[]) => {
@@ -208,9 +173,9 @@ export class AdminPageComponent implements OnInit {
       });
   }
 
-  fillNonAdvisorList() {
+  fillAdvisorList() {
     this.userService.getAllFaculty().subscribe((response: User[]) => {
-        this.nonAdvisorList = response;
+        this.advisorList = response;
       },
       (error) => {
         console.log(error)
@@ -246,7 +211,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createClubSubmit(){
-    const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubForm.value.advisorID}
+    const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubAdvisorID.value}
     console.log(clubInfo);
     this.adminService.insertNewClub(clubInfo).subscribe(success =>{
         this.createClubMessage = true;
@@ -310,7 +275,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   assignAdvisorSubmit(){
-    this.adminService.assignNewAdvisor(this.nonAdvisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
+    this.adminService.assignNewAdvisor(this.advisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
         console.log(success);
         this.assignAdvisorSuccess = true;
         location.reload();
@@ -364,7 +329,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateClubValid() {
-    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubForm.value.advisorID == '') {
+    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubAdvisorID.value == null) {
       return true;
     }
     else {
@@ -400,7 +365,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isAssignAdvisorValid() {
-    if (this.assignAdvisorClubID.value == null || this.nonAdvisorID.value == null) {
+    if (this.assignAdvisorClubID.value == null || this.advisorID.value == null) {
       return true;
     }
     else {

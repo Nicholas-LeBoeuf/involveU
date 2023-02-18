@@ -32,6 +32,7 @@ public class DBServices {
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
+    private List<SocialMedia> clubSMs;
     private String sql;
     private int validQuery;
     @Autowired
@@ -236,6 +237,15 @@ public class DBServices {
             return clubs.get(0);
         }
     }
+    protected  Boolean deleteDBClub(int clubID)
+    {
+        sql = "DELETE FROM Club WHERE clubID = ?";
+
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery ==1;
+    }
+
     protected Boolean insertNewClub(Club newClub)
     {
         sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, advisorID) Values (?,?,?,?,?,?,?,?,?);";
@@ -635,6 +645,38 @@ public class DBServices {
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
+    //SOCIAL MEDIA
+    protected List<SocialMedia> getDBClubSocialMedia(int clubID)
+    {
+        sql = "SELECT * FROM SocialMedia WHERE clubID = " + clubID + ";";
 
+        clubSMs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(SocialMedia.class));
+
+        return clubSMs;
+    }
+    protected boolean deleteDBSocialMedia(int smID)
+    {
+        sql = "DELETE FROM SocialMedia WHERE socialMediaID = ?;";
+
+        validQuery = JdbcTemplated.update(sql,smID);
+
+        return validQuery == 1;
+    }
+    protected boolean insertDBNewSocialMedia(SocialMedia newSM)
+    {
+        sql = "INSERT INTO SocialMedia (Platform,profileName,link, clubID) VALUES (?,?,?,?);";
+
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(), newSM.getProfileName(), newSM.getLink(), newSM.getClubID());
+
+        return validQuery == 1;
+    }
+    protected boolean updateSocialMedia(SocialMedia newSM)
+    {
+        sql = "UPDATE SocialMedia SET Platform = ?, link = ?, profileName = ?, link = ?";
+
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName());
+
+        return validQuery == 1;
+    }
 
 }

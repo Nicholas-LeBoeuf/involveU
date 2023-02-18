@@ -10,6 +10,7 @@ import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
 import {Title} from "@angular/platform-browser";
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
   selector: 'app-admin-page',
@@ -51,8 +52,9 @@ export class AdminPageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private clubService: ClubService,
-              public cookie: CookieService,
+              public responsiveService: ResponsiveService,
               private adminService: AdminService,
+              public cookie: CookieService,
               private datePipe: DatePipe,
               private title: Title) {
     this.title.setTitle("involveU | Admin")

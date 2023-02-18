@@ -18,8 +18,6 @@ import {Announcement} from "../../objects/announcements";
   styleUrls: ['./club-page.component.scss']
 })
 export class ClubPageComponent implements OnInit {
-  trophy: typeof faTrophy;
-  faMedal: typeof faMedal;
 
   constructor(private clubService: ClubService,
               private eventsService: EventsService,

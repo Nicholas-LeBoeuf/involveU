@@ -41,6 +41,7 @@ import {ClubService} from "./services/club.service";
 import {EboardService} from "./services/eboard.service";
 import {EventsService} from "./services/events.service";
 import {UserService} from "./services/user.service";
+import {TabViewModule} from "primeng/tabview";
 
 
 
@@ -85,6 +86,7 @@ FullCalendarModule.registerPlugins([
         FileUploadModule,
         LayoutModule,
         FontAwesomeModule,
+        TabViewModule,
     ],
   providers: [
     CookieService,

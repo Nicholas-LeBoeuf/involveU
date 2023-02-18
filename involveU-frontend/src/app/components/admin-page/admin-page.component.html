@@ -1,4 +1,141 @@
-<div class="leftAdminDiv">
+<div class="blueTitleBar text-center adminPagePadding">
+  <img class="SNHULogoAdminPage adminPageTitleMargin" src="assets/SNHU-Logo-White.png" alt="Southern New Hampshire University logo with white text">
+  <h1 class="yellow-text adminPageTitleMargin">Admin Page</h1>
+</div>
+
+<div class="container adminContainer">
+  <p-tabView [scrollable]="true">
+
+    <p-tabPanel header="Announcements">
+      <h1 class="text-center blueHeaders adminPageTitleMargin">OSI Announcements</h1>
+      <form [formGroup]="osiAnnouncementForm">
+        <div class="osiAnnouncements">
+          <div class="form-group">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Title" formControlName="announcementTitle">
+            <div *ngIf="osiAnnouncementFormInputs?.['announcementTitle']?.invalid && (osiAnnouncementFormInputs?.['announcementTitle']?.dirty || osiAnnouncementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="osiAnnouncementFormInputs?.['announcementTitle']?.errors?.['required']">
+                Announcement Title is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs dateInputLabel" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="date" placeholder="Expires On: &nbsp;" formControlName="expiresOn">
+            <div *ngIf="osiAnnouncementFormInputs?.['expiresOn']?.invalid && (osiAnnouncementFormInputs?.['expiresOn']?.dirty || osiAnnouncementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="osiAnnouncementFormInputs?.['expiresOn']?.errors?.['required']">
+                Expiration Date is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
+            <div *ngIf="osiAnnouncementFormInputs?.['contentOfAnnouncement']?.invalid && (osiAnnouncementFormInputs?.['contentOfAnnouncement']?.dirty || osiAnnouncementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="osiAnnouncementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
+                Announcement content is required
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="form-submit-button yellowButton" type="submit" [disabled]="isOSIAnnouncementValid()" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
+          </div>
+        </div>
+      </form>
+    </p-tabPanel>
+
+    <p-tabPanel header="Add Club">
+      <h1 class="text-center blueHeaders adminPageTitleMargin">Create Club</h1>
+      <form [formGroup]="createClubForm">
+
+          <div class="form-group ">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Name" formControlName="clubName">
+            <div *ngIf="clubCreationFormInputs?.['clubName']?.invalid && (clubCreationFormInputs?.['clubName']?.dirty || clubCreationFormInputs?.['clubName']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubName']?.errors?.['required']">
+                Club Name is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Affiliation" formControlName="clubAffiliation">
+            <div *ngIf="clubCreationFormInputs?.['clubAffiliation']?.invalid && (clubCreationFormInputs?.['clubAffiliation']?.dirty || clubCreationFormInputs?.['clubAffiliation']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubAffiliation']?.errors?.['required']">
+                Club Affiliation is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Club Biography" formControlName="clubBio"></textarea>
+            <div *ngIf="clubCreationFormInputs?.['clubBio']?.invalid && (clubCreationFormInputs?.['clubBio']?.dirty || clubCreationFormInputs?.['clubBio']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubBio']?.errors?.['required']">
+                Club Biography is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Mission" formControlName="clubMission"></textarea>
+            <div *ngIf="clubCreationFormInputs?.['clubMission']?.invalid && (clubCreationFormInputs?.['clubMission']?.dirty || clubCreationFormInputs?.['clubMission']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubMission']?.errors?.['required']">
+                Club Mission is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Vision" formControlName="clubVision"></textarea>
+            <div *ngIf="clubCreationFormInputs?.['clubVision']?.invalid && (clubCreationFormInputs?.['clubVision']?.dirty || clubCreationFormInputs?.['clubVision']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubVision']?.errors?.['required']">
+                Club Vision is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Values" formControlName="clubValues"></textarea>
+            <div *ngIf="clubCreationFormInputs?.['clubValues']?.invalid && (clubCreationFormInputs?.['clubValues']?.dirty || clubCreationFormInputs?.['clubValues']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubValues']?.errors?.['required']">
+                Club Value is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Advisor" formControlName="advisorID">
+            <div *ngIf="clubCreationFormInputs?.['advisorID']?.invalid && (clubCreationFormInputs?.['advisorID']?.dirty || clubCreationFormInputs?.['advisorID']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['advisorID']?.errors?.['required']">
+                Club Advisor is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <p-fileUpload [ngClass]="{'adminImageUpload': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminImageUploadMobile': responsiveService.deviceMobile()}" name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)"></p-fileUpload>
+            <div *ngIf="clubCreationFormInputs?.['clubLogo']?.invalid && (clubCreationFormInputs?.['clubLogo']?.dirty || clubCreationFormInputs?.['clubLogo']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="clubCreationFormInputs?.['clubLogo']?.errors?.['required']">
+                Club Logo is required
+              </div>
+            </div>
+          </div>
+        <div class="text-center">
+          <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateClubValid()" (click)="createClubSubmit()">Submit club</button>
+        </div>
+      </form>
+    </p-tabPanel>
+
+    <p-tabPanel header="Delete Club">
+      Content 3
+    </p-tabPanel>
+    <p-tabPanel header="Add User">
+      Content 1
+    </p-tabPanel>
+    <p-tabPanel header="Delete User">
+      Content 2
+    </p-tabPanel>
+    <p-tabPanel header="Add E-Board Member">
+      Content 3
+    </p-tabPanel>
+    <p-tabPanel header="Remove E-Board Member">
+      Content 2
+    </p-tabPanel>
+    <p-tabPanel header="Assign Advisor">
+      Content 3
+    </p-tabPanel>
+  </p-tabView>
+</div>
+<!--<div class="leftAdminDiv">
   <div *ngIf="createClubMessage === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
     <p>Club creation successful!</p>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -54,7 +191,6 @@
           </div>
         </div>
         <div class="form-group createClubInputs">
-        <!--  <input class="form-control formInputs" type="text" placeholder="Club Logo" formControlName="clubLogo">-->
           <button class = "yellowButton" (click)="getClubLogo()">Club Logo</button>
           <img [src] = "retrievedResponse" />
           <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)"></p-fileUpload>
@@ -339,4 +475,4 @@
       </div>
     </form>
   </div>
-</div>
+</div>-->

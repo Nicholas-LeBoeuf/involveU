@@ -13,7 +13,6 @@ import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
 import {Title} from "@angular/platform-browser";
 
-
 @Component({
   selector: 'app-eboard-page',
   templateUrl: './eboard-page.component.html',
@@ -108,6 +107,7 @@ export class EboardPageComponent implements OnInit {
   @ViewChild('clubAnnouncementTable') clubAnnouncementTable: Table;
   locationID: FormControl = new FormControl(null);
   spaceID : FormControl = new FormControl(null);
+
   cols = [
     { field: 'eventName', header: 'Name' },
     { field: 'eventDate', header: 'Date' },
@@ -118,6 +118,7 @@ export class EboardPageComponent implements OnInit {
     { field: 'ticketLink', header: 'Ticket Link' },
     { field: 'isTransportation', header: 'Transportation' }
   ];
+
   announcementCols = [
     { field: 'announcementTitle', header: 'Title' },
     { field: 'contentOfAnnouncement', header: 'Announcement Content' },

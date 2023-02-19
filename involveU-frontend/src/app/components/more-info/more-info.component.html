@@ -4,3 +4,65 @@
     <h1 class="yellow-text moreInfoPageTitleMargin">Getting Involved on Campus</h1>
   </div>
 </div>
+
+<div>
+  <div class="moreInfoGrid" [ngClass]="{'moreInfoGridWeb' : responsiveService.deviceDesktop(), 'moreInfoGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+      <div [ngClass]="{'importantFormsDiv' : responsiveService.deviceDesktop(), 'importantFormsDivMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h1 class="blueHeaders text-center">Important Forms</h1>
+        <h5 class="text-center">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </h5>
+      </div>
+      <div [ngClass]="{'centerInfoDiv' : responsiveService.deviceDesktop()}">
+        <div [ngClass]="{'welcomeText' : responsiveService.deviceDesktop(), 'welcomeTextMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+          <h4 class="text-center">
+            At Southern New Hampshire University, your time is about more than just earning a degree. The Office of Student Involvement provides you with opportunities for involvement and peer collaboration. From clubs to leadership organizations and honor societies, there are many ways to get involved, network, attend events and explore learning communities.
+          </h4>
+        </div>
+        <div [ngClass]="{'contactInfoAndLocationCards' : responsiveService.deviceDesktop(), 'contactInfoAndLocationCardsMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+          <div [ngClass]="{'studentCenterInfoDiv' : responsiveService.deviceDesktop(), 'studentCenterInfoDivMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+            <h2 class="blueHeaders">Student Center</h2>
+            <h5>Email: connect@snhu.edu</h5>
+            <h5>Phone: 603.931.3559</h5>
+            <h5>Hours: Monday - Friday, 8:00 am - 4:30 pm (ET)</h5>
+          </div>
+          <div [ngClass]="{'osiInfoDiv' : responsiveService.deviceDesktop(), 'osiInfoDivMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+            <h2 class="blueHeaders">Office of Student Involvement</h2>
+            <h5>Location: Student Center</h5>
+            <h5>Email: involvement@snhu.edu</h5>
+            <h5>Phone: 603.629.4631</h5>
+            <h5>Hours: Monday - Friday, 8:00 am - 6:00 pm (ET)</h5>
+          </div>
+        </div>
+      </div>
+    <div [ngClass]="{'quickLinksDiv' : responsiveService.deviceDesktop(), 'quickLinksDivMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+      <h1 class="blueHeaders text-center">SNHU Quick Links</h1>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://mysnhu.force.com/mysnhu/s/student-involvement" target="_blank">Student Involvement</a>
+      </h4>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://mysnhu.force.com/mysnhu/s/getting-involved" target="_blank">Getting Involved</a>
+      </h4>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://mysnhu.force.com/mysnhu/s/diversity-equity-and-inclusion" target="_blank">Diversity, Equity & Inclusion</a>
+      </h4>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://mysnhu.force.com/mysnhu/s/athletics" target="_blank">Athletics</a>
+      </h4>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://mysnhu.force.com/mysnhu/s/campus-life" target="_blank">Campus Life</a>
+      </h4>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://www.snhu.edu/student-experience/campus-experience/student-organizations-and-leadership" target="_blank">Student Organizations and Leadership</a>
+      </h4>
+      <hr>
+      <h4 class="quickLinkPage">
+        <a href="https://25live.collegenet.com/pro/snhu#!/home/dash" target="_blank">25Live</a>
+      </h4>
+    </div>
+    </div>
+</div>

@@ -15,7 +15,7 @@
 }
 
 .imageResize {
-  width: 250px;
+  width: 150px;
   height: auto;
 }
 
@@ -49,7 +49,7 @@
 .eboardDropdown::ng-deep {
   .p-dropdown {
     width: 50%;
-    text-align: left;
+    text-align: center;
   }
 }
 
@@ -62,10 +62,12 @@
 
 .eboardInputWidth {
   width: 50%;
+  text-align: center;
 }
 
 .eboardInputWidthMobile {
   width: 80%;
+  text-align: center;
 }
 
 .updateClubLogoContainer {
@@ -83,4 +85,12 @@
 
 .importantText {
   margin-bottom: 0 !important;
+}
+
+.largeTextField {
+  height: 125px;
+}
+
+.leftAlignSearch {
+  margin: 0 !important;
 }

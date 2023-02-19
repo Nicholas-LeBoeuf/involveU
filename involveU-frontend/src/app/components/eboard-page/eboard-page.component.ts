@@ -306,6 +306,41 @@ export class EboardPageComponent implements OnInit {
     this.adminService.sendImage(file).subscribe(response => {
       console.log(response);
     })
+  }
 
+  isCreateAnnouncementFormValid() {
+    if (this.announcementForm.value.announcementTitle === '' || this.announcementForm.value.contentOfAnnouncement === '' || this.announcementForm.value.expiresOn === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditAnnouncementFormValid() {
+    if (this.editAnnouncementForm.value.editAnnouncementTitle === '' || this.editAnnouncementForm.value.editContentOfAnnouncement === '' || this.editAnnouncementForm.value.editExpiresOn === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isCreateSocialMediaFormValid() {
+    if (this.platformString.value === null || this.socialMediaForm.value.smProfileName === '' || this.socialMediaForm.value.smLink === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditSocialMediaFormValid() {
+    if (this.platformString.value === null || this.editSocialMediaForm.value.editsmProfileName === '' || this.editSocialMediaForm.value.editsmLink === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

@@ -31,7 +31,7 @@
             <h5>Phone: 603.629.4631</h5>
             <h5>Hours: Monday - Friday, 8:00 am - 6:00 pm (ET)</h5>
           </div>
-          <div [ngClass]="{'tabViewDocumentsDiv' : responsiveService.deviceDesktop()}">
+          <div [ngClass]="{'tabViewDocumentsDiv' : responsiveService.deviceDesktop(), 'tabViewDocumentsDivMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
             <p-tabView [scrollable]="true" styleClass="moreInfoTabs">
               <p-tabPanel header="Intro to Clubs and Orgs">
                 <h2 class="blueHeaders">Minimum Requirements for Clubs</h2>
@@ -185,6 +185,93 @@
                 <h5><li>Send thank-you cards as needed.</li></h5>
                 <h5 class="blueHeaders">If at any point during the event planning process you have any questions, please do not hesitate to reach out to your advisor or the Office of Student Involvement. We are all here to support you!</h5>
               </p-tabPanel>
+
+              <p-tabPanel header="Pre-Trip Meeting Agenda">
+                <h2 class="blueHeaders">Pre-Trip Meeting Agenda Guide</h2>
+                <h5>When you are chaperoning a trip, there are some key areas that you need to address with all attendees prior to departing for your trip. These meetings are required for all trips that are overnight and/or have inherent risk.</h5>
+                <h3 class="blueHeaders">Planning the meeting</h3>
+                <h5><li>All attendees should meet in person – plan it during a free block (Tuesday 3:30-4:30pm or Wednesday 2:00-3:30pm) or send out a Doodle or When2Meet poll. If one or two people cannot attend, find a time to meet with them separately.</li></h5>
+                <h5><li>Develop your agenda – here are some recommended topics</li></h5>
+                <ul>
+                  <h5><li>Details of the trip</li></h5>
+                  <h5><li>Conference Specific Information</li></h5>
+                  <h5><li>Waivers/ground rules</li></h5>
+                  <h5><li>Cash advances</li></h5>
+                  <h5><li>What to pack</li></h5>
+                  <h5><li>Communication</li></h5>
+                </ul>
+                <h3 class="blueHeaders">Breaking it Down</h3>
+                <ol>
+                  <h5><li>Details of the Trip</li></h5>
+                  <ul>
+                    <h5><li>With the help of your student Trip Coordinator, develop a one-sheet overview of major details for the trip. This is great for students to take a photo of for reference or to share with their parents/guardians. This should include:</li></h5>
+                    <ul>
+                      <h5><li>Flight info/departure information: where to meet and when, flight number (if applicable)</li></h5>
+                      <h5><li>Hotel information/accommodations</li></h5>
+                      <h5><li>Return information</li></h5>
+                    </ul>
+                    <h5><li>This is a great time to talk about what they need in terms of ID</li></h5>
+                  </ul>
+                  <h5><li>Conference Specific Information</li></h5>
+                  <ul>
+                    <h5><li>Most conference websites have printable rough schedules and/or information about an app that can be used for determining breakout sessions</li></h5>
+                    <h5><li>Talk about appropriate behavior at the conference</li></h5>
+                    <h5><li>If you are going to a conference where specific terminology is used, it may be helpful to develop a mini glossary or reference guide (many of our students have never attended a conference before)</li></h5>
+                    <h5><li>Does the conference provide an FAQ?</li></h5>
+                  </ul>
+                  <h5><li>Waiver/Ground Rules</li></h5>
+                  <ul>
+                    <h5><li>All students sign this <a href="http://bit.ly/tripwaiver" target="_blank">waiver</a></li></h5>
+                    <h5><li>Good to go over expectations. You determine these, but here are some suggestions:</li></h5>
+                    <ul>
+                      <h5><li>No drinking/smoking, etc.</li></h5>
+                      <h5><li>Stay with the group at all times</li></h5>
+                      <h5><li>Don’t go to the same sessions as others –try and spread out</li></h5>
+                      <h5><li>No leaving the hotel after dark</li></h5>
+                    </ul>
+                  </ul>
+                  <h5><li>Money</li></h5>
+                  <ul>
+                    <h5><li>Hotel</li></h5>
+                    <ul>
+                      <h5><li>Though SGA will pay for hotels if they have been approved for that spending through the Conference Allocation Process, each room will be required to put down a credit card for incidentals. Sometimes a hotel will put a small hold on a card, so it is not recommended to use a Debit Card. It is best to determine whose cards will be used prior to departing.</li></h5>
+                    </ul>
+                    <h5><li>Cash Advances</li></h5>
+                    <ul>
+                      <h5><li>If SGA is funding the conference and funds have been allocated for food expenses, you will be receiving a cash advance. A cash advance is a check made out to you individually that you can cash and use for food on the trip. You will pick this up from the Office of Student Involvement
+                        prior to your trip and it is recommended that you cash it or deposit it into your account for use. The breakdown of the allocation is likely $10 for breakfast, $15 for lunch and $25 for dinner (any meals covered by registration fees would not be included in your allocation)</li></h5>
+                      <h5><li>You can spend more than the amount given, but you will be responsible for the difference.</li></h5>
+                      <h5><li>You can spend more or less the amount provided on each meal –for example, breakfast may be less than $10, but dinner could be more than $25. Keeping your total allocation in mind, you can flex the per meal amount spent.</li></h5>
+                      <h5><li>Receipts: When you receive your check for your cash advance, you will also be given an envelope. On the envelope, you will record each transaction and include your itemized receipt in the envelope. All cash advance envelopes are to be returned within 5 business days from the return
+                        date. If you do not spend all of the money, include the change that you have. If you spend the entire amount, you would just need to include the receipts.</li></h5>
+                      <h5><li>Be sure to get a receipt for each and every purchase. Purchases without a receipt will not be covered (vending machines, for example, typically do not provide receipts so proof of purchase cannot be provided.)</li></h5>
+                      <h5><li>If SGA funds are spent, and a receipt is missing, you will be held responsible for any un-reconciled expenses. In addition, failure to return this envelope with all receipts and remaining money may cause your club budget to be frozen</li></h5>
+                    </ul>
+                    <h5><li>Spending Money</li></h5>
+                    <ul>
+                      <h5><li>Should they bring extra spending money? Are you going to any museums, malls or other landmarks during your trip?</li></h5>
+                      <h5><li>Airport snacks! And other incidentals.</li></h5>
+                    </ul>
+                  </ul>
+                  <h5><li>What to pack</li></h5>
+                  <ul>
+                    <h5><li>Is this conference business, business casual, casual? Talk about what that means as well. Many students may be unfamiliar or nervous</li></h5>
+                    <h5><li>Is there an awards banquet, ceremony or other event that requires more formal or dressy attire?</li></h5>
+                    <h5><li>Will there be free time? Should they pack more casual clothes?</li></h5>
+                    <h5><li>Weather!</li></h5>
+                    <h5><li>Travel attire expectations</li></h5>
+                    <h5><li>Any conference related materials – should they bring a padfolio, tote, laptop, resumes, etc.?</li></h5>
+                  </ul>
+                  <h5><li>Communication</li></h5>
+                  <ul>
+                    <h5><li>Set up a way to communicate while on the trip: group text or (if you don’t want to share your cell phone number with all of them) set up a GroupMe, Telegram or Facebook Messaging group</li></h5>
+                    <h5><li>Expectations around communication – must respond to texts within a certain amount of time, leaving message notifications on etc.</li></h5>
+                    <h5><li>You will be given a list of all of their phone numbers and emergency contact – please do not call their emergency contact. In case of emergency, follow the <a href="https://drive.google.com/file/d/1_h4JxQRQwUr2MfOorJX2hfkSM-XMkUIa/view" target="_blank">Emergency Procedures</a> and call Public Safety.</li></h5>
+                  </ul>
+                </ol>
+              </p-tabPanel>
+
+              
             </p-tabView>
           </div>
         </div>

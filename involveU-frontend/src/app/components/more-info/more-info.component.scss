@@ -17,6 +17,10 @@
   color: $GoldenYellow;
 }
 
+.welcomeText {
+  margin-bottom: 35px;
+}
+
 .moreInfoGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -31,6 +35,9 @@
   margin-top: 15px;
   margin-right: 40px;
   background-color: #f4f4f4;
+  -webkit-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  -moz-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
 }
 .centerInfoDiv {
   grid-area: 1 / 2 / 2 / 4;
@@ -41,8 +48,31 @@
   margin-top: 15px;
   margin-left: 40px;
   background-color: #f4f4f4;
+  -webkit-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  -moz-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
 }
 
-.blueHeaders {
+.center-text {
   text-align: center;
+}
+
+.studentCenterInfoDiv {
+  float:left;
+  width: 48%;
+  background-color: #f4f4f4;
+  -webkit-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  -moz-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  padding-left: 10px;
+}
+
+.osiInfoDiv {
+  float:right;
+  width: 48%;
+  background-color: #f4f4f4;
+  -webkit-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  -moz-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
+  padding-left: 10px;
 }

@@ -15,7 +15,7 @@
 
 <div class="container">
   <h1 class="blueHeaders">Announcements</h1>
-  <p-table #clubAnnouncementTable [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
+  <p-table #clubAnnouncementTable styleClass="eboardTables" [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [rows]="5" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
     <ng-template pTemplate="caption">
       <div class="captionContainer">
         <input class="form-control formInputs" pInputText type="text" (input)="onFilterAnnouncements($event)" placeholder="Search" />
@@ -25,6 +25,8 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-announcement>
@@ -38,7 +40,150 @@
       </tr>
     </ng-template>
   </p-table>
+
+  <h1 class="blueHeaders">Events</h1>
+  <p-table #clubEventTable styleClass="eboardTables" [value]="clubEvents" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [rows]="5" [columns]="cols" [globalFilterFields]="['eventName', 'eventLocation']">
+    <ng-template pTemplate="caption">
+      <div class="captionContainer">
+        <div class="eventSearchInput">
+          <input class="form-control formInputs" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
+        </div>
+        <div class="addEventButton">
+          <button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="yellowButton"> Add Event</button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th [pSortableColumn]="'eventName'" pFrozenColumn>Name <p-sortIcon [field]="'eventName'"></p-sortIcon></th>
+        <th [pSortableColumn]="'eventDate'">Date <p-sortIcon [field]="'eventDate'"></p-sortIcon></th>
+        <th [pSortableColumn]="'startTime'">Start Time <p-sortIcon [field]="'startTime'"></p-sortIcon></th>
+        <th [pSortableColumn]="'endTime'">End Time <p-sortIcon [field]="'eventTime'"></p-sortIcon></th>
+        <th [pSortableColumn]="'eventLocation'">Location <p-sortIcon [field]="'eventLocation'"></p-sortIcon></th>
+        <th>Description</th>
+        <th>Ticket Link</th>
+        <th [pSortableColumn]="'isTransportation'">Transportation <p-sortIcon [field]="'isTransportation'"></p-sortIcon></th>
+        <th>Edit</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-event>
+      <tr>
+        <td pFrozenColumn>{{event.eventName}}</td>
+        <td>{{event.eventDate | date:'MMMM dd, YYYY'}}</td>
+        <td>{{event.startTime | timeFormat}}</td>
+        <td>{{event.endTime  | timeFormat}}</td>
+        <td>{{event.eventLocation}}</td>
+        <td>{{event.eventDesc}}</td>
+        <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
+        <td>{{event.isTransportation}}</td>
+        <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')"class="yellowButton">Edit</button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
 </div>
+
+
+
+
+
+
+
+
+
+<p-dialog [(visible)]="createAnnouncementDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeCreateAnnouncementDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeCreateAnnouncementDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <h1>{{clubInfo.clubName}}</h1>
+  <div class="osiAnnouncementsDiv">
+    <h1 class="dialogTitle">Create Announcement</h1>
+    <form [formGroup]="announcementForm">
+      <div class="osiAnnouncements">
+        <div class="form-group">
+          <input class="form-control formInputs" type="text" placeholder="Title" formControlName="announcementTitle">
+          <div *ngIf="announcementFormInputs?.['announcementTitle']?.invalid && (announcementFormInputs?.['announcementTitle']?.dirty || announcementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
+            <div *ngIf="announcementFormInputs?.['announcementTitle']?.errors?.['required']">
+              Announcement Title is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input class="form-control formInputs" type="date" placeholder="Expiration Date: &nbsp;" formControlName="expiresOn">
+          <div *ngIf="announcementFormInputs?.['expiresOn']?.invalid && (announcementFormInputs?.['expiresOn']?.dirty || announcementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
+            <div *ngIf="announcementFormInputs?.['expiresOn']?.errors?.['required']">
+              Expiration Date is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control formInputs largeTextField"placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
+          <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.invalid && (announcementFormInputs?.['contentOfAnnouncement']?.dirty || announcementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
+            <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
+              Announcement content is required
+            </div>
+          </div>
+        </div>
+        <div class="centerButton">
+          <button class="form-submit-button yellowButton" type="submit" (click)="createAnnouncementSubmit()">Create Announcement</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editAnnouncementDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditAnnouncementDialog()">
+  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeEditAnnouncementDialog()">
+    <span class="fa fa-fw fa-close fa-lg"></span>
+  </a>
+  <div *ngIf="addEventSuccess === true" class="alert alert-success alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Announcement created successfully!</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div *ngIf="addEventFailed === true" class="alert alert-danger alert-dismissible fade show clubCreationAlerts" role="alert">
+    <p>Error creating announcement.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <h1>{{clubInfo.clubName}}</h1>
+  <div class="osiAnnouncementsDiv">
+    <div *ngFor="let announcement of this.certainAnnouncement" >
+      <h1 class="dialogTitle">Edit Announcement</h1>
+      <form [formGroup]="editAnnouncementForm">
+        <div class="osiAnnouncements">
+          <div class="form-group">
+            <input class="form-control formInputs" type="text" [(ngModel)] = "announcement.announcementTitle" formControlName="editAnnouncementTitle">
+            <div *ngIf="announcementFormInputs?.['announcementTitle']?.invalid && (announcementFormInputs?.['announcementTitle']?.dirty || announcementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="announcementFormInputs?.['announcementTitle']?.errors?.['required']">
+                Announcement Title is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs" type="date" [(ngModel)] = "announcement.expiresOn" formControlName="editExpiresOn">
+            <div *ngIf="announcementFormInputs?.['expiresOn']?.invalid && (announcementFormInputs?.['expiresOn']?.dirty || announcementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
+              <div *ngIf="announcementFormInputs?.['expiresOn']?.errors?.['required']">
+                Expiration Date is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control formInputs largeTextField" [(ngModel)] = "announcement.contentOfAnnouncement" formControlName="editContentOfAnnouncement"></textarea>
+            <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.invalid && (announcementFormInputs?.['contentOfAnnouncement']?.dirty || announcementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
+              <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
+                Announcement content is required
+              </div>
+            </div>
+          </div>
+          <div class="centerButton">
+            <button class="form-submit-button yellowButton" type="submit" (click)="updateClubAnnouncementSubmit()">Edit Announcement</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</p-dialog>
+
+
 
 <!--
 <h1 class="text-center">{{clubInfo.clubName}} Announcements</h1>

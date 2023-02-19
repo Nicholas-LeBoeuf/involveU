@@ -13,15 +13,25 @@
 }
 
 ::ng-deep {
-  .p-datatable-scrollable .p-datatable-thead>tr>th, .p-datatable-scrollable .p-datatable-tbody>tr>td, .p-datatable-scrollable .p-datatable-tfoot>tr>td {
+  .eboardTables.p-datatable-scrollable .p-datatable-thead>tr>th, .p-datatable-scrollable .p-datatable-tbody>tr>td, .p-datatable-scrollable .p-datatable-tfoot>tr>td {
     min-width: 175px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .eboardTables.p-datatable {
+    margin-bottom: 30px;
+  }
+
+  .eboardTables.p-datatable .p-paginator-bottom {
+    margin-top: 15px;
   }
 }
 
-
-
-
-
+.hyperText {
+  color: #0a58ca !important;
+  cursor: pointer;
+}
 
 /*
 .eventAlerts {

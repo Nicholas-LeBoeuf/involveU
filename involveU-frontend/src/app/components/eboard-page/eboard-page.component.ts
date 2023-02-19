@@ -122,10 +122,8 @@ export class EboardPageComponent implements OnInit {
   announcementCols = [
     { field: 'announcementTitle', header: 'Title' },
     { field: 'contentOfAnnouncement', header: 'Announcement Content' },
-    { field: 'postedOn', header: 'Date Posted' },
-    { field: 'expiresOn', header: 'Date Expired' },
-    { field: 'edit', header: 'Edit'},
-    { field: 'delete', header: 'Delete'}
+    { field: 'postedOn', header: 'Posted On' },
+    { field: 'expiresOn', header: 'Expires On' }
   ]
 
   ngOnInit(): void {
@@ -223,6 +221,7 @@ export class EboardPageComponent implements OnInit {
 
   showEditAnnouncementDialog(SpecificAnnouncement: Announcement) {
     this.certainAnnouncement.push(SpecificAnnouncement);
+    console.log(SpecificAnnouncement);
     this.editAnnouncementDialog = true;
   }
 
@@ -337,5 +336,9 @@ export class EboardPageComponent implements OnInit {
       return false;
     }
 
+  }
+
+  goToLink(url: string){
+    window.open(url, "_blank");
   }
 }

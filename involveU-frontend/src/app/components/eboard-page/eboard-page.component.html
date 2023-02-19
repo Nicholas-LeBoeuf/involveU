@@ -92,6 +92,8 @@
         <th>Platform</th>
         <th>Link</th>
         <th>Profile Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-sm>
@@ -99,6 +101,8 @@
         <td>{{sm.platform}}</td>
         <td><a class="hyperText" (click)="goToLink(sm.link)">{{sm.link}}</a></td>
         <td>{{sm.profileName}}</td>
+        <td><button class="yellowButton" (click)="showEditSocialMediaDialog(sm)">Edit</button></td>
+        <td><button class="yellowButton" (click)="deleteSocialMedia(sm)">Delete</button></td>
       </tr>
     </ng-template>
   </p-table>
@@ -204,7 +208,20 @@
       <p-dropdown [ngClass]="{'eboardDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardDropdownMobile': responsiveService.deviceMobile()}" [options]="platformList" [formControl]="platformString" optionValue="name" optionLabel="name" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Platform" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
       <input class="form-control formInputs" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Link" formControlName="smLink">
       <input class="form-control formInputs" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Profile Name" formControlName="smProfileName">
+
     </form>
     <button class="yellowButton" (click)="addSocialMedia()">Add Link</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editSocialMediaDialog" [modal]="true" [style]="{width: '35vw', height: '500px'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditSocialMediaDialog()">
+  <div class="eboardDialogs text-center" *ngFor="let editSM of certainSocialMedia">
+    <h1 class="blueHeaders">Add Social Media Link</h1>
+    <form [formGroup]="editSocialMediaForm">
+      <p-dropdown [(ngModel)]="editSM.platform" [ngClass]="{'eboardDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardDropdownMobile': responsiveService.deviceMobile()}" [options]="platformList" [formControl]="platformString" optionValue="name" optionLabel="name" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Platform" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+      <input [(ngModel)]="editSM.link" class="form-control formInputs" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Link" formControlName="editsmLink">
+      <input [(ngModel)]="editSM.profileName" class="form-control formInputs" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Profile Name" formControlName="editsmProfileName">
+    </form>
+    <button class="yellowButton" (click)="editSocialMedia()">Edit Link</button>
   </div>
 </p-dialog>

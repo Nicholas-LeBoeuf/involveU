@@ -24,6 +24,7 @@ export class EboardPageComponent implements OnInit {
   announcementForm : FormGroup;
   editAnnouncementForm: FormGroup;
   socialMediaForm : FormGroup;
+  editSocialMediaForm : FormGroup;
   todaysDate = new Date().toString();
 
   constructor(private clubService: ClubService,
@@ -58,6 +59,12 @@ export class EboardPageComponent implements OnInit {
       smProfileName: ['', Validators.required]
     })
 
+    this.editSocialMediaForm = this.formBuilder.group({
+      editPlatformString: ['', Validators.required],
+      editsmLink: ['', Validators.required],
+      editsmProfileName: ['', Validators.required]
+    })
+
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
@@ -65,6 +72,7 @@ export class EboardPageComponent implements OnInit {
   createAnnouncementDialog: boolean = false;
   editAnnouncementDialog: boolean = false;
   addSocialMediaDialog: boolean = false;
+  editSocialMediaDialog: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
 
@@ -81,6 +89,7 @@ export class EboardPageComponent implements OnInit {
   clubAnnouncements: any = {};
   certainAnnouncement: Announcement[] = [];
   clubSocialMedia: SocialMedia[] = [];
+  certainSocialMedia: SocialMedia[] = []
 
   @ViewChild('clubEventTable') clubEventTable: Table;
   @ViewChild('clubAnnouncementTable') clubAnnouncementTable: Table;
@@ -226,16 +235,63 @@ export class EboardPageComponent implements OnInit {
     this.addSocialMediaDialog = false;
   }
 
+  showEditSocialMediaDialog(event)
+  {
+    this.certainSocialMedia.push(event);
+    this.editSocialMediaDialog = true;
+  }
+
+  closeEditSocialMediaDialog()
+  {
+    this.certainSocialMedia = [];
+    this.editSocialMediaDialog = false;
+  }
+
   addSocialMedia() {
-    console.log(this.socialMediaForm.value.smLink);
     const newSocialMedia: SocialMedia = {platform: this.platformString.value, profileName: this.socialMediaForm.value.smProfileName, link: this.socialMediaForm.value.smLink, clubID: this.clubID};
 
     this.eboardService.addNewSocialMedia(newSocialMedia).subscribe(response => {
       console.log(response);
-      location.reload();
     },
     (error) => {
-      console.log(error);
+      if(error.status === 200) {
+        this.addSocialMediaDialog = false;
+        this.getClubSocialMedia();
+      }
+      else {
+        console.log(error);
+      }
     });
+  }
+
+  editSocialMedia() {
+    const editSocialMedia: SocialMedia = {socialMediaID: this.certainSocialMedia[0].socialMediaID, platform: this.platformString.value, profileName: this.editSocialMediaForm.value.editsmProfileName, link: this.editSocialMediaForm.value.editsmLink, clubID: this.clubID};
+
+    this.eboardService.editSocialMedia(editSocialMedia).subscribe(response => {
+        console.log(response);
+      },
+      (error) => {
+        if (error.status === 200) {
+          this.editSocialMediaDialog = false;
+          this.getClubSocialMedia();
+        }
+        else {
+          console.log(error);
+        }
+      });
+  }
+
+  deleteSocialMedia(socialMedia: SocialMedia) {
+    this.eboardService.deleteSocialMedia(socialMedia.socialMediaID).subscribe(response => {
+      console.log(response);
+    },
+      (error) => {
+        if (error.status === 200) {
+          this.getClubSocialMedia();
+        }
+        else {
+          console.log(error);
+        }
+      })
   }
 }

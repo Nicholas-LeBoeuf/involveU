@@ -33,6 +33,33 @@
   cursor: pointer;
 }
 
+.eboardDialogs {
+  padding: 20px;
+}
+
+//Dropdown input
+.eboardDropdown::ng-deep {
+  .p-dropdown {
+    width: 50%;
+    text-align: left;
+  }
+}
+
+.eboardDropdownMobile::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    width: 80%;
+  }
+}
+
+.eboardInputWidth {
+  width: 50%;
+}
+
+.eboardInputWidthMobile {
+  width: 80%;
+}
+
 /*
 .eventAlerts {
   position: absolute;

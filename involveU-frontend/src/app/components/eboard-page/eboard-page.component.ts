@@ -12,6 +12,8 @@ import {Events} from "../../objects/events";
 import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
 import {Title} from "@angular/platform-browser";
+import {SocialMedia} from "../../objects/social-media";
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
   selector: 'app-eboard-page',
@@ -21,12 +23,14 @@ import {Title} from "@angular/platform-browser";
 export class EboardPageComponent implements OnInit {
   announcementForm : FormGroup;
   editAnnouncementForm: FormGroup;
-  createEventForm : FormGroup;
-  editEventForm : FormGroup
+  socialMediaForm : FormGroup;
   todaysDate = new Date().toString();
+
   constructor(private clubService: ClubService,
               private formBuilder: FormBuilder,
               private eventsService: EventsService,
+              private eboardService: EboardService,
+              public responsiveService: ResponsiveService,
               private route: ActivatedRoute,
               private router: Router,
               private announcementsService: AnnouncementsService,
@@ -48,41 +52,19 @@ export class EboardPageComponent implements OnInit {
       editExpiresOn: ['']
     })
 
-    this.createEventForm = this.formBuilder.group({
-      createEventName: ['', Validators.required],
-      createEventLocation: ['', Validators.required],
-      createStartTime: ['', Validators.required],
-      createEndTime: ['', Validators.required],
-      createEventDate: ['', Validators.required],
-      createEventDesc: ['', Validators.required],
-      createIsTransportation: ['', Validators.required],
-      createTicketLink: ['', Validators.required],
-    })
-
-    this.editEventForm = this.formBuilder.group({
-      editEventName: ['', Validators.required],
-      editEventLocation: ['', Validators.required],
-      editStartTime: ['', Validators.required],
-      editEndTime: ['', Validators.required],
-      editEventDate: ['', Validators.required],
-      editEventDesc: ['', Validators.required],
-      editIsTransportation: ['', Validators.required],
-      editTicketLink: ['', Validators.required],
+    this.socialMediaForm = this.formBuilder.group({
+      platformString: ['', Validators.required],
+      smLink: ['', Validators.required],
+      smProfileName: ['', Validators.required]
     })
 
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
   //BOOLEANS
-  addEventDialog: boolean = false;
-  editDialog: boolean = false;
   createAnnouncementDialog: boolean = false;
   editAnnouncementDialog: boolean = false;
-  addEventSuccess: boolean = false;
-  addEventFailed: boolean = false;
-  editEventSuccess: boolean = false;
-  editEventFailed: boolean = false;
-  disableUserDropdown: boolean = true;
+  addSocialMediaDialog: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
 
@@ -97,27 +79,11 @@ export class EboardPageComponent implements OnInit {
   clubInfo: Club;
   clubEvents: Events[] = [];
   clubAnnouncements: any = {};
-  certainEvent: Events[] = [];
   certainAnnouncement: Announcement[] = [];
-  locations: Events[] = [];
-  spaces: Events[] = [];
-  selectedLocation: any = {};
+  clubSocialMedia: SocialMedia[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
   @ViewChild('clubAnnouncementTable') clubAnnouncementTable: Table;
-  locationID: FormControl = new FormControl(null);
-  spaceID : FormControl = new FormControl(null);
-
-  cols = [
-    { field: 'eventName', header: 'Name' },
-    { field: 'eventDate', header: 'Date' },
-    { field: 'startTime', header: 'Start Time' },
-    { field: 'endTime', header: 'End Time' },
-    { field: 'eventLocation', header: 'Location' },
-    { field: 'eventDesc', header: 'Description' },
-    { field: 'ticketLink', header: 'Ticket Link' },
-    { field: 'isTransportation', header: 'Transportation' }
-  ];
 
   announcementCols = [
     { field: 'announcementTitle', header: 'Title' },
@@ -126,6 +92,18 @@ export class EboardPageComponent implements OnInit {
     { field: 'expiresOn', header: 'Expires On' }
   ]
 
+  platformList = [
+    {name: 'Facebook'},
+    {name: 'Instagram'},
+    {name: 'Snapchat'},
+    {name: 'Twitter'},
+    {name: 'TikTok'},
+    {name: 'Website'},
+    {name: 'YouTube'},
+  ]
+
+  platformString: FormControl = new FormControl(null);
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.clubID = params['id'];
@@ -133,9 +111,8 @@ export class EboardPageComponent implements OnInit {
     this.userID = +this.cookie.get('studentID');
     this.getClubInfo();
     this.getClubEvents();
-    this.getSpacesByLocation();
     this.getClubAnnouncements();
-    this.getLocations();
+    this.getClubSocialMedia();
   }
 
   getClubInfo() {
@@ -200,15 +177,6 @@ export class EboardPageComponent implements OnInit {
     this.clubAnnouncementTable.filterGlobal((announcement.target as HTMLInputElement).value.toString(), 'contains');
   }
 
-  showAddEventDialog()
-  {
-    this.addEventDialog = true;
-  }
-  closeAddEventDialog()
-  {
-    this.addEventDialog = false;
-  }
-
   showCreateAnnouncementDialog()
   {
     this.createAnnouncementDialog = true;
@@ -230,23 +198,6 @@ export class EboardPageComponent implements OnInit {
     this.editAnnouncementDialog = false;
   }
 
-  showEditDialog(SpecficEvent: Events)
-  {
-    this.certainEvent.push(SpecficEvent);
-    this.editDialog = true;
-  }
-  closeEditDialog() {
-    this.certainEvent = [];
-    this.editDialog = false;
-  }
-
-  deleteEvent(eventID: number) {
-    this.eventsService.deleteEvent(eventID).subscribe(response => {
-      console.log(response);
-    })
-    location.reload();
-  }
-
   deleteAnnouncement(announcementID: number) {
     this.announcementsService.deleteAnnouncement(announcementID).subscribe(response => {
       console.log(response);
@@ -254,91 +205,37 @@ export class EboardPageComponent implements OnInit {
     location.reload();
   }
 
-  get getCreateEventsFormInputs()
-  {
-    return this.createEventForm.controls;
-  }
-
-  getLocations() {
-    this.eventsService.getLocations().subscribe((response: Events[]) => {
-        this.locations = response;
-        console.log(response);
-      },
-      (error) => {
-        console.log(error)
-      });
-  }
-
-  getSpacesByLocation() {
-    this.eventsService.getSpaceByLocation(this.locationID.value).subscribe(response => {
-        this.spaces = response;
-      },
-      (error) => {
-        console.log(error)
-      });
-  }
-
-  checkLocationSelected() {
-    if(this.selectedLocation!=='Select Location'){
-      this.disableUserDropdown = false;
-      this.getSpacesByLocation();
-    }
-    else {
-      this.disableUserDropdown = true;
-    }
-  }
-
-  areCreateFormInputsValid()
-  {
-    return this.createEventForm.value.createEventName === '' || this.locationID.value === null || this.spaceID.value === null || this.createEventForm.value.createStartTime === '' || this.createEventForm.value.createEndTime === '' || this.createEventForm.value.createEventDate === '' || this.createEventForm.value.createEventDesc === '';
-  }
-
-  submitNewEvent()
-  {
-    const eventInfo : Events = { eventName: this.createEventForm.value.createEventName, eventLocation: this.spaceID.value, startTime: this.createEventForm.value.createStartTime, endTime: this.createEventForm.value.createEndTime, eventDate: this.createEventForm.value.createEventDate, eventDesc: this.createEventForm.value.createEventDesc, isTransportation: this.createEventForm.value.createIsTransportation, ticketLink: this.createEventForm.value.createTicketLink, clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
-
-    this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
-      console.log(success);
-      this.addEventSuccess = true;
-      location.reload();
-    },(error) =>{
-      location.reload();
-      console.log(error.text);
-      this.addEventFailed = true;
-    })
-  }
-
-  updateEvent()
-  {
-    const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.editEventForm.value.editEventName,eventLocation: this.editEventForm.value.editEventLocation, startTime: this.editEventForm.value.editStartTime, endTime: this.editEventForm.value.editEndTime, eventDate: this.editEventForm.value.editEventDate, eventDesc: this.editEventForm.value.editEventDesc, isTransportation: this.editEventForm.value.editIsTransportation, ticketLink: this.editEventForm.value.editTicketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
-
-    this.eventsService.updateEvent(eventInfo).subscribe(success =>{
-      console.log(success);
-      this.editEventSuccess = true;
-    },(error) =>{
-
-      this.getClubEvents();
-      console.log(error.text);
-      this.editEventFailed = true;
-    })
-  }
-
-  get getEditEventsFormInputs()
-  {
-    return this.editEventForm.controls;
-  }
-  areEditFormInputsValid()
-  {
-    if(this.editEventForm.value.editEventName == '' || this.editEventForm.value.editEventLocation == '' ||this.editEventForm.value.editStartTime == '' || this.editEventForm.value.editEndTime == '' || this.editEventForm.value.editEventDate == '' || this.editEventForm.value.editEventDesc == '') {
-      return true;
-    }
-    else{
-      return false;
-    }
-
-  }
-
   goToLink(url: string){
     window.open(url, "_blank");
+  }
+
+  getClubSocialMedia() {
+    this.eboardService.getClubSocialMedia(this.clubID).subscribe(response => {
+      this.clubSocialMedia = response;
+      console.log(response);
+    })
+  }
+
+  showAddSocialMediaDialog()
+  {
+    this.addSocialMediaDialog = true;
+  }
+
+  closeAddSocialMediaDialog()
+  {
+    this.addSocialMediaDialog = false;
+  }
+
+  addSocialMedia() {
+    console.log(this.socialMediaForm.value.smLink);
+    const newSocialMedia: SocialMedia = {platform: this.platformString.value, profileName: this.socialMediaForm.value.smProfileName, link: this.socialMediaForm.value.smLink, clubID: this.clubID};
+
+    this.eboardService.addNewSocialMedia(newSocialMedia).subscribe(response => {
+      console.log(response);
+      location.reload();
+    },
+    (error) => {
+      console.log(error);
+    });
   }
 }

@@ -664,7 +664,7 @@ public class DBServices {
     }
     protected boolean insertDBNewSocialMedia(SocialMedia newSM)
     {
-        sql = "INSERT INTO SocialMedia (Platform,profileName,link, clubID) VALUES (?,?,?,?);";
+        sql = "INSERT INTO SocialMedia (platform,profileName,link, clubID) VALUES (?,?,?,?);";
 
         validQuery = JdbcTemplated.update(sql, newSM.getPlatform(), newSM.getProfileName(), newSM.getLink(), newSM.getClubID());
 
@@ -672,7 +672,7 @@ public class DBServices {
     }
     protected boolean updateSocialMedia(SocialMedia newSM)
     {
-        sql = "UPDATE SocialMedia SET Platform = ?, link = ?, profileName = ?, link = ?";
+        sql = "UPDATE SocialMedia SET platform = ?, link = ?, profileName = ?, link = ?";
 
         validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName());
 

@@ -1,5 +1,5 @@
 export interface SocialMedia {
-  socialMediaID: number;
+  socialMediaID?: number;
   platform: string;
   link: string;
   profileName: string;

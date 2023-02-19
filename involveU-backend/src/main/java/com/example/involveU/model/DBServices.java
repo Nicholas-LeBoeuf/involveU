@@ -672,9 +672,9 @@ public class DBServices {
     }
     protected boolean updateSocialMedia(SocialMedia newSM)
     {
-        sql = "UPDATE SocialMedia SET platform = ?, link = ?, profileName = ?, link = ?";
+        sql = "UPDATE SocialMedia SET platform = ?, link = ?, profileName = ? WHERE socialMediaID = ?";
 
-        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName());
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName(), newSM.getSocialMediaID());
 
         return validQuery == 1;
     }

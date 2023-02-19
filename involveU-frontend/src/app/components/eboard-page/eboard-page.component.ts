@@ -14,6 +14,7 @@ import {EboardService} from "../../services/eboard.service";
 import {Title} from "@angular/platform-browser";
 import {SocialMedia} from "../../objects/social-media";
 import {ResponsiveService} from "../../services/responsive.service";
+import {AdminService} from "../../services/admin.service";
 
 @Component({
   selector: 'app-eboard-page',
@@ -31,6 +32,7 @@ export class EboardPageComponent implements OnInit {
               private formBuilder: FormBuilder,
               private eventsService: EventsService,
               private eboardService: EboardService,
+              private adminService: AdminService,
               public responsiveService: ResponsiveService,
               private route: ActivatedRoute,
               private router: Router,
@@ -82,6 +84,7 @@ export class EboardPageComponent implements OnInit {
 
   //STRINGS
   message: string;
+  clubLogoName: string;
 
   //OBJECTS
   clubInfo: Club;
@@ -127,6 +130,8 @@ export class EboardPageComponent implements OnInit {
   getClubInfo() {
     this.clubService.getSpecificClub(this.clubID).subscribe(response => {
       this.clubInfo = response;
+      this.clubLogoName = response.clubLogo;
+      console.log(response);
       this.clubService.getClubLogo(this.clubInfo.clubID).subscribe(logo => {
         const reader = new FileReader();
         reader.onload = (e) => this.clubInfo.clubLogo = e.target.result;
@@ -293,5 +298,14 @@ export class EboardPageComponent implements OnInit {
           console.log(error);
         }
       })
+  }
+
+  onUpload(event) {
+    const file:File = event.files[0];
+
+    this.adminService.sendImage(file).subscribe(response => {
+      console.log(response);
+    })
+
   }
 }

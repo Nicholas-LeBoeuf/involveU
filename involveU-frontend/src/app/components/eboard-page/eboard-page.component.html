@@ -9,7 +9,7 @@
 </div>
 
 <div class="blueTitleBar text-center eboardPagePadding" *ngIf="clubInfo">
-  <img class="eboardPageTitleMargin" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+  <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
   <h1 class="yellow-text eboardPageTitleMargin">{{clubInfo.clubName}} | Executive Board</h1>
 </div>
 
@@ -107,14 +107,18 @@
     </ng-template>
   </p-table>
 
+  <h1 class="blueHeaders">Club Logo</h1>
+  <div class="updateClubLogoContainer text-center">
+    <h2 class="blueHeaders">Current Club Logo</h2>
+
+    <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+    <h2 class="blueHeaders">Update Club Logo</h2>
+    <div class="blueBar">
+      <h3 class="yellow-text importantText">MAKE SURE TO NAME FILE '{{clubLogoName}}'</h3>
+    </div>
+    <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)" [multiple]="false" [maxFileSize]="2000000"></p-fileUpload>
+  </div>
 </div>
-
-
-
-
-
-
-
 
 
 <p-dialog [(visible)]="createAnnouncementDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeCreateAnnouncementDialog()">

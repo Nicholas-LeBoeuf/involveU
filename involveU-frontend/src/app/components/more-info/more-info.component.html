@@ -31,6 +31,68 @@
             <h5>Phone: 603.629.4631</h5>
             <h5>Hours: Monday - Friday, 8:00 am - 6:00 pm (ET)</h5>
           </div>
+          <div [ngClass]="{'tabViewDocumentsDiv' : responsiveService.deviceDesktop()}">
+            <p-tabView [scrollable]="true" styleClass="moreInfoTabs">
+              <p-tabPanel header="Intro to Clubs and Orgs">
+                <h2 class="blueHeaders">Minimum Requirements for Clubs</h2>
+                <h5><li>Turn in roster each semester by the deadline</li></h5>
+                <h5><li>Maintain a minimum of seven active members for the entire year</li></h5>
+                <h5><li>Participate in the Involvement Fair in the Fall & Spring</li></h5>
+                <h5><li>Follow Budget and Finance Policies (as well as all SGA and Student Involvement Policies)</li></h5>
+                <h5><li>Attend all required leadership programs</li></h5>
+                <ul>
+                  <h5><li>Executive Board Training</li></h5>
+                  <h5><li>Fall Leadership Conference</li></h5>
+                  <h5><li>Spring Leadership Transition Summit</li></h5>
+                  <h5><li>Club Collaborations or any Additional Trainings</li></h5>
+                </ul>
+                <h5><li>Check club e-mail regularly and respond to emails in a timely manner</li></h5>
+                <h5><li>Host one event per semester for all of campus</li></h5>
+                <h5><li>Keep an updated Constitution on-file with the Office of Student Involvement</li></h5>
+                <h2 class="blueHeaders">What happens if those are not met?</h2>
+                <h5><li>If a club fails to meet expectations:</li></h5>
+                <ul>
+                  <h5><li>The club or organization is put on probation</li></h5>
+                  <h5><li>A development plan may be put in place for the club or organization</li></h5>
+                  <h5><li>The club or organization may lose recognition</li></h5>
+                </ul>
+                <h5><li>All clubs and organizations are reviewed at the end of each semester for completion of the minimum requirements</li></h5>
+                <h5><li>If the club budget is overspent, the club’s account(s) will be frozen, and the club will be responsible for paying back the funds</li></h5>
+              </p-tabPanel>
+
+              <p-tabPanel header="OSI Staff">
+                <h2 class="blueHeaders">Office of Student Involvement Staff</h2>
+                <h5><li>Jay Tifone, Senior Director: SGA Advisor, SEC</li></h5>
+                <h5><li>Amanda Sibel, Director: Leadership Program</li></h5>
+                <h5><li>Elizabeth LaClair, Associate Director: Homecoming, Orientation, First Days, Senior Events</li></h5>
+                <h5><li>Chantel Freeman, Associate Director: Online Events</li></h5>
+                <h5><li>Nicole Gregory, Assistant Director: Clubs & Orgs, Club Resource Center, IGC Advisor , Training and Development, Awards Banquet</li></h5>
+                <h5><li>Stacey Bissonnette, Assistant Director: Online Honor Societies</li></h5>
+                <h5><li>Cathy Homiski, Assistant Director: SNHUconnect community, metrics</li></h5>
+                <h5><li>Kadie Dickson, Assistant Director: CAPE Advisor, SNHUtickets, Student Center Operations, Commuters</li></h5>
+                <h5><li>Lindsey Acampora, Coordinator: Online Clubs, assistance with large campus events</li></h5>
+                <h5><li>Lucas Frasier, Graduate Assistant: Late Night Breakfast, Co-Advise CAPE, Monthly Calendars</li></h5>
+                <h5><li>Jay Carey, Coordinator: Online Clubs, Night and Weekend Online Event Support</li></h5>
+                <h5><li>Tarnya Carrier, SGA Business Manager: All things money for SGA!</li></h5>
+                <h5><li>Vicky Plimpton, Senior Office Manager: SUVs, Driver Checks, Rosters and general helpfulness</li></h5>
+              </p-tabPanel>
+
+              <p-tabPanel header="Club Operations">
+                <h2 class="blueHeaders">Club Operations</h2>
+                <h5><li>Documents provided to Executive Boards at the start
+                  of each academic year and includes:</li></h5>
+                <ul>
+                  <h5><li>Office of Student Involvement Handbook</li></h5>
+                  <h5><li>SGA Budget and Finance Policies</li></h5>
+                  <h5><li>Financial forms</li></h5>
+                  <h5><li>On-campus event planning resources (25Live guide, Last Chapter Pub policies, Green Space Guidelines)</li></h5>
+                  <h5><li>Trip Planning Guide</li></h5>
+                  <h5><li>Helpful documents for event planning, collaboration, etc.</li></h5>
+                </ul>
+                <h5><li>All documents available in <a href="https://learn.snhu.edu" target="_blank">brightspace</a>!</li></h5>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
         </div>
       </div>
     <div [ngClass]="{'quickLinksDiv' : responsiveService.deviceDesktop(), 'quickLinksDivMobileTablet' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">

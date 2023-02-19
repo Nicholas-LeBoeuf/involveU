@@ -21,6 +21,10 @@
   margin-bottom: 35px;
 }
 
+.blueHeaders {
+  margin-top: 10px;
+}
+
 .moreInfoGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -57,22 +61,31 @@
   text-align: center;
 }
 
+.contactInfoAndLocationCards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
 .studentCenterInfoDiv {
-  float:left;
-  width: 48%;
+  grid-area: 1 / 1 / 2 / 2;
   background-color: #f4f4f4;
   -webkit-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
   -moz-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
   box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
   padding-left: 10px;
+  height: 198px;
+  margin-right: 15px;
 }
 
 .osiInfoDiv {
-  float:right;
-  width: 48%;
+  grid-area: 1 / 2 / 2 / 3;
   background-color: #f4f4f4;
   -webkit-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
   -moz-box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
   box-shadow: 0px 10px 13px 0px rgba(51,51,51,0.46);
   padding-left: 10px;
+  margin-left: 15px;
 }

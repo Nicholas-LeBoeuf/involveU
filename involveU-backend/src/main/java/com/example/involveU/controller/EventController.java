@@ -1,4 +1,8 @@
 package com.example.involveU.controller;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -217,14 +221,36 @@ public class EventController extends DBServices{
         return new ResponseEntity<>(events,HttpStatus.OK);
     }
 
+    @GetMapping("events/test25live/{clubID}")
+    private  Object get25liveEvents(@PathVariable("clubID") int clubID) throws IOException {
+
+        String urlParameters = "24";
+        URL obj = new URL("https://webservices.collegenet.com/r25ws/wrd/snhu/run/events.json?oranization_id=24");
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Content-Type",
+                "application/x-www-form-urlencoded");
+        con.setRequestProperty("Content-Length",
+                Integer.toString(urlParameters.getBytes().length));
+        con.setRequestProperty("Content-Language", "en-US");
+            con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream (
+                con.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.close();
+        InputStream is = con.getInputStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+        String line;
+        while ((line = rd.readLine()) != null) {
+            response.append(line);
+            response.append('\r');
+        }
+        rd.close();
+        return response.toString();
 
 
-
-
-
-
-
-
+    }
 
 }
 

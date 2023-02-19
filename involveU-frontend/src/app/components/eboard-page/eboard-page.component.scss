@@ -1,3 +1,29 @@
+.eboardPageTitleMargin {
+  margin-bottom: 20px;
+}
+
+.eboardPagePadding {
+  padding: 1px;
+}
+
+.captionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::ng-deep {
+  .p-datatable-scrollable .p-datatable-thead>tr>th, .p-datatable-scrollable .p-datatable-tbody>tr>td, .p-datatable-scrollable .p-datatable-tfoot>tr>td {
+    min-width: 175px;
+  }
+}
+
+
+
+
+
+
+/*
 .eventAlerts {
   position: absolute;
   z-index: 1000000;
@@ -165,3 +191,4 @@
 ::ng-deep .ui-table-scrollable-body {
   margin-right: 17px !important;
 }
+*/

@@ -123,7 +123,9 @@ export class EboardPageComponent implements OnInit {
     { field: 'announcementTitle', header: 'Title' },
     { field: 'contentOfAnnouncement', header: 'Announcement Content' },
     { field: 'postedOn', header: 'Date Posted' },
-    { field: 'expiresOn', header: 'Date Expired' }
+    { field: 'expiresOn', header: 'Date Expired' },
+    { field: 'edit', header: 'Edit'},
+    { field: 'delete', header: 'Delete'}
   ]
 
   ngOnInit(): void {
@@ -141,6 +143,12 @@ export class EboardPageComponent implements OnInit {
   getClubInfo() {
     this.clubService.getSpecificClub(this.clubID).subscribe(response => {
       this.clubInfo = response;
+      this.clubService.getClubLogo(this.clubInfo.clubID).subscribe(logo => {
+        const reader = new FileReader();
+        reader.onload = (e) => this.clubInfo.clubLogo = e.target.result;
+        reader.readAsDataURL(new Blob([logo]));
+        this.clubInfo.clubLogo = logo;
+      })
     })
   }
 
@@ -153,6 +161,7 @@ export class EboardPageComponent implements OnInit {
   getClubAnnouncements() {
     this.announcementsService.getClubAnnouncements(this.clubID).subscribe(response => {
       this.clubAnnouncements = response;
+      console.log(response);
     })
   }
 

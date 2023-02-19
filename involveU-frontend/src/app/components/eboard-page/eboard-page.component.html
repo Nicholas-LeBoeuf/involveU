@@ -7,6 +7,40 @@
   <p>{{this.message}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
+<div class="blueTitleBar text-center eboardPagePadding" *ngIf="clubInfo">
+  <img class="eboardPageTitleMargin" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+  <h1 class="yellow-text eboardPageTitleMargin">{{clubInfo.clubName}} | Executive Board</h1>
+</div>
+
+<div class="container">
+  <h1 class="blueHeaders">Announcements</h1>
+  <p-table #clubAnnouncementTable [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
+    <ng-template pTemplate="caption">
+      <div class="captionContainer">
+        <input class="form-control formInputs" pInputText type="text" (input)="onFilterAnnouncements($event)" placeholder="Search" />
+        <button (click) = "showCreateAnnouncementDialog()" class="yellowButton">Create</button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-announcement>
+      <tr>
+        <td>{{announcement.announcementTitle}}</td>
+        <td>{{announcement.contentOfAnnouncement}}</td>
+        <td>{{announcement.postedOn | date:'MMMM dd, YYYY'}}</td>
+        <td>{{announcement.expiresOn | date:'MMMM dd, YYYY'}}</td>
+        <td><button (click) = "showEditAnnouncementDialog(announcement)" class="yellowButton">Edit</button></td>
+        <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="yellowButton">Delete</button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!--
 <h1 class="text-center">{{clubInfo.clubName}} Announcements</h1>
 <p-table #clubAnnouncementTable [value]="clubAnnouncements" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
   <ng-template pTemplate="caption">
@@ -347,3 +381,4 @@
     </form>
   </div>
 </p-dialog>
+-->

@@ -16,3 +16,33 @@
   align-items: center;
   color: $GoldenYellow;
 }
+
+.moreInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  padding: 15px;
+}
+
+.importantFormsDiv {
+  grid-area: 1 / 1 / 2 / 2;
+  margin-top: 15px;
+  margin-right: 40px;
+  background-color: #f4f4f4;
+}
+.centerInfoDiv {
+  grid-area: 1 / 2 / 2 / 4;
+  margin-top: 15px;
+}
+.quickLinksDiv {
+  grid-area: 1 / 4 / 2 / 5;
+  margin-top: 15px;
+  margin-left: 40px;
+  background-color: #f4f4f4;
+}
+
+.blueHeaders {
+  text-align: center;
+}

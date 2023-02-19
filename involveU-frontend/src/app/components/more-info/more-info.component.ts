@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
   selector: 'app-more-info',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoreInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(public responsiveService: ResponsiveService) { }
 
   ngOnInit(): void {
   }

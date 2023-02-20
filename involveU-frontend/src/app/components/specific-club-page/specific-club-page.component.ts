@@ -13,6 +13,7 @@ import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
 import {Title} from "@angular/platform-browser";
+import {SocialMedia} from "../../objects/social-media";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -60,6 +61,7 @@ export class SpecificClubPageComponent implements OnInit {
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
   clubAnnouncements: Announcement[] = [];
+  clubSocialMedia: SocialMedia[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 
@@ -87,6 +89,7 @@ export class SpecificClubPageComponent implements OnInit {
     this.getEboard();
     this.getUserRSVPdEvents();
     this.getClubAnnouncements();
+    this.getClubSocialMedia();
 
     setTimeout(() => {
       this.isLoading = false;
@@ -213,6 +216,16 @@ export class SpecificClubPageComponent implements OnInit {
       (error) => {
         console.log(error)
       });
+  }
+
+  getClubSocialMedia() {
+    this.eboardService.getClubSocialMedia(+this.clubID).subscribe(response => {
+      this.clubSocialMedia = response;
+    })
+  }
+
+  goToLink(url: string){
+    window.open(url, "_blank");
   }
 }
 

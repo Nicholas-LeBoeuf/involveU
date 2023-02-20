@@ -387,3 +387,31 @@ em {
 .alert-dismissible .btn-close {
   padding: 1rem  1rem;
 }
+
+//Tab View Styling
+::ng-deep {
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+    border: none;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: none;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
+  }
+
+  .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+    background-color: #fdcb54;
+    color: $HeritageBlue;
+  }
+
+  .p-tabview .p-tabview-nav-btn.p-link {
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+  }
+}

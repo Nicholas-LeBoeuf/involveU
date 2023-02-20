@@ -18,6 +18,10 @@ export class AdminService {
     return this.http.post(environment.apiURL + `club/insertClub`, newClub, {responseType: 'text'});
   }
 
+  deleteClub(clubID: number) {
+    return this.http.delete(environment.apiURL + `club/deleteClub/${clubID}`);
+  }
+
   createUser(newUser: User) {
     return this.http.post(environment.apiURL + `admin/createUser`, newUser, {responseType: 'text'});
   }
@@ -51,7 +55,7 @@ export class AdminService {
     const data: FormData = new FormData();
     data.append('file', file);
     console.log(data);
-    return this.http.post(`http://localhost:8080/api/admin/testImage`, data);
+    return this.http.post(environment.apiURL + `admin/testImage`, data);
   }
 
   createOSIAnnouncement(newAnnouncement: Announcement) {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ResponsiveService} from "../../services/responsive.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-more-info',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoreInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(public responsiveService: ResponsiveService,
+              private title: Title) {
+    this.title.setTitle("involveU | More Information")
+  }
 
   ngOnInit(): void {
   }

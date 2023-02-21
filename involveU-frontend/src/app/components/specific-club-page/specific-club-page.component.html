@@ -60,6 +60,40 @@
             </ng-template>
           </p-table>
         </ng-container>
+        <ng-container *ngIf="clubSocialMedia !== null">
+          <h2 class="blueHeaders">Social Media</h2>
+          <div class="allSocialMedia" *ngFor="let sm of clubSocialMedia">
+
+            <div *ngIf="sm.platform === 'Instagram'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-brands fa-instagram socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+
+            <div *ngIf="sm.platform === 'Twitter'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-brands fa-twitter socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+
+            <div *ngIf="sm.platform === 'Facebook'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-brands fa-facebook socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+
+            <div *ngIf="sm.platform === 'YouTube'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-brands fa-youtube socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+
+            <div *ngIf="sm.platform === 'Website'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-solid fa-globe socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+
+            <div *ngIf="sm.platform === 'TikTok'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-brands fa-tiktok socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+
+            <div *ngIf="sm.platform === 'Snapchat'" class="socialMediaLine">
+              <span (click)="goToLink(sm.link)" class="fa-brands fa-snapchat socialMediaIcon"></span><a class="socialMediaText" (click)="goToLink(sm.link)">@{{sm.profileName}}</a>
+            </div>
+          </div>
+
+        </ng-container>
       </div>
       <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
         <div class="announcementBorders">

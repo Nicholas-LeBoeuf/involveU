@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
+import { SHA256, enc } from "crypto-js";
 
 @Component({
   selector: 'app-root',
@@ -122,7 +123,10 @@ export class AppComponent {
   }
 
   onLoginSubmit() {
-    this.userService.checkLoginCredentials(this.loginForm.value.username, this.loginForm.value.password).subscribe((response: User) => {
+
+    const hashedPass = SHA256(this.loginForm.value.password).toString(enc.Hex);
+
+    this.userService.checkLoginCredentials(this.loginForm.value.username, hashedPass).subscribe((response: User) => {
       this.loggedInUser = response;
 
       this.setCookie();

@@ -633,7 +633,7 @@ public class DBServices {
 
     protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
     {
-        sql = "select Announcements.announcementID, Announcements.clubID, Announcements.contentOfAnnouncement, Announcements.expiresOn, Announcements.announcementTitle, Club.clubName from Announcements join Favorites F on Announcements.clubID = F.clubID AND F.userID = " + userID +" AND expiresON > DATE(NOW()) JOIN Club WHERE Announcements.clubID = Club.clubID ORDER BY postedOn DESC;";
+        sql = "select Announcements.announcementID, Announcements.clubID, Announcements.contentOfAnnouncement, Announcements.expiresOn,Announcements.postedOn, Announcements.announcementTitle, Club.clubName from Announcements join Favorites F on Announcements.clubID = F.clubID AND F.userID = " + userID +" AND expiresON > DATE(NOW()) JOIN Club WHERE Announcements.clubID = Club.clubID ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
@@ -641,7 +641,7 @@ public class DBServices {
 
     protected  List<Announcement> getDBClubAnnouncements(int clubID)
     {
-        sql = "select announcementID, Announcements.clubID, contentOfAnnouncement, expiresOn, announcementTitle, Club.clubName from Announcements JOIN Club ON Announcements.clubID =  "+ clubID+ "  and Announcements.clubID = Club.clubID;";
+        sql = "select announcementID, Announcements.clubID, contentOfAnnouncement, expiresOn,postedOn, announcementTitle, Club.clubName from Announcements JOIN Club ON Announcements.clubID =  "+ clubID+ "  and Announcements.clubID = Club.clubID;";
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
@@ -664,7 +664,7 @@ public class DBServices {
     }
     protected boolean insertDBNewSocialMedia(SocialMedia newSM)
     {
-        sql = "INSERT INTO SocialMedia (Platform,profileName,link, clubID) VALUES (?,?,?,?);";
+        sql = "INSERT INTO SocialMedia (platform,profileName,link, clubID) VALUES (?,?,?,?);";
 
         validQuery = JdbcTemplated.update(sql, newSM.getPlatform(), newSM.getProfileName(), newSM.getLink(), newSM.getClubID());
 
@@ -672,9 +672,9 @@ public class DBServices {
     }
     protected boolean updateSocialMedia(SocialMedia newSM)
     {
-        sql = "UPDATE SocialMedia SET Platform = ?, link = ?, profileName = ?, link = ?";
+        sql = "UPDATE SocialMedia SET platform = ?, link = ?, profileName = ? WHERE socialMediaID = ?";
 
-        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName());
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName(), newSM.getSocialMediaID());
 
         return validQuery == 1;
     }

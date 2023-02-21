@@ -31,6 +31,7 @@
     "@fullcalendar/list": "^5.0.0",
     "@fullcalendar/timegrid": "^5.0.0",
     "boostrap": "^2.0.0",
+    "crypto-js": "^4.1.1",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^5.11.3",
     "ng": "^0.0.0",

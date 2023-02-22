@@ -140,7 +140,8 @@ export class AppComponent {
   }
 
   onSignupSubmit() {
-    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
+    const hashedPass = SHA256(this.signupForm.value.password).toString(enc.Hex);
+    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: hashedPass};
 
     this.userService.signupNewUser(userInfo).subscribe(success =>{
       this.displaySignupDialog = false;

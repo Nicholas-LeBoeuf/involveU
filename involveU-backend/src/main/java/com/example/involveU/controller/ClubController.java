@@ -72,6 +72,19 @@ public class ClubController extends DBServices{
              return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);
   }
 
+  @PutMapping ("/eboard/updateClubData/{clubID}")
+  private ResponseEntity<String> updateClubData(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBData(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
   @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {

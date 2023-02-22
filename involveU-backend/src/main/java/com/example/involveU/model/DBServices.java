@@ -254,6 +254,15 @@ public class DBServices {
         return validQuery == 1;
 
     }
+
+    protected Boolean updateClubDBData(int clubID)
+    {
+        sql = "UPDATE Club SET clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
     protected String getClubLogo(int clubID)
     {
         String clubLogoPath;

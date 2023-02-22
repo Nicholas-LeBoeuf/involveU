@@ -112,6 +112,7 @@ public class AdminController extends DBServices {
         S3Util s3 = new S3Util();
         String filename = newImage.getOriginalFilename();
         System.out.println(filename);
+
         s3.uploadFile(filename, newImage.getInputStream());
 
         return new ResponseEntity<>("Success",HttpStatus.OK	);

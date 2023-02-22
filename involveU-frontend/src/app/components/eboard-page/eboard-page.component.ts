@@ -11,7 +11,10 @@ import {AnnouncementsService} from "../../services/announcements.service";
 import {Events} from "../../objects/events";
 import {Table} from "primeng/table";
 import {EboardService} from "../../services/eboard.service";
-
+import {Title} from "@angular/platform-browser";
+import {SocialMedia} from "../../objects/social-media";
+import {ResponsiveService} from "../../services/responsive.service";
+import {AdminService} from "../../services/admin.service";
 
 @Component({
   selector: 'app-eboard-page',
@@ -21,17 +24,23 @@ import {EboardService} from "../../services/eboard.service";
 export class EboardPageComponent implements OnInit {
   announcementForm : FormGroup;
   editAnnouncementForm: FormGroup;
-  createEventForm : FormGroup;
-  editEventForm : FormGroup
+  socialMediaForm : FormGroup;
+  editSocialMediaForm : FormGroup;
   todaysDate = new Date().toString();
+
   constructor(private clubService: ClubService,
               private formBuilder: FormBuilder,
               private eventsService: EventsService,
+              private eboardService: EboardService,
+              private adminService: AdminService,
+              public responsiveService: ResponsiveService,
               private route: ActivatedRoute,
               private router: Router,
               private announcementsService: AnnouncementsService,
               public cookie: CookieService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private title: Title) {
+    this.title.setTitle("involveU | E-Board")
     this.announcementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
@@ -46,40 +55,26 @@ export class EboardPageComponent implements OnInit {
       editExpiresOn: ['']
     })
 
-    this.createEventForm = this.formBuilder.group({
-      createEventName: ['', Validators.required],
-      createEventLocation: ['', Validators.required],
-      createStartTime: ['', Validators.required],
-      createEndTime: ['', Validators.required],
-      createEventDate: ['', Validators.required],
-      createEventDesc: ['', Validators.required],
-      createIsTransportation: ['', Validators.required],
-      createTicketLink: ['', Validators.required],
+    this.socialMediaForm = this.formBuilder.group({
+      platformString: ['', Validators.required],
+      smLink: ['', Validators.required],
+      smProfileName: ['', Validators.required]
     })
 
-    this.editEventForm = this.formBuilder.group({
-      editEventName: ['', Validators.required],
-      editEventLocation: ['', Validators.required],
-      editStartTime: ['', Validators.required],
-      editEndTime: ['', Validators.required],
-      editEventDate: ['', Validators.required],
-      editEventDesc: ['', Validators.required],
-      editIsTransportation: ['', Validators.required],
-      editTicketLink: ['', Validators.required],
+    this.editSocialMediaForm = this.formBuilder.group({
+      editPlatformString: ['', Validators.required],
+      editsmLink: ['', Validators.required],
+      editsmProfileName: ['', Validators.required]
     })
 
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
   //BOOLEANS
-  addEventDialog: boolean = false;
-  editDialog: boolean = false;
-  editAnnouncementDialog
-  addEventSuccess: boolean = false;
-  addEventFailed: boolean = false;
-  editEventSuccess: boolean = false;
-  editEventFailed: boolean = false;
-  disableUserDropdown: boolean = true;
+  createAnnouncementDialog: boolean = false;
+  editAnnouncementDialog: boolean = false;
+  addSocialMediaDialog: boolean = false;
+  editSocialMediaDialog: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
 
@@ -89,37 +84,37 @@ export class EboardPageComponent implements OnInit {
 
   //STRINGS
   message: string;
+  clubLogoName: string;
 
   //OBJECTS
   clubInfo: Club;
   clubEvents: Events[] = [];
   clubAnnouncements: any = {};
-  certainEvent: Events[] = [];
   certainAnnouncement: Announcement[] = [];
-  locations: Events[] = [];
-  spaces: Events[] = [];
-  selectedLocation: any = {};
+  clubSocialMedia: SocialMedia[] = [];
+  certainSocialMedia: SocialMedia[] = []
 
   @ViewChild('clubEventTable') clubEventTable: Table;
   @ViewChild('clubAnnouncementTable') clubAnnouncementTable: Table;
-  locationID: FormControl = new FormControl(null);
-  spaceID : FormControl = new FormControl(null);
-  cols = [
-    { field: 'eventName', header: 'Name' },
-    { field: 'eventDate', header: 'Date' },
-    { field: 'startTime', header: 'Start Time' },
-    { field: 'endTime', header: 'End Time' },
-    { field: 'eventLocation', header: 'Location' },
-    { field: 'eventDesc', header: 'Description' },
-    { field: 'ticketLink', header: 'Ticket Link' },
-    { field: 'isTransportation', header: 'Transportation' }
-  ];
+
   announcementCols = [
     { field: 'announcementTitle', header: 'Title' },
     { field: 'contentOfAnnouncement', header: 'Announcement Content' },
-    { field: 'postedOn', header: 'Date Posted' },
-    { field: 'expiresOn', header: 'Date Expired' }
+    { field: 'postedOn', header: 'Posted On' },
+    { field: 'expiresOn', header: 'Expires On' }
   ]
+
+  platformList = [
+    {name: 'Facebook'},
+    {name: 'Instagram'},
+    {name: 'Snapchat'},
+    {name: 'Twitter'},
+    {name: 'TikTok'},
+    {name: 'Website'},
+    {name: 'YouTube'},
+  ]
+
+  platformString: FormControl = new FormControl(null);
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -128,14 +123,21 @@ export class EboardPageComponent implements OnInit {
     this.userID = +this.cookie.get('studentID');
     this.getClubInfo();
     this.getClubEvents();
-    this.getSpacesByLocation();
     this.getClubAnnouncements();
-    this.getLocations();
+    this.getClubSocialMedia();
   }
 
   getClubInfo() {
     this.clubService.getSpecificClub(this.clubID).subscribe(response => {
       this.clubInfo = response;
+      this.clubLogoName = response.clubLogo;
+      console.log(response);
+      this.clubService.getClubLogo(this.clubInfo.clubID).subscribe(logo => {
+        const reader = new FileReader();
+        reader.onload = (e) => this.clubInfo.clubLogo = e.target.result;
+        reader.readAsDataURL(new Blob([logo]));
+        this.clubInfo.clubLogo = logo;
+      })
     })
   }
 
@@ -148,6 +150,7 @@ export class EboardPageComponent implements OnInit {
   getClubAnnouncements() {
     this.announcementsService.getClubAnnouncements(this.clubID).subscribe(response => {
       this.clubAnnouncements = response;
+      console.log(response);
     })
   }
 
@@ -184,44 +187,29 @@ export class EboardPageComponent implements OnInit {
     this.clubEventTable.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
 
-  /*onFilterAnnouncements(announcement: Announcement) {
+  onFilterAnnouncements(announcement: Event) {
     this.clubAnnouncementTable.filterGlobal((announcement.target as HTMLInputElement).value.toString(), 'contains');
-  }*/
-
-  showAddEventDialog()
-  {
-    this.addEventDialog = true;
   }
-  closeAddEventDialog()
+
+  showCreateAnnouncementDialog()
   {
-    this.addEventDialog = false;
+    this.createAnnouncementDialog = true;
+  }
+
+  closeCreateAnnouncementDialog()
+  {
+    this.createAnnouncementDialog = false;
   }
 
   showEditAnnouncementDialog(SpecificAnnouncement: Announcement) {
     this.certainAnnouncement.push(SpecificAnnouncement);
+    console.log(SpecificAnnouncement);
     this.editAnnouncementDialog = true;
   }
 
   closeEditAnnouncementDialog() {
     this.certainAnnouncement = [];
     this.editAnnouncementDialog = false;
-  }
-
-  showEditDialog(SpecficEvent: Events)
-  {
-    this.certainEvent.push(SpecficEvent);
-    this.editDialog = true;
-  }
-  closeEditDialog() {
-    this.certainEvent = [];
-    this.editDialog = false;
-  }
-
-  deleteEvent(eventID: number) {
-    this.eventsService.deleteEvent(eventID).subscribe(response => {
-      console.log(response);
-    })
-    location.reload();
   }
 
   deleteAnnouncement(announcementID: number) {
@@ -231,92 +219,128 @@ export class EboardPageComponent implements OnInit {
     location.reload();
   }
 
-  get getCreateEventsFormInputs()
+  goToLink(url: string){
+    window.open(url, "_blank");
+  }
+
+  getClubSocialMedia() {
+    this.eboardService.getClubSocialMedia(this.clubID).subscribe(response => {
+      this.clubSocialMedia = response;
+      console.log(response);
+    })
+  }
+
+  showAddSocialMediaDialog()
   {
-    return this.createEventForm.controls;
+    this.addSocialMediaDialog = true;
   }
 
-  getLocations() {
-    this.eventsService.getLocations().subscribe((response: Events[]) => {
-        this.locations = response;
+  closeAddSocialMediaDialog()
+  {
+    this.addSocialMediaDialog = false;
+  }
+
+  showEditSocialMediaDialog(event)
+  {
+    this.certainSocialMedia.push(event);
+    this.editSocialMediaDialog = true;
+  }
+
+  closeEditSocialMediaDialog()
+  {
+    this.certainSocialMedia = [];
+    this.editSocialMediaDialog = false;
+  }
+
+  addSocialMedia() {
+    const newSocialMedia: SocialMedia = {platform: this.platformString.value, profileName: this.socialMediaForm.value.smProfileName, link: this.socialMediaForm.value.smLink, clubID: this.clubID};
+
+    this.eboardService.addNewSocialMedia(newSocialMedia).subscribe(response => {
+      console.log(response);
+    },
+    (error) => {
+      if(error.status === 200) {
+        this.addSocialMediaDialog = false;
+        this.getClubSocialMedia();
+      }
+      else {
+        console.log(error);
+      }
+    });
+  }
+
+  editSocialMedia() {
+    const editSocialMedia: SocialMedia = {socialMediaID: this.certainSocialMedia[0].socialMediaID, platform: this.platformString.value, profileName: this.editSocialMediaForm.value.editsmProfileName, link: this.editSocialMediaForm.value.editsmLink, clubID: this.clubID};
+
+    this.eboardService.editSocialMedia(editSocialMedia).subscribe(response => {
+        console.log(response);
       },
       (error) => {
-        console.log(error)
+        if (error.status === 200) {
+          this.editSocialMediaDialog = false;
+          this.getClubSocialMedia();
+        }
+        else {
+          console.log(error);
+        }
       });
   }
 
-  getSpacesByLocation() {
-    this.eventsService.getSpaceByLocation(this.locationID.value).subscribe(response => {
-        this.spaces = response;
-      },
+  deleteSocialMedia(socialMedia: SocialMedia) {
+    this.eboardService.deleteSocialMedia(socialMedia.socialMediaID).subscribe(response => {
+      console.log(response);
+    },
       (error) => {
-        console.log(error)
-      });
+        if (error.status === 200) {
+          this.getClubSocialMedia();
+        }
+        else {
+          console.log(error);
+        }
+      })
   }
 
-  checkLocationSelected() {
-    if(this.selectedLocation!=='Select Location'){
-      this.disableUserDropdown = false;
-      this.getSpacesByLocation();
+  onUpload(event) {
+    const file:File = event.files[0];
+
+    this.adminService.sendImage(file).subscribe(response => {
+      console.log(response);
+    })
+  }
+
+  isCreateAnnouncementFormValid() {
+    if (this.announcementForm.value.announcementTitle === '' || this.announcementForm.value.contentOfAnnouncement === '' || this.announcementForm.value.expiresOn === '') {
+      return true;
     }
     else {
-      this.disableUserDropdown = true;
-    }
-  }
-
-  areCreateFormInputsValid()
-  {
-    if(this.createEventForm.value.createEventName == '' || this.createEventForm.value.createEventLocation == '' ||this.createEventForm.value.createStartTime == '' || this.createEventForm.value.createEndTime == '' || this.createEventForm.value.createEventDate == '' || this.createEventForm.value.createEventDesc == '') {
-      return true;
-    }
-    else{
       return false;
     }
-
   }
 
-  submitNewEvent()
-  {
-    const eventInfo : Events = { eventName: this.createEventForm.value.createEventName, eventLocation: this.createEventForm.value.createEventLocation, startTime: this.createEventForm.value.createStartTime, endTime: this.createEventForm.value.createEndTime, eventDate: this.createEventForm.value.createEventDate, eventDesc: this.createEventForm.value.createEventDesc, isTransportation: this.createEventForm.value.createIsTransportation, ticketLink: this.createEventForm.value.createTicketLink, clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
-
-    this.eventsService.submitNewEvent(eventInfo).subscribe(success =>{
-      console.log(success);
-      this.addEventSuccess = true;
-      location.reload();
-    },(error) =>{
-      location.reload();
-      console.log(error.text);
-      this.addEventFailed = true;
-    })
-  }
-
-  updateEvent()
-  {
-    const eventInfo : Events = {eventID: this.certainEvent[0].eventID, eventName: this.editEventForm.value.editEventName,eventLocation: this.editEventForm.value.editEventLocation, startTime: this.editEventForm.value.editStartTime, endTime: this.editEventForm.value.editEndTime, eventDate: this.editEventForm.value.editEventDate, eventDesc: this.editEventForm.value.editEventDesc, isTransportation: this.editEventForm.value.editIsTransportation, ticketLink: this.editEventForm.value.editTicketLink,clubName:  this.clubInfo.clubName, clubID: this.clubInfo.clubID };
-
-    this.eventsService.updateEvent(eventInfo).subscribe(success =>{
-      console.log(success);
-      this.editEventSuccess = true;
-    },(error) =>{
-
-      this.getClubEvents();
-      console.log(error.text);
-      this.editEventFailed = true;
-    })
-  }
-
-  get getEditEventsFormInputs()
-  {
-    return this.editEventForm.controls;
-  }
-  areEditFormInputsValid()
-  {
-    if(this.editEventForm.value.editEventName == '' || this.editEventForm.value.editEventLocation == '' ||this.editEventForm.value.editStartTime == '' || this.editEventForm.value.editEndTime == '' || this.editEventForm.value.editEventDate == '' || this.editEventForm.value.editEventDesc == '') {
+  isEditAnnouncementFormValid() {
+    if (this.editAnnouncementForm.value.editAnnouncementTitle === '' || this.editAnnouncementForm.value.editContentOfAnnouncement === '' || this.editAnnouncementForm.value.editExpiresOn === '') {
       return true;
     }
-    else{
+    else {
       return false;
     }
+  }
 
+  isCreateSocialMediaFormValid() {
+    if (this.platformString.value === null || this.socialMediaForm.value.smProfileName === '' || this.socialMediaForm.value.smLink === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditSocialMediaFormValid() {
+    if (this.platformString.value === null || this.editSocialMediaForm.value.editsmProfileName === '' || this.editSocialMediaForm.value.editsmLink === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

@@ -5,7 +5,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 20000;
+  z-index: 10000;
 }
 
 li {
@@ -21,14 +21,14 @@ ul {
 }
 
 .SNHUlogoScale {
-  height: 45px;
+  height: auto;
+  width: 140px;
   cursor: pointer;
 }
 
 .involveULogoScale {
-  width: 67px;
-  height: 59px;
-  margin-left: 10px;
+  height: auto;
+  width: 60px;
 }
 
 
@@ -36,7 +36,7 @@ ul {
 
 .involveUModalScale {
   width: 200px;
-  height: 174px;
+  height: auto;
   display: block;
   margin: 4% auto;
 }
@@ -46,24 +46,6 @@ ul {
   text-align: center;
   font-weight: normal;
   margin-bottom: 5%;
-}
-
-::ng-deep .p-dialog {
-  background-color: #AECDE6 !important;
-  border-radius: 20px;
-}
-
-::ng-deep .p-dialog .p-dialog-content {
-  background-color: #AECDE6 !important;
-  border-radius: 20px;
-}
-
-::ng-deep .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
-  display:none;
-}
-
-::ng-deep .p-dialog .p-dialog-footer {
-  display: none;
 }
 
 .inputField {
@@ -76,6 +58,11 @@ ul {
   margin: auto;
 }
 
+.centerButtonDiv {
+  display: flex;
+  justify-content: center;
+}
+
 .signupGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -83,6 +70,8 @@ ul {
   grid-column-gap: 0;
   grid-row-gap: 0;
   justify-items: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .input1 { grid-area: 1 / 1 / 2 / 2; }
@@ -116,13 +105,6 @@ ul {
   display:none!important;
 }
 
-.alert {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: center;
-  border-radius: 10px;
-  position: sticky;
-}
 
 .closeButtonDialog {
   float: right;
@@ -154,10 +136,6 @@ ul {
 
 .alert-dismissible .btn-close {
   padding: 1rem  1rem;
-}
-
-::ng-deep .p-dialog .p-dialog-content:last-of-type {
-  border-radius: 20px;
 }
 
 ::ng-deep .p-contextmenu {
@@ -231,4 +209,8 @@ ul {
 .dropdown-item {
   text-align: center;
   margin: 5px auto;
+}
+
+.buttonMargin {
+  margin-bottom: 10px;
 }

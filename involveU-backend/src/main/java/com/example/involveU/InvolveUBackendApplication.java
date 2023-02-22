@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @SpringBootApplication
 public class InvolveUBackendApplication extends SpringBootServletInitializer {
 

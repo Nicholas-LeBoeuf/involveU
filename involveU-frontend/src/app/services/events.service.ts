@@ -76,7 +76,7 @@ export class EventsService {
   getTopRSVP():Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTopRSVP`);
   }
-  getEventsBySpace(locationID: string): Observable<Events[]> {
+  getEventsBySpace(locationID: number): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getEventsBySpace/${locationID}`)
   }
 }

@@ -6,6 +6,11 @@ import {CookieService} from "ngx-cookie-service";
 import {Table} from "primeng/table";
 import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
+import {Title} from "@angular/platform-browser";
+import {ResponsiveService} from "../../services/responsive.service";
+import {faTrophy, faMedal} from "@fortawesome/free-solid-svg-icons";
+import {AnnouncementsService} from "../../services/announcements.service";
+import {Announcement} from "../../objects/announcements";
 
 @Component({
   selector: 'app-club-page',
@@ -16,30 +21,38 @@ export class ClubPageComponent implements OnInit {
 
   constructor(private clubService: ClubService,
               private eventsService: EventsService,
+              private announcementsService: AnnouncementsService,
+              public responsiveService: ResponsiveService,
               private router: Router,
-              public cookie: CookieService) { }
+              private title: Title,
+              public cookie: CookieService
+              ) {
+    this.title.setTitle("involveU | Clubs")
+  }
 
+  //BOOLEANS
   displayClubSearchModal: boolean = false;
-  displayClubSearchLoggedInModal: boolean = false;
   viewMoreInfoDialog: boolean = false;
   isLoggedIn: boolean = false;
-
-  timeout: boolean = false;
-  userID: number;
-
   loading: boolean = true;
-
   successMessage: boolean = false;
   failMessage: boolean = false;
-  message!: string;
+  isLoading: boolean = true;
+  showMore: boolean = false;
 
+  //NUMBERS
+  userID: number;
+  numberOfRows: number;
+
+  //STRINGS
+  message: string;
   clubName: string;
+  userFirstName: string;
 
-  imagesForClubSearch: any = ['cape.png', 'cssa.png', 'penmenPress.png', 'radioSNHU.png', 'snhuLogoStock.png'];
+  //OBJECTS or ARRAYS
   allClubs: Club[] = [];
-  compareAllClubs: Club[] = [];
   favoritedClubs: Club[] = [];
-  notFavoritedClubs: Club[] = [];
+
   featuredClubs: Club[] = [];
 
   favoritedClubsEvents: Events[] = [];
@@ -48,149 +61,89 @@ export class ClubPageComponent implements OnInit {
   userRSVPdEvents: Events[] = [];
   topRSVPdEvents: Events[] = [];
 
+  osiAnnouncements: Announcement[] = [];
+  favoritedClubAnnouncements: Announcement[] = [];
+
   cols = [
     { field: 'clubName', header: 'Club Name' }
   ];
 
-  @ViewChild('dtNotLoggedIn') dtNotLoggedIn: Table;
-  @ViewChild('dtLoggedIn') dtLoggedIn: Table;
+  @ViewChild('dtClubSearch') dtClubSearch: Table;
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
+    this.userFirstName = this.cookie.get('studentFName');
+    this.userFirstName = this.userFirstName.replace(/['"]/g, '');
+
     this.isUserLoggedIn();
-    this.fillClubList();
+    this.getClubList();
     this.getUsersFavoritedClubs();
-    this.getClubsThatArentFavorited();
     this.getFavoritedClubEvents();
     this.getAllClubsForFeatured();
     this.getAllFutureEvents();
     this.getUserRSVPdEvents();
     this.getTopRSVP();
-    this.loading = false;
+    this.getOSIAnnouncements();
+    this.getFavoritedClubAnnouncements();
 
-    if (!localStorage.getItem('isReloaded')) {
-      localStorage.setItem('isReloaded', 'no reload')
-      location.reload()
+    if (this.responsiveService.deviceDesktop()) {
+      this.numberOfRows = 2;
     }
     else {
-      localStorage.removeItem('isReloaded')
+      this.numberOfRows = 1;
     }
-  }
 
-  ngAfterViewInit(): void {
+    this.loading = false;
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   }
 
   isUserLoggedIn() {
     this.isLoggedIn = this.userID !== 0;
   }
 
-  checkLogin() {
-    if (this.isLoggedIn) {
-      this.showClubSearchLoggedInDialog();
-    }
-    else {
-      this.showClubSearchDialog();
-    }
-  }
-
+  //Get Functions
   getTopRSVP() {
     this.eventsService.getTopRSVP().subscribe(response => {
       this.topRSVPdEvents = response;
-      console.log(response);
     },
     (error) => {
       console.log(error);
     })
   }
 
-  showClubSearchDialog() {
-    this.displayClubSearchModal = true;
-  }
-
-  closeClubSearchDialog() {
-    this.displayClubSearchModal = false;
-  }
-
-  showClubSearchLoggedInDialog() {
-    this.displayClubSearchLoggedInModal = true;
-  }
-
-  closeClubSearchLoggedInDialog() {
-    this.displayClubSearchLoggedInModal = false;
-  }
-
-  showViewMoreInfoDialog(SpecificEvent: Events){
-    this.certainEvent.push(SpecificEvent);
-    this.viewMoreInfoDialog = true;
-  }
-  closeViewMoreInfoDialog(){
-    this.certainEvent = [];
-    this.viewMoreInfoDialog = false;
-  }
-
-  fillClubList() {
+  getClubList() {
     this.clubService.getAllClubs().subscribe((response: Club[]) => {
-      this.allClubs = response;
-    },
+        this.allClubs = response;
+      },
       (error) => {
         console.log(error)
       });
   }
 
-  getClubsThatArentFavorited() {
-    this.loading = true;
-
-    this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe((response: Club[]) => {
-      this.compareAllClubs = response;
-    });
-
-    setTimeout(() => {
-      this.clubService.getAllClubs().subscribe(response => {
-        this.notFavoritedClubs = response.filter(allClubs => !this.compareAllClubs.find(x => x.clubID === allClubs.clubID));
-        this.loading = false;
-
-      })
-    }, 1000);
-  }
-
-  favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe()
-    this.message = 'Club successfully favorited!';
-    this.successMessage = true;
-    location.reload();
-  }
-
-  removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe()
-    this.message = 'Club successfully unfavorited!';
-    this.successMessage = true;
-    location.reload();
-  }
-
   getUsersFavoritedClubs() {
     this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe(response => {
-      this.favoritedClubs = response;
-    },
+        this.favoritedClubs = response;
+      },
       (error) => {
-      console.log(error);
+        console.log(error);
       })
-  }
-
-  goToClubPage(clubID: number) {
-    this.router.navigate(['/clubs/' + clubID]).then();
-  }
-
-  onFilterNotLoggedInTable(event: Event) {
-    this.dtNotLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
-  }
-
-  onFilterLoggedInTable(event: Event) {
-    this.dtLoggedIn.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
   }
 
   getFavoritedClubEvents() {
     this.eventsService.getFutureFavortedClubEvents(this.userID).subscribe(response => {
       this.favoritedClubsEvents = response;
+      for(let i = 0; i < this.favoritedClubsEvents.length; i++) {
+        this.clubService.getClubLogo(this.favoritedClubsEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.favoritedClubsEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.favoritedClubsEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 
@@ -204,15 +157,63 @@ export class ClubPageComponent implements OnInit {
   getAllFutureEvents() {
     this.eventsService.getAllFutureEvents().subscribe(response => {
       this.allFutureEvents = response;
+      for(let i = 0; i < this.allFutureEvents.length; i++) {
+        this.clubService.getClubLogo(this.allFutureEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.allFutureEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.allFutureEvents[i].clubLogo = logo;
+        })
+      }
     })
+  }
+
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+      console.log(response);
+      for(let i = 0; i < this.userRSVPdEvents.length; i++) {
+        this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.userRSVPdEvents[i].clubLogo = logo;
+        })
+      }
+    })
+  }
+
+  getFavoritedClubAnnouncements() {
+    this.announcementsService.getFavoritedClubAnnouncements(this.userID).subscribe(response => {
+      this.favoritedClubAnnouncements = response;
+    })
+  }
+
+  getOSIAnnouncements() {
+    this.announcementsService.getClubAnnouncements(275).subscribe(response => {
+        this.osiAnnouncements = response;
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  //Actions
+  removeFromFavorites(clubID: number) {
+    this.clubService.unfavoriteClub(clubID, this.userID).subscribe()
+    this.message = 'Club successfully unfavorited!';
+    this.successMessage = true;
+    location.reload();
+  }
+
+  isUserRSVPd(eventID: number): boolean {
+    return this.userRSVPdEvents.some(event => event.eventID === eventID);
   }
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
-
     })
-
     this.message = "Event Successfully RSVPd!";
     this.successMessage = true;
     location.reload();
@@ -221,22 +222,37 @@ export class ClubPageComponent implements OnInit {
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
       console.log(response);
-
     })
-
     this.message = "Successfully Removed RSVP!";
     this.successMessage = true;
     location.reload();
   }
 
-  getUserRSVPdEvents() {
-    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
-      this.userRSVPdEvents = response;
-    })
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
   }
 
-  isUserRSVPd(eventID: number): boolean {
-    return this.userRSVPdEvents.some(event => event.eventID === eventID);
+  //Dialogs
+  showClubSearchDialog() {
+    this.displayClubSearchModal = true;
   }
 
+  closeClubSearchDialog() {
+    this.displayClubSearchModal = false;
+  }
+
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+
+  closeViewMoreInfoDialog(){
+    this.certainEvent = [];
+    this.viewMoreInfoDialog = false;
+  }
+
+  //Filters
+  onFilterClubSearchTable(event: Event) {
+    this.dtClubSearch.filterGlobal((event.target as HTMLInputElement).value.toString(), 'contains');
+  }
 }

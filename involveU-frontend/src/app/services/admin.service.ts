@@ -12,21 +12,26 @@ import {Announcement} from "../objects/announcements";
 })
 export class AdminService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   insertNewClub(newClub: Club) {
     return this.http.post(environment.apiURL + `club/insertClub`, newClub, {responseType: 'text'});
   }
 
-  createUser(newUser: User){
+  deleteClub(clubID: number) {
+    return this.http.delete(environment.apiURL + `club/deleteClub/${clubID}`);
+  }
+
+  createUser(newUser: User) {
     return this.http.post(environment.apiURL + `admin/createUser`, newUser, {responseType: 'text'});
   }
 
-  deleteUser(userID: number){
+  deleteUser(userID: number) {
     return this.http.get(environment.apiURL + `admin/deleteUser/${userID}`, {responseType: 'text'});
   }
 
-  assignNewAdvisor(advisorID: number, clubID: number){
+  assignNewAdvisor(advisorID: number, clubID: number) {
     return this.http.get(environment.apiURL + `admin/assignNewAdvisor/${advisorID}/${clubID}`, {responseType: 'text'});
   }
 
@@ -34,23 +39,19 @@ export class AdminService {
     return this.http.get(environment.apiURL + `admin/addNewEboard/${userID}/${clubID}/${role}`, {responseType: 'text'});
   }
 
-  removeEBoardMember(userID: number){
+  removeEBoardMember(userID: number) {
     return this.http.get(environment.apiURL + `admin/deleteEboard/${userID}`, {responseType: 'text'});
   }
 
   getAllEboard(): Observable<User[]> {
-  return this.http.get<User[]>(environment.apiURL + `admin/getAllEboard`);
+    return this.http.get<User[]>(environment.apiURL + `admin/getAllEboard`);
   }
 
   getAllNonEboard(): Observable<User[]> {
     return this.http.get<User[]>(environment.apiURL + `admin/getNonEboard`);
   }
 
-  getNonAdvisors(): Observable<User[]> {
-    return this.http.get<User[]>(environment.apiURL + `admin/getNonAdvisors`);
-  }
-  sendImage(file: File)
-  {
+  sendImage(file: File) {
     console.log(file);
     const data: FormData = new FormData();
     data.append('file', file);
@@ -60,5 +61,10 @@ export class AdminService {
 
   createOSIAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
+  }
+
+
+  getClubLogo(clubID: number) {
+    return this.http.get(environment.apiURL + `api/club/getClubLogo/${clubID}`, {responseType: 'blob'});
   }
 }

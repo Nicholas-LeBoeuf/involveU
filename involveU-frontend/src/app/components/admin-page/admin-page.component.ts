@@ -6,9 +6,10 @@ import {AdminService} from "../../services/admin.service";
 import {Club} from "../../objects/club";
 import {User} from "../../objects/user";
 import {CookieService} from "ngx-cookie-service";
-import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
+import {Title} from "@angular/platform-browser";
+import {ResponsiveService} from "../../services/responsive.service";
 
 @Component({
   selector: 'app-admin-page',
@@ -19,35 +20,22 @@ export class AdminPageComponent implements OnInit {
   createUserForm: FormGroup;
   deleteUserForm: FormGroup;
   createClubForm : FormGroup;
+  deleteClubForm: FormGroup;
   assignAdvisorForm : FormGroup;
   osiAnnouncementForm : FormGroup;
-  clubNames: Club[] = [];
-  userList: User[] = [];
-  nonEboardList: User[] = [];
-  eboardList: User[] = [];
-  nonAdvisorList: User[] = [];
-  clubEboard: User[] = [];
-  assign: boolean = true;
   removeEBoardForm : FormGroup;
   addEBoardForm : FormGroup;
-  selectedClub: any = {};
-  clubID!: number;
-
-  addEBoardClubID: FormControl = new FormControl(null);
-  removeEBoardClubID: FormControl = new FormControl(null);
-  assignAdvisorClubID: FormControl = new FormControl(null);
-  deleteUserID: FormControl = new FormControl(null);
-  nonEboardID: FormControl = new FormControl(null);
-  eboardID: FormControl = new FormControl(null);
-  nonAdvisorID: FormControl = new FormControl(null);
-  todaysDate = new Date().toString();
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private clubService: ClubService,
-              public cookie: CookieService,
+              public responsiveService: ResponsiveService,
               private adminService: AdminService,
-              private datePipe: DatePipe) {
+              public cookie: CookieService,
+              private datePipe: DatePipe,
+              private title: Title) {
+    this.title.setTitle("involveU | Admin")
+
     this.createClubForm = this.formBuilder.group({
       clubName: ['', Validators.required],
       clubAffiliation: ['', Validators.required],
@@ -74,6 +62,10 @@ export class AdminPageComponent implements OnInit {
       userID: ['', Validators.required]
     })
 
+    this.deleteClubForm = this.formBuilder.group({
+      clubID: ['', Validators.required]
+    })
+
     this.assignAdvisorForm = this.formBuilder.group({
       advisorID: ['', Validators.required]
     });
@@ -96,52 +88,68 @@ export class AdminPageComponent implements OnInit {
     });
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
-  labelEboard: User[];
+
+  //BOOLEANS
   createClubMessage: boolean = false;
   createClubFailed: boolean = false;
   createUserSuccess: boolean = false;
   createUserFailed: boolean = false;
   deleteUserSuccess: boolean = false;
+  deleteClubSuccess: boolean = false;
   deleteUserFailed: boolean = false;
+  deleteClubFailed: boolean = false;
   assignAdvisorSuccess: boolean = false;
   assignAdvisorFailed: boolean = false;
   assignEboardSuccess: boolean = false;
   assignEboardFailed: boolean = false;
   removeEboardSuccess: boolean = false;
   removeEboardFailed: boolean = false;
-  disableUserDropdown = true;
+  disableUserDropdown:boolean = true;
+  assign: boolean = true;
+
+  //NUMBERS
+  clubID!: number;
+
+  //STRINGS
 
 
-  uploadedFiles: any[] = [];
+  //OBJECTS
+  labelEboard: User[];
+  clubNames: Club[] = [];
+  userList: User[] = [];
+  nonEboardList: User[] = [];
+  eboardList: User[] = [];
+  advisorList: User[] = [];
+  clubEboard: User[] = [];
+  selectedClub: any = {};
+
+  //FORM CONTROLSc
+  addEBoardClubID: FormControl = new FormControl(null);
+  removeEBoardClubID: FormControl = new FormControl(null);
+  removeClubID: FormControl = new FormControl(null);
+  assignAdvisorClubID: FormControl = new FormControl(null);
+  deleteUserID: FormControl = new FormControl(null);
+  nonEboardID: FormControl = new FormControl(null);
+  eboardID: FormControl = new FormControl(null);
+  advisorID: FormControl = new FormControl(null);
+  createClubAdvisorID: FormControl = new FormControl(null);
+  todaysDate = new Date().toString();
+
+
   ngOnInit(): void {
     this.fillClubList();
     this.fillUserList();
     this.fillNonEboardList();
     this.fillEboardList();
-    this.fillNonAdvisorList();
+    this.fillAdvisorList();
     this.getEboardMembers();
   }
   onUpload(event) {
+    const file:File = event.files[0];
 
-    //console.log(event.target.files[0])
-    console.log(event);
-
-    //this.adminService.sendImage(event.files[0]).subscribe()
-   /* console.log("made it");
-    const file:File = event.target.files[0];
-
-    if (file) {
-
-      this.fileName = file.name;
-
-      const formData = new FormData();
-
-      formData.append("thumbnail", file);
-
-      this.adminService.sendImage(formData).subscribe()*/
-      //const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-     // upload$.subscribe();
+    this.adminService.sendImage(file).subscribe(response => {
+      console.log(response);
+    })
 
   }
 
@@ -181,9 +189,9 @@ export class AdminPageComponent implements OnInit {
       });
   }
 
-  fillNonAdvisorList() {
-    this.adminService.getNonAdvisors().subscribe((response: User[]) => {
-        this.nonAdvisorList = response;
+  fillAdvisorList() {
+    this.userService.getAllFaculty().subscribe((response: User[]) => {
+        this.advisorList = response;
       },
       (error) => {
         console.log(error)
@@ -200,6 +208,10 @@ export class AdminPageComponent implements OnInit {
 
   get deleteUserFormInputs() {
     return this.deleteUserForm.controls;
+  }
+
+  get deleteClubFormInputs() {
+    return this.deleteClubForm.controls;
   }
 
   get assignAdvisorFormInputs() {
@@ -219,7 +231,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createClubSubmit(){
-    const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubForm.value.advisorID}
+    const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubAdvisorID.value}
     console.log(clubInfo);
     this.adminService.insertNewClub(clubInfo).subscribe(success =>{
         this.createClubMessage = true;
@@ -257,6 +269,24 @@ export class AdminPageComponent implements OnInit {
       });
   }
 
+  deleteClubSubmit(){
+    this.adminService.deleteClub(this.removeClubID.value).subscribe(success =>{
+        console.log(success);
+        console.log("test");
+        this.deleteClubSuccess = true;
+        location.reload();
+      },
+      (error) => {
+        console.log(error);
+        if(error.status === 200)
+        {
+          this.deleteClubSuccess = true;
+          location.reload();
+        }
+        this.deleteClubFailed = true;
+      });
+  }
+
   addEBoardSubmit(){
     this.adminService.addEBoardMember(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
         console.log(success);
@@ -283,7 +313,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   assignAdvisorSubmit(){
-    this.adminService.assignNewAdvisor(this.nonAdvisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
+    this.adminService.assignNewAdvisor(this.advisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
         console.log(success);
         this.assignAdvisorSuccess = true;
         location.reload();
@@ -337,7 +367,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateClubValid() {
-    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubForm.value.advisorID == '') {
+    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubAdvisorID.value == null) {
       return true;
     }
     else {
@@ -363,6 +393,15 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
+  isDeleteClubValid() {
+    if (this.removeClubID.value == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   isAssignEboardValid() {
     if (this.nonEboardID.value == null || this.addEBoardClubID.value == null || this.addEBoardForm.value.role == '') {
       return true;
@@ -373,7 +412,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isAssignAdvisorValid() {
-    if (this.assignAdvisorClubID.value == null || this.nonAdvisorID.value == null) {
+    if (this.assignAdvisorClubID.value == null || this.advisorID.value == null) {
       return true;
     }
     else {

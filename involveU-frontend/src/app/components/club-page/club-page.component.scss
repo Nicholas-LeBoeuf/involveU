@@ -1,252 +1,189 @@
-.container {
-  width: 100vw !important;
-  margin: 0 !important;
-  padding: 0;
-  height: 92vh;
+@import "src/styles";
 
-}
-
-.gridContainer {
+.desktopClubGrid {
   display: grid;
-
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-
-  margin: 1.5%;
-
-  height: 100vh;
-
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
 }
 
-#titleDiv {
-  border-radius: 10px;
-  margin: 2%;
-  background-color: #5c93cb;
-  grid-row-start: 1;
-  grid-column-start: 1;
-
-  grid-row-end: 2;
-  grid-column-end: 3;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-}
-#titleDiv:hover {
-  transform: scale(1.04);
+.desktopFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
 }
 
-#topClubsDiv {
-  border-radius: 10px;
-  margin: 2%;
-  background-color: #5c93cb;
-  grid-row-start: 1;
-  grid-column-start: 3;
-
-  grid-row-end: 2;
-  grid-column-end: 5;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-
+.desktopTopFive {
+  grid-area: 1 / 2 / 2 / 3;
 }
 
-#topClubsDiv:hover {
-  transform: scale(1.04);
+.desktopFavoritedClubs {
+  grid-area: 2 / 1 / 3 / 3;
 }
 
-#favoritedClubs {
-  border-radius: 10px;
-  margin: 1%;
-  background-color: #5c93cb;
-  grid-row-start: 2;
-  grid-column-start: 1;
-
-  grid-row-end: 3;
-  grid-column-end: 5;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-
+.desktopAnnouncements {
+  grid-area: 3 / 1 / 4 / 3;
 }
 
-#favoritedClubs:hover {
-  transform: scale(1.04);
+.desktopClubEvents {
+  grid-area: 4 / 1 / 5 / 3;
 }
 
-#favoritedEvents {
-  border-radius: 10px;
-  margin: 1%;
-  background-color: #5c93cb;
-  grid-row-start: 3;
-  grid-column-start: 1;
-
-  grid-row-end: 4;
-  grid-column-end: 5;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-
+.desktopRSVPdEvents {
+  grid-area: 5 / 1 / 6 / 3;
 }
 
-#favoritedEvents:hover {
-  transform: scale(1.04);
+.mobileTabletClubGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
 }
 
-#item-4 {
-  border-radius: 10px;
-  margin: 1%;
-  background-color: #5c93cb;
-  grid-row-start: 4;
-  grid-column-start: 1;
-
-  grid-row-end: 5;
-  grid-column-end: 5;
-  transition: all ease-in-out 300ms;
-  box-shadow: inset -1px 3px 8px 5px #5c93cb, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
-
+.mobileTabletFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
 }
 
-#item-4:hover {
-  transform: scale(1.04);
+.mobileTabletTopFive {
+  grid-area: 2 / 1 / 3 / 2;
 }
 
-.pageTitle {
-  font-size: 45px;
+.mobileTabletFavoritedClubs {
+  grid-area: 3 / 1 / 4 / 2;
 }
 
-.clubSearch {
-  width: 250px !important;
-  height: 60px;
-  font-size: 25px;
-  margin-top: 8%;
+.mobileTabletAnnouncements {
+  grid-area: 4 / 1 / 5 / 2;
 }
 
-.topClubsTitle {
-  font-size: 45px;
+.mobileTabletClubEvents {
+  grid-area: 5 / 1 / 6 / 2;
 }
 
-.clubContent {
-  height: 350px;
-  background-color: #AECDE6;
-  border-radius: 5px;
-  margin: 0.6rem;
-  text-align: center;
-  padding-top: 20px;
-  box-shadow: inset -1px 3px 8px 5px #AECDE6, 2px 5px 16px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+.mobileTabletRSVPdEvents {
+  grid-area: 6 / 1 / 7 / 2;
 }
 
-.clubContent h3 {
-  font-weight: bold;
+.notLoggedInDesktopClubGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
 }
 
-::ng-deep .p-carousel .p-carousel-content .p-carousel-prev, ::ng-deep .p-carousel .p-carousel-content .p-carousel-next {
-  color: black !important;
-  background-color: white;
+.notLoggedInDesktopFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
 }
 
-.logoMargin {
-  margin-bottom: 6%;
+.notLoggedInDesktopTopFive {
+  grid-area: 1 / 2 / 2 / 3;
 }
 
-::ng-deep #pr_id_4 .p-carousel-item {
-  text-align: center;
+.notLoggedInDesktopOSIAnnouncements {
+  grid-area: 2 / 1 / 3 / 3;
 }
 
-.textMargin {
-  margin-bottom: 6%;
+.notLoggedInDesktopClubEvents {
+  grid-area: 3 / 1 / 4 / 3;
 }
 
-.firstPlace {
-  background-color: gold;
-  margin-bottom: 15px;
+.notLoggedInMobileTabletClubGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
 }
 
-.secondPlace {
-  background-color: #a2a2a2;
-  margin-bottom: 15px;
+.notLoggedInMobileTabletFeaturedClub {
+  grid-area: 1 / 1 / 2 / 2;
 }
 
-.thirdPlace {
-  background-color: #CD7F32;
-  margin-bottom: 15px;
+.notLoggedInMobileTabletTopFive {
+  grid-area: 2 / 1 / 3 / 2;
 }
 
-.fourthPlace, .fifthPlace {
-  background-color: #AECDE6;
-  margin-bottom: 15px;
+.notLoggedInMobileTabletOSIAnnouncements {
+  grid-area: 3 / 1 / 4 / 2;
 }
 
-:host ::ng-deep .p-carousel-items-container {
-  text-align: center;
+.notLoggedInMobileTabletClubEvents {
+  grid-area: 4 / 1 / 5 / 2;
 }
 
-::ng-deep .p-dialog {
-  background-color: #AECDE6 !important;
-  border-radius: 20px;
+.SNHULogoClubPage {
+  width: 300px;
+  height: auto;
 }
 
-::ng-deep .p-dialog .p-dialog-content {
-  background-color: #AECDE6 !important;
+.clubPageTitleMargin {
+  margin-bottom: 20px;
 }
 
-.form-group {
-  display: block;
-  margin: 15px auto;
+.grayBackground {
+  background-color: #f4f4f4;
+  border: 1px solid #c8c8c8;
 }
 
-.closeButtonDialog {
-  float: right;
+.topMargin {
+  margin-top: 10px;
 }
 
-.card {
-  margin-top: 7%;
-  background-color: #AECDE6;
-  border: none;
-  overflow: hidden;
+.clubBioMargin {
+  padding: 0 45px;
 }
 
-.clubSearchTitle {
-  font-size: 2.5em;
-  margin-bottom: 4%;
-  font-weight: normal;
+.top5Table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.iconMargin {
+  margin: 0 30px;
+}
+
+.goldTrophy {
+  color: #ffc60a;
+}
+
+.silverTrophy {
+  color: #b3b3bf;
+}
+
+.bronzeTrophy {
+  color: #ab4f12;
+}
+
+::ng-deep .favoritedClubsTable {
+  margin-bottom: 1.5rem !important;
+}
+
+
+//Club Search Styling
 .clubNameCell {
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
   transition: 250ms all ease-in-out;
+  color: $HeritageBlue;
 }
 
 .clubNameCell:hover {
-  background-color: #d1e8ff;
+  color: $GoldenYellow;
+  background-color: $HeritageBlue;
 }
 
-.eventAlerts {
-  position: absolute;
-  z-index: 1000000;
-
-  left: 50%;
-  right: 50%;
-
-  transform: translate(-50%, -50%);
-
-  height: 5%;
-  margin-top: 2% !important;
-  width: 30%;
+.clubSearchTitle {
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
-.eventAlerts p {
-  font-size: 1.8em;
-}
-
-.alert-dismissible .btn-close {
-  padding: 1rem  1rem;
-}
-
-.alert {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: center;
-  border-radius: 10px;
-  top: 35px;
-  position: sticky;
+.card {
+  border: 3px solid black;
+  overflow: hidden;
 }
 
 .clubSearchInput {
@@ -254,36 +191,19 @@
   margin: auto;
 }
 
-.parent {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+.buttonPadding {
+  padding: 1% 0;
 }
 
-.div1 {
-  grid-area: 1 / 1 / 2 / 2;
-  margin-bottom: 20px;
-}
-.div2 {
-  grid-area: 1 / 2 / 2 / 3;
-  margin-bottom: 20px;
-}
-.div3 { grid-area: 2 / 1 / 3 / 2; }
-.div4 { grid-area: 2 / 2 / 3 / 3; }
-.div5 { grid-area: 3 / 1 / 4 / 3; }
+::ng-deep {
+  .searchClubsDialog.p-dialog {
+    width: 50%;
+  }
 
-.eventData {
-  font-weight: bolder !important;
-}
-
-.eventDataTitle {
-  font-weight: 400 !important;
-}
-.noDataContent {
-  width: 50%;
-  margin: auto;
-  text-align: center;
-
+  .clubSearchTable.p-datatable {
+    margin: 0 10%;
+  }
+  .clubSearchTable.p-datatable-scrollable .p-datatable-tbody>tr>td {
+    text-align: center
+  }
 }

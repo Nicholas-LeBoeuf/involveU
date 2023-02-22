@@ -43,40 +43,54 @@ em {
   font-family: "Oswald", sans-serif !important;
 }
 
-body {
-  min-width: 500px;
+.yellow-text {
+  color: $GoldenYellow;
 }
 
 .container {
   margin-top: 15px;
 }
 
-.blueButton {
-  background-color: #0667B3;
-  border: 1px solid black;
+.yellowButton {
+  background-color: $GoldenYellow;
+  border: none;
   border-radius: 14px;
   height: 40px;
   padding: 0 20px;
   margin: 10px;
-  color: white;
+  color: $HeritageBlue;
+  font-weight: 900;
 }
 
-.blueButton:hover {
-  background-color: #3b88c4;
+.yellowButton:hover {
+  background-color: #fdcb54;
 }
 
-.blueButton:disabled {
+.yellowButton:disabled {
   background-color: #8d8d8d;
 }
 
 .form-control {
   height: 40px;
-
+  width: 165px;
+  margin: 0 auto;
   border-radius: 10px;
 }
 
 .formSelect {
-  width: 209px;
+  width: 165px;
+}
+
+.form-control-mobile {
+  width: 100px;
+  margin: 0 auto;
+  border-radius: 10px;
+  height: 40px;
+}
+
+.formSelectMobile {
+  width: 100px;
+  padding: 1px 2px;
 }
 
 .formInputs {
@@ -139,9 +153,265 @@ body {
 
 .blueTitleBar {
   background-color: $HeritageBlue;
-  height: 210px;
 }
 
 .dateInputLabel:before {
   content: attr(placeholder) !important;
+}
+
+
+//Event popup
+::ng-deep {
+  .p-dialog {
+    border-radius: 20px;
+    border: none !important;
+  }
+
+  .p-dialog .p-dialog-content {
+    border-radius: 20px;
+    padding: 0 !important;
+
+  }
+
+  .p-dialog-draggable .p-dialog-header, .p-dialog .p-dialog-footer{
+    display:none;
+  }
+
+  .p-dialog .p-dialog-footer {
+    display: none;
+  }
+
+  .p-dialog .p-dialog-content:last-of-type {
+    border-radius: 20px !important;
+  }
+
+  .p-dialog-mask.p-component-overlay {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+}
+
+.eventCardDialog {
+  width: 100%;
+  border: 3px solid black;
+  border-radius: 20px;
+  float: left;
+  height: 100%;
+}
+
+.eventImageDialog {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.imageMaskDialog {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+  height: 130px;
+
+}
+
+.eventInformationDialogContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  min-height: 0;
+  min-width: 0;
+  margin: 20px;
+}
+
+.eventDateDialog {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.eventTimeDialog {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.eventTransportationDialog {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.eventTicketLinkDialog {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.eventDescriptionDialog {
+  grid-area: 3 / 1 / 4 / 2;
+}
+.eventLocationDialog {
+  grid-area: 3 / 2 / 4 / 3;
+}
+
+
+//Event Card "Carousel"
+.eventCard {
+  margin: 2%;
+  border: 2px solid black;
+  border-radius: 20px;
+  float: left;
+}
+.eventCard:hover {
+  cursor: pointer;
+}
+
+.eventCardSizeWeb {
+  width: 45%;
+}
+
+.eventCardSizeTabletMobile {
+  width: 90%;
+}
+
+
+.eventImage {
+  position: absolute;
+  z-index: 0;
+  text-align: center;
+  margin-top: 2px;
+}
+.imageMaskEvent {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  position: sticky;
+  height: 130px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.imageCenter {
+  display: flex;
+  justify-content: center;
+}
+
+
+.addTopMargin {
+  margin-top: 0.5rem;
+}
+
+.eventClubName {
+  margin-bottom: 15px;
+}
+
+
+//Prime Table Paginator Styling
+::ng-deep {
+  .p-datatable .p-paginator-bottom {
+    margin-bottom: 2%;
+  }
+  .p-paginator {
+    background: transparent;
+    border: none;
+  }
+  .p-paginator .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last {
+    color: $GoldenYellow !important;
+    background-color: $InkBlue !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    background-color: $HeritageBlue !important;
+    border-radius: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: $GoldenYellow;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+    background-color: $SkyBlue !important;
+    color: $GoldenYellow !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background-color: $GoldenYellow !important;
+    color: $HeritageBlue;
+  }
+}
+
+//Announcement Cards "Caro"
+.announcementCard {
+  padding: 15px;
+  margin: 2%;
+  border: 2px solid black;
+  border-radius: 20px;
+  float: left;
+}
+
+.announcementCardSizeWeb {
+  width: 45%;
+  height: 175px;
+}
+
+.announcementCardSizeTabletMobile {
+  width: 90%;
+  height: 175px;
+}
+
+.announcementDate {
+  color: gray;
+}
+
+.announcementTitle {
+  margin-top: 3px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+//Alerts
+.alert {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 10px;
+  position: fixed !important;
+
+  z-index: 1000000;
+
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 5%;
+  margin-top: 2% !important;
+  width: 30%;
+}
+
+.alert p {
+  font-size: 1.8em;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem  1rem;
+}
+
+//Tab View Styling
+::ng-deep {
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+    border: none;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: none;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
+  }
+
+  .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+    background-color: #fdcb54;
+    color: $HeritageBlue;
+  }
+
+  .p-tabview .p-tabview-nav-btn.p-link {
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+  }
 }

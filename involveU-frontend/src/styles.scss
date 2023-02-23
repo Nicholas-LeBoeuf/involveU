@@ -415,3 +415,18 @@ em {
     color: $GoldenYellow;
   }
 }
+
+//PrimeNG Table Styling
+::ng-deep {
+  .p-datatable .p-datatable-thead > tr > th {
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+    border-color: $InkBlue;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    color: $InkBlue;
+    border-color: $InkBlue;
+    background-color: #F4F4F4;
+  }
+}

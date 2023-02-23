@@ -221,6 +221,7 @@ export class SpecificClubPageComponent implements OnInit {
   getClubSocialMedia() {
     this.eboardService.getClubSocialMedia(+this.clubID).subscribe(response => {
       this.clubSocialMedia = response;
+      console.log(response);
     })
   }
 

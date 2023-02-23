@@ -43,7 +43,7 @@
           <h2 class="blueHeaders">Vision</h2>
           <p>{{clubInfo.clubVision}}</p>
         </ng-container>
-        <ng-container *ngIf="clubEboard !== null">
+        <ng-container *ngIf="clubEboard.length !== 0">
           <h2 class="blueHeaders">Executive Board</h2>
           <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
             <ng-template pTemplate="header">
@@ -60,7 +60,7 @@
             </ng-template>
           </p-table>
         </ng-container>
-        <ng-container *ngIf="clubSocialMedia !== null">
+        <ng-container *ngIf="clubSocialMedia.length !== 0">
           <h2 class="blueHeaders">Social Media</h2>
           <div class="allSocialMedia" *ngFor="let sm of clubSocialMedia">
 

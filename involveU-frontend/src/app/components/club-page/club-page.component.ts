@@ -33,6 +33,7 @@ export class ClubPageComponent implements OnInit {
   //BOOLEANS
   displayClubSearchModal: boolean = false;
   viewMoreInfoDialog: boolean = false;
+  viewCertainAnnouncementDialog: boolean = false;
   isLoggedIn: boolean = false;
   loading: boolean = true;
   successMessage: boolean = false;
@@ -52,14 +53,13 @@ export class ClubPageComponent implements OnInit {
   //OBJECTS or ARRAYS
   allClubs: Club[] = [];
   favoritedClubs: Club[] = [];
-
   featuredClubs: Club[] = [];
-
   favoritedClubsEvents: Events[] = [];
   allFutureEvents: Events[] = [];
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
   topRSVPdEvents: Events[] = [];
+  certainAnnouncement: Announcement[] = [];
 
   osiAnnouncements: Announcement[] = [];
   favoritedClubAnnouncements: Announcement[] = [];
@@ -186,6 +186,7 @@ export class ClubPageComponent implements OnInit {
   getFavoritedClubAnnouncements() {
     this.announcementsService.getFavoritedClubAnnouncements(this.userID).subscribe(response => {
       this.favoritedClubAnnouncements = response;
+      console.log(response);
     })
   }
 
@@ -249,6 +250,16 @@ export class ClubPageComponent implements OnInit {
   closeViewMoreInfoDialog(){
     this.certainEvent = [];
     this.viewMoreInfoDialog = false;
+  }
+
+  showViewCertainAnnouncementDialog(announcement: Announcement) {
+    this.certainAnnouncement.push(announcement);
+    this.viewCertainAnnouncementDialog = true;
+  }
+
+  closeViewCertainAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.viewCertainAnnouncementDialog = false;
   }
 
   //Filters

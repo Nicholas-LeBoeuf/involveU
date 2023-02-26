@@ -42,6 +42,7 @@ export class SpecificClubPageComponent implements OnInit {
   successMessage: boolean = false;
   failMessage: boolean = false;
   viewMoreInfoDialog: boolean = false;
+  viewCertainAnnouncementDialog: boolean = false;
   showMore: boolean = false;
   isLoading: boolean = true;
 
@@ -62,6 +63,7 @@ export class SpecificClubPageComponent implements OnInit {
   userRSVPdEvents: Events[] = [];
   clubAnnouncements: Announcement[] = [];
   clubSocialMedia: SocialMedia[] = [];
+  certainAnnouncement: Announcement[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 
@@ -227,6 +229,16 @@ export class SpecificClubPageComponent implements OnInit {
 
   goToLink(url: string){
     window.open(url, "_blank");
+  }
+
+  showViewCertainAnnouncementDialog(announcement: Announcement) {
+    this.certainAnnouncement.push(announcement);
+    this.viewCertainAnnouncementDialog = true;
+  }
+
+  closeViewCertainAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.viewCertainAnnouncementDialog = false;
   }
 }
 

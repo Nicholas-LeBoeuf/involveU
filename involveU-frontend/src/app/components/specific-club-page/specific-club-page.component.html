@@ -99,7 +99,7 @@
         <div class="announcementBorders">
           <h2 class="blueHeaders text-center">Announcements</h2>
           <hr class="announcementLine">
-          <div class="announcementContent" *ngFor="let announcement of clubAnnouncements; index as index; last as last">
+          <div class="announcementContent" (click)="showViewCertainAnnouncementDialog(announcement)" *ngFor="let announcement of clubAnnouncements; index as index">
             <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
             <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
             <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
@@ -200,5 +200,15 @@
        <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
      </div>
    </div>
+</p-dialog>
 
+<p-dialog [(visible)]="viewCertainAnnouncementDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewCertainAnnouncementDialog()">
+  <div class="announcementDialogContent" *ngFor="let announcement of certainAnnouncement">
+    <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+    <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+    <p>{{announcement.contentOfAnnouncement}}</p>
+    <div class="text-center">
+      <button class="yellowButton" (click)="closeViewCertainAnnouncementDialog()">Close</button>
+    </div>
+  </div>
 </p-dialog>

@@ -33,6 +33,7 @@ export class LandingPageComponent implements OnInit {
   isLoggedIn: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
+  viewCertainAnnouncementDialog: boolean = false;
 
   //NUMBERS
   userID: number;
@@ -48,6 +49,7 @@ export class LandingPageComponent implements OnInit {
   certainEvent: Events[] = [];
   osiAnnouncements: Announcement[] =[];
   userRSVPdEvents: Events[] = [];
+  certainAnnouncement: Announcement[] = [];
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -139,5 +141,15 @@ export class LandingPageComponent implements OnInit {
     this.message = "Successfully Removed RSVP!";
     this.successMessage = true;
     location.reload();
+  }
+
+  showViewCertainAnnouncementDialog(announcement: Announcement) {
+    this.certainAnnouncement.push(announcement);
+    this.viewCertainAnnouncementDialog = true;
+  }
+
+  closeViewCertainAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.viewCertainAnnouncementDialog = false;
   }
 }

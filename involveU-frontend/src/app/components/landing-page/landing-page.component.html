@@ -123,7 +123,7 @@
   <ng-template #announcementsPresent>
     <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-announcement>
-        <div class="announcementCard" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+        <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(announcement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
           <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
           <p [ngClass]="{ 'line-clamp': !showMore }">{{announcement.contentOfAnnouncement}}</p>
@@ -133,11 +133,6 @@
   </ng-template>
 
 </div>
-
-
-
-
-
 
 
 <p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
@@ -195,6 +190,17 @@
         </ng-template>
       </ng-container>
       <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="viewCertainAnnouncementDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewCertainAnnouncementDialog()">
+  <div class="announcementDialogContent" *ngFor="let announcement of certainAnnouncement">
+    <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+    <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+    <p>{{announcement.contentOfAnnouncement}}</p>
+    <div class="text-center">
+      <button class="yellowButton" (click)="closeViewCertainAnnouncementDialog()">Close</button>
     </div>
   </div>
 </p-dialog>

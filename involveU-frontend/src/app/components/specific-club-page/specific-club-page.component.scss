@@ -111,17 +111,14 @@
   width: 99%;
 }
 
+.announcementContent:hover {
+  background-color: #efefef;
+  cursor: pointer;
+}
+
 .announcementLine {
   margin-top: 0 !important;
   margin-bottom: 5px !important;
-}
-
-.announcementDate {
-  color: gray;
-}
-
-.announcementTitle {
-  margin-top: 3px;
 }
 
 .line-clamp {

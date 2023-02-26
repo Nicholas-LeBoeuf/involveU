@@ -43,6 +43,7 @@ export class SpecificClubPageComponent implements OnInit {
   failMessage: boolean = false;
   viewMoreInfoDialog: boolean = false;
   viewCertainAnnouncementDialog: boolean = false;
+  viewAllAnnouncementsDialog: boolean = false;
   showMore: boolean = false;
   isLoading: boolean = true;
 
@@ -239,6 +240,14 @@ export class SpecificClubPageComponent implements OnInit {
   closeViewCertainAnnouncementDialog() {
     this.certainAnnouncement = [];
     this.viewCertainAnnouncementDialog = false;
+  }
+
+  showAllAnnouncementsDialog() {
+    this.viewAllAnnouncementsDialog = true;
+  }
+
+  closeAllAnnouncementsDialog() {
+    this.viewAllAnnouncementsDialog = false;
   }
 }
 

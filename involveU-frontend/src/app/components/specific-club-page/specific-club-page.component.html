@@ -106,7 +106,7 @@
             <hr class="announcementLine" *ngIf="index < 5">
           </div>
           <div class="text-center">
-            <button class="yellowButton">Show More</button>
+            <button class="yellowButton" (click)="showAllAnnouncementsDialog()">Show More</button>
           </div>
         </div>
       </div>
@@ -210,5 +210,19 @@
     <div class="text-center">
       <button class="yellowButton" (click)="closeViewCertainAnnouncementDialog()">Close</button>
     </div>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="viewAllAnnouncementsDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw', height: '66vh'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeAllAnnouncementsDialog()">
+  <h1 class="blueHeaders text-center allAnnouncementsHeader">All {{clubInfo.clubName}} Announcements</h1>
+  <hr>
+  <div  *ngFor="let currentAnnouncement of clubAnnouncements">
+    <em class="announcementDate allAnnouncementDialog">Posted on {{currentAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
+    <h4 class="blueHeaders convertToOswald announcementTitle allAnnouncementDialog">{{currentAnnouncement.announcementTitle}}</h4>
+    <p class="allAnnouncementDialog">{{currentAnnouncement.contentOfAnnouncement}}</p>
+    <hr>
+  </div>
+  <div class="text-center">
+    <button class="yellowButton" (click)="closeAllAnnouncementsDialog()">Close</button>
   </div>
 </p-dialog>

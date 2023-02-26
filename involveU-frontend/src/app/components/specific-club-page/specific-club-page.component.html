@@ -106,7 +106,7 @@
               <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
               <hr class="announcementLine" *ngIf="index < 5">
             </div>
-            <div class="text-center">
+            <div class="text-center" *ngIf="clubAnnouncements.length > 5">
               <button class="yellowButton" (click)="showAllAnnouncementsDialog()">Show More</button>
             </div>
           </ng-container>

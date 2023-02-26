@@ -31,9 +31,10 @@
       </div>
 
       <div class="grayBackground bottomMargin" [ngClass]="{'desktopTopFive' : responsiveService.deviceDesktop(), 'mobileTabletTopFive' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
-        <ng-container *ngIf="topRSVPdEvents.length > 0">
-          <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
-          <hr>
+
+        <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
+        <hr>
+        <ng-container *ngIf="topRSVPdEvents.length > 0; else NoTop5">
           <table class="top5Table">
             <tbody>
             <tr>
@@ -79,39 +80,52 @@
             </tbody>
           </table>
         </ng-container>
+        <ng-template #NoTop5>
+          <h5 class="text-center">Currently, there is no data for 'Top 5 RSVP'd Events'</h5>
+        </ng-template>
       </div>
 
       <div *ngIf="userID !== 0;" [ngClass]="{'desktopFavoritedClubs' : responsiveService.deviceDesktop(), 'mobileTabletFavoritedClubs' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders">{{userFirstName}}'s Favorited Clubs</h2>
-        <p-table styleClass="favoritedClubsTable" [value]="favoritedClubs" responsiveLayout="scroll">
-          <ng-template pTemplate="header">
-            <tr>
-              <th class="text-center">Club</th>
-              <th class="text-center">View Club</th>
-              <th class="text-center">Unfavorite Club</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-club>
-            <tr>
-              <td class="text-center">{{club.clubName}}</td>
-              <td class="text-center"><button class="yellowButton" (click)="goToClubPage(club.clubID)">View</button></td>
-              <td class="text-center"><button class="yellowButton" (click)="removeFromFavorites(club.clubID)">Unfavorite</button></td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <ng-container *ngIf="favoritedClubs.length !== 0; else NoFavoritedClubs">
+          <p-table styleClass="favoritedClubsTable" [value]="favoritedClubs" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="text-center">Club</th>
+                <th class="text-center">View Club</th>
+                <th class="text-center">Unfavorite Club</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-club>
+              <tr>
+                <td class="text-center">{{club.clubName}}</td>
+                <td class="text-center"><button class="yellowButton" (click)="goToClubPage(club.clubID)">View</button></td>
+                <td class="text-center"><button class="yellowButton" (click)="removeFromFavorites(club.clubID)">Unfavorite</button></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-container>
+        <ng-template #NoFavoritedClubs>
+          <h3>You currently have no favorited clubs to show!</h3>
+        </ng-template>
       </div>
 
       <div [ngClass]="{'desktopAnnouncements' : responsiveService.deviceDesktop(), 'mobileTabletAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders">Recent Favorited Club Announcements</h2>
-        <p-table [value]="favoritedClubAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
-          <ng-template pTemplate="body" let-favAnnouncement>
-            <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(favAnnouncement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-              <em class="announcementDate">Posted on {{favAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
-              <h4 class="blueHeaders convertToOswald announcementTitle">{{favAnnouncement.announcementTitle}}</h4>
-              <p [ngClass]="{ 'line-clamp': !showMore }">{{favAnnouncement.contentOfAnnouncement}}</p>
-            </div>
-          </ng-template>
-        </p-table>
+        <ng-container *ngIf="favoritedClubAnnouncements.length !== 0; else NoFavClubAnnouncements">
+          <p-table [value]="favoritedClubAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+            <ng-template pTemplate="body" let-favAnnouncement>
+              <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(favAnnouncement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <em class="announcementDate">Posted on {{favAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
+                <h4 class="blueHeaders convertToOswald announcementTitle">{{favAnnouncement.announcementTitle}}</h4>
+                <p [ngClass]="{ 'line-clamp': !showMore }">{{favAnnouncement.contentOfAnnouncement}}</p>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-container>
+        <ng-template #NoFavClubAnnouncements>
+          <h3>There are no announcements to display!</h3>
+        </ng-template>
       </div>
 
       <div [ngClass]="{'desktopClubEvents' : responsiveService.deviceDesktop(), 'mobileTabletClubEvents' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
@@ -200,9 +214,9 @@
       </div>
 
       <div class="grayBackground bottomMargin" [ngClass]="{'notLoggedInDesktopTopFive' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletTopFive' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
-        <ng-container *ngIf="topRSVPdEvents.length > 0">
-          <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
-          <hr>
+        <h2 class="blueHeaders text-center topMargin">Top 5 RSVP'd Events</h2>
+        <hr>
+        <ng-container *ngIf="topRSVPdEvents.length !== 0; else NoTop5Events">
           <table class="top5Table">
             <tbody>
             <tr>
@@ -248,30 +262,38 @@
             </tbody>
           </table>
         </ng-container>
+        <ng-template #NoTop5Events>
+          <h5 class="text-center">Currently, there is no data for 'Top 5 RSVP'd Events'</h5>
+        </ng-template>
       </div>
 
       <div [ngClass]="{'notLoggedInDesktopOSIAnnouncements' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletOSIAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders">Recent Office of Student Involvement Announcements</h2>
-        <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
-          <ng-template pTemplate="body" let-OSIAnnouncement>
-            <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(OSIAnnouncement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-              <em class="announcementDate">Posted on {{OSIAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
-            <h4 class="blueHeaders convertToOswald announcementTitle">{{OSIAnnouncement.announcementTitle}}</h4>
-              <p [ngClass]="{ 'line-clamp': !showMore }">{{OSIAnnouncement.contentOfAnnouncement}}</p>
-            </div>
-          </ng-template>
-        </p-table>
+        <ng-container *ngIf="osiAnnouncements.length !== 0; else NoOSIAnnouncements">
+          <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+            <ng-template pTemplate="body" let-OSIAnnouncement>
+              <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(OSIAnnouncement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <em class="announcementDate">Posted on {{OSIAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
+                <h4 class="blueHeaders convertToOswald announcementTitle">{{OSIAnnouncement.announcementTitle}}</h4>
+                <p [ngClass]="{ 'line-clamp': !showMore }">{{OSIAnnouncement.contentOfAnnouncement}}</p>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-container>
+       <ng-template #NoOSIAnnouncements>
+         <h3>There are no announcements to display!</h3>
+       </ng-template>
       </div>
 
       <div [ngClass]="{'notLoggedInDesktopClubEvents' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletClubEvents' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
+        <h2 class="blueHeaders">Club Events Coming Up</h2>
         <ng-container *ngIf="allFutureEvents.length === 0; else FutureEventsPresent">
           <div class="noContent">
-            <h3>There are no events that you are RSVP'd to!</h3>
+            <h3>There are no events to display!</h3>
           </div>
         </ng-container>
 
         <ng-template #FutureEventsPresent>
-          <h2 class="blueHeaders">Club Events Coming Up</h2>
           <p-table [value]="allFutureEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
             <ng-template pTemplate="body" let-futureEvent>
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(futureEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">

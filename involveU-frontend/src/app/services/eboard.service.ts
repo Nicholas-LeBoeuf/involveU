@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import { SocialMedia } from "../objects/social-media";
 import {Observable} from "rxjs";
+import {Club} from "../objects/club";
 
 
 @Injectable({
@@ -26,5 +27,9 @@ export class EboardService {
 
   editSocialMedia(socialMediaContent: SocialMedia) {
     return this.http.put(environment.apiURL + `club/editSocialMedia`, socialMediaContent);
+  }
+
+  editClubData(clubData: Club) {
+    return this.http.put(environment.apiURL + `/club/updateClubData`, clubData);
   }
 }

@@ -72,10 +72,10 @@ public class ClubController extends DBServices{
              return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping ("/eboard/updateClubData/{clubID}")
-  private ResponseEntity<String> updateClubData(@PathVariable("clubID") int clubID)
+  @PutMapping ("/club/updateClubData")
+  private ResponseEntity<String> updateClubData(@RequestBody Club newClub)
     {
-        if(updateClubDBData(clubID))
+        if(updateClubDBData(newClub))
         {
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
@@ -84,7 +84,7 @@ public class ClubController extends DBServices{
             return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
         }
     }
-    @PutMapping ("/eboard/updateClubBio/{clubID}")
+    @PutMapping ("/club/updateClubBio/{clubID}")
     private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID)
     {
         if(updateClubDBBio(clubID))
@@ -97,7 +97,7 @@ public class ClubController extends DBServices{
         }
     }
 
-    @PutMapping ("/eboard/updateClubVision/{clubID}")
+    @PutMapping ("/club/updateClubVision/{clubID}")
     private ResponseEntity<String> updateClubVision(@PathVariable("clubID") int clubID)
     {
         if(updateClubDBVision(clubID))
@@ -110,7 +110,7 @@ public class ClubController extends DBServices{
         }
     }
 
-    @PutMapping ("/eboard/updateClubMission/{clubID}")
+    @PutMapping ("/club/updateClubMission/{clubID}")
     private ResponseEntity<String> updateClubMission(@PathVariable("clubID") int clubID)
     {
         if(updateClubDBMission(clubID))
@@ -123,7 +123,7 @@ public class ClubController extends DBServices{
         }
     }
 
-    @PutMapping ("/eboard/updateClubValues/{clubID}")
+    @PutMapping ("/club/updateClubValues/{clubID}")
     private ResponseEntity<String> updateClubValues(@PathVariable("clubID") int clubID)
     {
         if(updateClubDBValues(clubID))

@@ -255,10 +255,10 @@ public class DBServices {
 
     }
 
-    protected Boolean updateClubDBData(int clubID)
+    protected Boolean updateClubDBData(Club newClub)
     {
-        sql = "UPDATE Club SET clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ? WHERE clubID = " + clubID;
-        validQuery = JdbcTemplated.update(sql, clubID);
+        sql = "UPDATE Club SET clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ? WHERE clubID = ?";
+        validQuery = JdbcTemplated.update(sql, newClub.getClubBio(), newClub.getClubMission(), newClub.getClubValues());
 
         return validQuery == 1;
     }

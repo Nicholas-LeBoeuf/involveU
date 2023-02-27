@@ -84,6 +84,57 @@ public class ClubController extends DBServices{
             return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
         }
     }
+    @PutMapping ("/eboard/updateClubBio/{clubID}")
+    private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBBio(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/eboard/updateClubVision/{clubID}")
+    private ResponseEntity<String> updateClubVision(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBVision(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/eboard/updateClubMission/{clubID}")
+    private ResponseEntity<String> updateClubMission(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBMission(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/eboard/updateClubValues/{clubID}")
+    private ResponseEntity<String> updateClubValues(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBValues(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
 
   @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )

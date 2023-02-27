@@ -263,6 +263,38 @@ public class DBServices {
         return validQuery == 1;
     }
 
+    protected Boolean updateClubDBBio(int clubID)
+    {
+        sql = "UPDATE Club SET clubBio = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBVision(int clubID)
+    {
+        sql = "UPDATE Club SET clubVision = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBMission(int clubID)
+    {
+        sql = "UPDATE Club SET clubMission = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBValues(int clubID)
+    {
+        sql = "UPDATE Club SET clubValues = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
     protected String getClubLogo(int clubID)
     {
         String clubLogoPath;

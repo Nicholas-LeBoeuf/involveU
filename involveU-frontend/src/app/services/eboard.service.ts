@@ -30,6 +30,10 @@ export class EboardService {
   }
 
   editClubData(clubData: Club) {
-    return this.http.put(environment.apiURL + `/club/updateClubData`, clubData);
+    return this.http.put(environment.apiURL + `club/updateClubData`, clubData);
+  }
+
+  editClubBio(clubID: number) {
+    return this.http.post(environment.apiURL + `club/updateClubBio/${clubID}`, {responseType: 'text'});
   }
 }

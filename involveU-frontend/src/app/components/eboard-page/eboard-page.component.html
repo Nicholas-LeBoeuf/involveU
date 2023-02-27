@@ -107,6 +107,12 @@
     </ng-template>
   </p-table>
 
+  <h1 class="blueHeaders">Club Bio</h1>
+  <div class=" ">
+    <p>{{clubInfo.clubBio}}</p>
+    <button class="yellowButton">Edit</button>
+  </div>
+
   <h1 class="blueHeaders">Club Logo</h1>
   <div class="updateClubLogoContainer text-center">
     <h2 class="blueHeaders">Current Club Logo</h2>
@@ -224,4 +230,8 @@
     <button class="yellowButton" [disabled]="isEditSocialMediaFormValid()" (click)="editSocialMedia()">Edit Link</button>
     <button class="yellowButton" (click)="closeEditSocialMediaDialog()">Close</button>
   </div>
+</p-dialog>
+
+<p-dialog>
+
 </p-dialog>

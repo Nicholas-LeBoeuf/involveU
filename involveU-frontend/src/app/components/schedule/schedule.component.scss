@@ -10,8 +10,23 @@
   margin: 10px;
 }
 
+@media (max-width: 768px) {
+  .centerButton {
+    text-align: center !important;
+    margin: 0 !important;
+  }
+
+  .removeMargin {
+    margin-left: 10px !important;
+  }
+}
+
 .centerButton {
-  margin-left: 38px;
+  margin-left: 2.4%;
+}
+
+.removeMargin {
+  margin-left: 0;
 }
 
 .filterByLocation {

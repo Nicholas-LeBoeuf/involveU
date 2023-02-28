@@ -18,7 +18,7 @@
 
 <ng-template [ngIf]="eventsToSend && optionSelected">
   <div class="centerButton">
-    <button class="yellowButton" *ngIf="optionSelected" (click)="returnToFilter()">Return to Filters</button>
+    <button class="yellowButton removeMargin" *ngIf="optionSelected" (click)="returnToFilter()">Return to Filters</button>
   </div>
   <app-calendar [eventsToDisplay]="eventsToSend"></app-calendar>
 </ng-template>

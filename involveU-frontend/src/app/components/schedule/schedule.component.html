@@ -1,4 +1,4 @@
-<div class="buttonContainer" *ngIf="!optionSelected">
+<!--<div class="buttonContainer">
   <h1>Filter Calendar</h1>
   <button class="yellowButton" (click)="activateAllEvents()">Show All Events</button>
   <button class="yellowButton" (click)="activateFavoritedClubEvents()" [disabled]="!userID">Show Favorited Club Events</button>
@@ -14,12 +14,13 @@
       <p-dropdown [(ngModel)]="spaceID" [options]="spacesList" [filter]="true" [autoDisplayFirst]="false" [disabled]="disableSpaceDropdown" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" class="dropdownLength" (onChange)="onSpaceSelected()" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
     </div>
   </div>
-</div>
+</div>-->
 
-<ng-template [ngIf]="eventsToSend && optionSelected">
+<!--<ng-template [ngIf]="eventsToSend && optionSelected">
   <div class="centerButton">
     <button class="yellowButton removeMargin" *ngIf="optionSelected" (click)="returnToFilter()">Return to Filters</button>
   </div>
-  <app-calendar [eventsToDisplay]="eventsToSend"></app-calendar>
-</ng-template>
 
+</ng-template>-->
+
+<app-calendar></app-calendar>

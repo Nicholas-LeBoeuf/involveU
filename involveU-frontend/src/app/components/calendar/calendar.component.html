@@ -1,4 +1,23 @@
-<full-calendar [options]="options"></full-calendar>
+<div class="buttonContainer">
+  <h1>Filter Calendar</h1>
+  <button class="yellowButton" (click)="activateAllEvents()">Show All Events</button>
+  <button class="yellowButton" (click)="activateFavoritedClubEvents()" [disabled]="!userID">Show Favorited Club Events</button>
+  <p-dropdown class="clubDropdown" [options]="dropdownOptions" optionLabel="clubName" placeholder="Select a Club to View Events" (onChange)="onClubSelected($event)"></p-dropdown>
+  <div class="filterByLocation">
+    <h3>Filter by Location</h3>
+    <div class="eventLocation containerContentSize">
+      <label class="dialogLabels">Location</label>
+      <p-dropdown [(ngModel)]="locationID" [options]="locationsList" [filter]="true" [autoDisplayFirst]="false" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" class="dropdownLength" (onChange)="checkLocationSelected()" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+    </div>
+    <div class="eventSpace containerContentSize">
+      <label class="dialogLabels">Space</label>
+      <p-dropdown [(ngModel)]="spaceID" [options]="spacesList" [filter]="true" [autoDisplayFirst]="false" [disabled]="disableSpaceDropdown" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" class="dropdownLength" (onChange)="onSpaceSelected()" [style]="{'width':'400px', 'height':'50px', 'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+    </div>
+  </div>
+</div>
+
+
+<full-calendar [options]="options" [deepChangeDetection]="true"></full-calendar>
 
 <p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
   <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">

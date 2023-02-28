@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ClubService} from "../../services/club.service";
 import {EventsService} from "../../services/events.service";
 import {Router} from "@angular/router";
@@ -35,6 +35,7 @@ export class ScheduleComponent implements OnInit {
   locationsList: Events[] = [];
   spacesList: Events[] = [];
 
+  @Output() sendEvents = new EventEmitter<Events[]>();
 
 
   ngOnInit() {
@@ -50,24 +51,33 @@ export class ScheduleComponent implements OnInit {
   }
   activateAllEvents() {
     this.eventsService.getAllEvents().subscribe(response => {
+      this.eventsToSend = [];
       this.eventsToSend = response;
     });
     this.optionSelected = true;
+
+    this.sendEvents.emit(this.eventsToSend);
   }
 
   activateFavoritedClubEvents() {
     this.eventsService.getFavoritedClubsEvents(this.userID).subscribe(response => {
+      this.eventsToSend = [];
       this.eventsToSend = response;
     });
     this.optionSelected = true;
+
+    this.sendEvents.emit(this.eventsToSend);
   }
 
   onClubSelected(event) {
     this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
+      this.eventsToSend = [];
       this.eventsToSend = response;
       this.eventsToSend = this.eventsToSend.slice();
     })
     this.optionSelected = true;
+
+    this.sendEvents.emit(this.eventsToSend);
   }
 
   returnToFilter() {

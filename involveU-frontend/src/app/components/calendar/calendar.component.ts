@@ -26,6 +26,8 @@ export class CalendarComponent implements OnInit {
   // BOOLEANS
   viewMoreInfoDialog: boolean = false;
   disableSpaceDropdown: boolean = false;
+  isLoggedIn: boolean = false;
+  successMessage: boolean = false;
 
   // NUMBERS
   userID: number;
@@ -33,15 +35,16 @@ export class CalendarComponent implements OnInit {
   spaceID: number;
 
   // STRINGS
-
+  message: string;
 
   // OBJECTS or ARRAYS
   formattedEvents: CalendarFormat[] = [];
-  selectedEvent: Events;
+  selectedEvent: Events[] = [];
   eventsToSend: Events[];
   dropdownOptions: Club[] = [];
   locationsList: Events[] = [];
   spacesList: Events[] = [];
+  userRSVPdEvents: Events[] = [];
 
   options = {
     initialView: 'dayGridMonth',
@@ -67,6 +70,8 @@ export class CalendarComponent implements OnInit {
     this.userID = +this.cookie.get('studentID');
     this.getAllClubs();
     this.getLocations();
+    this.isUserLoggedIn();
+    this.getUserRSVPdEvents();
   }
 
   formatAllEvents() {
@@ -79,6 +84,11 @@ export class CalendarComponent implements OnInit {
 
     this.options.events = this.formattedEvents; // Reset the events portion of the options object
   }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
+  }
+
 
   // GET functions
   getAllClubs() {
@@ -103,6 +113,21 @@ export class CalendarComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+  }
+
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+      console.log(response);
+      for(let i = 0; i < this.userRSVPdEvents.length; i++) {
+        this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.userRSVPdEvents[i].clubLogo = logo;
+        })
+      }
+    })
   }
 
   // Calendar Activations
@@ -170,7 +195,15 @@ export class CalendarComponent implements OnInit {
 
   showEventInformation(clickInfo: EventClickArg) {
     this.eventsService.getSpecificEvent(+clickInfo.event.id).subscribe(response => {
-      this.selectedEvent = response;
+      this.selectedEvent.push(response);
+
+      this.clubService.getClubLogo(this.selectedEvent[0].clubID).subscribe(logo => {
+        const reader = new FileReader();
+        reader.onload = (e) => this.selectedEvent[0].clubLogo = e.target.result;
+        reader.readAsDataURL(new Blob([logo]));
+        this.selectedEvent[0].clubLogo = logo;
+      })
+
     })
     this.openViewMoreInfoDialog();
   }
@@ -180,6 +213,29 @@ export class CalendarComponent implements OnInit {
   }
 
   closeViewMoreInfoDialog() {
+    this.selectedEvent = [];
     this.viewMoreInfoDialog = false;
+  }
+
+  isUserRSVPd(eventID: number): boolean {
+    return this.userRSVPdEvents.some(event => event.eventID === eventID);
+  }
+
+  eventRSVP(eventID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+      console.log(response);
+    })
+    this.message = "Event Successfully RSVPd!";
+    this.successMessage = true;
+    location.reload();
+  }
+
+  removeEventRSVP(eventID: number) {
+    this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
+      console.log(response);
+    })
+    this.message = "Successfully Removed RSVP!";
+    this.successMessage = true;
+    location.reload();
   }
 }

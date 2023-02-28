@@ -30,7 +30,7 @@ const routes: Routes = [
     component: AdminPageComponent
   },
   {
-    path: 'schedule',
+    path: 'calendar',
     component: CalendarComponent
   },
   {

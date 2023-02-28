@@ -38,6 +38,7 @@ export class CalendarComponent implements OnInit {
     events: this.formattedEvents,
     eventClick: this.showEventInformation.bind(this),
     nowIndicator: true,
+    displayEventTime: false
 
   };
 

@@ -56,3 +56,27 @@
   overflow: inherit !important;
   white-space: normal !important;
 }
+
+@media (max-width: 768px) {
+  ::ng-deep {
+    .fc .fc-toolbar.fc-header-toolbar {
+      display: block;
+      text-align: center;
+    }
+
+    .fc-header-toolbar .fc-toolbar-chunk {
+      padding: 7px;
+      display: block;
+    }
+
+  }
+}
+
+::ng-deep .fc-day-grid-event > .fc-content {
+  white-space: normal;
+  text-overflow: ellipsis;
+  max-height:20px;
+}
+::ng-deep .fc-day-grid-event > .fc-content:hover {
+  max-height:none!important;
+}

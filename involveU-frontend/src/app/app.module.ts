@@ -20,7 +20,6 @@ import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import {DropdownModule} from "primeng/dropdown";
-import { ScheduleComponent } from './components/schedule/schedule.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -60,7 +59,6 @@ FullCalendarModule.registerPlugins([
     FilterPipe,
     SpecificClubPageComponent,
     AdminPageComponent,
-    ScheduleComponent,
     CalendarComponent,
     TimeFormatPipe,
     EboardPageComponent,

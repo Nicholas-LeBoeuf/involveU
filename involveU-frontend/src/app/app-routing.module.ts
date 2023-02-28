@@ -4,9 +4,9 @@ import { ClubPageComponent} from "./components/club-page/club-page.component";
 import {LandingPageComponent} from "./components/landing-page/landing-page.component";
 import {SpecificClubPageComponent} from "./components/specific-club-page/specific-club-page.component";
 import {AdminPageComponent} from "./components/admin-page/admin-page.component";
-import {ScheduleComponent} from "./components/schedule/schedule.component";
 import {EboardPageComponent} from "./components/eboard-page/eboard-page.component";
 import {MoreInfoComponent} from "./components/more-info/more-info.component"
+import {CalendarComponent} from "./components/calendar/calendar.component";
 
 const routes: Routes = [
   {
@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'schedule',
-    component: ScheduleComponent
+    component: CalendarComponent
   },
   {
     path: ':id/eboard',

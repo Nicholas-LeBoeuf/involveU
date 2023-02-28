@@ -187,15 +187,15 @@ export class CalendarComponent implements OnInit {
 
 
   formatAllEvents() {
-    if(this.formattedEvents.length !== 0)
+   /* if(this.formattedEvents.length !== 0)
     {
       console.log("emptying");
-      this.formattedEvents = [];
-    }
-    console.log("test");
+
+    }*/
+
+    this.formattedEvents = [];
     for (let i = 0; i < this.eventsToSend.length; i++)
     {
-      console.log("wooo");
       this.formattedEvents.push({id: this.eventsToSend[i].eventID, title: this.eventsToSend[i].eventName, start: this.eventsToSend[i].eventDate + 'T' + this.eventsToSend[i].startTime, end: this.eventsToSend[i].eventDate + 'T' + this.eventsToSend[i].endTime, allDay: false})
     }
 

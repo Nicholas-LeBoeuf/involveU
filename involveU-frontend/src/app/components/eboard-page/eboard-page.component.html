@@ -110,7 +110,7 @@
   <h1 class="blueHeaders">Club Bio</h1>
   <div class=" ">
     <p>{{clubInfo.clubBio}}</p>
-    <button class="yellowButton">Edit</button>
+    <button class="yellowButton" (click)="showEditClubBioDialog()">Edit</button>
   </div>
 
   <h1 class="blueHeaders">Club Logo</h1>
@@ -232,6 +232,17 @@
   </div>
 </p-dialog>
 
-<p-dialog>
-
+<p-dialog [(visible)]="editClubBioDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw', height: '400px'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubBioDialog()">
+  <div class="form-group">
+    <form [formGroup]="editClubBioForm">
+      <input class="form-control formInputs" [ngClass]="{'editClubDataInputs': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio">
+      <div *ngIf="announcementFormInputs?.['editClubBio']?.invalid && (announcementFormInputs?.['editClubBio']?.dirty || announcementFormInputs?.['editClubBio']?.touched)" class="requiredAlert alert-danger">
+        <div *ngIf="announcementFormInputs?.['editClubBio']?.errors?.['required']">
+          Club Bio is required
+        </div>
+      </div>
+    </form>
+    <button class="yellowButton" (click)="editClubBio()">Edit ClubBio</button>
+    <button class="yellowButton" (click)="closeEditClubBioDialog()">Close</button>
+  </div>
 </p-dialog>

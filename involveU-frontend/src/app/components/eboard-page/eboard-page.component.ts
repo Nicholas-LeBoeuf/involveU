@@ -26,6 +26,7 @@ export class EboardPageComponent implements OnInit {
   editAnnouncementForm: FormGroup;
   socialMediaForm : FormGroup;
   editSocialMediaForm : FormGroup;
+  editClubBioForm: FormGroup;
   todaysDate = new Date().toString();
 
   constructor(private clubService: ClubService,
@@ -67,6 +68,10 @@ export class EboardPageComponent implements OnInit {
       editsmProfileName: ['', Validators.required]
     })
 
+    this.editClubBioForm = this.formBuilder.group({
+      editClubBio: ['', Validators.required]
+    })
+
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
@@ -75,6 +80,7 @@ export class EboardPageComponent implements OnInit {
   editAnnouncementDialog: boolean = false;
   addSocialMediaDialog: boolean = false;
   editSocialMediaDialog: boolean = false;
+  editClubBioDialog: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
 
@@ -252,6 +258,16 @@ export class EboardPageComponent implements OnInit {
     this.editSocialMediaDialog = false;
   }
 
+  showEditClubBioDialog()
+  {
+    this.editClubBioDialog = true;
+  }
+
+  closeEditClubBioDialog()
+  {
+    this.editClubBioDialog = false;
+  }
+
   addSocialMedia() {
     const newSocialMedia: SocialMedia = {platform: this.platformString.value, profileName: this.socialMediaForm.value.smProfileName, link: this.socialMediaForm.value.smLink, clubID: this.clubID};
 
@@ -297,6 +313,15 @@ export class EboardPageComponent implements OnInit {
         else {
           console.log(error);
         }
+      })
+  }
+
+  editClubBio() {
+    this.eboardService.editClubBio(this.clubID).subscribe(response => {
+      console.log(response);
+    },
+      (error) => {
+        console.log(error);
       })
   }
 

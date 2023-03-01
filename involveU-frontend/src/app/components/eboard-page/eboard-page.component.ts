@@ -27,6 +27,9 @@ export class EboardPageComponent implements OnInit {
   socialMediaForm : FormGroup;
   editSocialMediaForm : FormGroup;
   editClubBioForm: FormGroup;
+  editClubVisionForm: FormGroup;
+  editClubMissionForm: FormGroup;
+  editClubValuesForm: FormGroup;
   todaysDate = new Date().toString();
 
   constructor(private clubService: ClubService,
@@ -72,6 +75,18 @@ export class EboardPageComponent implements OnInit {
       editClubBio: ['', Validators.required]
     })
 
+    this.editClubVisionForm = this.formBuilder.group({
+      editClubVision: ['', Validators.required]
+    })
+
+    this.editClubMissionForm = this.formBuilder.group({
+      editClubMission: ['', Validators.required]
+    })
+
+    this.editClubValuesForm = this.formBuilder.group({
+      editClubValues: ['', Validators.required]
+    })
+
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
@@ -81,6 +96,9 @@ export class EboardPageComponent implements OnInit {
   addSocialMediaDialog: boolean = false;
   editSocialMediaDialog: boolean = false;
   editClubBioDialog: boolean = false;
+  editClubVisionDialog: boolean = false;
+  editClubMissionDialog: boolean = false;
+  editClubValuesDialog: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
 
@@ -266,6 +284,36 @@ export class EboardPageComponent implements OnInit {
   closeEditClubBioDialog()
   {
     this.editClubBioDialog = false;
+  }
+
+  showEditClubVisionDialog()
+  {
+    this.editClubVisionDialog = true;
+  }
+
+  closeEditClubVisionDialog()
+  {
+    this.editClubVisionDialog = false;
+  }
+
+  showEditClubMissionDialog()
+  {
+    this.editClubMissionDialog = true;
+  }
+
+  closeEditClubMissionDialog()
+  {
+    this.editClubMissionDialog = false;
+  }
+
+  showEditClubValuesDialog()
+  {
+    this.editClubValuesDialog = true;
+  }
+
+  closeEditClubValuesDialog()
+  {
+    this.editClubValuesDialog = false;
   }
 
   addSocialMedia() {

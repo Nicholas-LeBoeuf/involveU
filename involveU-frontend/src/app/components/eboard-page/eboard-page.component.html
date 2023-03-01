@@ -116,19 +116,19 @@
   <h1 class="blueHeaders">Club Vision</h1>
   <div class=" ">
     <p>{{clubInfo.clubVision}}</p>
-    <button class="yellowButton" (click)="showEditClubBioDialog()">Edit</button>
+    <button class="yellowButton" (click)="showEditClubVisionDialog()">Edit</button>
   </div>
 
   <h1 class="blueHeaders">Club Mission</h1>
   <div class=" ">
     <p>{{clubInfo.clubMission}}</p>
-    <button class="yellowButton" (click)="showEditClubBioDialog()">Edit</button>
+    <button class="yellowButton" (click)="showEditClubMissionDialog()">Edit</button>
   </div>
 
   <h1 class="blueHeaders">Club Values</h1>
   <div class=" ">
     <p>{{clubInfo.clubValues}}</p>
-    <button class="yellowButton" (click)="showEditClubBioDialog()">Edit</button>
+    <button class="yellowButton" (click)="showEditClubValuesDialog()">Edit</button>
   </div>
 
   <h1 class="blueHeaders">Club Logo</h1>
@@ -254,13 +254,38 @@
   <div class="form-group">
     <form [formGroup]="editClubBioForm">
       <input class="form-control formInputs" [ngClass]="{'editClubDataInputs': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio">
-      <div *ngIf="announcementFormInputs?.['editClubBio']?.invalid && (announcementFormInputs?.['editClubBio']?.dirty || announcementFormInputs?.['editClubBio']?.touched)" class="requiredAlert alert-danger">
-        <div *ngIf="announcementFormInputs?.['editClubBio']?.errors?.['required']">
-          Club Bio is required
-        </div>
-      </div>
     </form>
-    <button class="yellowButton" >Edit ClubBio</button>
+    <button class="yellowButton" >Edit Club Bio</button>
     <button class="yellowButton" (click)="closeEditClubBioDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubVisionDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw', height: '400px'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubMissionDialog()">
+  <div class="form-group">
+    <form [formGroup]="editClubVisionForm">
+      <input class="form-control formInputs" [ngClass]="{'editClubDataInputs': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubVision" formControlName="editClubVision">
+    </form>
+    <button class="yellowButton" >Edit Club Vision</button>
+    <button class="yellowButton" (click)="closeEditClubVisionDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubMissionDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw', height: '400px'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubMissionDialog()">
+  <div class="form-group">
+    <form [formGroup]="editClubMissionForm">
+      <input class="form-control formInputs" [ngClass]="{'editClubDataInputs': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubMission" formControlName="editClubMission">
+    </form>
+    <button class="yellowButton" >Edit Club Mission</button>
+    <button class="yellowButton" (click)="closeEditClubMissionDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubValuesDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw', height: '400px'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubValuesDialog()">
+  <div class="form-group">
+    <form [formGroup]="editClubValuesForm">
+      <input class="form-control formInputs" [ngClass]="{'editClubDataInputs': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubValues" formControlName="editClubValues">
+    </form>
+    <button class="yellowButton" >Edit Club Values</button>
+    <button class="yellowButton" (click)="closeEditClubValuesDialog()">Close</button>
   </div>
 </p-dialog>

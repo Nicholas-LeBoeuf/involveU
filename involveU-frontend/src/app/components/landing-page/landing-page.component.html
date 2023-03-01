@@ -83,7 +83,7 @@
 
 
   <ng-template #eventsPresent>
-    <p-table [value]="todaysEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+    <p-table [value]="todaysEvents" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-event>
         <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <div class="eventCardPicture">
@@ -121,7 +121,7 @@
   </ng-container>
 
   <ng-template #announcementsPresent>
-    <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+    <p-table [value]="osiAnnouncements" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-announcement>
         <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(announcement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>

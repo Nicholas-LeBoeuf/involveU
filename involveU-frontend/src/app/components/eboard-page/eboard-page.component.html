@@ -15,7 +15,7 @@
 
 <div class="container">
   <h1 class="blueHeaders">Announcements</h1>
-  <p-table #clubAnnouncementTable styleClass="eboardTables" [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [rows]="5" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
+  <p-table #clubAnnouncementTable styleClass="eboardTables" [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
     <ng-template pTemplate="caption">
       <div class="captionContainer">
         <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterAnnouncements($event)" placeholder="Search" />
@@ -42,7 +42,7 @@
   </p-table>
 
   <h1 class="blueHeaders">Events</h1>
-  <p-table #clubEventTable styleClass="eboardTables" [value]="clubEvents" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [rows]="5" [globalFilterFields]="['eventName', 'eventLocation']">
+  <p-table #clubEventTable styleClass="eboardTables" [value]="clubEvents" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5" [globalFilterFields]="['eventName', 'eventLocation']">
     <ng-template pTemplate="caption">
       <div class="captionContainer">
         <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
@@ -80,7 +80,7 @@
   </p-table>
 
   <h1 class="blueHeaders">Social Media</h1>
-  <p-table styleClass="eboardTables" [value]="clubSocialMedia" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [rows]="5">
+  <p-table styleClass="eboardTables" [value]="clubSocialMedia" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5">
     <ng-template pTemplate="caption">
       <div class="captionContainer">
         <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />

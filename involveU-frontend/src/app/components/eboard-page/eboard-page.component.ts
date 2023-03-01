@@ -422,4 +422,40 @@ export class EboardPageComponent implements OnInit {
       return false;
     }
   }
+
+  isEditClubBioFormValid() {
+    if (this.editClubBioForm.value.editClubBio === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubVisionFormValid() {
+    if (this.editClubVisionForm.value.editClubVision === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubMissionFormValid() {
+    if (this.editClubMissionForm.value.editClubMission === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubValuesFormValid() {
+    if (this.editClubValuesForm.value.editClubValues === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }

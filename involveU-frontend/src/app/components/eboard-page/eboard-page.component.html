@@ -264,7 +264,7 @@
     <form [formGroup]="editClubBioForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio"></textarea>
     </form>
-    <button class="yellowButton" (click)="updateClubData()">Edit Club Bio</button>
+    <button class="yellowButton" [disabled]="isEditClubBioFormValid()" (click)="updateClubData()">Edit Club Bio</button>
     <button class="yellowButton" (click)="closeEditClubBioDialog()">Close</button>
   </div>
 </p-dialog>
@@ -275,7 +275,7 @@
     <form [formGroup]="editClubVisionForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubVision" formControlName="editClubVision"></textarea>
     </form>
-    <button class="yellowButton" (click)="updateClubData()">Edit Club Vision</button>
+    <button class="yellowButton" [disabled]="isEditClubVisionFormValid()" (click)="updateClubData()">Edit Club Vision</button>
     <button class="yellowButton" (click)="closeEditClubVisionDialog()">Close</button>
   </div>
 </p-dialog>
@@ -286,7 +286,7 @@
     <form [formGroup]="editClubMissionForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubMission" formControlName="editClubMission"></textarea>
     </form>
-    <button class="yellowButton" (click)="updateClubData()">Edit Club Mission</button>
+    <button class="yellowButton" [disabled]="isEditClubMissionFormValid()" (click)="updateClubData()">Edit Club Mission</button>
     <button class="yellowButton" (click)="closeEditClubMissionDialog()">Close</button>
   </div>
 </p-dialog>
@@ -297,7 +297,7 @@
     <form [formGroup]="editClubValuesForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubValues" formControlName="editClubValues"></textarea>
     </form>
-    <button class="yellowButton" (click)="updateClubData()">Edit Club Values</button>
+    <button class="yellowButton" [disabled]="isEditClubValuesFormValid()" (click)="updateClubData()">Edit Club Values</button>
     <button class="yellowButton" (click)="closeEditClubValuesDialog()">Close</button>
   </div>
 </p-dialog>

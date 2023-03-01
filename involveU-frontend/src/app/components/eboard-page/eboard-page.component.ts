@@ -316,15 +316,6 @@ export class EboardPageComponent implements OnInit {
       })
   }
 
-  editClubBio() {
-    this.eboardService.editClubBio(this.clubID).subscribe(response => {
-      console.log(response);
-    },
-      (error) => {
-        console.log(error);
-      })
-  }
-
   onUpload(event) {
     const file:File = event.files[0];
 

@@ -33,7 +33,7 @@ export class EboardService {
     return this.http.put(environment.apiURL + `club/updateClubData`, clubData);
   }
 
-  editClubBio(clubID: number) {
-    return this.http.post(environment.apiURL + `club/updateClubBio/${clubID}`, {responseType: 'text'});
-  }
+  /*editClubBio(clubID: number, newBio: string) {
+    return this.http.put(environment.apiURL + `club/updateClubBio/${clubID}/${newBio}`, {responseType: 'text'});
+  }*/
 }

@@ -84,10 +84,10 @@ public class ClubController extends DBServices{
             return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
         }
     }
-    @PutMapping ("/club/updateClubBio/{clubID}")
-    private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID)
+    /*@PutMapping ("/club/updateClubBio/{clubID}")
+    private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID, @PathVariable("newBio")String clubBio)
     {
-        if(updateClubDBBio(clubID))
+        if(updateClubDBBio(clubID, clubBio))
         {
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
@@ -135,7 +135,7 @@ public class ClubController extends DBServices{
             return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
         }
     }
-
+*/
   @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {

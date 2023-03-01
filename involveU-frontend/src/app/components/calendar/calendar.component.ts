@@ -25,6 +25,7 @@ export class CalendarComponent implements OnInit {
 
   // BOOLEANS
   viewMoreInfoDialog: boolean = false;
+  viewFilterDialog: boolean = false;
   disableSpaceDropdown: boolean = false;
   isLoggedIn: boolean = false;
   successMessage: boolean = false;
@@ -215,6 +216,14 @@ export class CalendarComponent implements OnInit {
   closeViewMoreInfoDialog() {
     this.selectedEvent = [];
     this.viewMoreInfoDialog = false;
+  }
+
+  openViewFilterDialog() {
+    this.viewFilterDialog = true;
+  }
+
+  closeViewFilterDialog() {
+    this.viewFilterDialog = false;
   }
 
   isUserRSVPd(eventID: number): boolean {

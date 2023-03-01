@@ -4,6 +4,7 @@
 @import '~@fullcalendar/daygrid/main.min.css';
 @import '~@fullcalendar/timegrid/main.css';
 @import '~@fullcalendar/timegrid/main.min.css';
+@import 'src/styles';
 
 
 .fc { /* the calendar root */
@@ -12,50 +13,60 @@
   white-space: pre-wrap;
 }
 
-::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button {
-  background-color: #dadada;
-  border-color: #dadada;
-  color: #333333;
+::ng-deep {
+  .fc.fc-theme-standard .fc-toolbar .fc-button {
+    background-color: $HeritageBlue !important;
+    border: 3px solid white !important;
+    color: $GoldenYellow !important;
+    box-shadow: none !important;
+  }
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button:hover {
+    background-color: $GoldenYellow !important;
+    border: 3px solid white !important;
+    color: $HeritageBlue !important;
+    box-shadow: none !important;
+  }
+
+  .fc.fc-theme-standard .fc-view-harness th  {
+    background-color: $HeritageBlue !important;
+  }
+
+  .fc.fc-theme-standard .fc-view-harness th a {
+    color: $GoldenYellow !important;
+  }
+
+  .fc-daygrid-dot-event .fc-event-title {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+  }
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active,
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active,
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active,
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-listWeek-button.fc-button-active {
+    background: $GoldenYellow !important;
+    color: $HeritageBlue !important;
+    box-shadow: none !important;
+  }
+
+  .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    cursor: pointer !important;
+  }
+
+  .fc-timegrid-event-harness {
+    cursor: pointer !important;
+  }
+
+  .fc .fc-event, .fc .fc-scrollgrid table tr {
+    cursor: pointer !important;
+  }
+
+  .fc.fc-theme-standard .fc-highlight {
+    background-color: $SkyBlue !important;
+  }
 }
 
-::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:hover {
-  background-color: #116fbf;
-  border-color: #116fbf;
-  color: white;
-}
-
-::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:active {
-  background-color: #007ad9 !important;
-  border-color: #007ad9 !important;
-  color: white;
-}
-
-::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
-  background-color: #007ad9 !important;
-  border-color: #007ad9 !important;
-  color: white;
-}
-
-::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus {
-  box-shadow: 0 0 0 0.2rem #8dcdff !important;
-}
-
-::ng-deep .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
-  cursor: pointer !important;
-}
-
-::ng-deep .fc-timegrid-event-harness {
-  cursor: pointer !important;
-}
-
-::ng-deep .fc .fc-event, .fc .fc-scrollgrid table tr {
-  cursor: pointer !important;
-}
-
-::ng-deep .fc-daygrid-dot-event .fc-event-title {
-  overflow: inherit !important;
-  white-space: normal !important;
-}
 
 @media (max-width: 768px) {
   ::ng-deep {

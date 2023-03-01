@@ -440,3 +440,9 @@ em {
 .announcementDialogContent p {
   margin-bottom: 0;
 }
+
+//Center Items in Carousel
+::ng-deep .centerItems tbody.p-element.p-datatable-tbody{
+  display: flex !important;
+  justify-content: center !important;
+}

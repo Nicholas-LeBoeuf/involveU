@@ -1,49 +1,104 @@
+<div class="applyMargin">
+  <button class="yellowButton removeMargin" (click)="openViewFilterDialog()">Filters</button>
+</div>
+
 <full-calendar [options]="options"></full-calendar>
 
-<p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
-  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
-    <span class="fa fa-fw fa-close fa-lg"></span>
-  </a>
-  <h1 class="text-center">Event Information</h1>
-  <hr class="dialogLines">
-    <div class="eventInfoContainer" *ngIf="selectedEvent">
-      <div class="eventName">
-        <h3 class="eventDataTitle">Event Name: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventName}}</h5>
-      </div>
-      <div class="eventDate">
-        <h3 class="eventDataTitle">Event Date: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventDate | date:'MMMM dd, YYYY'}}</h5>
-      </div>
-      <div class="eventTime">
-        <h3 class="eventDataTitle">Time: </h3>
-        <h5 class="eventData">{{this.selectedEvent.startTime | timeFormat}} - {{this.selectedEvent.endTime | timeFormat}}</h5>
-      </div>
-      <div class="eventLocation">
-        <h3 class="eventDataTitle">Event Location: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventLocation}}</h5>
-      </div>
-      <div class="eventDesc">
-        <h3 class="eventDataTitle">Event Description: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventDesc}}</h5>
-      </div>
-      <div class="eventHost">
-        <h3 class="eventDataTitle">Hosted By:</h3>
-        <h5 class="eventData">{{this.selectedEvent.clubName}}</h5>
-      </div>
-      <div class="eventTransportation">
-        <h3 class="eventDataTitle">Transportation</h3>
-        <ng-container *ngIf="this.selectedEvent.isTransportation; else noTransportation">
-          <h5 class="eventData">Transportation Provided</h5>
-        </ng-container>
-        <ng-template #noTransportation>
-          <h5 class="eventData">Transportation NOT provided</h5>
-        </ng-template>
-      </div>
-      <div class="eventTicketLink">
-        <h3 class="eventDataTitle">Ticket Link:</h3>
-        <h5 class="eventData">{{this.selectedEvent.ticketLink}}</h5>
+
+<p-dialog [(visible)]="viewFilterDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewFilterDialog()">
+  <div class="text-center dialogContainer">
+    <h1 class="blueHeaders">Filter Calendar</h1>
+    <hr>
+    <div class="filterSection">
+      <button class="yellowButton" (click)="activateAllEventsFilter()">Show All Events</button>
+    </div>
+    <hr>
+    <div class="filterSection">
+      <button class="yellowButton" (click)="activateFavoritedClubEventsFilter()" [disabled]="!userID">Show Favorited Club Events</button>
+    </div>
+    <hr>
+    <div class="filterSection">
+      <h3 class="blueHeaders">Filter by Club</h3>
+      <div class="dropdownContentSize">
+        <p-dropdown [options]="dropdownOptions" [filter]="true" optionLabel="clubName" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" placeholder="Select a Club to View Events" (onChange)="activateClubFilter($event)" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
       </div>
     </div>
+    <hr>
+    <div class="filterSection">
+      <div class="filterByLocation">
+        <h3 class="blueHeaders">Filter by Location</h3>
+        <div class="dropdownContentSize">
+          <p-dropdown  [(ngModel)]="locationID" [options]="locationsList" [filter]="true" [autoDisplayFirst]="false" appendTo="body" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" (onChange)="checkLocationSelected()" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        </div>
+        <div class="dropdownContentSize">
+          <p-dropdown [(ngModel)]="spaceID" [options]="spacesList" [filter]="true" [autoDisplayFirst]="false" appendTo="body" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" [disabled]="disableSpaceDropdown" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" (onChange)="activateSpaceFilter()" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="text-center marginButton">
+      <button class="yellowButton" (click)="closeViewFilterDialog()">Close</button>
+    </div>
+  </div>
 </p-dialog>
+
+<p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
+  <div class="eventCardDialog text-center" *ngFor="let event of selectedEvent">
+    <div class="eventCardPicture">
+      <div class="imageCenter">
+        <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
+      </div>
+      <div class="imageMaskDialog"></div>
+      <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+      <h5 class="eventClubName">{{event.clubName}}</h5>
+
+      <div class="eventInformationDialogContainer">
+        <div class="eventDateDialog">
+          <h3 class="blueHeaders text-center">Date</h3>
+          <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+        </div>
+        <div class="eventTimeDialog">
+          <h3 class="blueHeaders text-center">Time</h3>
+          <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+        </div>
+        <div class="eventTransportationDialog">
+          <h3 class="blueHeaders text-center">Transportation</h3>
+          <ng-container *ngIf="event.isTransportation; else noTransportation">
+            <p>Transportation Provided</p>
+          </ng-container>
+          <ng-template #noTransportation>
+            <p>Transportation NOT Provided</p>
+          </ng-template>
+        </div>
+        <div class="eventTicketLinkDialog">
+          <h3 class="blueHeaders text-center">Ticket Link</h3>
+          <ng-container *ngIf="event.ticketLink !== null && event.ticketLink !== ''; else noTicketLink">
+            <p>{{event.ticketLink}}</p>
+          </ng-container>
+          <ng-template #noTicketLink>
+            <p>N/A</p>
+          </ng-template>
+        </div>
+        <div class="eventDescriptionDialog">
+          <h3 class="blueHeaders text-center">Description</h3>
+          <p>{{event.eventDesc}}</p>
+        </div>
+        <div class="eventLocationDialog">
+          <h3 class="blueHeaders text-center">Location</h3>
+          <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+        </div>
+      </div>
+      <ng-container *ngIf="isLoggedIn">
+        <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+        </ng-container>
+        <ng-template #ShowRSVP>
+          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+        </ng-template>
+      </ng-container>
+      <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
+    </div>
+  </div>
+</p-dialog>
+
 

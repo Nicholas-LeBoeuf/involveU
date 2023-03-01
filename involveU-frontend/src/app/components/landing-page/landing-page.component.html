@@ -13,7 +13,7 @@
     <div class="images">
       <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
         <ng-template let-image pTemplate="item">
-          <img class="carouselImages" src="assets/landingPageImages/{{image}}">
+          <img class="carouselImages" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
         </ng-template>
       </p-carousel>
     </div>
@@ -32,7 +32,7 @@
         <h3>See What is going on this week at Southern New Hampshire University</h3>
       </div>
       <div class="thisWeekButton">
-        <button class="yellowButton" routerLink="/schedule">View Events</button>
+        <button class="yellowButton" routerLink="/calendar">View Events</button>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
   <div class="images">
     <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
-        <img class="carouselImagesSmall" src="assets/landingPageImages/{{image}}">
+        <img class="carouselImagesSmall" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
       </ng-template>
     </p-carousel>
   </div>
@@ -83,12 +83,12 @@
 
 
   <ng-template #eventsPresent>
-    <p-table [value]="todaysEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+    <p-table [value]="todaysEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-event>
         <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <div class="eventCardPicture">
             <div class="imageCenter">
-              <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+              <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
             </div>
             <div class="imageMaskEvent"></div>
             <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
@@ -121,7 +121,7 @@
   </ng-container>
 
   <ng-template #announcementsPresent>
-    <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+    <p-table [value]="osiAnnouncements" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
       <ng-template pTemplate="body" let-announcement>
         <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(announcement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
@@ -139,7 +139,7 @@
   <div class="eventCardDialog text-center" *ngFor="let certainEvent of certainEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
-        <img class="eventImage" [src]="certainEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+        <img class="eventImage" [src]="certainEvent.clubLogo" alt="{{certainEvent.clubName}} Logo"/>
       </div>
       <div class="imageMaskDialog"></div>
       <h3 class="blueHeaders text-center">{{certainEvent.eventName}}</h3>

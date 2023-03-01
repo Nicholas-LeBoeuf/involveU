@@ -7,6 +7,7 @@ import {Title} from "@angular/platform-browser";
 import {Club} from "../../objects/club";
 import {ClubService} from "../../services/club.service";
 import {CookieService} from "ngx-cookie-service";
+import {ResponsiveService} from "../../services/responsive.service";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class CalendarComponent implements OnInit {
 
   constructor(private eventsService: EventsService,
               public cookie: CookieService,
+              public responsiveService: ResponsiveService,
               private clubService: ClubService,
               private title: Title) {
     this.title.setTitle("involveU | Calendar");
@@ -26,7 +28,7 @@ export class CalendarComponent implements OnInit {
   // BOOLEANS
   viewMoreInfoDialog: boolean = false;
   viewFilterDialog: boolean = false;
-  disableSpaceDropdown: boolean = false;
+  disableSpaceDropdown: boolean = true;
   isLoggedIn: boolean = false;
   successMessage: boolean = false;
 
@@ -73,6 +75,7 @@ export class CalendarComponent implements OnInit {
     this.getLocations();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
+    this.activateAllEventsFilter();
   }
 
   formatAllEvents() {
@@ -144,6 +147,8 @@ export class CalendarComponent implements OnInit {
       () => {
         this.formatAllEvents();
       });
+
+    this.closeViewFilterDialog();
   }
 
   activateFavoritedClubEventsFilter() {
@@ -152,12 +157,31 @@ export class CalendarComponent implements OnInit {
       this.eventsToSend = response;
     },
       (error) => {
-      console.log(error);
+        console.log(error);
       },
 
       () => {
         this.formatAllEvents();
       });
+
+    this.closeViewFilterDialog();
+  }
+
+  activateClubFilter(event) {
+    this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
+        this.eventsToSend = [];
+        this.eventsToSend = response;
+        this.eventsToSend = this.eventsToSend.slice();
+      },
+      (error) => {
+        console.log(error);
+      },
+
+      () => {
+        this.formatAllEvents();
+      });
+
+    this.closeViewFilterDialog();
   }
 
   activateSpaceFilter() {
@@ -171,24 +195,11 @@ export class CalendarComponent implements OnInit {
       () => {
         this.formatAllEvents();
       });
+
+    this.closeViewFilterDialog();
   }
 
   // MISC functions
-  onClubSelected(event) {
-    this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
-      this.eventsToSend = [];
-      this.eventsToSend = response;
-      this.eventsToSend = this.eventsToSend.slice();
-    },
-      (error) => {
-        console.log(error);
-      },
-
-      () => {
-        this.formatAllEvents();
-      });
-  }
-
   checkLocationSelected() {
     this.disableSpaceDropdown = false;
     this.getSpacesByLocation();

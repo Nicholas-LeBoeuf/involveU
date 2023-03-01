@@ -364,6 +364,21 @@ export class EboardPageComponent implements OnInit {
       })
   }
 
+  updateClubData() {
+    const updateClubData : Club = {advisorID: this.clubInfo.advisorID, clubAffiliation: this.clubInfo.clubAffiliation, clubBio: this.editClubBioForm.value.editClubBio, clubMission: this.editClubMissionForm.value.editClubMission, clubName: this.clubInfo.clubName, clubValues: this.editClubValuesForm.value.editClubValues, clubVision: this.editClubVisionForm.value.editClubVision, ownerID: this.clubInfo.ownerID, clubID: this.clubID};
+    this.eboardService.editClubData(updateClubData).subscribe(response => {
+        console.log(response);
+      },
+      (error) => {
+        if (error.status === 200) {
+          this.getClubInfo();
+        }
+        else {
+          console.log(error);
+        }
+      })
+  }
+
   onUpload(event) {
     const file:File = event.files[0];
 

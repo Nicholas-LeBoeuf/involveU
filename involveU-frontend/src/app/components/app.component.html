@@ -64,7 +64,7 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li> <a #rla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a></li>
-          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a></li>
+          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a></li>
           <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
           <li><a #mla="routerLinkActive" class="dropdown-item" routerLink="/moreinfo" routerLinkActive="active" [class.active-span]="mla.isActive">More Information</a></li>
           <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">

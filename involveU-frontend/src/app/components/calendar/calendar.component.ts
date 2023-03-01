@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
 import {EventClickArg} from "@fullcalendar/angular";
@@ -15,7 +15,7 @@ import {ResponsiveService} from "../../services/responsive.service";
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
 
   constructor(private eventsService: EventsService,
               public cookie: CookieService,
@@ -75,6 +75,10 @@ export class CalendarComponent implements OnInit {
     this.getLocations();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
+    this.activateAllEventsFilter();
+  }
+
+  ngAfterViewInit() {
     this.activateAllEventsFilter();
   }
 

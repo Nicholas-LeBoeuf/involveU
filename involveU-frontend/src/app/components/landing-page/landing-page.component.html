@@ -13,7 +13,7 @@
     <div class="images">
       <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
         <ng-template let-image pTemplate="item">
-          <img class="carouselImages" src="assets/landingPageImages/{{image}}">
+          <img class="carouselImages" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
         </ng-template>
       </p-carousel>
     </div>
@@ -42,7 +42,7 @@
   <div class="images">
     <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
-        <img class="carouselImagesSmall" src="assets/landingPageImages/{{image}}">
+        <img class="carouselImagesSmall" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
       </ng-template>
     </p-carousel>
   </div>
@@ -88,7 +88,7 @@
         <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
           <div class="eventCardPicture">
             <div class="imageCenter">
-              <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+              <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
             </div>
             <div class="imageMaskEvent"></div>
             <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
@@ -139,7 +139,7 @@
   <div class="eventCardDialog text-center" *ngFor="let certainEvent of certainEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
-        <img class="eventImage" [src]="certainEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+        <img class="eventImage" [src]="certainEvent.clubLogo" alt="{{certainEvent.clubName}} Logo"/>
       </div>
       <div class="imageMaskDialog"></div>
       <h3 class="blueHeaders text-center">{{certainEvent.eventName}}</h3>

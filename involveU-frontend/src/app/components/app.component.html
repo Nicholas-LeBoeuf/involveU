@@ -21,7 +21,7 @@
 <nav class="navbar">
   <ng-container *ngIf="responsiveService.deviceDesktop(); else MobileAndTabletView">
     <div class="navButtons">
-      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="Southern New Hampshire University Logo" routerLink="/home">
       <div class="specificNavButton">
         <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
       </div>
@@ -51,9 +51,9 @@
         <button class="yellowButton" (click)="showLoginDialog()">Login</button>
       </ng-template>
       <ng-template [ngIf]="this.cookie.get('studentID') != ''">
-        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg">
+        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">
       </ng-template>
-      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
+      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
     </div>
   </ng-container>
   <ng-template #MobileAndTabletView>
@@ -84,10 +84,10 @@
         </ul>
       </div>
       <div class="mobileFlexSNHULogo">
-        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" routerLink="/home" alt="Southern New Hampshire University Logo">
       </div>
       <div class="involveUCenter">
-        <img class="involveULogoScale mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png">
+        <img class="involveULogoScale mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
       </div>
     </div>
   </ng-template>

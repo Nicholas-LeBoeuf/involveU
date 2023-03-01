@@ -46,7 +46,7 @@
   <div class="eventCardDialog text-center" *ngFor="let event of selectedEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
-        <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+        <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
       </div>
       <div class="imageMaskDialog"></div>
       <h3 class="blueHeaders text-center">{{event.eventName}}</h3>

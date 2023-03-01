@@ -142,7 +142,7 @@
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(FavEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" [src]="FavEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+                    <img class="eventImage" [src]="FavEvent.clubLogo" alt="{{FavEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{FavEvent.eventName}}</h3>
@@ -179,7 +179,7 @@
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(RSVPEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" [src]="RSVPEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+                    <img class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{RSVPEvent.eventName}}</h3>
@@ -299,7 +299,7 @@
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(futureEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" [src]="futureEvent.clubLogo" /><!--CHANGE TO CLUB LOGO-->
+                    <img class="eventImage" [src]="futureEvent.clubLogo" alt="{{futureEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{futureEvent.eventName}}</h3>

@@ -123,7 +123,7 @@
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" src="assets/{{clubInfo.clubLogo}}">
+                    <img class="eventImage" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
@@ -157,7 +157,7 @@
    <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
      <div class="eventCardPicture">
        <div class="imageCenter">
-         <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}">
+         <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubLogo}} Logo">
        </div>
        <div class="imageMaskDialog"></div>
        <h3 class="blueHeaders text-center">{{event.eventName}}</h3>

@@ -43,6 +43,7 @@ import {UserService} from "./services/user.service";
 import {TabViewModule} from "primeng/tabview";
 import { IntroClubsOrgsComponent } from './components/intro-clubs-orgs/intro-clubs-orgs.component';
 import { OsiStaffComponent } from './components/osi-staff/osi-staff.component';
+import { StudentCenterServicesComponent } from './components/student-center-services/student-center-services.component';
 
 
 
@@ -66,7 +67,8 @@ FullCalendarModule.registerPlugins([
     EboardPageComponent,
     MoreInfoComponent,
     IntroClubsOrgsComponent,
-    OsiStaffComponent
+    OsiStaffComponent,
+    StudentCenterServicesComponent
   ],
     imports: [
         BrowserModule,

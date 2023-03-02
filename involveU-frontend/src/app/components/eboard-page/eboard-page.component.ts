@@ -321,6 +321,7 @@ export class EboardPageComponent implements OnInit {
 
     this.eboardService.addNewSocialMedia(newSocialMedia).subscribe(response => {
       console.log(response);
+      location.reload();
     },
     (error) => {
       if(error.status === 200) {
@@ -368,10 +369,18 @@ export class EboardPageComponent implements OnInit {
     const updateClubData : Club = {advisorID: this.clubInfo.advisorID, clubAffiliation: this.clubInfo.clubAffiliation, clubBio: this.editClubBioForm.value.editClubBio, clubMission: this.editClubMissionForm.value.editClubMission, clubName: this.clubInfo.clubName, clubValues: this.editClubValuesForm.value.editClubValues, clubVision: this.editClubVisionForm.value.editClubVision, ownerID: this.clubInfo.ownerID, clubID: this.clubID};
     this.eboardService.editClubData(updateClubData).subscribe(response => {
         console.log(response);
+        this.editClubBioDialog = false;
+        this.editClubVisionDialog = false;
+        this.editClubMissionDialog = false;
+        this.editClubValuesDialog = false;
       },
       (error) => {
         if (error.status === 200) {
           this.getClubInfo();
+          this.editClubBioDialog = false;
+          this.editClubVisionDialog = false;
+          this.editClubMissionDialog = false;
+          this.editClubValuesDialog = false;
         }
         else {
           console.log(error);

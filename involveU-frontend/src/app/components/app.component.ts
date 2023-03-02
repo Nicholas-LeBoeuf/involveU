@@ -45,6 +45,7 @@ export class AppComponent {
 
   //BOOLEANS
   isEboard: boolean = false;
+  isLoggedIn: boolean = false;
   loggedInMessage: boolean = false;
   loggedInFailedMessage: boolean = false;
   signUpMessage: boolean = false;
@@ -65,6 +66,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
     this.checkIfUserInEboard();
+    this.isUserLoggedIn();
   }
 
   private prevContextMenu!: ContextMenu;
@@ -224,5 +226,9 @@ export class AppComponent {
       (error) => {
         console.log(error);
       })
+  }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
   }
 }

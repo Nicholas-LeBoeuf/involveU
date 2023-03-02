@@ -46,6 +46,7 @@ import { OsiStaffComponent } from './components/osi-staff/osi-staff.component';
 import { StudentCenterServicesComponent } from './components/student-center-services/student-center-services.component';
 import { EventPlanningComponent } from './components/event-planning/event-planning.component';
 import { ProgramPlanningChecklistComponent } from './components/program-planning-checklist/program-planning-checklist.component';
+import { PreTripAgendaComponent } from './components/pre-trip-agenda/pre-trip-agenda.component';
 
 
 
@@ -72,7 +73,8 @@ FullCalendarModule.registerPlugins([
     OsiStaffComponent,
     StudentCenterServicesComponent,
     EventPlanningComponent,
-    ProgramPlanningChecklistComponent
+    ProgramPlanningChecklistComponent,
+    PreTripAgendaComponent
   ],
     imports: [
         BrowserModule,

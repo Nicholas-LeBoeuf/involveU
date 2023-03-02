@@ -304,9 +304,7 @@
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{futureEvent.eventName}}</h3>
                   <h5 class="eventClubName">{{futureEvent.clubName}}</h5>
-                  <p>Date: {{futureEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{futureEvent.startTime | timeFormat}} - {{futureEvent.endTime | timeFormat}}</p>
-                  <p>Location: {{futureEvent.eventLocation}} -> {{futureEvent.spaceName}}</p>
+                  <p>Login to view more information!</p>
                 </div>
               </div>
             </ng-template>
@@ -332,11 +330,21 @@
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
-          <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event date</p>
+          </ng-template>
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
-          <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event time</p>
+          </ng-template>
         </div>
         <div class="eventTransportationDialog">
           <h3 class="blueHeaders text-center">Transportation</h3>
@@ -362,7 +370,12 @@
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
-          <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event location</p>
+          </ng-template>
         </div>
       </div>
       <ng-container *ngIf="isLoggedIn">

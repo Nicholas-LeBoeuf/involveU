@@ -47,6 +47,7 @@ import { StudentCenterServicesComponent } from './components/student-center-serv
 import { EventPlanningComponent } from './components/event-planning/event-planning.component';
 import { ProgramPlanningChecklistComponent } from './components/program-planning-checklist/program-planning-checklist.component';
 import { PreTripAgendaComponent } from './components/pre-trip-agenda/pre-trip-agenda.component';
+import { TripPlanningGuideComponent } from './components/trip-planning-guide/trip-planning-guide.component';
 
 
 
@@ -74,7 +75,8 @@ FullCalendarModule.registerPlugins([
     StudentCenterServicesComponent,
     EventPlanningComponent,
     ProgramPlanningChecklistComponent,
-    PreTripAgendaComponent
+    PreTripAgendaComponent,
+    TripPlanningGuideComponent
   ],
     imports: [
         BrowserModule,

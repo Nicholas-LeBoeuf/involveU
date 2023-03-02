@@ -255,14 +255,46 @@ public class DBServices {
 
     }
 
-    protected Boolean updateClubDBData(int clubID)
+    protected Boolean updateClubDBData(Club newClub)
     {
-        sql = "UPDATE Club SET clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ? WHERE clubID = " + clubID;
+        sql = "UPDATE Club SET ownerID =?, clubName = ?, clubAffiliation = ?, clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ?, advisorID = ? WHERE clubID = ?";
+        validQuery = JdbcTemplated.update(sql, newClub.getOwnerID(), newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getAdvisorID(), newClub.getClubID());
+
+        return validQuery == 1;
+    }
+
+   /* protected Boolean updateClubDBBio(int clubID, String newBio)
+    {
+        sql = "UPDATE Club SET clubBio = ? WHERE clubID = " + clubID + ";";
+        validQuery = JdbcTemplated.update(sql, clubID, newBio);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBVision(int clubID)
+    {
+        sql = "UPDATE Club SET clubVision = ? WHERE clubID = " + clubID;
         validQuery = JdbcTemplated.update(sql, clubID);
 
         return validQuery == 1;
     }
 
+    protected Boolean updateClubDBMission(int clubID)
+    {
+        sql = "UPDATE Club SET clubMission = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBValues(int clubID)
+    {
+        sql = "UPDATE Club SET clubValues = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+*/
     protected String getClubLogo(int clubID)
     {
         String clubLogoPath;

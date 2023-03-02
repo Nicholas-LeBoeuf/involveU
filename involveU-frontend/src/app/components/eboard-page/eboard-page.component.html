@@ -107,6 +107,38 @@
     </ng-template>
   </p-table>
 
+  <div class="editTextFlex">
+    <h1 class="blueHeaders">Club Bio</h1>
+    <button class="yellowButton editMargin" (click)="showEditClubBioDialog()">Edit</button>
+  </div>
+  <div class=" ">
+    <p>{{clubInfo.clubBio}}</p>
+  </div>
+
+  <div class="editTextFlex">
+     <h1 class="blueHeaders">Club Vision</h1>
+     <button class="yellowButton editMargin" (click)="showEditClubVisionDialog()">Edit</button>
+  </div>
+  <div>
+    <p>{{clubInfo.clubVision}}</p>
+  </div>
+
+  <div class="editTextFlex">
+     <h1 class="blueHeaders">Club Mission</h1>
+     <button class="yellowButton editMargin" (click)="showEditClubMissionDialog()">Edit</button>
+  </div>
+  <div>
+    <p>{{clubInfo.clubMission}}</p>
+  </div>
+
+  <div class="editTextFlex">
+    <h1 class="blueHeaders">Club Values</h1>
+    <button class="yellowButton editMargin" (click)="showEditClubValuesDialog()">Edit</button>
+  </div>
+  <div>
+    <p>{{clubInfo.clubValues}}</p>
+  </div>
+
   <h1 class="blueHeaders">Club Logo</h1>
   <div class="updateClubLogoContainer text-center">
     <h2 class="blueHeaders">Current Club Logo</h2>
@@ -223,5 +255,49 @@
     </form>
     <button class="yellowButton" [disabled]="isEditSocialMediaFormValid()" (click)="editSocialMedia()">Edit Link</button>
     <button class="yellowButton" (click)="closeEditSocialMediaDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubBioDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubBioDialog()">
+  <div class="form-group text-center eboardDialogs">
+    <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Bio</h1>
+    <form [formGroup]="editClubBioForm">
+      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio"></textarea>
+    </form>
+    <button class="yellowButton" [disabled]="isEditClubBioFormValid()" (click)="updateClubData()">Edit Club Bio</button>
+    <button class="yellowButton" (click)="closeEditClubBioDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubVisionDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubVisionDialog()">
+  <div class="form-group text-center eboardDialogs">
+    <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Vision</h1>
+    <form [formGroup]="editClubVisionForm">
+      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubVision" formControlName="editClubVision"></textarea>
+    </form>
+    <button class="yellowButton" [disabled]="isEditClubVisionFormValid()" (click)="updateClubData()">Edit Club Vision</button>
+    <button class="yellowButton" (click)="closeEditClubVisionDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubMissionDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubMissionDialog()">
+  <div class="form-group text-center eboardDialogs">
+    <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Mission</h1>
+    <form [formGroup]="editClubMissionForm">
+      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubMission" formControlName="editClubMission"></textarea>
+    </form>
+    <button class="yellowButton" [disabled]="isEditClubMissionFormValid()" (click)="updateClubData()">Edit Club Mission</button>
+    <button class="yellowButton" (click)="closeEditClubMissionDialog()">Close</button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="editClubValuesDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeEditClubValuesDialog()">
+  <div class="form-group text-center eboardDialogs">
+    <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Values</h1>
+    <form [formGroup]="editClubValuesForm">
+      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubValues" formControlName="editClubValues"></textarea>
+    </form>
+    <button class="yellowButton" [disabled]="isEditClubValuesFormValid()" (click)="updateClubData()">Edit Club Values</button>
+    <button class="yellowButton" (click)="closeEditClubValuesDialog()">Close</button>
   </div>
 </p-dialog>

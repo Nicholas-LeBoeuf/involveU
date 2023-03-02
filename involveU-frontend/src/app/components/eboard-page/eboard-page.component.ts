@@ -26,6 +26,10 @@ export class EboardPageComponent implements OnInit {
   editAnnouncementForm: FormGroup;
   socialMediaForm : FormGroup;
   editSocialMediaForm : FormGroup;
+  editClubBioForm: FormGroup;
+  editClubVisionForm: FormGroup;
+  editClubMissionForm: FormGroup;
+  editClubValuesForm: FormGroup;
   todaysDate = new Date().toString();
 
   constructor(private clubService: ClubService,
@@ -67,6 +71,22 @@ export class EboardPageComponent implements OnInit {
       editsmProfileName: ['', Validators.required]
     })
 
+    this.editClubBioForm = this.formBuilder.group({
+      editClubBio: ['', Validators.required]
+    })
+
+    this.editClubVisionForm = this.formBuilder.group({
+      editClubVision: ['', Validators.required]
+    })
+
+    this.editClubMissionForm = this.formBuilder.group({
+      editClubMission: ['', Validators.required]
+    })
+
+    this.editClubValuesForm = this.formBuilder.group({
+      editClubValues: ['', Validators.required]
+    })
+
     this.todaysDate = this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd');
   }
 
@@ -75,6 +95,10 @@ export class EboardPageComponent implements OnInit {
   editAnnouncementDialog: boolean = false;
   addSocialMediaDialog: boolean = false;
   editSocialMediaDialog: boolean = false;
+  editClubBioDialog: boolean = false;
+  editClubVisionDialog: boolean = false;
+  editClubMissionDialog: boolean = false;
+  editClubValuesDialog: boolean = false;
   successMessage: boolean = false;
   failMessage: boolean = false;
 
@@ -252,11 +276,52 @@ export class EboardPageComponent implements OnInit {
     this.editSocialMediaDialog = false;
   }
 
+  showEditClubBioDialog()
+  {
+    this.editClubBioDialog = true;
+  }
+
+  closeEditClubBioDialog()
+  {
+    this.editClubBioDialog = false;
+  }
+
+  showEditClubVisionDialog()
+  {
+    this.editClubVisionDialog = true;
+  }
+
+  closeEditClubVisionDialog()
+  {
+    this.editClubVisionDialog = false;
+  }
+
+  showEditClubMissionDialog()
+  {
+    this.editClubMissionDialog = true;
+  }
+
+  closeEditClubMissionDialog()
+  {
+    this.editClubMissionDialog = false;
+  }
+
+  showEditClubValuesDialog()
+  {
+    this.editClubValuesDialog = true;
+  }
+
+  closeEditClubValuesDialog()
+  {
+    this.editClubValuesDialog = false;
+  }
+
   addSocialMedia() {
     const newSocialMedia: SocialMedia = {platform: this.platformString.value, profileName: this.socialMediaForm.value.smProfileName, link: this.socialMediaForm.value.smLink, clubID: this.clubID};
 
     this.eboardService.addNewSocialMedia(newSocialMedia).subscribe(response => {
       console.log(response);
+      location.reload();
     },
     (error) => {
       if(error.status === 200) {
@@ -293,6 +358,29 @@ export class EboardPageComponent implements OnInit {
       (error) => {
         if (error.status === 200) {
           this.getClubSocialMedia();
+        }
+        else {
+          console.log(error);
+        }
+      })
+  }
+
+  updateClubData() {
+    const updateClubData : Club = {advisorID: this.clubInfo.advisorID, clubAffiliation: this.clubInfo.clubAffiliation, clubBio: this.editClubBioForm.value.editClubBio, clubMission: this.editClubMissionForm.value.editClubMission, clubName: this.clubInfo.clubName, clubValues: this.editClubValuesForm.value.editClubValues, clubVision: this.editClubVisionForm.value.editClubVision, ownerID: this.clubInfo.ownerID, clubID: this.clubID};
+    this.eboardService.editClubData(updateClubData).subscribe(response => {
+        console.log(response);
+        this.editClubBioDialog = false;
+        this.editClubVisionDialog = false;
+        this.editClubMissionDialog = false;
+        this.editClubValuesDialog = false;
+      },
+      (error) => {
+        if (error.status === 200) {
+          this.getClubInfo();
+          this.editClubBioDialog = false;
+          this.editClubVisionDialog = false;
+          this.editClubMissionDialog = false;
+          this.editClubValuesDialog = false;
         }
         else {
           console.log(error);
@@ -337,6 +425,42 @@ export class EboardPageComponent implements OnInit {
 
   isEditSocialMediaFormValid() {
     if (this.platformString.value === null || this.editSocialMediaForm.value.editsmProfileName === '' || this.editSocialMediaForm.value.editsmLink === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubBioFormValid() {
+    if (this.editClubBioForm.value.editClubBio === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubVisionFormValid() {
+    if (this.editClubVisionForm.value.editClubVision === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubMissionFormValid() {
+    if (this.editClubMissionForm.value.editClubMission === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isEditClubValuesFormValid() {
+    if (this.editClubValuesForm.value.editClubValues === '') {
       return true;
     }
     else {

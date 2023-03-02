@@ -72,10 +72,22 @@ public class ClubController extends DBServices{
              return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping ("/eboard/updateClubData/{clubID}")
-  private ResponseEntity<String> updateClubData(@PathVariable("clubID") int clubID)
+  @PutMapping ("/club/updateClubData")
+  private ResponseEntity<String> updateClubData(@RequestBody Club newClub)
     {
-        if(updateClubDBData(clubID))
+        if(updateClubDBData(newClub))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+    /*@PutMapping ("/club/updateClubBio/{clubID}")
+    private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID, @PathVariable("newBio")String clubBio)
+    {
+        if(updateClubDBBio(clubID, clubBio))
         {
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
@@ -85,6 +97,45 @@ public class ClubController extends DBServices{
         }
     }
 
+    @PutMapping ("/club/updateClubVision/{clubID}")
+    private ResponseEntity<String> updateClubVision(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBVision(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/club/updateClubMission/{clubID}")
+    private ResponseEntity<String> updateClubMission(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBMission(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/club/updateClubValues/{clubID}")
+    private ResponseEntity<String> updateClubValues(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBValues(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+*/
   @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {

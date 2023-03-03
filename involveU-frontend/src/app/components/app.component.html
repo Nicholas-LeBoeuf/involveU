@@ -26,7 +26,7 @@
         <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
       </div>
       <div class="specificNavButton">
-        <ng-template [ngIf]="isLoggedIn == true">
+        <ng-template [ngIf]="this.cookie.get('studentID') != ''">
           <a #sla="routerLinkActive" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a>
         </ng-template>
       </div>
@@ -66,7 +66,9 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li> <a #rla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a></li>
-          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a></li>
+          <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+            <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a></li>
+          </ng-template>
           <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
           <li><a #mla="routerLinkActive" class="dropdown-item" routerLink="/moreinfo" routerLinkActive="active" [class.active-span]="mla.isActive">More Information</a></li>
           <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">

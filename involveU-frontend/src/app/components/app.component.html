@@ -26,7 +26,7 @@
         <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
       </div>
       <div class="specificNavButton">
-        <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+        <ng-template [ngIf]="this.isLoggedIn">
           <a #sla="routerLinkActive" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a>
         </ng-template>
       </div>
@@ -48,11 +48,11 @@
       </div>
     </div>
     <div class="buttons">
-      <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+      <ng-template [ngIf]="!this.isLoggedIn">
         <button class="yellowButton" (click)="showSignupDialog()">Sign Up</button>
         <button class="yellowButton" (click)="showLoginDialog()">Login</button>
       </ng-template>
-      <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+      <ng-template [ngIf]="this.isLoggedIn">
         <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">
       </ng-template>
       <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
@@ -66,7 +66,7 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li> <a #rla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a></li>
-          <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+          <ng-template [ngIf]="this.isLoggedIn">
             <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a></li>
           </ng-template>
           <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
@@ -77,11 +77,11 @@
           <ng-template [ngIf]="isEboard !== false">
             <a #ela="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/{{usersEboardInfo.clubID}}/eboard" [class.active-span]="ela.isActive" >{{usersEboardInfo.clubName}} Eboard</a>
           </ng-template>
-          <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+          <ng-template [ngIf]="!this.isLoggedIn">
             <li><a class="dropdown-item" (click)="showSignupDialog()">Sign Up</a></li>
             <li><a class="dropdown-item" (click)="showLoginDialog()">Login</a></li>
           </ng-template>
-          <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+          <ng-template [ngIf]="this.isLoggedIn">
             <li><a class="dropdown-item" (click)="logoutUser()">Logout</a></li>
           </ng-template>
 

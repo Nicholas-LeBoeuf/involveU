@@ -161,6 +161,7 @@ export class AppComponent {
     this.cookie.delete('isEboard');
     this.usersEboardInfo = {};
     this.isEboard = false;
+    this.isLoggedIn = false;
 
     this.router.navigateByUrl('/home').then(nav => {
       console.log(nav); // true if navigation is successful

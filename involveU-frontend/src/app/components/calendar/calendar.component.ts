@@ -8,6 +8,7 @@ import {Club} from "../../objects/club";
 import {ClubService} from "../../services/club.service";
 import {CookieService} from "ngx-cookie-service";
 import {ResponsiveService} from "../../services/responsive.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -18,6 +19,7 @@ import {ResponsiveService} from "../../services/responsive.service";
 export class CalendarComponent implements OnInit, AfterViewInit {
 
   constructor(private eventsService: EventsService,
+              private toastr: ToastrService,
               public cookie: CookieService,
               public responsiveService: ResponsiveService,
               private clubService: ClubService,
@@ -75,7 +77,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.getLocations();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
-    this.activateAllEventsFilter();
   }
 
   ngAfterViewInit() {
@@ -146,10 +147,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     },
       (error) => {
         console.log(error);
+        this.toastr.error('Error Retrieving All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
 
       () => {
         this.formatAllEvents();
+        this.toastr.show('Currently Displaying All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
     this.closeViewFilterDialog();
@@ -162,10 +165,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     },
       (error) => {
         console.log(error);
+        this.toastr.error('Error Retrieving Favorited Club Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
 
       () => {
         this.formatAllEvents();
+        this.toastr.show('Currently Displaying Favorited Club Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
     this.closeViewFilterDialog();
@@ -178,11 +183,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.eventsToSend = this.eventsToSend.slice();
       },
       (error) => {
+        this.toastr.error('Error Retrieving ' + event.value.clubName + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
         console.log(error);
       },
 
       () => {
         this.formatAllEvents();
+        this.toastr.show('Currently Displaying ' + event.value.clubName + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
     this.closeViewFilterDialog();
@@ -193,10 +200,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.eventsToSend = response;
       },
       (error) => {
+        this.toastr.error('Error Retrieving Location Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
         console.log(error);
       },
 
       () => {
+        this.toastr.show('Currently Displaying Events Filtered By Location', undefined, {positionClass: 'toast-top-center', progressBar: true});
         this.formatAllEvents();
       });
 

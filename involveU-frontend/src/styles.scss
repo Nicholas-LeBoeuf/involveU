@@ -452,5 +452,9 @@ em {
   .toast-container {
     margin-top: 10px !important;
     width: 100%;
+    text-align: center;
+  }
+  .toast-container .ngx-toastr {
+    padding: 15px !important;
   }
 }

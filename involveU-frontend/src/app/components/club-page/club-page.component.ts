@@ -11,6 +11,7 @@ import {ResponsiveService} from "../../services/responsive.service";
 import {faTrophy, faMedal} from "@fortawesome/free-solid-svg-icons";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-club-page',
@@ -24,6 +25,7 @@ export class ClubPageComponent implements OnInit {
               private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
               private router: Router,
+              private toastr: ToastrService,
               private title: Title,
               public cookie: CookieService
               ) {
@@ -201,10 +203,16 @@ export class ClubPageComponent implements OnInit {
 
   //Actions
   removeFromFavorites(clubID: number) {
-    this.clubService.unfavoriteClub(clubID, this.userID).subscribe()
-    this.message = 'Club successfully unfavorited!';
-    this.successMessage = true;
-    location.reload();
+    this.clubService.unfavoriteClub(clubID, this.userID).subscribe( response => {
+
+    },
+      error => {
+        this.toastr.error('Unsuccessful Unfavorite Club Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Unfavorited Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.getUsersFavoritedClubs();
+      });
   }
 
   isUserRSVPd(eventID: number): boolean {
@@ -213,20 +221,29 @@ export class ClubPageComponent implements OnInit {
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
-    this.message = "Event Successfully RSVPd!";
-    this.successMessage = true;
-    location.reload();
+
+    },
+      error => {
+        this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
-    this.message = "Successfully Removed RSVP!";
-    this.successMessage = true;
-    location.reload();
+
+    },
+      error => {
+        console.log(error);
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   goToClubPage(clubID: number) {

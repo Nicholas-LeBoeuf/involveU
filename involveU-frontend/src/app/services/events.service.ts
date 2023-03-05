@@ -39,11 +39,11 @@ export class EventsService {
   }
 
   rsvpToEvent(eventID: number, userID: number) {
-    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
+    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`, {responseType: 'text'});
   }
 
   removeEventRSVP(eventID: number, userID: number) {
-    return this.http.get(environment.apiURL + `events/removeRsvpEvent/${eventID}/${userID}`);
+    return this.http.get(environment.apiURL + `events/removeRsvpEvent/${eventID}/${userID}`, {responseType: 'text'});
   }
 
   submitNewEvent(event: Events)

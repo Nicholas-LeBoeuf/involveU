@@ -259,20 +259,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       console.log(response);
     },
       error => {
-        if (error.status !== 200) {
-          this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
-        }
-        else {
-          this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
-          location.reload();
-        }
-
+        this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
       () => {
         this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
         location.reload();
       });
-
   }
 
   removeEventRSVP(eventID: number) {
@@ -281,19 +273,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     },
       error => {
         console.log(error);
-        if (error.status !== 200) {
-          this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
-        }
-        else {
-          this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
-          location.reload();
-        }
-
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
       () => {
         this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
         location.reload();
       });
-
   }
 }

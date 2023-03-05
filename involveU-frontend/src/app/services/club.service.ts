@@ -37,7 +37,7 @@ export class ClubService {
   }
 
   unfavoriteClub(clubID: number, id: number) {
-    return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`);
+    return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`, {responseType: 'text'});
   }
 
   getClubEboard(clubID: number): Observable<User[]> {

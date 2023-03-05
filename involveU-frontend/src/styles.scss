@@ -454,7 +454,15 @@ em {
     width: 100%;
     text-align: center;
   }
+
   .toast-container .ngx-toastr {
     padding: 15px !important;
+  }
+
+  .toast-container .toast-error {
+    background-image: none !important;
+  }
+  .toast-container .toast-success {
+    background-image: none !important;
   }
 }

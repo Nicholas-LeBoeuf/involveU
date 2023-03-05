@@ -257,18 +257,43 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
       console.log(response);
-    })
-    this.message = "Event Successfully RSVPd!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        if (error.status !== 200) {
+          this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        }
+        else {
+          this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          location.reload();
+        }
+
+      },
+      () => {
+        this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
+
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
       console.log(response);
-    })
-    this.message = "Successfully Removed RSVP!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        console.log(error);
+        if (error.status !== 200) {
+          this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        }
+        else {
+          this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          location.reload();
+        }
+
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
+
   }
 }

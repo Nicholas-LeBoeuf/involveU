@@ -32,7 +32,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   viewFilterDialog: boolean = false;
   disableSpaceDropdown: boolean = true;
   isLoggedIn: boolean = false;
-  successMessage: boolean = false;
 
   // NUMBERS
   userID: number;
@@ -40,7 +39,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   spaceID: number;
 
   // STRINGS
-  message: string;
 
   // OBJECTS or ARRAYS
   formattedEvents: CalendarFormat[] = [];

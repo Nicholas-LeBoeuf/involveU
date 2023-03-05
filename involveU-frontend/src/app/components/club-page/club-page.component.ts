@@ -8,7 +8,6 @@ import {Events} from "../../objects/events";
 import {EventsService} from "../../services/events.service";
 import {Title} from "@angular/platform-browser";
 import {ResponsiveService} from "../../services/responsive.service";
-import {faTrophy, faMedal} from "@fortawesome/free-solid-svg-icons";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {ToastrService} from "ngx-toastr";
@@ -38,8 +37,6 @@ export class ClubPageComponent implements OnInit {
   viewCertainAnnouncementDialog: boolean = false;
   isLoggedIn: boolean = false;
   loading: boolean = true;
-  successMessage: boolean = false;
-  failMessage: boolean = false;
   isLoading: boolean = true;
   showMore: boolean = false;
 
@@ -48,7 +45,6 @@ export class ClubPageComponent implements OnInit {
   numberOfRows: number;
 
   //STRINGS
-  message: string;
   clubName: string;
   userFirstName: string;
 

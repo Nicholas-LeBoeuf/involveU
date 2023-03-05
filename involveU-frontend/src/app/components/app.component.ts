@@ -138,7 +138,6 @@ export class AppComponent {
       location.reload();
     },
       error => {
-
         this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
       () => {

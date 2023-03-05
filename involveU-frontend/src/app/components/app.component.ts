@@ -132,16 +132,16 @@ export class AppComponent {
 
     this.userService.checkLoginCredentials(this.loginForm.value.username, hashedPass).subscribe((response: User) => {
       this.loggedInUser = response;
-
-      this.setCookie();
-      this.displayLoginDialog = false;
-      location.reload();
     },
       error => {
         this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
       () => {
         this.toastr.success('Successfully Logged In', undefined, {positionClass: 'toast-top-center', progressBar: true});
+
+        this.setCookie();
+        this.displayLoginDialog = false;
+        location.reload();
       });
   }
 
@@ -149,13 +149,14 @@ export class AppComponent {
     const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
 
     this.userService.signupNewUser(userInfo).subscribe(success =>{
-      this.displaySignupDialog = false;
+
     },
       error => {
         this.toastr.error('Create Account Unsuccessful', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
       () => {
         this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.displaySignupDialog = false;
       });
   }
 

@@ -10,6 +10,7 @@ import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
 import {Title} from "@angular/platform-browser";
 import {ResponsiveService} from "../../services/responsive.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-admin-page',
@@ -33,7 +34,8 @@ export class AdminPageComponent implements OnInit {
               private adminService: AdminService,
               public cookie: CookieService,
               private datePipe: DatePipe,
-              private title: Title) {
+              private title: Title,
+              private toastr: ToastrService) {
     this.title.setTitle("involveU | Admin")
 
     this.createClubForm = this.formBuilder.group({
@@ -148,7 +150,7 @@ export class AdminPageComponent implements OnInit {
     const file:File = event.files[0];
 
     this.adminService.sendImage(file).subscribe(response => {
-      console.log(response);
+
     })
 
   }
@@ -232,83 +234,90 @@ export class AdminPageComponent implements OnInit {
 
   createClubSubmit(){
     const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubAdvisorID.value}
-    console.log(clubInfo);
+
     this.adminService.insertNewClub(clubInfo).subscribe(success =>{
-        this.createClubMessage = true;
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        this.createClubFailed = true;
-        console.log(error)
+      error => {
+        this.toastr.error('Unsuccessful Club Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.createClubForm.reset();
+        this.createClubAdvisorID.reset();
+        this.fillClubList();
       });
   }
 
   createUserSubmit(){
     const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.createUserForm.value.year, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
     this.adminService.createUser(newUser).subscribe(success =>{
-        this.createUserSuccess = true;
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        this.createUserFailed = true;
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful User Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created User', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.createUserForm.reset();
+        this.fillUserList();
       });
   }
 
   deleteUserSubmit(){
     this.adminService.deleteUser(this.deleteUserID.value).subscribe(success =>{
-        console.log(success);
-        this.deleteUserSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
-        this.deleteUserFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful User Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Deleted User', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.deleteUserID.reset();
+        this.fillUserList();
       });
   }
 
   deleteClubSubmit(){
     this.adminService.deleteClub(this.removeClubID.value).subscribe(success =>{
-        console.log(success);
-        console.log("test");
-        this.deleteClubSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
-        if(error.status === 200)
-        {
-          this.deleteClubSuccess = true;
-          location.reload();
-        }
-        this.deleteClubFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful Club Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Deleted Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.removeClubID.reset();
+        this.fillClubList();
       });
   }
 
   addEBoardSubmit(){
     this.adminService.addEBoardMember(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
-        console.log(success);
-        this.assignEboardSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        this.assignEboardFailed = true;
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful Eboard Addition Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Assigned Eboard Position', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.nonEboardID.reset();
+        this.addEBoardClubID.reset();
+        this.addEBoardForm.reset();
       });
-    console.log(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role)
   }
 
   removeEBoardSubmit(){
     this.adminService.removeEBoardMember(this.eboardID.value).subscribe(success =>{
-        console.log(success);
-        this.removeEboardSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
-        this.removeEboardFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful Eboard Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed Eboard Member', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.eboardID.reset();
+        this.removeEBoardClubID.reset();
       });
   }
 
@@ -318,21 +327,28 @@ export class AdminPageComponent implements OnInit {
         this.assignAdvisorSuccess = true;
         location.reload();
       },
-      (error) => {
-        console.log(error);
-        this.assignAdvisorFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful Assign Advisor Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Assigned Advisor', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.advisorID.reset();
+        this.assignAdvisorClubID.reset();
       });
   }
 
   createOSIAnnouncementSubmit(){
     const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle, postedOn: this.todaysDate};
-    console.log(newAnnouncement);
+
     this.adminService.createOSIAnnouncement(newAnnouncement).subscribe(success =>{
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful Announcement Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Announcement', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.osiAnnouncementForm.reset();
       });
   }
 
@@ -340,20 +356,11 @@ export class AdminPageComponent implements OnInit {
   {
     this.clubService.getClubEboard(this.removeEBoardClubID.value).subscribe(response => {
       this.clubEboard = response;
-      console.log(response)
-      this.clubEboard.forEach(member =>
-        {
-          console.log(member);
+      this.clubEboard.forEach(member => {
           member.firstName = member.firstName + ' ' + member.lastName;
-
         }
-
       );
     })
-
-    console.log("List:"+this.labelEboard);
-
-
   }
 
   checkClubSelected() {

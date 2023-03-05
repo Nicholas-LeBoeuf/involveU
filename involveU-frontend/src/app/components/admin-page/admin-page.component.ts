@@ -92,22 +92,10 @@ export class AdminPageComponent implements OnInit {
   }
 
   //BOOLEANS
-  createClubMessage: boolean = false;
-  createClubFailed: boolean = false;
-  createUserSuccess: boolean = false;
-  createUserFailed: boolean = false;
-  deleteUserSuccess: boolean = false;
-  deleteClubSuccess: boolean = false;
-  deleteUserFailed: boolean = false;
-  deleteClubFailed: boolean = false;
+  clubLogoUploaded: boolean = false;
   assignAdvisorSuccess: boolean = false;
-  assignAdvisorFailed: boolean = false;
-  assignEboardSuccess: boolean = false;
-  assignEboardFailed: boolean = false;
-  removeEboardSuccess: boolean = false;
-  removeEboardFailed: boolean = false;
-  disableUserDropdown:boolean = true;
   assign: boolean = true;
+  disableUserDropdown: boolean = true;
 
   //NUMBERS
   clubID!: number;
@@ -151,7 +139,14 @@ export class AdminPageComponent implements OnInit {
 
     this.adminService.sendImage(file).subscribe(response => {
 
-    })
+    },
+      error => {
+        this.toastr.error('Unsuccessful Club Logo Upload', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Uploaded Club Logo', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.clubLogoUploaded = true;
+      });
 
   }
 
@@ -246,6 +241,7 @@ export class AdminPageComponent implements OnInit {
         this.createClubForm.reset();
         this.createClubAdvisorID.reset();
         this.fillClubList();
+        this.clubLogoUploaded = false;
       });
   }
 
@@ -374,7 +370,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateClubValid() {
-    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubAdvisorID.value == null) {
+    if (this.createClubForm.value.clubName === '' || this.createClubForm.value.clubAffiliation === '' ||  this.createClubForm.value.clubBio === '' ||  this.createClubForm.value.clubVision === '' ||  this.createClubForm.value.clubMission === '' ||  this.createClubForm.value.clubValues === '' || this.createClubAdvisorID.value === null  || this.clubLogoUploaded === false) {
       return true;
     }
     else {
@@ -383,7 +379,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateUserValid() {
-    if (this.createUserForm.value.firstName == '' || this.createUserForm.value.lastName == '' || this.createUserForm.value.email == '' || this.createUserForm.value.password == '' || this.createUserForm.value.year == '' || this.createUserForm.value.pronouns == '') {
+    if (this.createUserForm.value.firstName === '' || this.createUserForm.value.lastName === '' || this.createUserForm.value.email === '' || this.createUserForm.value.password === '' || this.createUserForm.value.year === '' || this.createUserForm.value.pronouns === '') {
       return true;
     }
     else {
@@ -392,7 +388,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isDeleteUserValid() {
-    if (this.deleteUserID.value == null) {
+    if (this.deleteUserID.value === null) {
       return true;
     }
     else {
@@ -401,7 +397,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isDeleteClubValid() {
-    if (this.removeClubID.value == null) {
+    if (this.removeClubID.value === null) {
       return true;
     }
     else {
@@ -410,7 +406,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isAssignEboardValid() {
-    if (this.nonEboardID.value == null || this.addEBoardClubID.value == null || this.addEBoardForm.value.role == '') {
+    if (this.nonEboardID.value === null || this.addEBoardClubID.value === null || this.addEBoardForm.value.role === '') {
       return true;
     }
     else {
@@ -419,7 +415,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isAssignAdvisorValid() {
-    if (this.assignAdvisorClubID.value == null || this.advisorID.value == null) {
+    if (this.assignAdvisorClubID.value === null || this.advisorID.value === null) {
       return true;
     }
     else {
@@ -428,7 +424,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isRemoveEboardValid() {
-    if (this.eboardID.value == null || this.removeEBoardClubID == null) {
+    if (this.eboardID.value === null || this.removeEBoardClubID === null) {
       return true;
     }
     else {
@@ -437,7 +433,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isOSIAnnouncementValid() {
-    if(this.osiAnnouncementForm.value.announcementTitle == '' || this.osiAnnouncementForm.value.contentOfAnnouncement == '' || this.osiAnnouncementForm.value.expiresOn == null || this.osiAnnouncementForm.value.postedOn == null) {
+    if(this.osiAnnouncementForm.value.announcementTitle === '' || this.osiAnnouncementForm.value.contentOfAnnouncement === '' || this.osiAnnouncementForm.value.expiresOn === null || this.osiAnnouncementForm.value.postedOn === null) {
       return true;
     }
     else {

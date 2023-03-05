@@ -15,6 +15,7 @@ import {Title} from "@angular/platform-browser";
 import {SocialMedia} from "../../objects/social-media";
 import {ResponsiveService} from "../../services/responsive.service";
 import {AdminService} from "../../services/admin.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-eboard-page',
@@ -43,7 +44,8 @@ export class EboardPageComponent implements OnInit {
               private announcementsService: AnnouncementsService,
               public cookie: CookieService,
               private datePipe: DatePipe,
-              private title: Title) {
+              private title: Title,
+              private toastr: ToastrService) {
     this.title.setTitle("involveU | E-Board")
     this.announcementForm = this.formBuilder.group({
       clubID: [''],
@@ -99,15 +101,12 @@ export class EboardPageComponent implements OnInit {
   editClubVisionDialog: boolean = false;
   editClubMissionDialog: boolean = false;
   editClubValuesDialog: boolean = false;
-  successMessage: boolean = false;
-  failMessage: boolean = false;
 
   //NUMBERS
   clubID: number;
   userID: number;
 
   //STRINGS
-  message: string;
   clubLogoName: string;
 
   //OBJECTS
@@ -187,24 +186,33 @@ export class EboardPageComponent implements OnInit {
     const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle, postedOn: this.todaysDate};
     console.log(newAnnouncement);
     this.announcementsService.createAnnouncement(newAnnouncement).subscribe(success =>{
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful Announcement Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Announcement', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.announcementForm.reset();
+        this.createAnnouncementDialog = false;
+        this.getClubAnnouncements();
       });
   }
 
   updateClubAnnouncementSubmit() {
     const updatedAnnouncement: Announcement = {announcementID: this.certainAnnouncement[0].announcementID, clubID: this.clubID, contentOfAnnouncement: this.editAnnouncementForm.value.editContentOfAnnouncement, expiresOn: this.editAnnouncementForm.value.editExpiresOn, announcementTitle: this.editAnnouncementForm.value.editAnnouncementTitle, postedOn: this.todaysDate};
     this.announcementsService.updateAnnouncement(updatedAnnouncement).subscribe(success => {
-      console.log(success);
-      location.reload();
+
     },
-      (error) => {
-      console.log(updatedAnnouncement);
-      console.log(error);
-    });
+      error => {
+        this.toastr.error('Unsuccessful Announcement Edit Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Edited Announcement', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.editAnnouncementForm.reset();
+        this.editAnnouncementDialog = false;
+        this.getClubAnnouncements();
+      });
   }
 
   onFilterEventName(event: Event) {
@@ -238,9 +246,14 @@ export class EboardPageComponent implements OnInit {
 
   deleteAnnouncement(announcementID: number) {
     this.announcementsService.deleteAnnouncement(announcementID).subscribe(response => {
-      console.log(response);
-    })
-    location.reload();
+    },
+      error => {
+        this.toastr.error('Unsuccessful Announcement Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Deleted Announcement', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.getClubAnnouncements();
+      });
   }
 
   goToLink(url: string){
@@ -320,18 +333,18 @@ export class EboardPageComponent implements OnInit {
     const newSocialMedia: SocialMedia = {platform: this.platformString.value, profileName: this.socialMediaForm.value.smProfileName, link: this.socialMediaForm.value.smLink, clubID: this.clubID};
 
     this.eboardService.addNewSocialMedia(newSocialMedia).subscribe(response => {
-      console.log(response);
-      location.reload();
+
     },
-    (error) => {
-      if(error.status === 200) {
+      error => {
+        this.toastr.error('Unsuccessful Social Media Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Social Media', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.socialMediaForm.reset();
+        this.platformString.reset();
         this.addSocialMediaDialog = false;
         this.getClubSocialMedia();
-      }
-      else {
-        console.log(error);
-      }
-    });
+      });
   }
 
   editSocialMedia() {
@@ -340,14 +353,15 @@ export class EboardPageComponent implements OnInit {
     this.eboardService.editSocialMedia(editSocialMedia).subscribe(response => {
         console.log(response);
       },
-      (error) => {
-        if (error.status === 200) {
-          this.editSocialMediaDialog = false;
-          this.getClubSocialMedia();
-        }
-        else {
-          console.log(error);
-        }
+      error => {
+        this.toastr.error('Unsuccessful Social Media Edit Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Edited Social Media', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.editSocialMediaForm.reset();
+        this.platformString.reset();
+        this.editSocialMediaDialog = false;
+        this.getClubSocialMedia();
       });
   }
 
@@ -355,14 +369,13 @@ export class EboardPageComponent implements OnInit {
     this.eboardService.deleteSocialMedia(socialMedia.socialMediaID).subscribe(response => {
       console.log(response);
     },
-      (error) => {
-        if (error.status === 200) {
-          this.getClubSocialMedia();
-        }
-        else {
-          console.log(error);
-        }
-      })
+      error => {
+        this.toastr.error('Unsuccessful Social Media Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Deleted Social Media', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.getClubSocialMedia();
+      });
   }
 
   updateClubData() {
@@ -374,18 +387,17 @@ export class EboardPageComponent implements OnInit {
         this.editClubMissionDialog = false;
         this.editClubValuesDialog = false;
       },
-      (error) => {
-        if (error.status === 200) {
-          this.getClubInfo();
-          this.editClubBioDialog = false;
-          this.editClubVisionDialog = false;
-          this.editClubMissionDialog = false;
-          this.editClubValuesDialog = false;
-        }
-        else {
-          console.log(error);
-        }
-      })
+      error => {
+        this.toastr.error('Unsuccessful Club Info Edit Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Edited Club Info', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.getClubInfo();
+        this.editClubBioDialog = false;
+        this.editClubVisionDialog = false;
+        this.editClubMissionDialog = false;
+        this.editClubValuesDialog = false;
+      });
   }
 
   onUpload(event) {
@@ -393,7 +405,14 @@ export class EboardPageComponent implements OnInit {
 
     this.adminService.sendImage(file).subscribe(response => {
       console.log(response);
-    })
+    },
+      error => {
+        this.toastr.error('Unsuccessful Logo Upload Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Updated Club Logo', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.getClubInfo();
+      });
   }
 
   isCreateAnnouncementFormValid() {

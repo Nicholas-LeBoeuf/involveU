@@ -9,7 +9,7 @@ import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
 import { SHA256, enc } from "crypto-js";
-import {ToastrModule, ToastrService} from "ngx-toastr";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-root',
@@ -48,10 +48,6 @@ export class AppComponent {
   //BOOLEANS
   isEboard: boolean = false;
   isLoggedIn: boolean = false;
-  loggedInMessage: boolean = false;
-  loggedInFailedMessage: boolean = false;
-  signUpMessage: boolean = false;
-  signUpFailMessage: boolean = false;
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
 

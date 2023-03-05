@@ -1,13 +1,3 @@
-<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
 <div class="blueTitleBar text-center eboardPagePadding" *ngIf="clubInfo">
   <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
   <h1 class="yellow-text eboardPageTitleMargin">{{clubInfo.clubName}} | Executive Board</h1>

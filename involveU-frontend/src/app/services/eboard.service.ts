@@ -18,18 +18,18 @@ export class EboardService {
   }
 
   deleteSocialMedia(socialMediaID: number) {
-    return this.http.delete(environment.apiURL + `club/deleteClubSocialMedia/${socialMediaID}`);
+    return this.http.delete(environment.apiURL + `club/deleteClubSocialMedia/${socialMediaID}`, {responseType: 'text'});
   }
 
   addNewSocialMedia(socialMediaContent: SocialMedia) {
-    return this.http.post(environment.apiURL + `club/insertNewSocialMedia`, socialMediaContent);
+    return this.http.post(environment.apiURL + `club/insertNewSocialMedia`, socialMediaContent, {responseType: 'text'});
   }
 
   editSocialMedia(socialMediaContent: SocialMedia) {
-    return this.http.put(environment.apiURL + `club/editSocialMedia`, socialMediaContent);
+    return this.http.put(environment.apiURL + `club/editSocialMedia`, socialMediaContent, {responseType: 'text'});
   }
 
   editClubData(clubData: Club) {
-    return this.http.put(environment.apiURL + `club/updateClubData`, clubData);
+    return this.http.put(environment.apiURL + `club/updateClubData`, clubData, {responseType: 'text'});
   }
 }

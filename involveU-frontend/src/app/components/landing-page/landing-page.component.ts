@@ -9,6 +9,7 @@ import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {Title} from "@angular/platform-browser";
 import {ClubService} from "../../services/club.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-landing-page',
@@ -22,7 +23,8 @@ export class LandingPageComponent implements OnInit {
               private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
               public cookie: CookieService,
-              private title: Title) {
+              private title: Title,
+              private toastr: ToastrService) {
     this.title.setTitle("involveU")
   }
 
@@ -31,8 +33,6 @@ export class LandingPageComponent implements OnInit {
   showMore: boolean = false;
   isLoading: boolean = true;
   isLoggedIn: boolean = false;
-  successMessage: boolean = false;
-  failMessage: boolean = false;
   viewCertainAnnouncementDialog: boolean = false;
 
   //NUMBERS
@@ -40,7 +40,6 @@ export class LandingPageComponent implements OnInit {
   numberOfRows: number;
 
   //STRINGS
-  message: string;
 
   //OBJECTS or ARRAYS
   imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
@@ -128,19 +127,29 @@ export class LandingPageComponent implements OnInit {
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
+
+    },
+      error => {
+        this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
 
-    })
-
-    this.message = "Successfully Removed RSVP!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        console.log(error);
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   showViewCertainAnnouncementDialog(announcement: Announcement) {

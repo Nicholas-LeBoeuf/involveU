@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^14.2.0",
+    "@angular/animations": "^14.2.12",
     "@angular/cdk": "^15.1.1",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
@@ -39,6 +39,7 @@
     "md5": "^2.3.0",
     "ng": "^0.0.0",
     "ngx-cookie-service": "^14.0.1",
+    "ngx-toastr": "^14.2.2",
     "node-sass": "^7.0.3",
     "primeicons": "^6.0.1",
     "primeng": "^14.1.2",

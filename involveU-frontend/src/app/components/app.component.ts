@@ -9,6 +9,7 @@ import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
 import { SHA256, enc } from "crypto-js";
+import {ToastrModule, ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent {
               public cookie: CookieService,
               private clubService: ClubService,
               private router: Router,
+              private toastr: ToastrService,
               public responsiveService: ResponsiveService) {
 
     this.loginForm = this.formBuilder.group({
@@ -134,10 +136,12 @@ export class AppComponent {
       this.setCookie();
       this.displayLoginDialog = false;
       location.reload();
-      this.loggedInMessage = true;
     },
-      (error) => {
-      this.loggedInFailedMessage = true;
+      error => {
+        this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Logged In', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
   }
 
@@ -146,11 +150,13 @@ export class AppComponent {
 
     this.userService.signupNewUser(userInfo).subscribe(success =>{
       this.displaySignupDialog = false;
-      this.signUpMessage = true;
     },
-      (error) => {
-      this.signUpFailMessage = true;
-    });
+      error => {
+        this.toastr.error('Create Account Unsuccessful', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      });
   }
 
   logoutUser() {
@@ -168,6 +174,8 @@ export class AppComponent {
     }, err => {
       console.log(err) // when there's an error
     });
+
+    this.toastr.success('Successfully Logged Out', undefined, {positionClass: 'toast-top-center', progressBar: true});
   }
 
   get signupFormInputs() {

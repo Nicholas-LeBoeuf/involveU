@@ -446,3 +446,11 @@ em {
   display: flex !important;
   justify-content: center !important;
 }
+
+//Toastr
+::ng-deep {
+  .toast-container {
+    margin-top: 10px !important;
+    width: 100%;
+  }
+}

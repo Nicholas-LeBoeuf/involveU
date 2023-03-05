@@ -48,7 +48,7 @@ import { EventPlanningComponent } from './components/event-planning/event-planni
 import { ProgramPlanningChecklistComponent } from './components/program-planning-checklist/program-planning-checklist.component';
 import { PreTripAgendaComponent } from './components/pre-trip-agenda/pre-trip-agenda.component';
 import { TripPlanningGuideComponent } from './components/trip-planning-guide/trip-planning-guide.component';
-
+import {ToastrModule} from "ngx-toastr";
 
 
 FullCalendarModule.registerPlugins([
@@ -99,6 +99,7 @@ FullCalendarModule.registerPlugins([
         LayoutModule,
         FontAwesomeModule,
         TabViewModule,
+        ToastrModule.forRoot(),
     ],
   providers: [
     CookieService,

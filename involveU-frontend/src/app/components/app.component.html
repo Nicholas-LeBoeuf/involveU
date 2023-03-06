@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="centerButtonDiv">
-      <button class="yellowButton" type="submit" (click)="onLoginSubmit()">Login</button>
+      <button class="yellowButton" type="submit" [disabled]="isLoginValid()" (click)="onLoginSubmit()">Login</button>
       <button class="yellowButton" (click)="closeLoginDialog()">Close</button>
     </div>
 
@@ -160,15 +160,8 @@
         </div>
       </div>
       <div class="form-group">
-        <select [ngClass]="{'formSelect': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'formSelectMobile': responsiveService.deviceMobile()}" class="form-control formInputs" name="year" formControlName="year">
-          <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Year...</option>
-          <option value="Freshman">Freshman</option>
-          <option value="Sophomore">Sophomore</option>
-          <option value="Junior">Junior</option>
-          <option value="Senior">Senior</option>
-          <option value="Faculty">Faculty</option>
-        </select>
-        <div *ngIf="signupFormInputs?.['year']?.invalid && (signupFormInputs?.['year']?.dirty || signupFormInputs?.['year']?.touched)" class="alert alert-danger">
+        <p-dropdown appendTo="body" [ngClass]="{'signupDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'signupDropdownMobile': responsiveService.deviceMobile()}" [options]="yearNames" [formControl]="yearNameFC" optionValue="yearName" optionLabel="yearName" [autoDisplayFirst]="false" placeholder="Select Year..." [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+        <div *ngIf="yearNameFC.invalid && (yearNameFC.dirty || yearNameFC.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['year']?.errors?.['required']">
             Year is required
           </div>
@@ -184,7 +177,7 @@
       </div>
     </div>
     <div class="centerButtonDiv">
-      <button class="yellowButton" type="submit" (click)="onSignupSubmit()">Signup</button>
+      <button class="yellowButton" type="submit" [disabled]="isSignupValid()" (click)="onSignupSubmit()">Sign Up</button>
       <button class="yellowButton" (click)="closeSignupDialog()">Close</button>
     </div>
 
@@ -199,4 +192,3 @@
 </p-dialog>
 
 <p-contextMenu #profileContextMenu [model]="profileContextMenuItems"></p-contextMenu>
-<p-contextMenu #adminContextMenu [model]="adminContextMenuItems"></p-contextMenu>

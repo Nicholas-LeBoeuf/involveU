@@ -165,16 +165,9 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <select class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" name="year" formControlName="year">
-            <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Your Year...</option>
-            <option value="Freshman">Freshman</option>
-            <option value="Sophomore">Sophomore</option>
-            <option value="Junior">Junior</option>
-            <option value="Senior">Senior</option>
-            <option value="Faculty">Faculty</option>
-          </select>
-          <div *ngIf="createUserFormInputs?.['year']?.invalid && (createUserFormInputs?.['year']?.dirty || createUserFormInputs?.['year']?.touched)" class="requiredAlert alert-danger">
+        <div class="form-group text-center">
+          <p-dropdown appendTo="body" [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="yearNames" [formControl]="yearNameFC" optionValue="yearName" optionLabel="yearName" [autoDisplayFirst]="false" placeholder="Select Year..." class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+          <div *ngIf="yearNameFC.invalid && (yearNameFC.dirty || yearNameFC.touched)" class="requiredAlert alert-danger">
             <div *ngIf="createUserFormInputs?.['year']?.errors?.['required']">
               Year is required
             </div>

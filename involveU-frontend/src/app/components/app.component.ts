@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
@@ -40,7 +40,6 @@ export class AppComponent {
       lastName: ['', Validators.required],
       email: ['', Validators.required],
       password: ['',  Validators.required, Validators.minLength(8)],
-      year: ['', Validators.required],
       pronouns: ['', Validators.required]
     });
   }
@@ -60,6 +59,16 @@ export class AppComponent {
   //OBJECTS or ARRAYS
   loggedInUser: User;
   usersEboardInfo: any;
+  yearNames = [
+    { yearName: 'Freshman' },
+    { yearName: 'Sophomore' },
+    { yearName: 'Junior' },
+    { yearName: 'Senior' },
+    { yearName: 'Faculty' },
+  ]
+
+  //FORM CONTROLS
+  yearNameFC: FormControl = new FormControl(null);
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
@@ -74,42 +83,6 @@ export class AppComponent {
       label: 'Logout',
       command: () => {
         this.logoutUser();
-      }
-    }
-  ]
-
-  public adminContextMenuItems: MenuItem[] = [
-    {
-      label: 'Create Clubs',
-      command: (router: Router) => {
-        this.router.navigateByUrl('admin/createClub').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });
-      }
-    },
-    {
-      label: 'Create/Delete Users'
-    },
-    {
-      label: 'Assign/Remove Advisors',
-      command: (router: Router) => {
-        this.router.navigateByUrl('admin/assignRemoveAdvisor').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });;
-      }
-    },
-    {
-      label: 'Assign/Remove EBoard',
-      command: (router: Router) => {
-        this.router.navigateByUrl('admin/addRemoveEBoard').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });;
       }
     }
   ]
@@ -142,7 +115,7 @@ export class AppComponent {
   }
 
   onSignupSubmit() {
-    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
+    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.yearNameFC.value, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
 
     this.userService.signupNewUser(userInfo).subscribe(success =>{
 
@@ -153,6 +126,8 @@ export class AppComponent {
       () => {
         this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
         this.displaySignupDialog = false;
+        this.signupForm.reset();
+        this.yearNameFC.reset();
       });
   }
 
@@ -236,5 +211,23 @@ export class AppComponent {
 
   isUserLoggedIn() {
     this.isLoggedIn = this.userID !== 0;
+  }
+
+  isSignupValid() {
+    if (this.signupForm.value.firstName === '' || this.signupForm.value.lastName === '' || this.signupForm.value.email === '' || this.signupForm.value.password === '' || this.yearNameFC.value === null || this.signupForm.value.pronouns === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isLoginValid() {
+    if (this.loginForm.value.username === '' || this.loginForm.value.password === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

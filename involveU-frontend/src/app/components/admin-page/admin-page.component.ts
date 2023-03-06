@@ -112,8 +112,15 @@ export class AdminPageComponent implements OnInit {
   advisorList: User[] = [];
   clubEboard: User[] = [];
   selectedClub: any = {};
+  yearNames = [
+    { yearName: 'Freshman' },
+    { yearName: 'Sophomore' },
+    { yearName: 'Junior' },
+    { yearName: 'Senior' },
+    { yearName: 'Faculty' },
+  ]
 
-  //FORM CONTROLSc
+  //FORM CONTROLS
   addEBoardClubID: FormControl = new FormControl(null);
   removeEBoardClubID: FormControl = new FormControl(null);
   removeClubID: FormControl = new FormControl(null);
@@ -124,6 +131,7 @@ export class AdminPageComponent implements OnInit {
   advisorID: FormControl = new FormControl(null);
   createClubAdvisorID: FormControl = new FormControl(null);
   todaysDate = new Date().toString();
+  yearNameFC: FormControl = new FormControl(null);
 
 
   ngOnInit(): void {
@@ -207,10 +215,6 @@ export class AdminPageComponent implements OnInit {
     return this.deleteUserForm.controls;
   }
 
-  get deleteClubFormInputs() {
-    return this.deleteClubForm.controls;
-  }
-
   get assignAdvisorFormInputs() {
     return this.assignAdvisorForm.controls;
   }
@@ -246,7 +250,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createUserSubmit(){
-    const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.createUserForm.value.year, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
+    const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.yearNameFC.value, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
     this.adminService.createUser(newUser).subscribe(success =>{
 
       },
@@ -256,6 +260,7 @@ export class AdminPageComponent implements OnInit {
       () => {
         this.toastr.success('Successfully Created User', undefined, {positionClass: 'toast-top-center', progressBar: true});
         this.createUserForm.reset();
+        this.yearNameFC.reset();
         this.fillUserList();
       });
   }
@@ -379,7 +384,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateUserValid() {
-    if (this.createUserForm.value.firstName === '' || this.createUserForm.value.lastName === '' || this.createUserForm.value.email === '' || this.createUserForm.value.password === '' || this.createUserForm.value.year === '' || this.createUserForm.value.pronouns === '') {
+    if (this.createUserForm.value.firstName === '' || this.createUserForm.value.lastName === '' || this.createUserForm.value.email === '' || this.createUserForm.value.password === '' || this.yearNameFC.value === null || this.createUserForm.value.pronouns === '') {
       return true;
     }
     else {

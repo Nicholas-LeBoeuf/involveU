@@ -95,7 +95,7 @@ em {
 
 .formInputs {
   border: 2px solid #0667B3;
-  color: #0667B3
+  color: #0667B3;
 }
 
 .formInputs::placeholder {
@@ -464,5 +464,12 @@ em {
   }
   .toast-container .toast-success {
     background-image: none !important;
+  }
+}
+
+//P-Dropdown Color
+::ng-deep {
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #0667B3;
   }
 }

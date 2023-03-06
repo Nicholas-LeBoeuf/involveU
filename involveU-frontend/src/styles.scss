@@ -473,3 +473,28 @@ em {
     color: #0667B3;
   }
 }
+
+input, textarea, date {
+  transition: .4s ease-in-out;
+}
+
+::ng-deep {
+  textarea.ng-invalid.ng-touched, input.ng-invalid.ng-touched, date.ng-invalid.ng-touched {
+    border: red 2px solid;
+    background-color: #ffc0c0;
+  }
+}
+
+::ng-deep {
+  .p-dropdown {
+    transition: .4s ease-in-out;
+  }
+}
+
+.ng-invalid.ng-touched {
+  ::ng-deep > .p-dropdown,
+  select#{&} {
+    border: 2px solid red !important;
+    background-color: #ffc0c0;
+  }
+}

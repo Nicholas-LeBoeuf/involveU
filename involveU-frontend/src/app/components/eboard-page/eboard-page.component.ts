@@ -50,7 +50,7 @@ export class EboardPageComponent implements OnInit {
     this.announcementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
-      expiresOn: [''],
+      expiresOn: ['', Validators.required],
       announcementTitle: ['', Validators.required],
       postedOn: ['']
     })

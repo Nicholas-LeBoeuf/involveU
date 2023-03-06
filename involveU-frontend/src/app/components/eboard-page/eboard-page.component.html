@@ -150,27 +150,12 @@
       <div class="osiAnnouncements">
         <div class="form-group">
           <input class="form-control formInputs" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Title" formControlName="announcementTitle">
-          <div *ngIf="announcementFormInputs?.['announcementTitle']?.invalid && (announcementFormInputs?.['announcementTitle']?.dirty || announcementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="announcementFormInputs?.['announcementTitle']?.errors?.['required']">
-              Announcement Title is required
-            </div>
-          </div>
         </div>
         <div class="form-group">
           <input class="form-control formInputs dateInputLabel" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="date" placeholder="Expiration Date: &nbsp;" formControlName="expiresOn">
-          <div *ngIf="announcementFormInputs?.['expiresOn']?.invalid && (announcementFormInputs?.['expiresOn']?.dirty || announcementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
-            <div *ngIf="announcementFormInputs?.['expiresOn']?.errors?.['required']">
-              Expiration Date is required
-            </div>
-          </div>
         </div>
         <div class="form-group">
           <textarea class="form-control formInputs largeTextField" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
-          <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.invalid && (announcementFormInputs?.['contentOfAnnouncement']?.dirty || announcementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
-              Announcement content is required
-            </div>
-          </div>
         </div>
         <div class="centerButton">
           <button class="form-submit-button yellowButton" type="submit" [disabled]="isCreateAnnouncementFormValid()" (click)="createAnnouncementSubmit()">Create Announcement</button>
@@ -189,27 +174,12 @@
         <div class="osiAnnouncements">
           <div class="form-group">
             <input class="form-control formInputs" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "announcement.announcementTitle" formControlName="editAnnouncementTitle">
-            <div *ngIf="announcementFormInputs?.['announcementTitle']?.invalid && (announcementFormInputs?.['announcementTitle']?.dirty || announcementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="announcementFormInputs?.['announcementTitle']?.errors?.['required']">
-                Announcement Title is required
-              </div>
-            </div>
           </div>
           <div class="form-group">
             <input class="form-control formInputs dateInputLabel" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="date" [(ngModel)] = "announcement.expiresOn" formControlName="editExpiresOn">
-            <div *ngIf="announcementFormInputs?.['expiresOn']?.invalid && (announcementFormInputs?.['expiresOn']?.dirty || announcementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
-              <div *ngIf="announcementFormInputs?.['expiresOn']?.errors?.['required']">
-                Expiration Date is required
-              </div>
-            </div>
           </div>
           <div class="form-group">
             <textarea class="form-control formInputs largeTextField" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" [(ngModel)] = "announcement.contentOfAnnouncement" formControlName="editContentOfAnnouncement"></textarea>
-            <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.invalid && (announcementFormInputs?.['contentOfAnnouncement']?.dirty || announcementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="announcementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
-                Announcement content is required
-              </div>
-            </div>
           </div>
           <div class="centerButton">
             <button class="form-submit-button yellowButton" type="submit" [disabled]="isEditAnnouncementFormValid()" (click)="updateClubAnnouncementSubmit()">Edit Announcement</button>
@@ -225,10 +195,9 @@
   <div class="eboardDialogs text-center">
     <h1 class="blueHeaders eboardPageTitleMargin">Add Social Media Link</h1>
     <form [formGroup]="socialMediaForm">
-      <p-dropdown [ngClass]="{'eboardDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardDropdownMobile': responsiveService.deviceMobile()}" [options]="platformList" [formControl]="platformString" optionValue="name" optionLabel="name" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Platform" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px', 'margin-bottom':'20px'}"></p-dropdown>
+      <p-dropdown [ngClass]="{'eboardDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardDropdownMobile': responsiveService.deviceMobile()}" [options]="platformList" [formControl]="platformString" [required]="true" optionValue="name" optionLabel="name" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Platform" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px', 'margin-bottom':'20px'}"></p-dropdown>
       <input class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Link" formControlName="smLink">
       <input class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Profile Name" formControlName="smProfileName">
-
     </form>
     <button class="yellowButton" [disabled]="isCreateSocialMediaFormValid()" (click)="addSocialMedia()">Add Link</button>
     <button class="yellowButton" (click)="closeAddSocialMediaDialog()">Close</button>
@@ -239,7 +208,7 @@
   <div class="eboardDialogs text-center" *ngFor="let editSM of certainSocialMedia">
     <h1 class="blueHeaders eboardPageTitleMargin">Edit Social Media Link</h1>
     <form [formGroup]="editSocialMediaForm">
-      <p-dropdown [(ngModel)]="editSM.platform" [ngClass]="{'eboardDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardDropdownMobile': responsiveService.deviceMobile()}" [options]="platformList" [formControl]="platformString" optionValue="name" optionLabel="name" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Platform" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px', 'margin-bottom':'20px'}"></p-dropdown>
+      <p-dropdown [(ngModel)]="editSM.platform" [ngClass]="{'eboardDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardDropdownMobile': responsiveService.deviceMobile()}" [required]="true" [options]="platformList" [formControl]="platformString" optionValue="name" optionLabel="name" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Platform" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px', 'margin-bottom':'20px'}"></p-dropdown>
       <input [(ngModel)]="editSM.link" class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Link" formControlName="editsmLink">
       <input [(ngModel)]="editSM.profileName" class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Profile Name" formControlName="editsmProfileName">
     </form>

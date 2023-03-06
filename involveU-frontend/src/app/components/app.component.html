@@ -88,19 +88,9 @@
   <form [formGroup]="loginForm">
     <div class="form-group loginInputs">
       <input class="form-control formInputs" type="text" placeholder="Email" formControlName="username">
-      <div *ngIf="loginFormInputs?.['username']?.invalid && (loginFormInputs?.['username']?.dirty || loginFormInputs?.['username']?.touched)" class="alert alert-danger">
-        <div *ngIf="loginFormInputs?.['username']?.errors?.['required']">
-          Email is required
-        </div>
-      </div>
     </div>
     <div class="form-group loginInputs">
       <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
-      <div *ngIf="loginFormInputs?.['password']?.invalid && (loginFormInputs?.['password']?.dirty || loginFormInputs?.['password']?.touched)" class="alert alert-danger">
-        <div *ngIf="loginFormInputs?.['password']?.errors?.['required']">
-          Password is required
-        </div>
-      </div>
     </div>
     <div class="centerButtonDiv">
       <button class="yellowButton" type="submit" [disabled]="isLoginValid()" (click)="onLoginSubmit()">Login</button>
@@ -123,57 +113,21 @@
     <div class="signupGrid">
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="First Name" formControlName="firstName">
-        <div *ngIf="signupFormInputs?.['firstName']?.invalid && (signupFormInputs?.['firstName']?.dirty || signupFormInputs?.['firstName']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['firstName']?.errors?.['required']">
-            First name is required
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Last Name" formControlName="lastName">
-        <div *ngIf="signupFormInputs?.['lastName']?.invalid && (signupFormInputs?.['lastName']?.dirty || signupFormInputs?.['lastName']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['lastName']?.errors?.['required']">
-            Last name is required
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Email" email formControlName="email">
-        <div *ngIf="signupFormInputs?.['email']?.invalid && (signupFormInputs?.['email']?.dirty || signupFormInputs?.['email']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['email']?.errors?.['required']">
-            Email is required
-          </div>
-          <div *ngIf="signupFormInputs?.['email']?.errors?.['email']">
-            Email must be a valid email
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="password" placeholder="Password" formControlName="password">
-        <div *ngIf="signupFormInputs?.['password']?.invalid && (signupFormInputs?.['password']?.dirty || signupFormInputs?.['password']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['password']?.errors?.['required']">
-            Password is required
-          </div>
-          <div *ngIf="signupFormInputs?.['password']?.errors?.['minLength']">
-            Password must be at least 8 characters
-          </div>
-        </div>
       </div>
       <div class="form-group">
-        <p-dropdown appendTo="body" [ngClass]="{'signupDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'signupDropdownMobile': responsiveService.deviceMobile()}" [options]="yearNames" [formControl]="yearNameFC" optionValue="yearName" optionLabel="yearName" [autoDisplayFirst]="false" placeholder="Select Year..." [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-        <div *ngIf="yearNameFC.invalid && (yearNameFC.dirty || yearNameFC.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['year']?.errors?.['required']">
-            Year is required
-          </div>
-        </div>
+        <p-dropdown appendTo="body" [ngClass]="{'signupDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'signupDropdownMobile': responsiveService.deviceMobile()}" [options]="yearNames" [formControl]="yearNameFC" optionValue="yearName" optionLabel="yearName" [required]="true" [autoDisplayFirst]="false" placeholder="Select Year..." [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
-        <div *ngIf="signupFormInputs?.['pronouns']?.invalid && (signupFormInputs?.['pronouns']?.dirty || signupFormInputs?.['pronouns']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['pronouns']?.errors?.['required']">
-            Pronouns are required
-          </div>
-        </div>
       </div>
     </div>
     <div class="centerButtonDiv">

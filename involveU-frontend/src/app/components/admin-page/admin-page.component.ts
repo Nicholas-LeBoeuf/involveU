@@ -84,7 +84,7 @@ export class AdminPageComponent implements OnInit {
     this.osiAnnouncementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
-      expiresOn: [''],
+      expiresOn: ['', Validators.required],
       announcementTitle: ['', Validators.required],
       postedOn: ['']
     });
@@ -104,7 +104,6 @@ export class AdminPageComponent implements OnInit {
 
 
   //OBJECTS
-  labelEboard: User[];
   clubNames: Club[] = [];
   userList: User[] = [];
   nonEboardList: User[] = [];
@@ -121,17 +120,17 @@ export class AdminPageComponent implements OnInit {
   ]
 
   //FORM CONTROLS
-  addEBoardClubID: FormControl = new FormControl(null);
-  removeEBoardClubID: FormControl = new FormControl(null);
-  removeClubID: FormControl = new FormControl(null);
-  assignAdvisorClubID: FormControl = new FormControl(null);
-  deleteUserID: FormControl = new FormControl(null);
-  nonEboardID: FormControl = new FormControl(null);
-  eboardID: FormControl = new FormControl(null);
-  advisorID: FormControl = new FormControl(null);
-  createClubAdvisorID: FormControl = new FormControl(null);
+  addEBoardClubID: FormControl = new FormControl(null, Validators.required);
+  removeEBoardClubID: FormControl = new FormControl(null, Validators.required);
+  removeClubID: FormControl = new FormControl(null, Validators.required);
+  assignAdvisorClubID: FormControl = new FormControl(null, Validators.required);
+  deleteUserID: FormControl = new FormControl(null, Validators.required);
+  nonEboardID: FormControl = new FormControl(null, Validators.required);
+  eboardID: FormControl = new FormControl(null, Validators.required);
+  advisorID: FormControl = new FormControl(null, Validators.required);
+  createClubAdvisorID: FormControl = new FormControl(null, Validators.required);
   todaysDate = new Date().toString();
-  yearNameFC: FormControl = new FormControl(null);
+  yearNameFC: FormControl = new FormControl(null, Validators.required);
 
 
   ngOnInit(): void {
@@ -201,34 +200,6 @@ export class AdminPageComponent implements OnInit {
       (error) => {
         console.log(error)
       });
-  }
-
-  get clubCreationFormInputs() {
-    return this.createClubForm.controls;
-  }
-
-  get createUserFormInputs() {
-    return this.createUserForm.controls;
-  }
-
-  get deleteUserFormInputs() {
-    return this.deleteUserForm.controls;
-  }
-
-  get assignAdvisorFormInputs() {
-    return this.assignAdvisorForm.controls;
-  }
-
-  get addEBoardFormInputs() {
-    return this.addEBoardForm.controls;
-  }
-
-  get removeEBoardFormInputs() {
-    return this.removeEBoardForm.controls;
-  }
-
-  get osiAnnouncementFormInputs() {
-    return this.osiAnnouncementForm.controls;
   }
 
   createClubSubmit(){

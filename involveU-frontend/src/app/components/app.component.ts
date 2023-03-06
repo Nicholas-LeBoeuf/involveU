@@ -68,7 +68,7 @@ export class AppComponent {
   ]
 
   //FORM CONTROLS
-  yearNameFC: FormControl = new FormControl(null);
+  yearNameFC: FormControl = new FormControl(null, Validators.required);
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');

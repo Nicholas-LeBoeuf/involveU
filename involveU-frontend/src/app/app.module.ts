@@ -41,13 +41,13 @@ import {EboardService} from "./services/eboard.service";
 import {EventsService} from "./services/events.service";
 import {UserService} from "./services/user.service";
 import {TabViewModule} from "primeng/tabview";
-import { IntroClubsOrgsComponent } from './components/intro-clubs-orgs/intro-clubs-orgs.component';
-import { OsiStaffComponent } from './components/osi-staff/osi-staff.component';
-import { StudentCenterServicesComponent } from './components/student-center-services/student-center-services.component';
-import { EventPlanningComponent } from './components/event-planning/event-planning.component';
-import { ProgramPlanningChecklistComponent } from './components/program-planning-checklist/program-planning-checklist.component';
-import { PreTripAgendaComponent } from './components/pre-trip-agenda/pre-trip-agenda.component';
-import { TripPlanningGuideComponent } from './components/trip-planning-guide/trip-planning-guide.component';
+import { IntroClubsOrgsComponent } from './components/more-info/more-info-tabs/intro-clubs-orgs/intro-clubs-orgs.component';
+import { OsiStaffComponent } from './components/more-info/more-info-tabs/osi-staff/osi-staff.component';
+import { StudentCenterServicesComponent } from './components/more-info/more-info-tabs/student-center-services/student-center-services.component';
+import { EventPlanningComponent } from './components/more-info/more-info-tabs/event-planning/event-planning.component';
+import { ProgramPlanningChecklistComponent } from './components/more-info/more-info-tabs/program-planning-checklist/program-planning-checklist.component';
+import { PreTripAgendaComponent } from './components/more-info/more-info-tabs/pre-trip-agenda/pre-trip-agenda.component';
+import { TripPlanningGuideComponent } from './components/more-info/more-info-tabs/trip-planning-guide/trip-planning-guide.component';
 import {ToastrModule} from "ngx-toastr";
 
 

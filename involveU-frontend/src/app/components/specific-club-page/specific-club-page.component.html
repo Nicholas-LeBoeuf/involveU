@@ -34,8 +34,8 @@
           <p>{{clubInfo.clubVision}}</p>
         </ng-container>
         <ng-container *ngIf="clubEboard.length !== 0">
-          <h2 class="blueHeaders">Executive Board</h2>
           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <h2 class="blueHeaders">Executive Board</h2>
             <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
               <ng-template pTemplate="header">
                 <tr>

@@ -35,20 +35,25 @@
         </ng-container>
         <ng-container *ngIf="clubEboard.length !== 0">
           <h2 class="blueHeaders">Executive Board</h2>
-          <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-              <tr>
-                <th class="text-center">Position</th>
-                <th class="text-center">Name</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-member>
-              <tr>
-                <td class="text-center">{{member.eboardPosition}}</td>
-                <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
-              </tr>
-            </ng-template>
-          </p-table>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="text-center">Position</th>
+                  <th class="text-center">Name</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-member>
+                <tr>
+                  <td class="text-center">{{member.eboardPosition}}</td>
+                  <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to see Executive Board Members!</p>
+          </ng-template>
         </ng-container>
         <ng-container *ngIf="clubSocialMedia.length !== 0">
           <h2 class="blueHeaders">Social Media</h2>
@@ -118,7 +123,14 @@
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
                   <h5 class="eventClubName">{{event.clubName}}</h5>
-                  <p>Login to view more information!</p>
+                  <ng-container *ngIf="isLoggedIn == true; else notLoggedIn">
+                    <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+                    <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+                    <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                  </ng-container>
+                  <ng-template #notLoggedIn>
+                    <p>Login to view more information!</p>
+                  </ng-template>
                   <ng-container *ngIf="isLoggedIn">
                     <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
                       <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>

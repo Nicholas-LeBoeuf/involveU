@@ -1,7 +1,7 @@
 <ng-container *ngIf="responsiveService.deviceDesktop() || responsiveService.deviceTablet(); else MobileView">
   <div class="imagesContainer">
     <div class="images">
-      <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
+      <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="7000" [showNavigators]="false" [showIndicators]="false">
         <ng-template let-image pTemplate="item">
           <img class="carouselImages" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
         </ng-template>

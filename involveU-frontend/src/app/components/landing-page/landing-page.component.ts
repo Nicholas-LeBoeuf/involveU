@@ -42,7 +42,7 @@ export class LandingPageComponent implements OnInit {
   //STRINGS
 
   //OBJECTS or ARRAYS
-  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
+  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg", "img9.jpg", "img10.jpg", "img11.jpg", "img12.jpg", "img13.jpg", "img14.jpg", "img15.jpg"];
   currentUser: User;
   todaysEvents: Events[] = [];
   certainEvent: Events[] = [];
@@ -51,6 +51,7 @@ export class LandingPageComponent implements OnInit {
   certainAnnouncement: Announcement[] = [];
 
   ngOnInit(): void {
+    this.imageArray = this.shuffleArray(this.imageArray);
     this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
 
@@ -160,5 +161,18 @@ export class LandingPageComponent implements OnInit {
   closeViewCertainAnnouncementDialog() {
     this.certainAnnouncement = [];
     this.viewCertainAnnouncementDialog = false;
+  }
+
+  shuffleArray(array) {
+    let size = array.length, temp, i;
+
+    while (size) {
+      i = Math.floor(Math.random() * size--);
+      temp = array[size];
+      array[size] = array[i];
+      array[i] = temp;
+    }
+
+    return array;
   }
 }

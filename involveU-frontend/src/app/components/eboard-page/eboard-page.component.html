@@ -55,13 +55,12 @@
     </ng-template>
     <ng-template pTemplate="body" let-event>
       <tr>
-        <td pFrozenColumn>{{event.eventName}}</td>
-        <td>{{event.eventDate | date:'MMMM dd, YYYY'}}</td>
-        <td>{{event.startTime | timeFormat}}</td>
-        <td>{{event.endTime  | timeFormat}}</td>
-        <td>{{event.eventLocation}}</td>
-        <td>{{event.spaceName}}</td>
-        <td>{{event.eventDesc}}</td>
+        <td pFrozenColumn [innerHTML]="event.title"></td>
+        <td>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</td>
+        <td>{{event.startDateTime | timeFormat}}</td>
+        <td>{{event.endDateTime | timeFormat}}</td>
+        <td [innerHTML]="event.location"></td>
+        <td [innerHTML]="event.description"></td>
         <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
         <td>{{event.isTransportation}}</td>
         <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')"class="yellowButton">Edit</button></td>

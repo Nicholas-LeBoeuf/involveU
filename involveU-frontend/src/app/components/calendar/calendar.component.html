@@ -45,21 +45,21 @@
 <p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
   <div class="eventCardDialog text-center" *ngFor="let event of selectedEvent">
     <div class="eventCardPicture">
-      <div class="imageCenter">
-        <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
-      </div>
-      <div class="imageMaskDialog"></div>
-      <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-      <h5 class="eventClubName">{{event.clubName}}</h5>
+        <div class="imageCenter">
+          <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
+        </div>
+        <div class="imageMaskDialog"></div>
+      <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
+      <h5 class="eventClubName setMargin" [innerHTML]="event.clubName"></h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
-          <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+          <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
-          <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+          <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
         </div>
         <div class="eventTransportationDialog">
           <h3 class="blueHeaders text-center">Transportation</h3>
@@ -81,11 +81,11 @@
         </div>
         <div class="eventDescriptionDialog">
           <h3 class="blueHeaders text-center">Description</h3>
-          <p>{{event.eventDesc}}</p>
+          <div class="descriptionStyling" [innerHTML]="event.description"></div>
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
-          <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+          <p [innerHTML]="event.location"></p>
         </div>
       </div>
       <ng-container *ngIf="isLoggedIn">
@@ -100,5 +100,3 @@
     </div>
   </div>
 </p-dialog>
-
-

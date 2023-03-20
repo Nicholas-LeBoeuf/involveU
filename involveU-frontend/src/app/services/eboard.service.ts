@@ -4,7 +4,6 @@ import {environment} from "../../environments/environment";
 import { SocialMedia } from "../objects/social-media";
 import {Club} from "../objects/club";
 import {Observable} from "rxjs";
-import {Club} from "../objects/club";
 
 
 @Injectable({

@@ -12,8 +12,8 @@ export interface Events {
 
   //derived
   clubID: number;
-  spaceName?: string;
-  locationName?: string;
+/*  spaceName?: string;
+  locationName?: string;*/
   space_ID?: number;
   location_ID?: number;
   clubLogo?: any;

@@ -135,11 +135,11 @@
                     <img class="eventImage" [src]="FavEvent.clubLogo" alt="{{FavEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{FavEvent.eventName}}</h3>
+                  <h3 class="blueHeaders text-center">{{FavEvent.title}}</h3>
                   <h5 class="eventClubName">{{FavEvent.clubName}}</h5>
-                  <p>Date: {{FavEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{FavEvent.startTime | timeFormat}} - {{FavEvent.endTime | timeFormat}}</p>
-                  <p>Location: {{FavEvent.eventLocation}} -> {{FavEvent.spaceName}}</p>
+                  <p>Date: {{FavEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{FavEvent.startDateTime | timeFormat}} - {{FavEvent.endDateTime | timeFormat}}</p>
+                  <p>Location: {{FavEvent.location}}</p>
                   <ng-container *ngIf="isLoggedIn">
                     <ng-container *ngIf="isUserRSVPd(FavEvent.eventID) === true; else ShowRSVP">
                       <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(FavEvent.eventID)">Remove RSVP</button>
@@ -172,11 +172,11 @@
                     <img class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{RSVPEvent.eventName}}</h3>
+                  <h3 class="blueHeaders text-center">{{RSVPEvent.title}}</h3>
                   <h5 class="eventClubName">{{RSVPEvent.clubName}}</h5>
-                  <p>Date: {{RSVPEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{RSVPEvent.startTime | timeFormat}} - {{RSVPEvent.endTime | timeFormat}}</p>
-                  <p>Location: {{RSVPEvent.eventLocation}} -> {{RSVPEvent.spaceName}}</p>
+                  <p>Date: {{RSVPEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{RSVPEvent.startDateTime | timeFormat}} - {{RSVPEvent.endDateTime | timeFormat}}</p>
+                  <p>Location: {{RSVPEvent.location}}</p>
 
                   <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(RSVPEvent.eventID)">Remove RSVP</button>
 
@@ -292,7 +292,7 @@
                     <img class="eventImage" [src]="futureEvent.clubLogo" alt="{{futureEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{futureEvent.eventName}}</h3>
+                  <h3 class="blueHeaders text-center">{{futureEvent.title}}</h3>
                   <h5 class="eventClubName">{{futureEvent.clubName}}</h5>
                   <p>Login to view more information!</p>
                 </div>
@@ -311,18 +311,18 @@
   <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
-        <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+        <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}}" />
       </div>
       <div class="imageMaskDialog"></div>
-      <h3 class="blueHeaders text-center">{{event.title}}</h3>
-      <h5 class="eventClubName">{{event.clubName}}</h5>
+      <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
+      <h5 class="eventClubName setMargin" [innerHTML]="event.clubName"></h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
           <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-            <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+            <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
           </ng-container>
           <ng-template #notLoggedIn>
             <p>Login to view event date</p>
@@ -352,13 +352,12 @@
         </div>
         <div class="eventDescriptionDialog">
           <h3 class="blueHeaders text-center">Description</h3>
-          <p>{{event.description}}</p>
+          <div class="descriptionStyling" [innerHTML]="event.description"></div>
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
-          <p>{{event.location}} -> {{event.spaceName}}</p>
           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-            <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+            <p [innerHTML]="event.location"></p>
           </ng-container>
           <ng-template #notLoggedIn>
             <p>Login to view event location</p>

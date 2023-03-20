@@ -242,6 +242,15 @@ em {
 .eventLocationDialog {
   grid-area: 3 / 2 / 4 / 3;
 }
+.descriptionStyling {
+  max-height: 200px;
+  overflow: auto
+}
+
+.setMargin {
+  margin: 0 20px;
+}
+
 
 
 //Event Card "Carousel"

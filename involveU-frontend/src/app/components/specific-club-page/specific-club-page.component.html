@@ -121,12 +121,12 @@
                     <img class="eventImage" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-                  <h5 class="eventClubName">{{event.clubName}}</h5>
+                  <h3 class="blueHeaders text-center" [innerHTML]="event.title"></h3>
+                  <h5 class="eventClubName" [innerHTML]="event.clubName"></h5>
                   <ng-container *ngIf="isLoggedIn == true; else notLoggedIn">
-                    <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
-                    <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
-                    <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                    <p>Date: {{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                    <p>Time: {{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
+                    <p [innerHTML]="'Location: ' + event.location"></p>
                   </ng-container>
                   <ng-template #notLoggedIn>
                     <p>Login to view more information!</p>
@@ -160,14 +160,14 @@
          <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubLogo}} Logo">
        </div>
        <div class="imageMaskDialog"></div>
-       <h3 class="blueHeaders text-center">{{event.title}}</h3>
-       <h5 class="eventClubName">{{event.clubName}}</h5>
+       <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
+       <h5 class="eventClubName setMargin" [innerHTML]="event.clubName"></h5>
 
        <div class="eventInformationDialogContainer">
          <div class="eventDateDialog">
            <h3 class="blueHeaders text-center">Date</h3>
            <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-             <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+             <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
            </ng-container>
            <ng-template #notLoggedIn>
              <p>Login to view event date</p>
@@ -176,7 +176,7 @@
          <div class="eventTimeDialog">
            <h3 class="blueHeaders text-center">Time</h3>
            <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-             <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+             <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
            </ng-container>
            <ng-template #notLoggedIn>
              <p>Login to view event time</p>
@@ -202,12 +202,12 @@
          </div>
          <div class="eventDescriptionDialog">
            <h3 class="blueHeaders text-center">Description</h3>
-           <p>{{event.description}}</p>
+           <div class="descriptionStyling" [innerHTML]="event.description"></div>
          </div>
          <div class="eventLocationDialog">
            <h3 class="blueHeaders text-center">Location</h3>
            <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-             <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+             <p [innerHTML]="event.location"></p>
            </ng-container>
            <ng-template #notLoggedIn>
              <p>Login to view event location</p>

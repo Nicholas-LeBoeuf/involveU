@@ -35,7 +35,8 @@
               "node_modules/primeicons/primeicons.scss",
               "node_modules/primeng/resources/themes/nova/theme.scss",
               "node_modules/primeng/resources/primeng.min.scss",
-              "node_modules/font-awesome/css/font-awesome.min.css"
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -45,7 +46,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumError": "2.5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -111,7 +112,8 @@
               "./node_modules/@fullcalendar/list/main.css",
               "node_modules/primeicons/primeicons.scss",
               "node_modules/primeng/resources/themes/nova/theme.scss",
-              "node_modules/primeng/resources/primeng.min.scss"
+              "node_modules/primeng/resources/primeng.min.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           }

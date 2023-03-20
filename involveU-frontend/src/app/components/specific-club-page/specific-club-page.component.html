@@ -1,13 +1,3 @@
-<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
 <ng-container *ngIf="clubInfo">
   <div class="blueTitleBar">
     <div class="logoAndName">
@@ -44,21 +34,26 @@
           <p>{{clubInfo.clubVision}}</p>
         </ng-container>
         <ng-container *ngIf="clubEboard.length !== 0">
-          <h2 class="blueHeaders">Executive Board</h2>
-          <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-              <tr>
-                <th class="text-center">Position</th>
-                <th class="text-center">Name</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-member>
-              <tr>
-                <td class="text-center">{{member.eboardPosition}}</td>
-                <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
-              </tr>
-            </ng-template>
-          </p-table>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <h2 class="blueHeaders">Executive Board</h2>
+            <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="text-center">Position</th>
+                  <th class="text-center">Name</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-member>
+                <tr>
+                  <td class="text-center">{{member.eboardPosition}}</td>
+                  <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to see Executive Board Members!</p>
+          </ng-template>
         </ng-container>
         <ng-container *ngIf="clubSocialMedia.length !== 0">
           <h2 class="blueHeaders">Social Media</h2>
@@ -106,7 +101,7 @@
               <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
               <hr class="announcementLine" *ngIf="index < 5">
             </div>
-            <div class="text-center">
+            <div class="text-center" *ngIf="clubAnnouncements.length > 5">
               <button class="yellowButton" (click)="showAllAnnouncementsDialog()">Show More</button>
             </div>
           </ng-container>
@@ -118,19 +113,24 @@
       <div [ngClass]="{'eventsTableContainerGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'eventsTableContainerGridWeb' : responsiveService.deviceDesktop()}">
         <h2 class="blueHeaders addTopMargin">Events Hosted By {{clubInfo.clubName}}</h2>
         <ng-container *ngIf="clubEvents.length !== 0; else NoEvents">
-          <p-table [value]="clubEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <p-table styleClass="centerItems" [value]="clubEvents" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
             <ng-template pTemplate="body" let-event>
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" src="assets/{{clubInfo.clubLogo}}">
+                    <img class="eventImage" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
                   <h5 class="eventClubName">{{event.clubName}}</h5>
-                  <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
-                  <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                  <ng-container *ngIf="isLoggedIn == true; else notLoggedIn">
+                    <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+                    <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+                    <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+                  </ng-container>
+                  <ng-template #notLoggedIn>
+                    <p>Login to view more information!</p>
+                  </ng-template>
                   <ng-container *ngIf="isLoggedIn">
                     <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
                       <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
@@ -157,7 +157,7 @@
    <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
      <div class="eventCardPicture">
        <div class="imageCenter">
-         <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}">
+         <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubLogo}} Logo">
        </div>
        <div class="imageMaskDialog"></div>
        <h3 class="blueHeaders text-center">{{event.title}}</h3>
@@ -166,11 +166,21 @@
        <div class="eventInformationDialogContainer">
          <div class="eventDateDialog">
            <h3 class="blueHeaders text-center">Date</h3>
-           <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+             <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+           </ng-container>
+           <ng-template #notLoggedIn>
+             <p>Login to view event date</p>
+           </ng-template>
          </div>
          <div class="eventTimeDialog">
            <h3 class="blueHeaders text-center">Time</h3>
-           <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
+           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+             <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+           </ng-container>
+           <ng-template #notLoggedIn>
+             <p>Login to view event time</p>
+           </ng-template>
          </div>
          <div class="eventTransportationDialog">
            <h3 class="blueHeaders text-center">Transportation</h3>
@@ -196,7 +206,12 @@
          </div>
          <div class="eventLocationDialog">
            <h3 class="blueHeaders text-center">Location</h3>
-           <p>{{event.location}} -> {{event.spaceName}}</p>
+           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+             <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+           </ng-container>
+           <ng-template #notLoggedIn>
+             <p>Login to view event location</p>
+           </ng-template>
          </div>
        </div>
        <ng-container *ngIf="isLoggedIn">

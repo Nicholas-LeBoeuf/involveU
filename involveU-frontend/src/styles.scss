@@ -95,7 +95,7 @@ em {
 
 .formInputs {
   border: 2px solid #0667B3;
-  color: #0667B3
+  color: #0667B3;
 }
 
 .formInputs::placeholder {
@@ -439,4 +439,62 @@ em {
 
 .announcementDialogContent p {
   margin-bottom: 0;
+}
+
+//Center Items in Carousel
+::ng-deep .centerItems tbody.p-element.p-datatable-tbody{
+  display: flex !important;
+  justify-content: center !important;
+}
+
+//Toastr
+::ng-deep {
+  .toast-container {
+    margin-top: 10px !important;
+    width: 100%;
+    text-align: center;
+  }
+
+  .toast-container .ngx-toastr {
+    padding: 15px !important;
+  }
+
+  .toast-container .toast-error {
+    background-image: none !important;
+  }
+  .toast-container .toast-success {
+    background-image: none !important;
+  }
+}
+
+//P-Dropdown Color
+::ng-deep {
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #0667B3;
+  }
+}
+
+input, textarea, date {
+  transition: .4s ease-in-out;
+}
+
+::ng-deep {
+  textarea.ng-invalid.ng-touched, input.ng-invalid.ng-touched, date.ng-invalid.ng-touched {
+    border: red 2px solid;
+    background-color: #ffc0c0;
+  }
+}
+
+::ng-deep {
+  .p-dropdown {
+    transition: .4s ease-in-out;
+  }
+}
+
+.ng-invalid.ng-touched {
+  ::ng-deep > .p-dropdown,
+  select#{&} {
+    border: 2px solid red !important;
+    background-color: #ffc0c0;
+  }
 }

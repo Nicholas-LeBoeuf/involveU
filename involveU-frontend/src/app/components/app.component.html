@@ -1,32 +1,14 @@
-<div *ngIf="loggedInMessage === true" class="alert alert-success alert-dismissible fade show loginSignupAlerts" role="alert">
-  <p>Successfully logged in!</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="loggedInFailedMessage === true" class="alert alert-danger alert-dismissible fade show loginSignupAlerts" role="alert">
-  <p>Invalid username or password</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="signUpMessage === true" class="alert alert-success alert-dismissible fade show loginSignupAlerts" role="alert">
-  <p>Signup successful!</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="signUpFailMessage === true" class="alert alert-danger alert-dismissible fade show loginSignupAlerts" role="alert">
-  <p>Signup unsuccessful</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
 <nav class="navbar">
   <ng-container *ngIf="responsiveService.deviceDesktop(); else MobileAndTabletView">
     <div class="navButtons">
-      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="Southern New Hampshire University Logo" routerLink="/home">
       <div class="specificNavButton">
         <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
       </div>
       <div class="specificNavButton">
-        <a #sla="routerLinkActive" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a>
+        <ng-template [ngIf]="this.isLoggedIn">
+          <a #sla="routerLinkActive" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a>
+        </ng-template>
       </div>
       <div class="specificNavButton">
         <a #ula="routerLinkActive" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a>
@@ -46,14 +28,14 @@
       </div>
     </div>
     <div class="buttons">
-      <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+      <ng-template [ngIf]="!this.isLoggedIn">
         <button class="yellowButton" (click)="showSignupDialog()">Sign Up</button>
         <button class="yellowButton" (click)="showLoginDialog()">Login</button>
       </ng-template>
-      <ng-template [ngIf]="this.cookie.get('studentID') != ''">
-        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg">
+      <ng-template [ngIf]="this.isLoggedIn">
+        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">
       </ng-template>
-      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
+      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
     </div>
   </ng-container>
   <ng-template #MobileAndTabletView>
@@ -64,7 +46,9 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li> <a #rla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a></li>
-          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a></li>
+          <ng-template [ngIf]="this.isLoggedIn">
+            <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a></li>
+          </ng-template>
           <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
           <li><a #mla="routerLinkActive" class="dropdown-item" routerLink="/moreinfo" routerLinkActive="active" [class.active-span]="mla.isActive">More Information</a></li>
           <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
@@ -73,20 +57,22 @@
           <ng-template [ngIf]="isEboard !== false">
             <a #ela="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/{{usersEboardInfo.clubID}}/eboard" [class.active-span]="ela.isActive" >{{usersEboardInfo.clubName}} Eboard</a>
           </ng-template>
-          <ng-template [ngIf]="this.cookie.get('studentID') == ''">
+          <ng-template [ngIf]="!this.isLoggedIn">
             <li><a class="dropdown-item" (click)="showSignupDialog()">Sign Up</a></li>
             <li><a class="dropdown-item" (click)="showLoginDialog()">Login</a></li>
           </ng-template>
-          <ng-template [ngIf]="this.cookie.get('studentID') != ''">
+          <ng-template [ngIf]="this.isLoggedIn">
             <li><a class="dropdown-item" (click)="logoutUser()">Logout</a></li>
           </ng-template>
 
         </ul>
       </div>
       <div class="mobileFlexSNHULogo">
-        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" routerLink="/home" alt="Southern New Hampshire University Logo">
       </div>
-      <img class="involveULogoScale mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png">
+      <div class="involveUCenter">
+        <img class="involveULogoScaleMobile mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
+      </div>
     </div>
   </ng-template>
 </nav>
@@ -102,22 +88,12 @@
   <form [formGroup]="loginForm">
     <div class="form-group loginInputs">
       <input class="form-control formInputs" type="text" placeholder="Email" formControlName="username">
-      <div *ngIf="loginFormInputs?.['username']?.invalid && (loginFormInputs?.['username']?.dirty || loginFormInputs?.['username']?.touched)" class="alert alert-danger">
-        <div *ngIf="loginFormInputs?.['username']?.errors?.['required']">
-          Email is required
-        </div>
-      </div>
     </div>
     <div class="form-group loginInputs">
       <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
-      <div *ngIf="loginFormInputs?.['password']?.invalid && (loginFormInputs?.['password']?.dirty || loginFormInputs?.['password']?.touched)" class="alert alert-danger">
-        <div *ngIf="loginFormInputs?.['password']?.errors?.['required']">
-          Password is required
-        </div>
-      </div>
     </div>
     <div class="centerButtonDiv">
-      <button class="yellowButton" type="submit" (click)="onLoginSubmit()">Login</button>
+      <button class="yellowButton" type="submit" [disabled]="isLoginValid()" (click)="onLoginSubmit()">Login</button>
       <button class="yellowButton" (click)="closeLoginDialog()">Close</button>
     </div>
 
@@ -137,68 +113,25 @@
     <div class="signupGrid">
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="First Name" formControlName="firstName">
-        <div *ngIf="signupFormInputs?.['firstName']?.invalid && (signupFormInputs?.['firstName']?.dirty || signupFormInputs?.['firstName']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['firstName']?.errors?.['required']">
-            First name is required
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Last Name" formControlName="lastName">
-        <div *ngIf="signupFormInputs?.['lastName']?.invalid && (signupFormInputs?.['lastName']?.dirty || signupFormInputs?.['lastName']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['lastName']?.errors?.['required']">
-            Last name is required
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Email" email formControlName="email">
-        <div *ngIf="signupFormInputs?.['email']?.invalid && (signupFormInputs?.['email']?.dirty || signupFormInputs?.['email']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['email']?.errors?.['required']">
-            Email is required
-          </div>
-          <div *ngIf="signupFormInputs?.['email']?.errors?.['email']">
-            Email must be a valid email
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="password" placeholder="Password" formControlName="password">
-        <div *ngIf="signupFormInputs?.['password']?.invalid && (signupFormInputs?.['password']?.dirty || signupFormInputs?.['password']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['password']?.errors?.['required']">
-            Password is required
-          </div>
-          <div *ngIf="signupFormInputs?.['password']?.errors?.['minLength']">
-            Password must be at least 8 characters
-          </div>
-        </div>
       </div>
       <div class="form-group">
-        <select [ngClass]="{'formSelect': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'formSelectMobile': responsiveService.deviceMobile()}" class="form-control formInputs" name="year" formControlName="year">
-          <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Year...</option>
-          <option value="Freshman">Freshman</option>
-          <option value="Sophomore">Sophomore</option>
-          <option value="Junior">Junior</option>
-          <option value="Senior">Senior</option>
-          <option value="Faculty">Faculty</option>
-        </select>
-        <div *ngIf="signupFormInputs?.['year']?.invalid && (signupFormInputs?.['year']?.dirty || signupFormInputs?.['year']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['year']?.errors?.['required']">
-            Year is required
-          </div>
-        </div>
+        <p-dropdown appendTo="body" [ngClass]="{'signupDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'signupDropdownMobile': responsiveService.deviceMobile()}" [options]="yearNames" [formControl]="yearNameFC" optionValue="yearName" optionLabel="yearName" [required]="true" [autoDisplayFirst]="false" placeholder="Select Year..." [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
       </div>
       <div class="form-group">
         <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
-        <div *ngIf="signupFormInputs?.['pronouns']?.invalid && (signupFormInputs?.['pronouns']?.dirty || signupFormInputs?.['pronouns']?.touched)" class="alert alert-danger">
-          <div *ngIf="signupFormInputs?.['pronouns']?.errors?.['required']">
-            Pronouns are required
-          </div>
-        </div>
       </div>
     </div>
     <div class="centerButtonDiv">
-      <button class="yellowButton" type="submit" (click)="onSignupSubmit()">Signup</button>
+      <button class="yellowButton" type="submit" [disabled]="isSignupValid()" (click)="onSignupSubmit()">Sign Up</button>
       <button class="yellowButton" (click)="closeSignupDialog()">Close</button>
     </div>
 
@@ -213,4 +146,3 @@
 </p-dialog>
 
 <p-contextMenu #profileContextMenu [model]="profileContextMenuItems"></p-contextMenu>
-<p-contextMenu #adminContextMenu [model]="adminContextMenuItems"></p-contextMenu>

@@ -1,13 +1,3 @@
-<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
 <div class="blueTitleBar">
   <div class="logoAndName text-center">
     <img class="SNHULogoClubPage clubPageTitleMargin" src="assets/SNHU-Logo-White.png" alt="Southern New Hampshire University logo with white text">
@@ -113,7 +103,7 @@
       <div [ngClass]="{'desktopAnnouncements' : responsiveService.deviceDesktop(), 'mobileTabletAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders">Recent Favorited Club Announcements</h2>
         <ng-container *ngIf="favoritedClubAnnouncements.length !== 0; else NoFavClubAnnouncements">
-          <p-table [value]="favoritedClubAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <p-table styleClass="centerItems" [value]="favoritedClubAnnouncements" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
             <ng-template pTemplate="body" let-favAnnouncement>
               <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(favAnnouncement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <em class="announcementDate">Posted on {{favAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
@@ -137,12 +127,12 @@
         </ng-container>
 
         <ng-template #eventsPresent>
-          <p-table [value]="favoritedClubsEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <p-table [value]="favoritedClubsEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
             <ng-template pTemplate="body" let-FavEvent>
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(FavEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" [src]="FavEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+                    <img class="eventImage" [src]="FavEvent.clubLogo" alt="{{FavEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{FavEvent.eventName}}</h3>
@@ -174,12 +164,12 @@
         </ng-container>
 
         <ng-template #RSVPEventsPresent>
-          <p-table [value]="userRSVPdEvents" [paginator]="true" [rows]="numberOfRows" [loading]="isLoading">
+          <p-table [value]="userRSVPdEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows" [loading]="isLoading">
             <ng-template pTemplate="body" let-RSVPEvent>
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(RSVPEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" [src]="RSVPEvent.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+                    <img class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{RSVPEvent.eventName}}</h3>
@@ -270,7 +260,7 @@
       <div [ngClass]="{'notLoggedInDesktopOSIAnnouncements' : responsiveService.deviceDesktop(), 'notLoggedInMobileTabletOSIAnnouncements' : responsiveService.deviceTablet() || responsiveService.deviceMobile()}">
         <h2 class="blueHeaders">Recent Office of Student Involvement Announcements</h2>
         <ng-container *ngIf="osiAnnouncements.length !== 0; else NoOSIAnnouncements">
-          <p-table [value]="osiAnnouncements" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <p-table [value]="osiAnnouncements" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
             <ng-template pTemplate="body" let-OSIAnnouncement>
               <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(OSIAnnouncement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <em class="announcementDate">Posted on {{OSIAnnouncement.postedOn | date:'MMMM dd, YYYY'}}</em>
@@ -294,19 +284,17 @@
         </ng-container>
 
         <ng-template #FutureEventsPresent>
-          <p-table [value]="allFutureEvents" [paginator]="true" [rows]="numberOfRows"  [loading]="isLoading">
+          <p-table styleClass="centerItems" [value]="allFutureEvents" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
             <ng-template pTemplate="body" let-futureEvent>
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(futureEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" [src]="futureEvent.clubLogo" /><!--CHANGE TO CLUB LOGO-->
+                    <img class="eventImage" [src]="futureEvent.clubLogo" alt="{{futureEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center">{{futureEvent.eventName}}</h3>
                   <h5 class="eventClubName">{{futureEvent.clubName}}</h5>
-                  <p>Date: {{futureEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{futureEvent.startTime | timeFormat}} - {{futureEvent.endTime | timeFormat}}</p>
-                  <p>Location: {{futureEvent.eventLocation}} -> {{futureEvent.spaceName}}</p>
+                  <p>Login to view more information!</p>
                 </div>
               </div>
             </ng-template>
@@ -333,6 +321,12 @@
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
           <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event date</p>
+          </ng-template>
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
@@ -363,6 +357,12 @@
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
           <p>{{event.location}} -> {{event.spaceName}}</p>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event location</p>
+          </ng-template>
         </div>
       </div>
       <ng-container *ngIf="isLoggedIn">

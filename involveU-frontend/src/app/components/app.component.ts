@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
@@ -9,6 +9,7 @@ import {MenuItem} from 'primeng/api';
 import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
 import { SHA256, enc } from "crypto-js";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent {
               public cookie: CookieService,
               private clubService: ClubService,
               private router: Router,
+              private toastr: ToastrService,
               public responsiveService: ResponsiveService) {
 
     this.loginForm = this.formBuilder.group({
@@ -38,17 +40,13 @@ export class AppComponent {
       lastName: ['', Validators.required],
       email: ['', Validators.required],
       password: ['',  Validators.required, Validators.minLength(8)],
-      year: ['', Validators.required],
       pronouns: ['', Validators.required]
     });
   }
 
   //BOOLEANS
   isEboard: boolean = false;
-  loggedInMessage: boolean = false;
-  loggedInFailedMessage: boolean = false;
-  signUpMessage: boolean = false;
-  signUpFailMessage: boolean = false;
+  isLoggedIn: boolean = false;
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
 
@@ -61,10 +59,21 @@ export class AppComponent {
   //OBJECTS or ARRAYS
   loggedInUser: User;
   usersEboardInfo: any;
+  yearNames = [
+    { yearName: 'Freshman' },
+    { yearName: 'Sophomore' },
+    { yearName: 'Junior' },
+    { yearName: 'Senior' },
+    { yearName: 'Faculty' },
+  ]
+
+  //FORM CONTROLS
+  yearNameFC: FormControl = new FormControl(null, Validators.required);
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
     this.checkIfUserInEboard();
+    this.isUserLoggedIn();
   }
 
   private prevContextMenu!: ContextMenu;
@@ -74,42 +83,6 @@ export class AppComponent {
       label: 'Logout',
       command: () => {
         this.logoutUser();
-      }
-    }
-  ]
-
-  public adminContextMenuItems: MenuItem[] = [
-    {
-      label: 'Create Clubs',
-      command: (router: Router) => {
-        this.router.navigateByUrl('admin/createClub').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });
-      }
-    },
-    {
-      label: 'Create/Delete Users'
-    },
-    {
-      label: 'Assign/Remove Advisors',
-      command: (router: Router) => {
-        this.router.navigateByUrl('admin/assignRemoveAdvisor').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });;
-      }
-    },
-    {
-      label: 'Assign/Remove EBoard',
-      command: (router: Router) => {
-        this.router.navigateByUrl('admin/addRemoveEBoard').then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log(err) // when there's an error
-        });;
       }
     }
   ]
@@ -128,27 +101,34 @@ export class AppComponent {
 
     this.userService.checkLoginCredentials(this.loginForm.value.username, hashedPass).subscribe((response: User) => {
       this.loggedInUser = response;
-
-      this.setCookie();
-      this.displayLoginDialog = false;
-      location.reload();
-      this.loggedInMessage = true;
     },
-      (error) => {
-      this.loggedInFailedMessage = true;
+      error => {
+        this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Logged In', undefined, {positionClass: 'toast-top-center', progressBar: true});
+
+        this.setCookie();
+        this.displayLoginDialog = false;
+        location.reload();
       });
   }
 
   onSignupSubmit() {
-    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.signupForm.value.year, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
+    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.yearNameFC.value, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
 
     this.userService.signupNewUser(userInfo).subscribe(success =>{
-      this.displaySignupDialog = false;
-      this.signUpMessage = true;
+
     },
-      (error) => {
-      this.signUpFailMessage = true;
-    });
+      error => {
+        this.toastr.error('Create Account Unsuccessful', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.displaySignupDialog = false;
+        this.signupForm.reset();
+        this.yearNameFC.reset();
+      });
   }
 
   logoutUser() {
@@ -159,12 +139,15 @@ export class AppComponent {
     this.cookie.delete('isEboard');
     this.usersEboardInfo = {};
     this.isEboard = false;
+    this.isLoggedIn = false;
 
     this.router.navigateByUrl('/home').then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {
       console.log(err) // when there's an error
     });
+
+    this.toastr.success('Successfully Logged Out', undefined, {positionClass: 'toast-top-center', progressBar: true});
   }
 
   get signupFormInputs() {
@@ -224,5 +207,27 @@ export class AppComponent {
       (error) => {
         console.log(error);
       })
+  }
+
+  isUserLoggedIn() {
+    this.isLoggedIn = this.userID !== 0;
+  }
+
+  isSignupValid() {
+    if (this.signupForm.value.firstName === '' || this.signupForm.value.lastName === '' || this.signupForm.value.email === '' || this.signupForm.value.password === '' || this.yearNameFC.value === null || this.signupForm.value.pronouns === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  isLoginValid() {
+    if (this.loginForm.value.username === '' || this.loginForm.value.password === '') {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

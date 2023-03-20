@@ -20,7 +20,6 @@ import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import {DropdownModule} from "primeng/dropdown";
-import { ScheduleComponent } from './components/schedule/schedule.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -42,7 +41,14 @@ import {EboardService} from "./services/eboard.service";
 import {EventsService} from "./services/events.service";
 import {UserService} from "./services/user.service";
 import {TabViewModule} from "primeng/tabview";
-
+import { IntroClubsOrgsComponent } from './components/more-info/more-info-tabs/intro-clubs-orgs/intro-clubs-orgs.component';
+import { OsiStaffComponent } from './components/more-info/more-info-tabs/osi-staff/osi-staff.component';
+import { StudentCenterServicesComponent } from './components/more-info/more-info-tabs/student-center-services/student-center-services.component';
+import { EventPlanningComponent } from './components/more-info/more-info-tabs/event-planning/event-planning.component';
+import { ProgramPlanningChecklistComponent } from './components/more-info/more-info-tabs/program-planning-checklist/program-planning-checklist.component';
+import { PreTripAgendaComponent } from './components/more-info/more-info-tabs/pre-trip-agenda/pre-trip-agenda.component';
+import { TripPlanningGuideComponent } from './components/more-info/more-info-tabs/trip-planning-guide/trip-planning-guide.component';
+import {ToastrModule} from "ngx-toastr";
 
 
 FullCalendarModule.registerPlugins([
@@ -60,11 +66,17 @@ FullCalendarModule.registerPlugins([
     FilterPipe,
     SpecificClubPageComponent,
     AdminPageComponent,
-    ScheduleComponent,
     CalendarComponent,
     TimeFormatPipe,
     EboardPageComponent,
-    MoreInfoComponent
+    MoreInfoComponent,
+    IntroClubsOrgsComponent,
+    OsiStaffComponent,
+    StudentCenterServicesComponent,
+    EventPlanningComponent,
+    ProgramPlanningChecklistComponent,
+    PreTripAgendaComponent,
+    TripPlanningGuideComponent
   ],
     imports: [
         BrowserModule,
@@ -87,6 +99,7 @@ FullCalendarModule.registerPlugins([
         LayoutModule,
         FontAwesomeModule,
         TabViewModule,
+        ToastrModule.forRoot(),
     ],
   providers: [
     CookieService,

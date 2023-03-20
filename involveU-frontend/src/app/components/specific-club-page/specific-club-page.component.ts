@@ -104,9 +104,14 @@ export class SpecificClubPageComponent implements OnInit {
   getClubInfo() {
     this.clubService.getSpecificClub(this.clubID).subscribe(response => {
       this.clubInfo = response;
+      this.clubService.getClubLogo(this.clubInfo.clubID).subscribe(logo => {
+        const reader = new FileReader();
+        reader.onload = (e) => this.clubInfo.clubLogo = e.target.result;
+        reader.readAsDataURL(new Blob([logo]));
+        this.clubInfo.clubLogo = logo;
+      })
     })
   }
-
   getUsersFavoritedClubs() {
     this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe(response => {
         this.favoritedClubs = response;
@@ -154,6 +159,14 @@ export class SpecificClubPageComponent implements OnInit {
   getClubEvents() {
     this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
       this.clubEvents = response;
+      for(let i = 0; i < this.clubEvents.length; i++) {
+        this.clubService.getClubLogo(this.clubEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.clubEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.clubEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 

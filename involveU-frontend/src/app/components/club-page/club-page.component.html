@@ -14,7 +14,7 @@
         <hr>
         <div *ngIf="featuredClubs.length > 0" class="text-center">
           <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
-          <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
+          <h3 class="topMargin blueHeaders" [innerHTML]="featuredClubs[0].clubName"></h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
           <button class="yellowButton" (click)="goToClubPage(featuredClubs[0].clubID)">Learn More</button>
         </div>
@@ -88,7 +88,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-club>
               <tr>
-                <td class="text-center">{{club.clubName}}</td>
+                <td class="text-center" [innerHTML]="club.clubName"></td>
                 <td class="text-center"><button class="yellowButton" (click)="goToClubPage(club.clubID)">View</button></td>
                 <td class="text-center"><button class="yellowButton" (click)="removeFromFavorites(club.clubID)">Unfavorite</button></td>
               </tr>
@@ -197,7 +197,7 @@
         <hr>
         <div *ngIf="featuredClubs.length > 0" class="text-center">
           <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}"/>
-          <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
+          <h3 class="topMargin blueHeaders" [innerHTML]="featuredClubs[0].clubName"></h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
           <button class="yellowButton" (click)="goToClubPage(featuredClubs[0].clubID)">Learn More</button>
         </div>
@@ -396,7 +396,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-club>
           <tr>
-            <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
+            <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)" [innerHTML]="club.clubName"></td>
           </tr>
         </ng-template>
       </p-table>

@@ -1,8 +1,8 @@
 <ng-container *ngIf="clubInfo">
   <div class="blueTitleBar">
     <div class="logoAndName">
-      <img class="clubLogo" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
-      <h1 class="clubNameMargin">{{clubInfo.clubName}}</h1>
+      <img class="clubLogo" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+      <h1 class="clubNameMargin" [innerHTML]="clubInfo.clubName"></h1>
       <ng-container *ngIf="userID !== 0">
         <ng-container *ngIf="clubIsFav; else ClubNotFavorited">
           <button class="yellowButton" (click)="removeFromFavorites()">Unfavorite Club</button>
@@ -118,7 +118,7 @@
               <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
                 <div class="eventCardPicture">
                   <div class="imageCenter">
-                    <img class="eventImage" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubName}} Logo">
+                    <img class="eventImage" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center" [innerHTML]="event.title"></h3>
@@ -157,7 +157,7 @@
    <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
      <div class="eventCardPicture">
        <div class="imageCenter">
-         <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}" alt="{{clubInfo.clubLogo}} Logo">
+         <img class="eventImageDialog" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
        </div>
        <div class="imageMaskDialog"></div>
        <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>

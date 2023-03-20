@@ -9,23 +9,23 @@
     <div class="eventInfoContainer" *ngIf="selectedEvent">
       <div class="eventName">
         <h3 class="eventDataTitle">Event Name: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventName}}</h5>
+        <h5 class="eventData">{{this.selectedEvent.title}}</h5>
       </div>
       <div class="eventDate">
         <h3 class="eventDataTitle">Event Date: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventDate | date:'MMMM dd, YYYY'}}</h5>
+        <h5 class="eventData">{{this.selectedEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</h5>
       </div>
       <div class="eventTime">
         <h3 class="eventDataTitle">Time: </h3>
-        <h5 class="eventData">{{this.selectedEvent.startTime | timeFormat}} - {{this.selectedEvent.endTime | timeFormat}}</h5>
+        <h5 class="eventData">{{this.selectedEvent.startDateTime | timeFormat}} - {{this.selectedEvent.endDateTime | timeFormat}}</h5>
       </div>
       <div class="eventLocation">
         <h3 class="eventDataTitle">Event Location: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventLocation}}</h5>
+        <h5 class="eventData">{{this.selectedEvent.location}}</h5>
       </div>
       <div class="eventDesc">
         <h3 class="eventDataTitle">Event Description: </h3>
-        <h5 class="eventData">{{this.selectedEvent.eventDesc}}</h5>
+        <h5 class="eventData">{{this.selectedEvent.description}}</h5>
       </div>
       <div class="eventHost">
         <h3 class="eventDataTitle">Hosted By:</h3>

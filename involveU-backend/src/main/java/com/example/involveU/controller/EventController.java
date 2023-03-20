@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import com.example.involveU.model.Space;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
 @RestController
 @RequestMapping("api/")
 public class EventController extends DBServices{
@@ -222,32 +225,25 @@ public class EventController extends DBServices{
     }
 
     @GetMapping("events/test25live/{clubID}")
-    private  Object get25liveEvents(@PathVariable("clubID") int clubID) throws IOException {
+    private  ResponseEntity<String> get25liveEvents(@PathVariable("clubID") int clubID) throws IOException, ParseException {
 
-        String urlParameters = "24";
-        URL obj = new URL("https://webservices.collegenet.com/r25ws/wrd/snhu/run/events.json?oranization_id=24");
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type",
-                "application/x-www-form-urlencoded");
-        con.setRequestProperty("Content-Length",
-                Integer.toString(urlParameters.getBytes().length));
-        con.setRequestProperty("Content-Language", "en-US");
-            con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream (
-                con.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.close();
-        InputStream is = con.getInputStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
-        String line;
-        while ((line = rd.readLine()) != null) {
-            response.append(line);
-            response.append('\r');
-        }
-        rd.close();
-        return response.toString();
+
+        String url = "https://25livepub.collegenet.com/calendars/snhu-all-campus-events-calendar.json";
+        RestTemplate restTemplate = new RestTemplate();
+        Events [] events = restTemplate.getForObject(url,Events[].class);
+
+        upload25liveEvents(events);
+
+
+//        HttpEntity<CreateTaskInput> request = new HttpEntity<>(headers);
+//        String url = generateUrl("/tasks");
+//
+//        ResponseEntity<TaskItemResponse[]> result = restTemplate.exchange(url, HttpMethod.GET, request, TaskItemResponse[].class);
+//        TaskItemResponse[] tasks = result.getBody();
+//
+//        assert tasks != null;
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
 
 
     }

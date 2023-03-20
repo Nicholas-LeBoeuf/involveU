@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import { SocialMedia } from "../objects/social-media";
+import {Club} from "../objects/club";
 import {Observable} from "rxjs";
 
 
@@ -26,5 +27,8 @@ export class EboardService {
 
   editSocialMedia(socialMediaContent: SocialMedia) {
     return this.http.put(environment.apiURL + `club/editSocialMedia`, socialMediaContent);
+  }
+  updateImage(selectedClub: Club, file: File) {
+    return this.http.put(environment.apiURL + `club/ChangeClubImage`, [selectedClub, file]);
   }
 }

@@ -9,4 +9,5 @@ export interface Club {
   advisorID: number;
   clubValues: string;
   clubMission: string;
+  clubfile?: File;
 }

@@ -48,7 +48,7 @@ export class CalendarComponent implements OnInit {
   formatAllEvents() {
     for (let i = 0; i < this.eventsToDisplay.length; i++)
     {
-      this.formattedEvents.push({id: this.eventsToDisplay[i].eventID, title: this.eventsToDisplay[i].eventName, start: this.eventsToDisplay[i].eventDate + 'T' + this.eventsToDisplay[i].startTime, end: this.eventsToDisplay[i].eventDate + 'T' + this.eventsToDisplay[i].endTime, allDay: false})
+      this.formattedEvents.push({id: this.eventsToDisplay[i].eventID, title: this.eventsToDisplay[i].title, start: this.eventsToDisplay[i].dateTimeFormatted + 'T' + this.eventsToDisplay[i].startDateTime, end: this.eventsToDisplay[i].dateTimeFormatted + 'T' + this.eventsToDisplay[i].endDateTime, allDay: false})
     }
   }
 

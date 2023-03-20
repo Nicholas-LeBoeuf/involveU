@@ -11,6 +11,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 @RestController
@@ -224,6 +225,32 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
             return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @PutMapping("/club/CheckDBImageName")
+    private ResponseEntity<String> changeClubImage(@RequestBody List<Object> json) throws IOException {
+
+//      Object obj = json.get(0);
+//        int newClub;
+//        newClub = obj ;
+
+
+//        String currentClubName =  clubInfo.getClubName();
+//        String clubFile = clubNewFile.getOriginalFilename();
+//
+//
+//      if(checkForSameFileName(clubFile, currentClubName))
+//      {
+//          s3.uploadFile(clubFile, clubNewFile.getInputStream());
+//      }
+//      else
+//      {
+//          s3.deleteImg(clubInfo.getClubLogo());
+//          s3.uploadFile(clubFile, clubNewFile.getInputStream());
+//      }
+
+
+        return new ResponseEntity<>("test", HttpStatus.OK);
     }
 
 

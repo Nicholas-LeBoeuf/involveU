@@ -42,7 +42,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
               </td>
               <td>
-                <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">1st : {{topRSVPdEvents[0].title}}<br>({{topRSVPdEvents[0].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -50,7 +50,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
               </td>
               <td>
-                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].title}}<br>({{topRSVPdEvents[1].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -58,7 +58,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
               </td>
               <td>
-                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].title}}<br>({{topRSVPdEvents[2].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -66,7 +66,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin"></i>
               </td>
               <td>
-                <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">4th : {{topRSVPdEvents[3].title}}<br>({{topRSVPdEvents[3].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -74,7 +74,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin"></i>
               </td>
               <td>
-                <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">5th : {{topRSVPdEvents[4].title}}<br>({{topRSVPdEvents[4].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             </tbody>
@@ -224,7 +224,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
               </td>
               <td>
-                <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">1st : {{topRSVPdEvents[0].title}}<br>({{topRSVPdEvents[0].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -232,7 +232,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
               </td>
               <td>
-                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].title}}<br>({{topRSVPdEvents[1].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -240,7 +240,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
               </td>
               <td>
-                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].title}}<br>({{topRSVPdEvents[2].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -248,7 +248,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin"></i>
               </td>
               <td>
-                <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">4th : {{topRSVPdEvents[3].title}}<br>({{topRSVPdEvents[3].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             <tr>
@@ -256,7 +256,7 @@
                 <i class="fa fa-3x fa-trophy iconMargin"></i>
               </td>
               <td>
-                <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
+                <h5 class="top5Text">5th : {{topRSVPdEvents[4].title}}<br>({{topRSVPdEvents[4].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
               </td>
             </tr>
             </tbody>
@@ -326,17 +326,17 @@
         <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
       </div>
       <div class="imageMaskDialog"></div>
-      <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+      <h3 class="blueHeaders text-center">{{event.title}}</h3>
       <h5 class="eventClubName">{{event.clubName}}</h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
-          <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+          <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
-          <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+          <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
         </div>
         <div class="eventTransportationDialog">
           <h3 class="blueHeaders text-center">Transportation</h3>
@@ -358,11 +358,11 @@
         </div>
         <div class="eventDescriptionDialog">
           <h3 class="blueHeaders text-center">Description</h3>
-          <p>{{event.eventDesc}}</p>
+          <p>{{event.description}}</p>
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
-          <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+          <p>{{event.location}} -> {{event.spaceName}}</p>
         </div>
       </div>
       <ng-container *ngIf="isLoggedIn">

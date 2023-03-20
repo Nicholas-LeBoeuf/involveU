@@ -160,17 +160,17 @@
          <img class="eventImageDialog" src="assets/{{clubInfo.clubLogo}}">
        </div>
        <div class="imageMaskDialog"></div>
-       <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+       <h3 class="blueHeaders text-center">{{event.title}}</h3>
        <h5 class="eventClubName">{{event.clubName}}</h5>
 
        <div class="eventInformationDialogContainer">
          <div class="eventDateDialog">
            <h3 class="blueHeaders text-center">Date</h3>
-           <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+           <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
          </div>
          <div class="eventTimeDialog">
            <h3 class="blueHeaders text-center">Time</h3>
-           <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+           <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
          </div>
          <div class="eventTransportationDialog">
            <h3 class="blueHeaders text-center">Transportation</h3>
@@ -192,11 +192,11 @@
          </div>
          <div class="eventDescriptionDialog">
            <h3 class="blueHeaders text-center">Description</h3>
-           <p>{{event.eventDesc}}</p>
+           <p>{{event.description}}</p>
          </div>
          <div class="eventLocationDialog">
            <h3 class="blueHeaders text-center">Location</h3>
-           <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+           <p>{{event.location}} -> {{event.spaceName}}</p>
          </div>
        </div>
        <ng-container *ngIf="isLoggedIn">

@@ -1,23 +1,21 @@
 package com.example.involveU.model;
 
-import javax.persistence.*;
-
 
 public class Events{
 
     private long eventID;
 
-    private  String eventName;
+    private  String title;
 
-    private  String eventLocation;
+    private  String location;
 
-    private  String startTime;
+    private  String startDateTime;
 
-    private  String endTime;
+    private  String endDateTime;
 
-    private  String eventDate;
+    private  String dateTimeFormatted;
 
-    private  String eventDesc;
+    private  String description;
 
     private  int isTransportation;
 
@@ -28,6 +26,7 @@ public class Events{
     private  int space_ID;
     private int location_ID;
     private  int clubID;
+    private ExtraCustomField[] customFields;
     public long getEventID() {
         return eventID;
     }
@@ -36,33 +35,33 @@ public class Events{
         this.eventID = eventID;
     }
 
-    public String getEventName() {return eventName;}
+    public String getTitle() {return title;}
 
-    public void setEventName(String eventName) {this.eventName = eventName;}
+    public void setTitle(String title) {this.title = title;}
 
-    public String getEventLocation() {return eventLocation;}
+    public String getLocation() {return location;}
 
-    public void setEventLocation(String eventLocation) {this.eventLocation = eventLocation;}
+    public void setLocation(String location) {this.location = location;}
 
-    public String getStartTime() {return startTime;}
+    public String getStartDateTime() {return startDateTime;}
 
-    public void setStartTime(String startTime) {this.startTime = startTime;}
+    public void setStartDateTime(String startDateTime) {this.startDateTime = startDateTime;}
 
-    public String getEndTime() {return endTime;}
+    public String getEndDateTime() {return endDateTime;}
 
-    public void setEndTime(String endTime) {this.endTime = endTime;}
+    public void setEndDateTime(String endDateTime) {this.endDateTime = endDateTime;}
 
-    public String getEventDate() {return eventDate;}
+    public String getDateTimeFormatted() {return dateTimeFormatted;}
 
-    public void setEventDate(String eventDate) {
+    public void setDateTimeFormatted(String dateTimeFormatted) {
 
-        this.eventDate = eventDate;
+        this.dateTimeFormatted = dateTimeFormatted;
 
     }
 
-    public String getEventDesc() {return eventDesc;}
+    public String getDescription() {return description;}
 
-    public void setEventDesc(String eventDesc) {this.eventDesc = eventDesc;}
+    public void setDescription(String description) {this.description = description;}
 
     public int getIsTransportation() {return isTransportation;}
 
@@ -92,5 +91,9 @@ public class Events{
 
     public void setLocation_ID(int location_ID) {this.location_ID = location_ID;}
 
+    public ExtraCustomField[] getCustomFields() {return customFields;}
 
+    public void setCustomFields(ExtraCustomField[] customFields) {
+        this.customFields = customFields;
+    }
 }

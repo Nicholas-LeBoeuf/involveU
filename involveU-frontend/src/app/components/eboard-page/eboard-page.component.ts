@@ -302,8 +302,8 @@ export class EboardPageComponent implements OnInit {
 
   onUpload(event) {
     const file:File = event.files[0];
-
-    this.adminService.sendImage(file).subscribe(response => {
+    this.clubInfo.clubfile = event.files[0];
+    this.eboardService.updateImage(this.clubInfo,file).subscribe(response => {
       console.log(response);
     })
   }

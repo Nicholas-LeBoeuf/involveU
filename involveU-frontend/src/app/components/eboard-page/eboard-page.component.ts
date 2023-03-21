@@ -16,6 +16,7 @@ import {SocialMedia} from "../../objects/social-media";
 import {ResponsiveService} from "../../services/responsive.service";
 import {AdminService} from "../../services/admin.service";
 import {ToastrService} from "ngx-toastr";
+import {User} from "../../objects/user";
 
 @Component({
   selector: 'app-eboard-page',
@@ -101,6 +102,7 @@ export class EboardPageComponent implements OnInit {
   editClubVisionDialog: boolean = false;
   editClubMissionDialog: boolean = false;
   editClubValuesDialog: boolean = false;
+  isInEboard: boolean = false;
 
   //NUMBERS
   clubID: number;
@@ -116,6 +118,7 @@ export class EboardPageComponent implements OnInit {
   certainAnnouncement: Announcement[] = [];
   clubSocialMedia: SocialMedia[] = [];
   certainSocialMedia: SocialMedia[] = []
+  clubEboard: User[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
   @ViewChild('clubAnnouncementTable') clubAnnouncementTable: Table;
@@ -148,6 +151,7 @@ export class EboardPageComponent implements OnInit {
     this.getClubEvents();
     this.getClubAnnouncements();
     this.getClubSocialMedia();
+    this.getEboard();
   }
 
   getClubInfo() {
@@ -173,6 +177,26 @@ export class EboardPageComponent implements OnInit {
     this.announcementsService.getClubAnnouncements(this.clubID).subscribe(response => {
       this.clubAnnouncements = response;
     })
+  }
+
+  getEboard() {
+    this.clubService.getClubEboard(this.clubID).subscribe(response => {
+      this.clubEboard = response;
+    },
+      error => {
+        console.log(error);
+      },
+      ()=> {
+        this.checkIfInEboard();
+   })
+  }
+
+  checkIfInEboard() {
+    for(let x = 0; x < this.clubEboard.length; x++) {
+      if(this.userID === this.clubEboard[x].studentID) {
+        this.isInEboard = true;
+      }
+    }
   }
 
   createAnnouncementSubmit() {

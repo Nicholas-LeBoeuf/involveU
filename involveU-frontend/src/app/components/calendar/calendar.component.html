@@ -50,7 +50,7 @@
         </div>
         <div class="imageMaskDialog"></div>
       <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
-      <h5 class="eventClubName setMargin" [innerHTML]="event.clubName"></h5>
+      <h5 class="eventClubName setMargin" (click)="goToClubPage(event.clubID)" [innerHTML]="event.clubName"></h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">

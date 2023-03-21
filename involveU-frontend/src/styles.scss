@@ -302,6 +302,11 @@ em {
 
 .eventClubName {
   margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.eventClubName:hover {
+  font-weight: bold;
 }
 
 

@@ -141,7 +141,7 @@
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center" [innerHTML]="FavEvent.title"></h3>
-                  <h5 class="eventClubName" [innerHTML]="FavEvent.clubName"></h5>
+                  <h5 class="eventClubName" (click)="goToClubPage(FavEvent.clubID)" [innerHTML]="FavEvent.clubName"></h5>
                   <p>Date: {{FavEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
                   <p>Time: {{FavEvent.startDateTime | timeFormat}} - {{FavEvent.endDateTime | timeFormat}}</p>
                   <p [innerHTML]="'Location: ' + FavEvent.location"></p>
@@ -178,7 +178,7 @@
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center" [innerHTML]="RSVPEvent.title"></h3>
-                  <h5 class="eventClubName" [innerHTML]="RSVPEvent.clubName"></h5>
+                  <h5 class="eventClubName" (click)="goToClubPage(RSVPEvent.clubID)" [innerHTML]="RSVPEvent.clubName"></h5>
                   <p>Date: {{RSVPEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
                   <p>Time: {{RSVPEvent.startDateTime | timeFormat}} - {{RSVPEvent.endDateTime | timeFormat}}</p>
                   <p [innerHTML]="'Location: ' + RSVPEvent.location"></p>
@@ -303,7 +303,7 @@
                   </div>
                   <div class="imageMaskEvent"></div>
                   <h3 class="blueHeaders text-center" [innerHTML]="futureEvent.title"></h3>
-                  <h5 class="eventClubName" [innerHTML]="futureEvent.clubName"></h5>
+                  <h5 class="eventClubName" (click)="goToClubPage(futureEvent.clubID)" [innerHTML]="futureEvent.clubName"></h5>
                   <p>Login to view more information!</p>
                 </div>
               </div>
@@ -325,7 +325,7 @@
       </div>
       <div class="imageMaskDialog"></div>
       <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
-      <h5 class="eventClubName setMargin" [innerHTML]="event.clubName"></h5>
+      <h5 class="eventClubName setMargin" (click)="goToClubPage(event.clubID)" [innerHTML]="event.clubName"></h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">

@@ -9,6 +9,7 @@ import {ClubService} from "../../services/club.service";
 import {CookieService} from "ngx-cookie-service";
 import {ResponsiveService} from "../../services/responsive.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -23,7 +24,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
               public cookie: CookieService,
               public responsiveService: ResponsiveService,
               private clubService: ClubService,
-              private title: Title) {
+              private title: Title,
+              private router: Router) {
     this.title.setTitle("involveU | Calendar");
   }
 
@@ -274,5 +276,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
         location.reload();
       });
+  }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
   }
 }

@@ -82,7 +82,7 @@
             </div>
             <div class="imageMaskEvent"></div>
             <h3 class="blueHeaders text-center" [innerHTML]="event.title"></h3>
-            <h5 class="eventClubName" [innerHTML]="event.clubName"></h5>
+            <h5 class="eventClubName" (click)="goToClubPage(event.clubID)" [innerHTML]="event.clubName"></h5>
             <ng-container *ngIf="isLoggedIn == true; else notLoggedIn">
               <p>Date: {{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
               <p>Time: {{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
@@ -137,7 +137,7 @@
       </div>
       <div class="imageMaskDialog"></div>
       <h3 class="blueHeaders text-center setMargin" [innerHTML]="certainEvent.title"></h3>
-      <h5 class="eventClubName setMargin" [innerHTML]="certainEvent.clubName"></h5>
+      <h5 class="eventClubName setMargin" (click)="goToClubPage(certainEvent.clubID)" [innerHTML]="certainEvent.clubName"></h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">

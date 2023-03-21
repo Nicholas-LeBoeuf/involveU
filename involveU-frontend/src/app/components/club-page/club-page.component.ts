@@ -169,7 +169,6 @@ export class ClubPageComponent implements OnInit {
   getUserRSVPdEvents() {
     this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
-      console.log(response);
       for(let i = 0; i < this.userRSVPdEvents.length; i++) {
         this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
           const reader = new FileReader();
@@ -184,7 +183,6 @@ export class ClubPageComponent implements OnInit {
   getFavoritedClubAnnouncements() {
     this.announcementsService.getFavoritedClubAnnouncements(this.userID).subscribe(response => {
       this.favoritedClubAnnouncements = response;
-      console.log(response);
     })
   }
 

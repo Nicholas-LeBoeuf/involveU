@@ -93,7 +93,6 @@ export class AdminPageComponent implements OnInit {
 
   //BOOLEANS
   clubLogoUploaded: boolean = false;
-  assignAdvisorSuccess: boolean = false;
   assign: boolean = true;
   disableUserDropdown: boolean = true;
 
@@ -294,10 +293,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   assignAdvisorSubmit(){
-    this.adminService.assignNewAdvisor(this.advisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
-        console.log(success);
-        this.assignAdvisorSuccess = true;
-        location.reload();
+    this.adminService.assignNewAdvisor(this.advisorID.value, this.assignAdvisorClubID.value).subscribe(response =>{
       },
       error => {
         this.toastr.error('Unsuccessful Assign Advisor Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -306,6 +302,7 @@ export class AdminPageComponent implements OnInit {
         this.toastr.success('Successfully Assigned Advisor', undefined, {positionClass: 'toast-top-center', progressBar: true});
         this.advisorID.reset();
         this.assignAdvisorClubID.reset();
+        this.fillAdvisorList();
       });
   }
 

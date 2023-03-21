@@ -74,7 +74,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.getAllClubs();
     this.getLocations();
     this.isUserLoggedIn();
-   // this.getUserRSVPdEvents();
+    this.getUserRSVPdEvents();
   }
 
   ngAfterViewInit() {
@@ -88,7 +88,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     {
       this.formattedEvents.push({id: this.eventsToSend[i].eventID, title: this.eventsToSend[i].title, start: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].startDateTime, end: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].endDateTime, allDay: false})
     }
-    console.log(this.formattedEvents);
 
     this.options.events = this.formattedEvents; // Reset the events portion of the options object
   }
@@ -123,38 +122,33 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // getUserRSVPdEvents() {
-  //   this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
-  //     this.userRSVPdEvents = response;
-  //     console.log(response);
-  //     for(let i = 0; i < this.userRSVPdEvents.length; i++) {
-  //       this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
-  //         const reader = new FileReader();
-  //         reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
-  //         reader.readAsDataURL(new Blob([logo]));
-  //         this.userRSVPdEvents[i].clubLogo = logo;
-  //       })
-  //     }
-  //   })
-  // }
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+      for(let i = 0; i < this.userRSVPdEvents.length; i++) {
+        this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.userRSVPdEvents[i].clubLogo = logo;
+        })
+      }
+    })
+  }
 
   // Calendar Activations
   activateAllEventsFilter() {
     this.eventsService.getAllEvents().subscribe(response => {
       this.eventsToSend = [];
       this.eventsToSend = response;
-      console.log(this.eventsToSend);
     },
       (error) => {
         console.log(error);
-        console.log("ello ello ello");
         this.toastr.error('Error Retrieving All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
 
       () => {
-        console.log("jimmie crack corn");
         this.formatAllEvents();
-
         this.toastr.show('Currently Displaying All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
@@ -259,7 +253,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
     },
       error => {
         this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -272,7 +265,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
     },
       error => {
         console.log(error);

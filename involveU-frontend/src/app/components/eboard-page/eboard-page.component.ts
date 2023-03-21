@@ -154,7 +154,6 @@ export class EboardPageComponent implements OnInit {
     this.clubService.getSpecificClub(this.clubID).subscribe(response => {
       this.clubInfo = response;
       this.clubLogoName = response.clubLogo;
-      console.log(response);
       this.clubService.getClubLogo(this.clubInfo.clubID).subscribe(logo => {
         const reader = new FileReader();
         reader.onload = (e) => this.clubInfo.clubLogo = e.target.result;
@@ -173,20 +172,12 @@ export class EboardPageComponent implements OnInit {
   getClubAnnouncements() {
     this.announcementsService.getClubAnnouncements(this.clubID).subscribe(response => {
       this.clubAnnouncements = response;
-      console.log(response);
     })
-  }
-
-  get announcementFormInputs()
-  {
-    return this.announcementForm.controls;
   }
 
   createAnnouncementSubmit() {
     const newAnnouncement: Announcement = {clubID: this.clubID, contentOfAnnouncement: this.announcementForm.value.contentOfAnnouncement, expiresOn: this.announcementForm.value.expiresOn, announcementTitle: this.announcementForm.value.announcementTitle, postedOn: this.todaysDate};
-    console.log(newAnnouncement);
     this.announcementsService.createAnnouncement(newAnnouncement).subscribe(success =>{
-
       },
       error => {
         this.toastr.error('Unsuccessful Announcement Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -235,7 +226,6 @@ export class EboardPageComponent implements OnInit {
 
   showEditAnnouncementDialog(SpecificAnnouncement: Announcement) {
     this.certainAnnouncement.push(SpecificAnnouncement);
-    console.log(SpecificAnnouncement);
     this.editAnnouncementDialog = true;
   }
 
@@ -263,7 +253,6 @@ export class EboardPageComponent implements OnInit {
   getClubSocialMedia() {
     this.eboardService.getClubSocialMedia(this.clubID).subscribe(response => {
       this.clubSocialMedia = response;
-      console.log(response);
     })
   }
 
@@ -351,7 +340,6 @@ export class EboardPageComponent implements OnInit {
     const editSocialMedia: SocialMedia = {socialMediaID: this.certainSocialMedia[0].socialMediaID, platform: this.platformString.value, profileName: this.editSocialMediaForm.value.editsmProfileName, link: this.editSocialMediaForm.value.editsmLink, clubID: this.clubID};
 
     this.eboardService.editSocialMedia(editSocialMedia).subscribe(response => {
-        console.log(response);
       },
       error => {
         this.toastr.error('Unsuccessful Social Media Edit Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -367,7 +355,6 @@ export class EboardPageComponent implements OnInit {
 
   deleteSocialMedia(socialMedia: SocialMedia) {
     this.eboardService.deleteSocialMedia(socialMedia.socialMediaID).subscribe(response => {
-      console.log(response);
     },
       error => {
         this.toastr.error('Unsuccessful Social Media Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -381,7 +368,6 @@ export class EboardPageComponent implements OnInit {
   updateClubData() {
     const updateClubData : Club = {advisorID: this.clubInfo.advisorID, clubAffiliation: this.clubInfo.clubAffiliation, clubBio: this.editClubBioForm.value.editClubBio, clubMission: this.editClubMissionForm.value.editClubMission, clubName: this.clubInfo.clubName, clubValues: this.editClubValuesForm.value.editClubValues, clubVision: this.editClubVisionForm.value.editClubVision, ownerID: this.clubInfo.ownerID, clubID: this.clubID};
     this.eboardService.editClubData(updateClubData).subscribe(response => {
-        console.log(response);
         this.editClubBioDialog = false;
         this.editClubVisionDialog = false;
         this.editClubMissionDialog = false;
@@ -404,7 +390,6 @@ export class EboardPageComponent implements OnInit {
     const file:File = event.files[0];
     this.clubInfo.clubfile = event.files[0];
     this.eboardService.updateImage(this.clubInfo,file).subscribe(response => {
-      console.log(response);
     },
       error => {
         this.toastr.error('Unsuccessful Logo Upload Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});

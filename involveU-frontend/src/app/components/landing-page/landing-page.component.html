@@ -21,7 +21,7 @@
       <div class="involveUNext">
         <h3>See What is going on this week at Southern New Hampshire University</h3>
       </div>
-      <div class="thisWeekButton">
+      <div class="thisWeekButton" *ngIf="this.cookie.get('studentID') !== ''">
         <button class="yellowButton" routerLink="/calendar">View Events</button>
       </div>
     </div>
@@ -53,7 +53,7 @@
 
     <h5 class="text-center yellow-text span-width">See What is going on this week at Southern New Hampshire University</h5>
 
-    <div class="thisWeekButton">
+    <div class="thisWeekButton" *ngIf="this.cookie.get('studentID') !== ''">
       <button class="yellowButton" routerLink="/schedule">View Events</button>
     </div>
   </div>

@@ -80,7 +80,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.activateAllEventsFilter();
+    if (this.isLoggedIn === true) {
+      this.activateAllEventsFilter();
+    }
   }
 
   formatAllEvents() {

@@ -1,9 +1,14 @@
-<div class="applyMargin">
-  <button class="yellowButton removeMargin" (click)="openViewFilterDialog()">Filters</button>
-</div>
+<ng-container *ngIf="isLoggedIn === false; else UserIsLoggedIn">
+  <h1 class="text-center">You must be <b>Logged In</b> to view this page!</h1>
+</ng-container>
 
-<full-calendar [options]="options"></full-calendar>
+<ng-template #UserIsLoggedIn>
+  <div class="applyMargin">
+    <button class="yellowButton removeMargin" (click)="openViewFilterDialog()">Filters</button>
+  </div>
 
+  <full-calendar [options]="options"></full-calendar>
+</ng-template>
 
 <p-dialog [(visible)]="viewFilterDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewFilterDialog()">
   <div class="text-center dialogContainer">

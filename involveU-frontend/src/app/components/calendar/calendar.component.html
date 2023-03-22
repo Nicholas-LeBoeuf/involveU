@@ -8,7 +8,7 @@
     <!--<button class="yellowButton removeMargin" (click)="openViewFilterDialog()">Filters</button>-->
     <button class="yellowButton setAutoHeight" (click)="activateAllEventsFilter()">All Events</button>
     <button class="yellowButton setAutoHeight" (click)="activateFavoritedClubEventsFilter()" [disabled]="!userID">Favorited Club Events</button>
-    <button class="yellowButton setAutoHeight" [disabled]="!userID">RSVP'd Events</button>
+    <button class="yellowButton setAutoHeight" (click)="activateRSVPFilter()" [disabled]="!userID">RSVP'd Events</button>
   </div>
   <div class="filterFlex">
     <div class="dropdownContentSize">

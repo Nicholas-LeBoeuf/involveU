@@ -63,8 +63,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("/events/getTopRSVP")
     private ResponseEntity<List<Events>> getTopFavorite()
     {

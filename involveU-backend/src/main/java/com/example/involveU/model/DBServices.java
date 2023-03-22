@@ -687,8 +687,16 @@ public class DBServices {
 
     }
     protected boolean upload25liveEvents(Events[] eventsList) throws ParseException {
-        for (Events event: eventsList) {
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+
+       //loops through all events that have been grabbed from Publisher
+        for (Events event: eventsList) {
+            //ExtraCustomFiled was created beacuse the club name is stored with an object called ExtraCustomFiled
+            //To access that object we must create a similar object with the same name
             for(ExtraCustomField customField: event.getCustomFields())
             {
                event.setClubName(customField.getValue());
@@ -699,11 +707,12 @@ public class DBServices {
             {
                 //Sets the clubID to the clubID in our database
                 event.setClubID(getDBClubID(event.getClubName()));
+
+                //This regex pattern grabs all contents between the symbols ><
                 Pattern pattern = Pattern.compile("\\>.*?\\<");
                 Matcher m = pattern.matcher(event.getLocation());
-               // System.out.println(event.getLocation());
 
-                    //uses regex to find the values in the a tag if there is a google link as the location
+                //uses regex to find the values in thea tag if there is a google link as the location
                    if(m.find())
                    {
                        String newLocation;
@@ -711,10 +720,6 @@ public class DBServices {
                        event.setLocation(newLocation);
                        System.out.println((m.group().subSequence(1, m.group().length()-1)));
                    }
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                    Date date = null;
-                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 
                     //Re formates date to simple date format
                     date = df.parse(event.getStartDateTime());
@@ -733,7 +738,7 @@ public class DBServices {
 
                     insertNewEvent(event);
             }
-            //If club does not exist in InvovleU database then a new club with defualt values are created
+            //If club does not exist in InvovleU database then a new club with defualt values is created
             else
             {
                 Club newClub = new Club();
@@ -751,15 +756,16 @@ public class DBServices {
         }
         return false;
     }
-
-
-
+    //We do not have a definite list of clubs on campus so if the club doesn't exist for
+    // a certain event we create one in the database
     protected boolean checkIfClubExisits(String clubName)
     {
         String newClubName = "";
+        //We also need to check if there is a comma in the club name since if
+        //two clubs are listed as the requester for an event they will be
+        //delimited with a comma. We need to split that so we do not create a new club with the names of two.
         if(clubName.contains(","))
         {
-
            for(int i = 0; i < clubName.indexOf(",");i++)
            {
                newClubName += clubName.charAt(i);
@@ -771,11 +777,9 @@ public class DBServices {
         }
 
         sql = "SELECT * FROM Club WHERE clubName = '" + newClubName + "';";
-
         clubs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
 
          return clubs.size() > 0;
-
     }
     protected int getDBClubID(String clubName)
     {
@@ -792,7 +796,6 @@ public class DBServices {
         {
             newClubName = clubName;
         }
-
 
         sql = "SELECT * FROM Club WHERE clubName  = '" + newClubName + "' ;";
 

@@ -576,7 +576,6 @@ public class DBServices {
 
         return events;
     }
-
     protected List<Events> getAllEvents()
     {
         sql = "SELECT * FROM Events;";
@@ -585,38 +584,6 @@ public class DBServices {
 
         return events;
     }
-    protected List<Events>  getEventsByLocationID(String locationID)
-    {
-        sql = "SELECT * FROM Events JOIN Spaces WHERE Events.location = "+locationID+" AND Events.location = Spaces.space_ID;";
-        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
-        return events;
-    }
-    //LOCATIONS CONTROLLER
-
-   protected List<Space> getAllDBLocations()
-    {
-        sql = "SELECT * FROM Location;";
-
-        spaces = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Space.class));
-        return spaces;
-    }
-    protected List<Space> getDBLocationsByID(int locationID)
-    {
-        sql = "SELECT * FROM  Location WHERE location_ID = "+locationID+ ";";
-
-        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
-        return spaces;
-    }
-
-    protected  List<Space> getSpacesByLocation(int locationID)
-    {
-        sql = "SELECT * FROM Location JOIN Spaces S ON Location.location_ID = S.location_ID WHERE S.location_ID = " +locationID +"; ";
-
-        spaces = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Space.class));
-        return spaces;
-    }
-
     //Announcements Controller
     protected List<Announcement> getAllDBAnnouncements()
     {

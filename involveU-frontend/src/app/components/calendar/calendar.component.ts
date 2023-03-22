@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
 import {EventClickArg} from "@fullcalendar/angular";
@@ -8,6 +8,8 @@ import {Club} from "../../objects/club";
 import {ClubService} from "../../services/club.service";
 import {CookieService} from "ngx-cookie-service";
 import {ResponsiveService} from "../../services/responsive.service";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -18,10 +20,12 @@ import {ResponsiveService} from "../../services/responsive.service";
 export class CalendarComponent implements OnInit, AfterViewInit {
 
   constructor(private eventsService: EventsService,
+              private toastr: ToastrService,
               public cookie: CookieService,
               public responsiveService: ResponsiveService,
               private clubService: ClubService,
-              private title: Title) {
+              private title: Title,
+              private router: Router) {
     this.title.setTitle("involveU | Calendar");
   }
 
@@ -30,7 +34,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   viewFilterDialog: boolean = false;
   disableSpaceDropdown: boolean = true;
   isLoggedIn: boolean = false;
-  successMessage: boolean = false;
 
   // NUMBERS
   userID: number;
@@ -38,7 +41,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   spaceID: number;
 
   // STRINGS
-  message: string;
 
   // OBJECTS or ARRAYS
   formattedEvents: CalendarFormat[] = [];
@@ -75,11 +77,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.getLocations();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
-    this.activateAllEventsFilter();
   }
 
   ngAfterViewInit() {
-    this.activateAllEventsFilter();
+    if (this.isLoggedIn === true) {
+      this.activateAllEventsFilter();
+    }
   }
 
   formatAllEvents() {
@@ -87,7 +90,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < this.eventsToSend.length; i++) // Put the events in the proper FullCalendar format
     {
-      this.formattedEvents.push({id: this.eventsToSend[i].eventID, title: this.eventsToSend[i].eventName, start: this.eventsToSend[i].eventDate + 'T' + this.eventsToSend[i].startTime, end: this.eventsToSend[i].eventDate + 'T' + this.eventsToSend[i].endTime, allDay: false})
+      this.formattedEvents.push({id: this.eventsToSend[i].eventID, title: this.eventsToSend[i].title, start: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].startDateTime, end: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].endDateTime, allDay: false})
     }
 
     this.options.events = this.formattedEvents; // Reset the events portion of the options object
@@ -126,7 +129,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   getUserRSVPdEvents() {
     this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
-      console.log(response);
       for(let i = 0; i < this.userRSVPdEvents.length; i++) {
         this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
           const reader = new FileReader();
@@ -146,10 +148,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     },
       (error) => {
         console.log(error);
+        this.toastr.error('Error Retrieving All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
 
       () => {
         this.formatAllEvents();
+        this.toastr.show('Currently Displaying All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
     this.closeViewFilterDialog();
@@ -162,10 +166,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     },
       (error) => {
         console.log(error);
+        this.toastr.error('Error Retrieving Favorited Club Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
 
       () => {
         this.formatAllEvents();
+        this.toastr.show('Currently Displaying Favorited Club Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
     this.closeViewFilterDialog();
@@ -178,11 +184,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.eventsToSend = this.eventsToSend.slice();
       },
       (error) => {
+        this.toastr.error('Error Retrieving ' + event.value.clubName + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
         console.log(error);
       },
 
       () => {
         this.formatAllEvents();
+        this.toastr.show('Currently Displaying ' + event.value.clubName + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       });
 
     this.closeViewFilterDialog();
@@ -193,10 +201,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.eventsToSend = response;
       },
       (error) => {
+        this.toastr.error('Error Retrieving Location Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
         console.log(error);
       },
 
       () => {
+        this.toastr.show('Currently Displaying Events Filtered By Location', undefined, {positionClass: 'toast-top-center', progressBar: true});
         this.formatAllEvents();
       });
 
@@ -247,19 +257,30 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   eventRSVP(eventID: number) {
     this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
-    this.message = "Event Successfully RSVPd!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
-    this.message = "Successfully Removed RSVP!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        console.log(error);
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
+  }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
   }
 }

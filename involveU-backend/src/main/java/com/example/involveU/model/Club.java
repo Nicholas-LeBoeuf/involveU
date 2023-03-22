@@ -1,5 +1,7 @@
 package com.example.involveU.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 public class Club {
 
@@ -15,6 +17,10 @@ public class Club {
     private String clubLogo;
     private int ownerID;
     private int advisorID;
+
+
+
+    private MultipartFile file;
 
 
     public int getClubID() {
@@ -92,4 +98,7 @@ public class Club {
         this.advisorID = advisorID;
     }
 
+    public MultipartFile getFile() {return file;}
+
+    public void setFile(MultipartFile file) {this.file = file;}
 }

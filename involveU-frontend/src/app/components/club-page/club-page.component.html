@@ -1,13 +1,3 @@
-<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
-  <p>{{this.message}}</p>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
 <div class="blueTitleBar">
   <div class="logoAndName text-center">
     <img class="SNHULogoClubPage clubPageTitleMargin" src="assets/SNHU-Logo-White.png" alt="Southern New Hampshire University logo with white text">
@@ -24,7 +14,7 @@
         <hr>
         <div *ngIf="featuredClubs.length > 0" class="text-center">
           <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
-          <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
+          <h3 class="topMargin blueHeaders" [innerHTML]="featuredClubs[0].clubName"></h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
           <button class="yellowButton" (click)="goToClubPage(featuredClubs[0].clubID)">Learn More</button>
         </div>
@@ -37,46 +27,51 @@
         <ng-container *ngIf="topRSVPdEvents.length > 0; else NoTop5">
           <table class="top5Table">
             <tbody>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'1st : ' + topRSVPdEvents[0].title"></h5>
+                  <h5>({{topRSVPdEvents[0].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'2nd : ' + topRSVPdEvents[1].title"></h5>
+                  <h5>({{topRSVPdEvents[1].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'3rd : ' + topRSVPdEvents[2].title"></h5>
+                  <h5>({{topRSVPdEvents[2].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'4th : ' + topRSVPdEvents[3].title"></h5>
+                  <h5>({{topRSVPdEvents[3].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'5th : ' + topRSVPdEvents[5].title"></h5>
+                  <h5>({{topRSVPdEvents[5].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
             </tbody>
           </table>
         </ng-container>
@@ -98,7 +93,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-club>
               <tr>
-                <td class="text-center">{{club.clubName}}</td>
+                <td class="text-center" [innerHTML]="club.clubName"></td>
                 <td class="text-center"><button class="yellowButton" (click)="goToClubPage(club.clubID)">View</button></td>
                 <td class="text-center"><button class="yellowButton" (click)="removeFromFavorites(club.clubID)">Unfavorite</button></td>
               </tr>
@@ -145,11 +140,11 @@
                     <img class="eventImage" [src]="FavEvent.clubLogo" alt="{{FavEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{FavEvent.eventName}}</h3>
-                  <h5 class="eventClubName">{{FavEvent.clubName}}</h5>
-                  <p>Date: {{FavEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{FavEvent.startTime | timeFormat}} - {{FavEvent.endTime | timeFormat}}</p>
-                  <p>Location: {{FavEvent.eventLocation}} -> {{FavEvent.spaceName}}</p>
+                  <h3 class="blueHeaders text-center" [innerHTML]="FavEvent.title"></h3>
+                  <h5 class="eventClubName" (click)="goToClubPage(FavEvent.clubID)" [innerHTML]="FavEvent.clubName"></h5>
+                  <p>Date: {{FavEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{FavEvent.startDateTime | timeFormat}} - {{FavEvent.endDateTime | timeFormat}}</p>
+                  <p [innerHTML]="'Location: ' + FavEvent.location"></p>
                   <ng-container *ngIf="isLoggedIn">
                     <ng-container *ngIf="isUserRSVPd(FavEvent.eventID) === true; else ShowRSVP">
                       <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(FavEvent.eventID)">Remove RSVP</button>
@@ -182,11 +177,11 @@
                     <img class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{RSVPEvent.eventName}}</h3>
-                  <h5 class="eventClubName">{{RSVPEvent.clubName}}</h5>
-                  <p>Date: {{RSVPEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
-                  <p>Time: {{RSVPEvent.startTime | timeFormat}} - {{RSVPEvent.endTime | timeFormat}}</p>
-                  <p>Location: {{RSVPEvent.eventLocation}} -> {{RSVPEvent.spaceName}}</p>
+                  <h3 class="blueHeaders text-center" [innerHTML]="RSVPEvent.title"></h3>
+                  <h5 class="eventClubName" (click)="goToClubPage(RSVPEvent.clubID)" [innerHTML]="RSVPEvent.clubName"></h5>
+                  <p>Date: {{RSVPEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{RSVPEvent.startDateTime | timeFormat}} - {{RSVPEvent.endDateTime | timeFormat}}</p>
+                  <p [innerHTML]="'Location: ' + RSVPEvent.location"></p>
 
                   <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(RSVPEvent.eventID)">Remove RSVP</button>
 
@@ -207,7 +202,7 @@
         <hr>
         <div *ngIf="featuredClubs.length > 0" class="text-center">
           <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}"/>
-          <h3 class="topMargin blueHeaders">{{featuredClubs[0].clubName}}</h3>
+          <h3 class="topMargin blueHeaders" [innerHTML]="featuredClubs[0].clubName"></h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
           <button class="yellowButton" (click)="goToClubPage(featuredClubs[0].clubID)">Learn More</button>
         </div>
@@ -219,46 +214,51 @@
         <ng-container *ngIf="topRSVPdEvents.length !== 0; else NoTop5Events">
           <table class="top5Table">
             <tbody>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">1st : {{topRSVPdEvents[0].eventName}}<br>({{topRSVPdEvents[0].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">2nd : {{topRSVPdEvents[1].eventName}}<br>({{topRSVPdEvents[1].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">3rd : {{topRSVPdEvents[2].eventName}}<br>({{topRSVPdEvents[2].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">4th : {{topRSVPdEvents[3].eventName}}<br>({{topRSVPdEvents[3].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-3x fa-trophy iconMargin"></i>
-              </td>
-              <td>
-                <h5 class="top5Text">5th : {{topRSVPdEvents[4].eventName}}<br>({{topRSVPdEvents[4].eventDate | date:'MMMM dd, YYYY'}})</h5>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'1st : ' + topRSVPdEvents[0].title"></h5>
+                  <h5>({{topRSVPdEvents[0].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'2nd : ' + topRSVPdEvents[1].title"></h5>
+                  <h5>({{topRSVPdEvents[1].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'3rd : ' + topRSVPdEvents[2].title"></h5>
+                  <h5>({{topRSVPdEvents[2].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'4th : ' + topRSVPdEvents[3].title"></h5>
+                  <h5>({{topRSVPdEvents[3].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="fa fa-3x fa-trophy iconMargin"></i>
+                </td>
+                <td>
+                  <h5 class="top5Text" [innerHTML]="'5th : ' + topRSVPdEvents[5].title"></h5>
+                  <h5>({{topRSVPdEvents[5].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                </td>
+              </tr>
             </tbody>
           </table>
         </ng-container>
@@ -302,8 +302,8 @@
                     <img class="eventImage" [src]="futureEvent.clubLogo" alt="{{futureEvent.clubName}} Logo"/>
                   </div>
                   <div class="imageMaskEvent"></div>
-                  <h3 class="blueHeaders text-center">{{futureEvent.eventName}}</h3>
-                  <h5 class="eventClubName">{{futureEvent.clubName}}</h5>
+                  <h3 class="blueHeaders text-center" [innerHTML]="futureEvent.title"></h3>
+                  <h5 class="eventClubName" (click)="goToClubPage(futureEvent.clubID)" [innerHTML]="futureEvent.clubName"></h5>
                   <p>Login to view more information!</p>
                 </div>
               </div>
@@ -321,17 +321,18 @@
   <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
     <div class="eventCardPicture">
       <div class="imageCenter">
-        <img class="eventImage" [src]="event.clubLogo" /> <!--CHANGE TO CLUB LOGO-->
+        <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}}" />
       </div>
       <div class="imageMaskDialog"></div>
-      <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
-      <h5 class="eventClubName">{{event.clubName}}</h5>
+      <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
+      <h5 class="eventClubName setMargin" (click)="goToClubPage(event.clubID)" [innerHTML]="event.clubName"></h5>
 
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
+          <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-            <p>{{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+            <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
           </ng-container>
           <ng-template #notLoggedIn>
             <p>Login to view event date</p>
@@ -339,12 +340,7 @@
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
-          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-            <p>{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
-          </ng-container>
-          <ng-template #notLoggedIn>
-            <p>Login to view event time</p>
-          </ng-template>
+          <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
         </div>
         <div class="eventTransportationDialog">
           <h3 class="blueHeaders text-center">Transportation</h3>
@@ -366,12 +362,12 @@
         </div>
         <div class="eventDescriptionDialog">
           <h3 class="blueHeaders text-center">Description</h3>
-          <p>{{event.eventDesc}}</p>
+          <div class="descriptionStyling" [innerHTML]="event.description"></div>
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
-            <p>{{event.eventLocation}} -> {{event.spaceName}}</p>
+            <p [innerHTML]="event.location"></p>
           </ng-container>
           <ng-template #notLoggedIn>
             <p>Login to view event location</p>
@@ -410,7 +406,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-club>
           <tr>
-            <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)">{{club.clubName}}</td>
+            <td style="justify-content: center" class="clubNameCell" (click)="goToClubPage(club.clubID)" [innerHTML]="club.clubName"></td>
           </tr>
         </ng-template>
       </p-table>

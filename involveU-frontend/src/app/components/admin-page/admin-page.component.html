@@ -3,313 +3,176 @@
   <h1 class="yellow-text adminPageTitleMargin">Admin Page</h1>
 </div>
 
-<div class="container adminContainer">
-  <p-tabView [scrollable]="true">
+<ng-container *ngIf="isUserAdmin === false; else UserIsAdmin">
+  <h1 class="text-center">You must be an <b>Administrator</b> to view this page!</h1>
+</ng-container>
 
-    <p-tabPanel header="Announcements">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">OSI Announcements</h1>
-      <form [formGroup]="osiAnnouncementForm">
-        <div class="osiAnnouncements">
-          <div class="form-group">
-            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Title" formControlName="announcementTitle">
-            <div *ngIf="osiAnnouncementFormInputs?.['announcementTitle']?.invalid && (osiAnnouncementFormInputs?.['announcementTitle']?.dirty || osiAnnouncementFormInputs?.['announcementTitle']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="osiAnnouncementFormInputs?.['announcementTitle']?.errors?.['required']">
-                Announcement Title is required
-              </div>
+<ng-template #UserIsAdmin>
+  <div class="container adminContainer">
+    <p-tabView [scrollable]="true">
+
+      <p-tabPanel header="Announcements">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">OSI Announcements</h1>
+        <form [formGroup]="osiAnnouncementForm">
+          <div class="osiAnnouncements">
+            <div class="form-group">
+              <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Title" formControlName="announcementTitle">
+            </div>
+            <div class="form-group">
+              <input class="form-control formInputs dateInputLabel" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="date" placeholder="Expires On: &nbsp;" formControlName="expiresOn">
+            </div>
+            <div class="form-group">
+              <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
+            </div>
+            <div class="text-center">
+              <button class="form-submit-button yellowButton" type="submit" [disabled]="isOSIAnnouncementValid()" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
             </div>
           </div>
-          <div class="form-group">
-            <input class="form-control formInputs dateInputLabel" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="date" placeholder="Expires On: &nbsp;" formControlName="expiresOn">
-            <div *ngIf="osiAnnouncementFormInputs?.['expiresOn']?.invalid && (osiAnnouncementFormInputs?.['expiresOn']?.dirty || osiAnnouncementFormInputs?.['expiresOn']?.touched)" class="leftAlert alert-danger">
-              <div *ngIf="osiAnnouncementFormInputs?.['expiresOn']?.errors?.['required']">
-                Expiration Date is required
-              </div>
+        </form>
+      </p-tabPanel>
+
+      <p-tabPanel header="Add Club">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">Create Club</h1>
+        <form [formGroup]="createClubForm">
+          <div class="form-group ">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Name" formControlName="clubName">
+          </div>
+          <div class="form-group ">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Affiliation" formControlName="clubAffiliation">
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Club Biography" formControlName="clubBio"></textarea>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Mission" formControlName="clubMission"></textarea>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Vision" formControlName="clubVision"></textarea>
+          </div>
+          <div class="form-group ">
+            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Values" formControlName="clubValues"></textarea>
+          </div>
+          <div class="form-group ">
+            <div class="text-center">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [required]="true" [options]="advisorList" [formControl]="createClubAdvisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select Advisor" class="dropdownLength" styleClass="clubFilter" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
             </div>
           </div>
-          <div class="form-group">
-            <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
-            <div *ngIf="osiAnnouncementFormInputs?.['contentOfAnnouncement']?.invalid && (osiAnnouncementFormInputs?.['contentOfAnnouncement']?.dirty || osiAnnouncementFormInputs?.['contentOfAnnouncement']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="osiAnnouncementFormInputs?.['contentOfAnnouncement']?.errors?.['required']">
-                Announcement content is required
-              </div>
-            </div>
+          <div class="form-group ">
+            <p-fileUpload [ngClass]="{'adminImageUpload': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminImageUploadMobile': responsiveService.deviceMobile()}" name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)"></p-fileUpload>
           </div>
           <div class="text-center">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isOSIAnnouncementValid()" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
+            <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateClubValid()" (click)="createClubSubmit()">Add club</button>
           </div>
-        </div>
-      </form>
-    </p-tabPanel>
+        </form>
+      </p-tabPanel>
 
-    <p-tabPanel header="Add Club">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">Create Club</h1>
-      <form [formGroup]="createClubForm">
-        <div class="form-group ">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Name" formControlName="clubName">
-          <div *ngIf="clubCreationFormInputs?.['clubName']?.invalid && (clubCreationFormInputs?.['clubName']?.dirty || clubCreationFormInputs?.['clubName']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubName']?.errors?.['required']">
-              Club Name is required
+      <p-tabPanel header="Delete Club">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">Delete Club</h1>
+        <form [formGroup]="deleteClubForm">
+          <div class="assignAdvisor">
+            <div class="form-group text-center">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="removeClubID" [required]="true" optionValue="clubID" optionLabel="clubName" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="text-center">
+              <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteClubValid()" (click)="deleteClubSubmit()">Delete Club</button>
             </div>
           </div>
-        </div>
-        <div class="form-group ">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Affiliation" formControlName="clubAffiliation">
-          <div *ngIf="clubCreationFormInputs?.['clubAffiliation']?.invalid && (clubCreationFormInputs?.['clubAffiliation']?.dirty || clubCreationFormInputs?.['clubAffiliation']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubAffiliation']?.errors?.['required']">
-              Club Affiliation is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group ">
-          <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Club Biography" formControlName="clubBio"></textarea>
-          <div *ngIf="clubCreationFormInputs?.['clubBio']?.invalid && (clubCreationFormInputs?.['clubBio']?.dirty || clubCreationFormInputs?.['clubBio']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubBio']?.errors?.['required']">
-              Club Biography is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group ">
-          <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Mission" formControlName="clubMission"></textarea>
-          <div *ngIf="clubCreationFormInputs?.['clubMission']?.invalid && (clubCreationFormInputs?.['clubMission']?.dirty || clubCreationFormInputs?.['clubMission']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubMission']?.errors?.['required']">
-              Club Mission is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group ">
-          <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Vision" formControlName="clubVision"></textarea>
-          <div *ngIf="clubCreationFormInputs?.['clubVision']?.invalid && (clubCreationFormInputs?.['clubVision']?.dirty || clubCreationFormInputs?.['clubVision']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubVision']?.errors?.['required']">
-              Club Vision is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group ">
-          <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Club Values" formControlName="clubValues"></textarea>
-          <div *ngIf="clubCreationFormInputs?.['clubValues']?.invalid && (clubCreationFormInputs?.['clubValues']?.dirty || clubCreationFormInputs?.['clubValues']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubValues']?.errors?.['required']">
-              Club Value is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group ">
-          <div class="text-center">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="advisorList" [formControl]="createClubAdvisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" styleClass="clubFilter" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="assignAdvisorFormInputs?.['email']?.invalid && (assignAdvisorFormInputs?.['email']?.dirty || assignAdvisorFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="assignAdvisorFormInputs?.['email']?.errors?.['required']">
-                Advisor email is required
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group ">
-          <p-fileUpload [ngClass]="{'adminImageUpload': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminImageUploadMobile': responsiveService.deviceMobile()}" name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)"></p-fileUpload>
-          <div *ngIf="clubCreationFormInputs?.['clubLogo']?.invalid && (clubCreationFormInputs?.['clubLogo']?.dirty || clubCreationFormInputs?.['clubLogo']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="clubCreationFormInputs?.['clubLogo']?.errors?.['required']">
-              Club Logo is required
-            </div>
-          </div>
-        </div>
-        <div class="text-center">
-          <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateClubValid()" (click)="createClubSubmit()">Add club</button>
-        </div>
-      </form>
-    </p-tabPanel>
+        </form>
+      </p-tabPanel>
 
-    <p-tabPanel header="Delete Club">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">Delete Club</h1>
-      <form [formGroup]="deleteClubForm">
-        <div class="assignAdvisor">
+      <p-tabPanel header="Add User">
+        <h1 class="text-center blueHeaders">Create User</h1>
+        <form [formGroup]="createUserForm">
+          <div class="form-group">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="First Name" formControlName="firstName">
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Last Name" formControlName="lastName">
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Email" email formControlName="email">
+          </div>
           <div class="form-group text-center">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="removeClubID" optionValue="clubID" optionLabel="clubName" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="deleteUserFormInputs?.['email']?.invalid && (deleteUserFormInputs?.['email']?.dirty || deleteUserFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="deleteUserFormInputs?.['email']?.errors?.['required']">
-                Email is required
-              </div>
-            </div>
+            <p-dropdown appendTo="body" [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="yearNames" [required]="true" [formControl]="yearNameFC" optionValue="yearName" optionLabel="yearName" [autoDisplayFirst]="false" placeholder="Select Year..." class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Pronouns" formControlName="pronouns">
+          </div>
+          <div class="form-group">
+            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="password" placeholder="Password" formControlName="password">
           </div>
           <div class="text-center">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteClubValid()" (click)="deleteClubSubmit()">Delete Club</button>
+            <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateUserValid()" (click)="createUserSubmit()">Add User</button>
           </div>
-        </div>
-      </form>
-    </p-tabPanel>
+        </form>
+      </p-tabPanel>
 
-    <p-tabPanel header="Add User">
-      <h1 class="text-center blueHeaders">Create User</h1>
-      <form [formGroup]="createUserForm">
-        <div class="form-group">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="First Name" formControlName="firstName">
-          <div *ngIf="createUserFormInputs?.['firstName']?.invalid && (createUserFormInputs?.['firstName']?.dirty || createUserFormInputs?.['firstName']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="createUserFormInputs?.['firstName']?.errors?.['required']">
-              First name is required
+      <p-tabPanel header="Delete User">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">Delete User</h1>
+        <form [formGroup]="deleteUserForm">
+          <div class="assignAdvisor">
+            <div class="form-group text-center">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="userList" [formControl]="deleteUserID" [required]="true" optionValue="studentID" optionLabel="email" [filter]="true" [autoDisplayFirst]="false" placeholder="Search email" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="text-center">
+              <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteUserValid()" (click)="deleteUserSubmit()">Delete User</button>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Last Name" formControlName="lastName">
-          <div *ngIf="createUserFormInputs?.['lastName']?.invalid && (createUserFormInputs?.['lastName']?.dirty || createUserFormInputs?.['lastName']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="createUserFormInputs?.['lastName']?.errors?.['required']">
-              Last name is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Email" email formControlName="email">
-          <div *ngIf="createUserFormInputs?.['email']?.invalid && (createUserFormInputs?.['email']?.dirty || createUserFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="createUserFormInputs?.['email']?.errors?.['required']">
-              Email is required
-            </div>
-            <div *ngIf="createUserFormInputs?.['email']?.errors?.['email']">
-              Email must be a valid email
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <select class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" name="year" formControlName="year">
-            <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Your Year...</option>
-            <option value="Freshman">Freshman</option>
-            <option value="Sophomore">Sophomore</option>
-            <option value="Junior">Junior</option>
-            <option value="Senior">Senior</option>
-            <option value="Faculty">Faculty</option>
-          </select>
-          <div *ngIf="createUserFormInputs?.['year']?.invalid && (createUserFormInputs?.['year']?.dirty || createUserFormInputs?.['year']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="createUserFormInputs?.['year']?.errors?.['required']">
-              Year is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Pronouns" formControlName="pronouns">
-          <div *ngIf="createUserFormInputs?.['pronouns']?.invalid && (createUserFormInputs?.['pronouns']?.dirty || createUserFormInputs?.['pronouns']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="createUserFormInputs?.['pronouns']?.errors?.['required']">
-              Pronouns are required
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="password" placeholder="Password" formControlName="password">
-          <div *ngIf="createUserFormInputs?.['password']?.invalid && (createUserFormInputs?.['password']?.dirty || createUserFormInputs?.['password']?.touched)" class="requiredAlert alert-danger">
-            <div *ngIf="createUserFormInputs?.['password']?.errors?.['required']">
-              Password is required
-            </div>
-            <div *ngIf="createUserFormInputs?.['password']?.errors?.['minLength']">
-              Password must be at least 8 characters
-            </div>
-          </div>
-        </div>
-        <div class="text-center">
-          <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateUserValid()" (click)="createUserSubmit()">Add User</button>
-        </div>
-      </form>
-    </p-tabPanel>
+        </form>
+      </p-tabPanel>
 
-    <p-tabPanel header="Delete User">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">Delete User</h1>
-      <form [formGroup]="deleteUserForm">
-        <div class="assignAdvisor">
-          <div class="form-group text-center">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="userList" [formControl]="deleteUserID" optionValue="studentID" optionLabel="email" [filter]="true" [autoDisplayFirst]="false" placeholder="Search email" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="deleteUserFormInputs?.['email']?.invalid && (deleteUserFormInputs?.['email']?.dirty || deleteUserFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="deleteUserFormInputs?.['email']?.errors?.['required']">
-                Email is required
-              </div>
-            </div>
-          </div>
+      <p-tabPanel header="Add E-Board Member">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">Assign EBoard Member</h1>
+        <form [formGroup]="addEBoardForm">
           <div class="text-center">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteUserValid()" (click)="deleteUserSubmit()">Delete User</button>
+            <div class="form-group">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="addEBoardClubID" [filter]="true" [required]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="form-group">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="nonEboardList" [formControl]="nonEboardID" [filter]="true" [required]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="form-group">
+              <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="EBoard Position" formControlName="role">
+            </div>
+            <div class="centerButton">
+              <button class="form-submit-button yellowButton" type="submit" [disabled]="isAssignEboardValid()" (click)="addEBoardSubmit()">Assign EBoard</button>
+            </div>
           </div>
-        </div>
-      </form>
-    </p-tabPanel>
+        </form>
+      </p-tabPanel>
 
-    <p-tabPanel header="Add E-Board Member">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">Assign EBoard Member</h1>
-      <form [formGroup]="addEBoardForm">
-        <div class="text-center">
-          <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="addEBoardClubID" [filter]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="addEBoardFormInputs?.['clubName']?.invalid && (addEBoardFormInputs?.['clubName']?.dirty || addEBoardFormInputs?.['clubName']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="addEBoardFormInputs?.['clubName']?.errors?.['required']">
-                Club Name is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="nonEboardList" [formControl]="nonEboardID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="addEBoardFormInputs?.['email']?.invalid && (addEBoardFormInputs?.['email']?.dirty || addEBoardFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="addEBoardFormInputs?.['email']?.errors?.['required']">
-                User email is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="EBoard Position" formControlName="role">
-            <div *ngIf="addEBoardFormInputs?.['role']?.invalid && (addEBoardFormInputs?.['role']?.dirty || addEBoardFormInputs?.['role']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="addEBoardFormInputs?.['role']?.errors?.['required']">
-                EBoard position is required
-              </div>
-            </div>
-          </div>
-          <div class="centerButton">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isAssignEboardValid()" (click)="addEBoardSubmit()">Assign EBoard</button>
-          </div>
-        </div>
-      </form>
-    </p-tabPanel>
-
-    <p-tabPanel header="Remove E-Board Member">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">Remove EBoard Member</h1>
-      <form [formGroup]="removeEBoardForm">
-        <div class="text-center">
-          <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="removeEBoardClubID" [filter]="true" [autoDisplayFirst]="false" [ngModel]="selectedClub" (onChange)="checkClubSelected()"  optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="removeEBoardFormInputs?.['clubName']?.invalid && (removeEBoardFormInputs?.['clubName']?.dirty || removeEBoardFormInputs?.['clubName']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="removeEBoardFormInputs?.['clubName']?.errors?.['required']">
-                Club Name is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubEboard" [formControl]="eboardID" [filter]="true" [autoDisplayFirst]="false" [disabled]="disableUserDropdown" optionValue="studentID" optionLabel="firstName"  placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="removeEBoardFormInputs?.['userID']?.invalid && (removeEBoardFormInputs?.['userID']?.dirty || removeEBoardFormInputs?.['userID']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="removeEBoardFormInputs?.['userID']?.errors?.['required']">
-                User email is required
-              </div>
-            </div>
-          </div>
+      <p-tabPanel header="Remove E-Board Member">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">Remove EBoard Member</h1>
+        <form [formGroup]="removeEBoardForm">
           <div class="text-center">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isRemoveEboardValid()" (click)="removeEBoardSubmit()">Remove EBoard</button>
-          </div>
-        </div>
-      </form>
-    </p-tabPanel>
-    <p-tabPanel header="Assign Advisor">
-      <h1 class="text-center blueHeaders adminPageTitleMargin">Assign Advisor</h1>
-      <form [formGroup]="assignAdvisorForm">
-        <div class="text-center">
-          <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="assignAdvisorClubID" [filter]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="assignAdvisorFormInputs?.['clubName']?.invalid && (assignAdvisorFormInputs?.['clubName']?.dirty || assignAdvisorFormInputs?.['clubName']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="assignAdvisorFormInputs?.['clubName']?.errors?.['required']">
-                Club Name is required
-              </div>
+            <div class="form-group">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="removeEBoardClubID" [filter]="true" [autoDisplayFirst]="false" [required]="true" [ngModel]="selectedClub" (onChange)="checkClubSelected()"  optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="form-group">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubEboard" [formControl]="eboardID" [filter]="true" [autoDisplayFirst]="false" [required]="true" [disabled]="disableUserDropdown" optionValue="studentID" optionLabel="firstName"  placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="text-center">
+              <button class="form-submit-button yellowButton" type="submit" [disabled]="isRemoveEboardValid()" (click)="removeEBoardSubmit()">Remove EBoard</button>
             </div>
           </div>
-          <div class="form-group">
-            <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="advisorList" [formControl]="advisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-            <div *ngIf="assignAdvisorFormInputs?.['email']?.invalid && (assignAdvisorFormInputs?.['email']?.dirty || assignAdvisorFormInputs?.['email']?.touched)" class="requiredAlert alert-danger">
-              <div *ngIf="assignAdvisorFormInputs?.['email']?.errors?.['required']">
-                Advisor email is required
-              </div>
-            </div>
-          </div>
+        </form>
+      </p-tabPanel>
+      <p-tabPanel header="Assign Advisor">
+        <h1 class="text-center blueHeaders adminPageTitleMargin">Assign Advisor</h1>
+        <form [formGroup]="assignAdvisorForm">
           <div class="text-center">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isAssignAdvisorValid()" (click)="assignAdvisorSubmit()">Assign Advisor</button>
+            <div class="form-group">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="assignAdvisorClubID" [filter]="true" [autoDisplayFirst]="false" optionValue="clubID" optionLabel="clubName" placeholder="Select Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="form-group">
+              <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="advisorList" [formControl]="advisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+            </div>
+            <div class="text-center">
+              <button class="form-submit-button yellowButton" type="submit" [disabled]="isAssignAdvisorValid()" (click)="assignAdvisorSubmit()">Assign Advisor</button>
+            </div>
           </div>
-        </div>
-      </form>
-    </p-tabPanel>
-  </p-tabView>
-</div>
+        </form>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</ng-template>

@@ -1,38 +1,5 @@
 @import "src/styles";
 
-.eventAlerts {
-  position: absolute;
-  z-index: 1000000;
-
-  left: 50%;
-  right: 50%;
-
-  transform: translate(-50%, -50%);
-
-  height: 5%;
-  margin-top: 2% !important;
-  width: 30%;
-}
-
-.eventAlerts p {
-  font-size: 1.8em;
-}
-
-.alert-dismissible .btn-close {
-  padding: 1rem  1rem;
-}
-
-.alert {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: center;
-  border-radius: 10px;
-  top: 35px;
-  position: sticky;
-}
-
-//Actual Page
-
 .clubLogo {
   margin-bottom: 10px;
 }

@@ -25,7 +25,7 @@
               <textarea class="form-control formInputs largeTextField" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
             </div>
             <div class="text-center">
-              <button class="form-submit-button yellowButton" type="submit" [disabled]="isOSIAnnouncementValid()" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
+              <button class="form-submit-button blueButton" type="submit" [disabled]="isOSIAnnouncementValid()" (click)="createOSIAnnouncementSubmit()">Create Announcement</button>
             </div>
           </div>
         </form>
@@ -61,7 +61,7 @@
             <p-fileUpload [ngClass]="{'adminImageUpload': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminImageUploadMobile': responsiveService.deviceMobile()}" name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)"></p-fileUpload>
           </div>
           <div class="text-center">
-            <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateClubValid()" (click)="createClubSubmit()">Add club</button>
+            <button class="blueButton form-submit-button" type="submit" [disabled]="isCreateClubValid()" (click)="createClubSubmit()">Add club</button>
           </div>
         </form>
       </p-tabPanel>
@@ -74,7 +74,7 @@
               <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubNames" [formControl]="removeClubID" [required]="true" optionValue="clubID" optionLabel="clubName" [filter]="true" [autoDisplayFirst]="false" placeholder="Search Club" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
             </div>
             <div class="text-center">
-              <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteClubValid()" (click)="deleteClubSubmit()">Delete Club</button>
+              <button class="form-submit-button blueButton" type="submit" [disabled]="isDeleteClubValid()" (click)="deleteClubSubmit()">Delete Club</button>
             </div>
           </div>
         </form>
@@ -102,7 +102,7 @@
             <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="password" placeholder="Password" formControlName="password">
           </div>
           <div class="text-center">
-            <button class="yellowButton form-submit-button" type="submit" [disabled]="isCreateUserValid()" (click)="createUserSubmit()">Add User</button>
+            <button class="blueButton form-submit-button" type="submit" [disabled]="isCreateUserValid()" (click)="createUserSubmit()">Add User</button>
           </div>
         </form>
       </p-tabPanel>
@@ -115,7 +115,7 @@
               <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="userList" [formControl]="deleteUserID" [required]="true" optionValue="studentID" optionLabel="email" [filter]="true" [autoDisplayFirst]="false" placeholder="Search email" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
             </div>
             <div class="text-center">
-              <button class="form-submit-button yellowButton" type="submit" [disabled]="isDeleteUserValid()" (click)="deleteUserSubmit()">Delete User</button>
+              <button class="form-submit-button blueButton" type="submit" [disabled]="isDeleteUserValid()" (click)="deleteUserSubmit()">Delete User</button>
             </div>
           </div>
         </form>
@@ -135,7 +135,7 @@
               <input class="form-control formInputs" [ngClass]="{'adminInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="EBoard Position" formControlName="role">
             </div>
             <div class="centerButton">
-              <button class="form-submit-button yellowButton" type="submit" [disabled]="isAssignEboardValid()" (click)="addEBoardSubmit()">Assign EBoard</button>
+              <button class="form-submit-button blueButton" type="submit" [disabled]="isAssignEboardValid()" (click)="addEBoardSubmit()">Assign EBoard</button>
             </div>
           </div>
         </form>
@@ -152,7 +152,7 @@
               <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="clubEboard" [formControl]="eboardID" [filter]="true" [autoDisplayFirst]="false" [required]="true" [disabled]="disableUserDropdown" optionValue="studentID" optionLabel="firstName"  placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
             </div>
             <div class="text-center">
-              <button class="form-submit-button yellowButton" type="submit" [disabled]="isRemoveEboardValid()" (click)="removeEBoardSubmit()">Remove EBoard</button>
+              <button class="form-submit-button blueButton" type="submit" [disabled]="isRemoveEboardValid()" (click)="removeEBoardSubmit()">Remove EBoard</button>
             </div>
           </div>
         </form>
@@ -168,7 +168,7 @@
               <p-dropdown [ngClass]="{'adminDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'adminDropdownMobile': responsiveService.deviceMobile()}" [options]="advisorList" [formControl]="advisorID" [filter]="true" [autoDisplayFirst]="false" optionValue="studentID" optionLabel="email" placeholder="Select User" class="dropdownLength" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
             </div>
             <div class="text-center">
-              <button class="form-submit-button yellowButton" type="submit" [disabled]="isAssignAdvisorValid()" (click)="assignAdvisorSubmit()">Assign Advisor</button>
+              <button class="form-submit-button blueButton" type="submit" [disabled]="isAssignAdvisorValid()" (click)="assignAdvisorSubmit()">Assign Advisor</button>
             </div>
           </div>
         </form>

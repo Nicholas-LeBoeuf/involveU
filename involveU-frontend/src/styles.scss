@@ -431,8 +431,8 @@ em {
 //Tab View Styling
 ::ng-deep {
   .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-    background-color: $HeritageBlue;
-    color: $GoldenYellow;
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
     border: none;
   }
 
@@ -441,8 +441,9 @@ em {
   }
 
   .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    background-color: $GoldenYellow;
-    color: $HeritageBlue;
+
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
   }
 
   .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {

@@ -1,5 +1,5 @@
-package com.example.involveU.model;
 
+package com.example.involveU.model; 
 
 public class Events{
 

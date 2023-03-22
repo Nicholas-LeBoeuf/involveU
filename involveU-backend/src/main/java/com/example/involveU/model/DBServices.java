@@ -529,7 +529,7 @@ public class DBServices {
 
         return  events;
     }
-
+//RSVP Controller
     protected boolean insertRsvpEvent(int eventID, int userID)
     {
         //setting validQuery to 1 ensures that it won't accidentally be set to 0 on last use.
@@ -568,6 +568,14 @@ public class DBServices {
 
         return events;
     }
+    protected  List<Events> getAllFutureRsvp(int userID)
+    {
+        sql = "SELECT * FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + " AND dateTimeFormatted >= DATE(NOW())  ORDER BY dateTimeFormatted ,startDateTime ASC;";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return events;
+    }
+
     protected List<Events> getAllClubRsvp(int clubID)
     {
         sql = "SELECT Events.eventID ,title, startDateTime, location, endDateTime, dateTimeFormatted,description, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";

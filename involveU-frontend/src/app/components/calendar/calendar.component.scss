@@ -124,19 +124,6 @@
   margin: 0 !important;
 }
 
-
-.calendarDropdown::ng-deep {
-  .p-dropdown {
-    text-align: left;
-  }
-}
-
-.calendarDropdownMobile::ng-deep {
-  .p-dropdown {
-    text-align: center;
-  }
-}
-
 ::ng-deep .p-dropdown-item.p-ripple {
   white-space: normal;
 }
@@ -159,4 +146,26 @@
 .setAutoHeight {
   height: auto !important;
   padding: 10px !important;
+}
+
+.calendarDropdownBlue::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+  }
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: $GoldenYellow;
+  }
+}
+
+.calendarDropdownYellow::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
+  }
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: $HeritageBlue;
+  }
 }

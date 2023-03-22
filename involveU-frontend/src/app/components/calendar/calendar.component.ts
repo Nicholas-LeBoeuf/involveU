@@ -39,8 +39,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   userID: number;
   locationID: number;
   spaceID: number;
-
   // STRINGS
+  currentFilter: string;
 
   // OBJECTS or ARRAYS
   formattedEvents: CalendarFormat[] = [];
@@ -154,6 +154,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       () => {
         this.formatAllEvents();
         this.toastr.show('Currently Displaying All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.currentFilter = 'allEventsFilter';
       });
 
     this.closeViewFilterDialog();
@@ -172,6 +173,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       () => {
         this.formatAllEvents();
         this.toastr.show('Currently Displaying Favorited Club Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.currentFilter = 'favoritedClubEventsFilter';
       });
 
     this.closeViewFilterDialog();
@@ -191,6 +193,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       () => {
         this.formatAllEvents();
         this.toastr.show('Currently Displaying ' + event.value.clubName + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.currentFilter = 'clubEventsFilter';
       });
 
     this.closeViewFilterDialog();
@@ -202,6 +205,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.eventsToSend = this.eventsToSend.slice();
     this.formatAllEvents();
     this.toastr.show('Currently Displaying ' + 'RSVP\'d Events' + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    this.currentFilter = 'RSVPEventsFilter';
   }
 
   activateSpaceFilter() {
@@ -290,5 +294,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
+  }
+
+  getCurrentFilter() {
+    return this.currentFilter;
   }
 }

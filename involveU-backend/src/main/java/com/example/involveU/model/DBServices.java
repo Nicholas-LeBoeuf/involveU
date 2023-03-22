@@ -562,7 +562,7 @@ public class DBServices {
 
     protected List<Events> getAllUserRsvp(int userID)
     {
-        sql = "SELECT Events.eventID ,title, startDateTime, location, endDateTime, dateTimeFormatted,description, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + "  ORDER BY dateTimeFormatted ,startDateTime ASC;";
+        sql = "SELECT * FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + "  ORDER BY dateTimeFormatted ,startDateTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
 

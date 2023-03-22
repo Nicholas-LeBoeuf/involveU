@@ -36,6 +36,10 @@ export class EventsService {
     return this.http.get<Events[]>(environment.apiURL + `events/getUserRsvpEvent/${userID}`);
   }
 
+  getUserFutureRSVPdEvents(userID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getUserFutureRsvpEvents/${userID}`);
+  }
+
   rsvpToEvent(eventID: number, userID: number) {
     return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`, {responseType: 'text'});
   }

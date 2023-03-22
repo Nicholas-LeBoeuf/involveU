@@ -167,7 +167,7 @@ export class ClubPageComponent implements OnInit {
   }
 
   getUserRSVPdEvents() {
-    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+    this.eventsService.getUserFutureRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
       for(let i = 0; i < this.userRSVPdEvents.length; i++) {
         this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {

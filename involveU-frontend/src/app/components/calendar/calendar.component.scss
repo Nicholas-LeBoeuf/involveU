@@ -127,7 +127,6 @@
 
 .calendarDropdown::ng-deep {
   .p-dropdown {
-    width: 50%;
     text-align: left;
   }
 }
@@ -135,7 +134,6 @@
 .calendarDropdownMobile::ng-deep {
   .p-dropdown {
     text-align: center;
-    width: 80%;
   }
 }
 
@@ -149,4 +147,16 @@
 
 .dropdownContentSize {
   margin: 20px;
+}
+
+.filterFlex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.setAutoHeight {
+  height: auto !important;
+  padding: 10px !important;
 }

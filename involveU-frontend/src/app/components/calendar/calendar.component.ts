@@ -196,6 +196,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.closeViewFilterDialog();
   }
 
+  activateRSVPFilter() {
+    this.eventsToSend = [];
+    this.eventsToSend = this.userRSVPdEvents;
+    this.eventsToSend = this.eventsToSend.slice();
+    this.formatAllEvents();
+    this.toastr.show('Currently Displaying ' + 'RSVP\'d Events' + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+  }
+
   activateSpaceFilter() {
     this.eventsService.getEventsBySpace(this.spaceID).subscribe(response => {
         this.eventsToSend = response;

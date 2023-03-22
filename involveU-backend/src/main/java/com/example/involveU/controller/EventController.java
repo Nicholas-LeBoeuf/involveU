@@ -35,7 +35,6 @@ public class EventController extends DBServices{
        events = getDBTodaysEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
     @GetMapping("events/getClubEvents/{clubID}")
     private ResponseEntity<List<Events>> getEventsByClub(@PathVariable("clubID") int clubID)
     {
@@ -43,26 +42,20 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("events/getFutureEvents")
     private ResponseEntity<List<Events>> getFutureEvents()
     {
         events = getDBAllFutureEvents();
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
-
     @GetMapping("events/getFutureFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFutureFavoriteClubEvents(@PathVariable("userID") int userID)
     {
         events = getDBFutureFavoriteClubEvents(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
-
     @GetMapping("events/getFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFavoriteClubEvents(@PathVariable("userID") int userID)
     {
@@ -70,8 +63,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("/events/getTopRSVP")
     private ResponseEntity<List<Events>> getTopFavorite()
     {
@@ -188,42 +179,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
-
-    //LOCATIONS  ENDPOINTS
-
-
-    @GetMapping("events/getAllLocations")
-    private ResponseEntity<List<Space>>getAllLocation()
-    {
-        spaces = getAllDBLocations();
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getLocationByID/{locationID}")
-    private ResponseEntity<List<Space>>getLocationID(@PathVariable("locationID") int locationID)
-    {
-        spaces = getDBLocationsByID(locationID);
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getSpacesByLocation/{locationID}")
-    private ResponseEntity<List<Space>>spacesByLocation(@PathVariable("locationID") int locationID)
-    {
-        spaces = getSpacesByLocation(locationID);
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getEventsBySpace/{locationID}")
-    private ResponseEntity<List<Events>>getEventBySpace(@PathVariable("locationID") String locationID)
-    {
-        events = getEventsByLocationID(locationID);
-
-        return new ResponseEntity<>(events,HttpStatus.OK);
-    }
-
     @GetMapping("events/test25live/{clubID}")
     private  ResponseEntity<String> get25liveEvents(@PathVariable("clubID") int clubID) throws IOException, ParseException {
 

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -20,7 +20,6 @@ import {Table, TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {ContextMenuModule} from "primeng/contextmenu";
 import {DropdownModule} from "primeng/dropdown";
-import { ScheduleComponent } from './components/schedule/schedule.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -33,6 +32,23 @@ import { EboardPageComponent } from './components/eboard-page/eboard-page.compon
 import {LayoutModule} from "@angular/cdk/layout";
 import {ResponsiveService} from "./services/responsive.service";
 import { DatePipe } from '@angular/common';
+import { MoreInfoComponent } from './components/more-info/more-info.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {AdminService} from "./services/admin.service";
+import {AnnouncementsService} from "./services/announcements.service";
+import {ClubService} from "./services/club.service";
+import {EboardService} from "./services/eboard.service";
+import {EventsService} from "./services/events.service";
+import {UserService} from "./services/user.service";
+import {TabViewModule} from "primeng/tabview";
+import { IntroClubsOrgsComponent } from './components/intro-clubs-orgs/intro-clubs-orgs.component';
+import { OsiStaffComponent } from './components/osi-staff/osi-staff.component';
+import { StudentCenterServicesComponent } from './components/student-center-services/student-center-services.component';
+import { EventPlanningComponent } from './components/event-planning/event-planning.component';
+import { ProgramPlanningChecklistComponent } from './components/program-planning-checklist/program-planning-checklist.component';
+import { PreTripAgendaComponent } from './components/pre-trip-agenda/pre-trip-agenda.component';
+import { TripPlanningGuideComponent } from './components/trip-planning-guide/trip-planning-guide.component';
+
 
 
 FullCalendarModule.registerPlugins([
@@ -50,10 +66,17 @@ FullCalendarModule.registerPlugins([
     FilterPipe,
     SpecificClubPageComponent,
     AdminPageComponent,
-    ScheduleComponent,
     CalendarComponent,
     TimeFormatPipe,
-    EboardPageComponent
+    EboardPageComponent,
+    MoreInfoComponent,
+    IntroClubsOrgsComponent,
+    OsiStaffComponent,
+    StudentCenterServicesComponent,
+    EventPlanningComponent,
+    ProgramPlanningChecklistComponent,
+    PreTripAgendaComponent,
+    TripPlanningGuideComponent
   ],
     imports: [
         BrowserModule,
@@ -74,11 +97,20 @@ FullCalendarModule.registerPlugins([
         FullCalendarModule,
         FileUploadModule,
         LayoutModule,
+        FontAwesomeModule,
+        TabViewModule,
     ],
   providers: [
     CookieService,
     ResponsiveService,
-    DatePipe
+    AdminService,
+    AnnouncementsService,
+    ClubService,
+    EboardService,
+    EventsService,
+    UserService,
+    DatePipe,
+    Title
   ],
   bootstrap: [AppComponent]
 })

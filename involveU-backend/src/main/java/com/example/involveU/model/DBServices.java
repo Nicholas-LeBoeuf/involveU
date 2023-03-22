@@ -32,6 +32,7 @@ public class DBServices {
     private List<Events> events;
     private List<Club> clubs;
     private List<RSVP> rsvps;
+    private List<SocialMedia> clubSMs;
     private String sql;
     private int validQuery;
     @Autowired
@@ -51,7 +52,6 @@ public class DBServices {
     protected static DriverManagerDataSource getDataSource() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
 
         dataSource.setUrl(url);
         dataSource.setUsername(username);
@@ -171,6 +171,14 @@ public class DBServices {
 
         return users;
     }
+
+    protected List<User> getDBAllFaculty()
+    {
+        sql = "SELECT * FROM User WHERE year = 'Faculty';";
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users;
+    }
     protected List<User> getDBAllEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 1 ";
@@ -229,12 +237,72 @@ public class DBServices {
             return clubs.get(0);
         }
     }
+    protected  Boolean deleteDBClub(int clubID)
+    {
+        sql = "DELETE FROM Club WHERE clubID = ?";
+
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery ==1;
+    }
+
     protected Boolean insertNewClub(Club newClub)
     {
         sql = "INSERT INTO Club (ownerID, clubName, clubAffiliation, clubBio, clubVision, clubMission, clubValues, clubLogo, advisorID) Values (?,?,?,?,?,?,?,?,?);";
         validQuery = JdbcTemplated.update(sql,newClub.getOwnerID(),newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getClubLogo(), newClub.getAdvisorID());
 
         return validQuery == 1;
+
+    }
+
+    protected Boolean updateClubDBData(Club newClub)
+    {
+        sql = "UPDATE Club SET ownerID =?, clubName = ?, clubAffiliation = ?, clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ?, advisorID = ? WHERE clubID = ?";
+        validQuery = JdbcTemplated.update(sql, newClub.getOwnerID(), newClub.getClubName(), newClub.getClubAffiliation(), newClub.getClubBio(), newClub.getClubVision(), newClub.getClubMission(), newClub.getClubValues(), newClub.getAdvisorID(), newClub.getClubID());
+
+        return validQuery == 1;
+    }
+
+   /* protected Boolean updateClubDBBio(int clubID, String newBio)
+    {
+        sql = "UPDATE Club SET clubBio = ? WHERE clubID = " + clubID + ";";
+        validQuery = JdbcTemplated.update(sql, clubID, newBio);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBVision(int clubID)
+    {
+        sql = "UPDATE Club SET clubVision = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBMission(int clubID)
+    {
+        sql = "UPDATE Club SET clubMission = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean updateClubDBValues(int clubID)
+    {
+        sql = "UPDATE Club SET clubValues = ? WHERE clubID = " + clubID;
+        validQuery = JdbcTemplated.update(sql, clubID);
+
+        return validQuery == 1;
+    }
+*/
+    protected String getClubLogo(int clubID)
+    {
+        String clubLogoPath;
+        sql = "SELECT clubLogo FROM Club WHERE clubID = ?;";
+
+        clubLogoPath = JdbcTemplated.queryForObject(sql,new Object[]{clubID}, String.class);
+
+        return clubLogoPath;
 
     }
     protected List<Club> searchDBClub(String searchContent)
@@ -301,6 +369,10 @@ public class DBServices {
         sql = "INSERT INTO Eboard (clubID, studentID,eboardPosition ) VALUES (?,?,?);";
 
         validQuery = JdbcTemplated.update(sql,clubID,userId,position);
+
+        sql = "UPDATE User SET isEboard = ? WHERE studentID = ? ";
+
+        validQuery = JdbcTemplated.update(sql,1, userId);
 
         if(validQuery == 1)
         {
@@ -438,18 +510,27 @@ public class DBServices {
     }
     protected  List<Events> getDBFutureFavoriteClubEvents(int userID)
     {
-        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName from Events JOIN Favorites ON eventDate >= DATE(NOW()) AND Events.clubID = Favorites.clubID AND Favorites.userID = "+userID +" ORDER BY eventDate ,startTime ASC;\n";
+        sql = "select Events.eventID, Events.eventName, Events.startTime, Events.eventLocation, Events.endTime, Events.eventDate, Events.eventDesc, Events.isTransportation, Events.ticketLink, Events.clubName, Events.clubID, Spaces.spaceName, Spaces.location_ID from Events JOIN Favorites ON eventDate >= DATE(NOW()) AND Events.clubID = Favorites.clubID AND Favorites.userID = "+userID+" JOIN Spaces WHERE space_ID = Events.eventLocation ORDER BY eventDate ,startTime ASC;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
 
         return  events;
     }
     protected  List<Events> getDBFavoriteClubEvents(int userID)
     {
-        sql = "select eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Events.clubID, Events.clubName, Spaces.space_ID, Spaces.spaceName from Events JOIN Spaces ON eventLocation = space_ID JOIN Favorites ON  Events.clubID = Favorites.clubID AND Favorites.userID = "+ userID+" ORDER BY eventDate ,startTime ASC;\n ";
+        sql = "select Events.eventID, Events.eventName, Events.startTime, Events.eventLocation, Events.endTime, Events.eventDate, Events.eventDesc, Events.isTransportation, Events.ticketLink, Events.clubName, Events.clubID, Spaces.spaceName, Spaces.location_ID from Events JOIN Favorites ON Events.clubID = Favorites.clubID AND Favorites.userID = "+ userID+" JOIN Spaces WHERE space_ID = Events.eventLocation ORDER BY eventDate ,startTime ASC; ";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return  events;
     }
 
@@ -485,9 +566,13 @@ public class DBServices {
 
     protected List<Events> getAllUserRsvp(int userID)
     {
-        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + ";";
+        sql = "SELECT Events.eventID ,eventName, startTime, eventLocation, endTime, eventDate,eventDesc, isTransportation,ticketLink, Spaces.location_ID, Spaces.spaceName FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND R.studentID = " + userID + " JOIN Spaces WHERE space_ID = Events.eventLocation ORDER BY eventDate ,startTime ASC;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
+        for(Events event: events)
+        {
+            event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
+        }
         return events;
     }
     protected List<Events> getAllClubRsvp(int clubID)
@@ -518,30 +603,12 @@ public class DBServices {
     {
         sql = "SELECT * FROM Events JOIN Spaces WHERE Events.eventLocation = "+locationID+" AND Events.eventLocation = Spaces.space_ID;";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
         for(Events event: events)
         {
             event.setEventLocation(getDBLocationsByID(event.getLocation_ID()).get(0).getLocationName());
         }
         return events;
-    }
-
-    protected boolean uploadImage(MultipartFile file)
-    {
-
-        try {
-            Blob blob = new SerialBlob(file.getBytes());
-            System.out.println(file.getBytes()[0]);
-            sql = "INSERT INTO Images (imageName, Image, clubID) VALUES (?,?,?)";
-
-            validQuery = JdbcTemplated.update(sql, file.getName(), blob, 3);
-        }catch(IOException e) {
-            System.out.print("Failed");
-        } catch (SerialException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return validQuery == 1;
     }
     //LOCATIONS CONTROLLER
 
@@ -571,7 +638,7 @@ public class DBServices {
     //Announcements Controller
     protected List<Announcement> getAllDBAnnouncements()
     {
-        sql = "SELECT * FROM Announcements;";
+        sql = "SELECT * FROM Announcements WHERE expiresON > DATE(NOW()) ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
 
@@ -607,7 +674,7 @@ public class DBServices {
 
     protected  List<Announcement> getDBFavoritedAnnouncements(int userID)
     {
-        sql = "select * from Announcements join Favorites F on Announcements.clubID = F.clubID WHERE F.userID = " + userID +";";
+        sql = "select Announcements.announcementID, Announcements.clubID, Announcements.contentOfAnnouncement, Announcements.expiresOn,Announcements.postedOn, Announcements.announcementTitle, Club.clubName from Announcements join Favorites F on Announcements.clubID = F.clubID AND F.userID = " + userID +" AND expiresON > DATE(NOW()) JOIN Club WHERE Announcements.clubID = Club.clubID ORDER BY postedOn DESC;";
 
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
@@ -615,24 +682,42 @@ public class DBServices {
 
     protected  List<Announcement> getDBClubAnnouncements(int clubID)
     {
-        sql = "select * from Announcements WHERE Announcements.clubID = " + clubID +";";
-
+        sql = "select announcementID, Announcements.clubID, contentOfAnnouncement, expiresOn,postedOn, announcementTitle, Club.clubName from Announcements JOIN Club ON Announcements.clubID =  "+ clubID+ "  and Announcements.clubID = Club.clubID;";
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }
+    //SOCIAL MEDIA
+    protected List<SocialMedia> getDBClubSocialMedia(int clubID)
+    {
+        sql = "SELECT * FROM SocialMedia WHERE clubID = " + clubID + ";";
 
+        clubSMs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(SocialMedia.class));
 
+        return clubSMs;
+    }
+    protected boolean deleteDBSocialMedia(int smID)
+    {
+        sql = "DELETE FROM SocialMedia WHERE socialMediaID = ?;";
 
-    //COMMENTED OUT FOR FUTURE IMPLEMENTATION
-//    protected Image getDBClubFile()
-//    {
-//
-//        sql = "SELECT imageName, Image FROM Images WHERE clubID = 3";
-//        List<Image> clubFile = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Image.class));
-//
-//        return clubFile.get(0);
-//    }
+        validQuery = JdbcTemplated.update(sql,smID);
 
+        return validQuery == 1;
+    }
+    protected boolean insertDBNewSocialMedia(SocialMedia newSM)
+    {
+        sql = "INSERT INTO SocialMedia (platform,profileName,link, clubID) VALUES (?,?,?,?);";
 
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(), newSM.getProfileName(), newSM.getLink(), newSM.getClubID());
+
+        return validQuery == 1;
+    }
+    protected boolean updateSocialMedia(SocialMedia newSM)
+    {
+        sql = "UPDATE SocialMedia SET platform = ?, link = ?, profileName = ? WHERE socialMediaID = ?";
+
+        validQuery = JdbcTemplated.update(sql, newSM.getPlatform(),  newSM.getLink(),newSM.getProfileName(), newSM.getSocialMediaID());
+
+        return validQuery == 1;
+    }
 
 }

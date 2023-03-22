@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Events} from "../objects/events";
-import {environment} from "../../environments/environment";
+//import {environment} from "../../environments/environment";
+//import {environment} from "../../environments/environment";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +76,7 @@ export class EventsService {
   getTopRSVP():Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTopRSVP`);
   }
-  getEventsBySpace(locationID: string): Observable<Events[]> {
+  getEventsBySpace(locationID: number): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getEventsBySpace/${locationID}`)
   }
 }

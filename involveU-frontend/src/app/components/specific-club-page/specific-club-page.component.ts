@@ -12,6 +12,8 @@ import {EboardService} from "../../services/eboard.service";
 import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
+import {Title} from "@angular/platform-browser";
+import {SocialMedia} from "../../objects/social-media";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -28,7 +30,10 @@ export class SpecificClubPageComponent implements OnInit {
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              public cookie: CookieService) {}
+              public cookie: CookieService,
+              private title: Title) {
+    this.title.setTitle("involveU | Club")
+  }
 
   //BOOLEANS
   isLoggedIn: boolean = false;
@@ -37,8 +42,10 @@ export class SpecificClubPageComponent implements OnInit {
   successMessage: boolean = false;
   failMessage: boolean = false;
   viewMoreInfoDialog: boolean = false;
+  viewCertainAnnouncementDialog: boolean = false;
+  viewAllAnnouncementsDialog: boolean = false;
   showMore: boolean = false;
-  isloading: boolean = true;
+  isLoading: boolean = true;
 
   //NUMBERS
   clubID: number;
@@ -56,12 +63,14 @@ export class SpecificClubPageComponent implements OnInit {
   certainEvent: Events[] = [];
   userRSVPdEvents: Events[] = [];
   clubAnnouncements: Announcement[] = [];
+  clubSocialMedia: SocialMedia[] = [];
+  certainAnnouncement: Announcement[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 
 
   ngOnInit(): void {
-    this.isloading = true;
+    this.isLoading = true;
 
     this.route.params.subscribe(params => {
       this.clubID = params['id'];
@@ -83,9 +92,10 @@ export class SpecificClubPageComponent implements OnInit {
     this.getEboard();
     this.getUserRSVPdEvents();
     this.getClubAnnouncements();
+    this.getClubSocialMedia();
 
     setTimeout(() => {
-      this.isloading = false;
+      this.isLoading = false;
     }, 1000);
   }
 
@@ -118,15 +128,15 @@ export class SpecificClubPageComponent implements OnInit {
     }
   }
 
-  favoriteClub(userID: number, clubID: number) {
-    this.clubService.favoriteClub(userID, clubID).subscribe()
+  favoriteClub() {
+    this.clubService.favoriteClub(this.userID, this.clubID).subscribe()
     this.message = 'Club successfully favorited!';
     this.successMessage = true;
     location.reload();
   }
 
-  removeFromFavorites(userID: number, clubID: number) {
-    this.clubService.unfavoriteClub(clubID, userID).subscribe()
+  removeFromFavorites() {
+    this.clubService.unfavoriteClub(this.clubID, this.userID).subscribe()
     this.message = 'Club successfully unfavorited!';
     this.successMessage = true;
     location.reload();
@@ -209,6 +219,35 @@ export class SpecificClubPageComponent implements OnInit {
       (error) => {
         console.log(error)
       });
+  }
+
+  getClubSocialMedia() {
+    this.eboardService.getClubSocialMedia(+this.clubID).subscribe(response => {
+      this.clubSocialMedia = response;
+      console.log(response);
+    })
+  }
+
+  goToLink(url: string){
+    window.open(url, "_blank");
+  }
+
+  showViewCertainAnnouncementDialog(announcement: Announcement) {
+    this.certainAnnouncement.push(announcement);
+    this.viewCertainAnnouncementDialog = true;
+  }
+
+  closeViewCertainAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.viewCertainAnnouncementDialog = false;
+  }
+
+  showAllAnnouncementsDialog() {
+    this.viewAllAnnouncementsDialog = true;
+  }
+
+  closeAllAnnouncementsDialog() {
+    this.viewAllAnnouncementsDialog = false;
   }
 }
 

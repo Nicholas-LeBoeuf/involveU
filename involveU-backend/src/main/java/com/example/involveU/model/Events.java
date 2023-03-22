@@ -21,10 +21,8 @@ public class Events{
 
     private String clubName;
     private String spaceName;
-
     private  int space_ID;
     private int location_ID;
-
     private  int clubID;
     public long getEventID() {
         return eventID;

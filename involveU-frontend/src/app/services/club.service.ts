@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { environment } from "../../environments/environment";
+//import {environment} from "../../environments/environment";
+import {environment} from "../../environments/environment.prod";
 import {Observable, throwError} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Club} from "../objects/club";
@@ -38,10 +39,17 @@ export class ClubService {
   unfavoriteClub(clubID: number, id: number) {
     return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`);
   }
+
   getClubEboard(clubID: number): Observable<User[]> {
     return this.http.get<User[]>(environment.apiURL + `club/getClubsEboard/${clubID}`);
   }
+
   checkIfEboard(userID: number): Observable<any> {
     return this.http.get<any>(environment.apiURL + `club/checkIfEboard/${userID}`);
+  }
+
+  getClubLogo(clubID : number){
+    return this.http.get(environment.apiURL + `club/getClubLogo/${clubID}`, {responseType: 'blob'});
+
   }
 }

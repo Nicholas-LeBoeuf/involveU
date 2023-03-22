@@ -1,263 +1,88 @@
-html {
-  background-color: #eeeeee;
-  height: 100%;
+@import "src/styles";
+
+.adminPageTitleMargin {
+  margin-bottom: 20px;
 }
 
-.leftAdminDiv {
-  float: left;
-  width:50%;
-  background-color: #eeeeee;
+.SNHULogoAdminPage {
+  width: 300px;
+  height: auto;
 }
 
-.rightAdminDiv {
-  float: right;
-  width:50%;
-  background-color: #eeeeee;
+.adminPagePadding {
+  padding: 1px;
 }
 
-.createClubInputs {
-  margin: auto;
+.adminInputWidth {
+  width: 50%;
 }
 
-.createClubDiv {
-  width: 48vw;
-  min-height: 82vh;
-  max-height: 82vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
-}
-
-.leftDiv {
-  float: left;
-  width:50%;
-  min-height: 86%;
-  max-height: 86%;
-}
-
-.rightDiv {
-  float: right;
-  width:50%;
-  min-height: 86%;
-  max-height: 86%;
-}
-
-.clubCreationAlerts {
-  position: absolute;
-  z-index: 1000000;
-  left: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  height: 5%;
-  margin-top: 2% !important;
-  width: 30%;
-}
-
-.clubCreationAlerts p {
-  font-size: 1.8em;
-}
-
-.alert-dismissible .btn-close {
-  padding: 1rem  1rem;
-}
-
-.alert {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: center;
-  border-radius: 10px;
-  top: 35px;
-  position: fixed;
-}
-
-.centerButton {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.dialogTitle {
-  font-size: 3em;
-  text-align: center;
-  font-weight: normal;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  padding-top: 30px;
-  color: #0667B3;
-}
-
-.form-submit-button{
-  clear:left;
-  float:left;
-}
-
-.form-control {
-  height: 50px;
-  width: 400px;
-  border-radius: 10px;
-  font-size: 1.5em;
-  margin-bottom: 4%;
-}
-
-.formInputs {
-  display: block;
-  margin: 30px auto auto;
-}
-
-.formLeftInputs {
-  color: #0667B3;
-  margin-left: 40px;
-  border: 2px solid #0667B3;
-}
-
-.formRightInputs {
-  color: #0667B3;
-  margin-right: 50px;
-  border: 2px solid #0667B3;
-}
-
-.formInputs::placeholder {
-  color: #0667B3;
-}
-
-.requiredAlert {
-  padding: 5px !important;
-  margin: 0 auto !important;
-  text-align: center;
-  border-radius: 10px;
-  position: sticky;
-  width: 60%;
+.adminInputWidthMobile {
+  width: 80%;
 }
 
 .largeTextField {
-  height: 150px;
-  overflow-wrap: inherit;
+  height: 125px;
 }
 
-.assignAdvisorDiv {
-  width: 48vw;
-  min-height: 45vh;
-  max-height: 45vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
-  margin-bottom: 2%;
+
+//File Upload
+.adminImageUpload::ng-deep {
+  .p-fileupload {
+    width: 50%;
+    margin: 0 auto;
+  }
+
+
+  .p-fileupload .p-fileupload-buttonbar {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .p-fileupload .p-fileupload-content {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
 }
 
-.createUserDiv {
-  width: 48vw;
-  min-height: 56vh;
-  max-height: 56vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
-  margin-top: 2%;
+.adminImageUploadMobile::ng-deep {
+  .p-fileupload {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .p-fileupload .p-fileupload-buttonbar .p-button {
+    margin: 5px;
+  }
+
+  .p-fileupload .p-fileupload-buttonbar {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .p-fileupload .p-fileupload-content {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
 }
 
-.deleteUserDiv {
-  width: 48vw;
-  min-height: 33vh;
-  max-height: 33vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
-  margin-top: 2%;
+//Dropdown input
+.adminDropdown::ng-deep {
+  .p-dropdown {
+    width: 50%;
+    text-align: left;
+  }
 }
 
-.addEBoardDiv {
-  width: 48vw;
-  min-height: 50vh;
-  max-height: 50vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
+.adminDropdownMobile::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    width: 80%;
+  }
 }
 
-.removeEBoardDiv {
-  width: 48vw;
-  min-height: 40vh;
-  max-height: 40vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
-  margin-bottom: 2%;
+::ng-deep .clubFilter.p-dropdown .p-dropdown-panel {
+  max-width: 100%;
 }
-
-.assignAdvisorDiv {
-  float: left;
-  width: 48vw;
-  min-height: 40vh;
-  max-height: 40vh;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-
-.assignAdvisor {
-  float: left;
-  width:100%;
-  min-height: 20vh;
-  max-height: 22vh;
-}
-
-.removeAdvisor {
-  float: right;
-  width:100%;
-  min-height: 20vh;
-  max-height: 22vh;
-}
-
-.addEBoard {
-  float: left;
-  width:100%;
-  min-height: 86%;
-  max-height: 86%;
-  display: block;
-}
-
-.removeEBoard {
-  float: right;
-  width:100%;
-  min-height: 86%;
-  max-height: 86%;
-}
-
-.osiAnnouncementsDiv {
-  width: 48vw;
-  min-height: 82vh;
-  max-height: 82vh;
-  display: block;
-  margin-left: 2%;
-  background-color: white;
-  border-radius: 10px;
-  margin-top: 2%;
-}
-
-.osiAnnouncements {
-  float: left;
-  width:100%;
-  min-height: 20vh;
-  max-height: 22vh;
-}
-
-.dropdownLength {
-  height: 50px !important;
-  width: 400px !important;
-  margin:auto;
-  display: block;
-}
-
-:host ::ng-deep .p-dropdown-label {
-  font-size: 1.5em !important;
-  color: #0667B3 !important;
-}
-
-:host ::ng-deep .pi-chevron-down {
-  color: #0667B3 !important;
-}
-

@@ -1,140 +1,226 @@
-<div class="container">
+<div *ngIf="successMessage === true" class="alert alert-success alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="failMessage === true" class="alert alert-danger alert-dismissible fade show eventAlerts" role="alert">
+  <p>{{this.message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<ng-container *ngIf="responsiveService.deviceDesktop() || responsiveService.deviceTablet(); else MobileView">
+  <div class="imagesContainer">
+    <div class="images">
+      <p-carousel styleClass="landingPageCaro" [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
+        <ng-template let-image pTemplate="item">
+          <img class="carouselImages" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class="carouselImageMask">
+      <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
+        <h1>Welcome to involveU, {{this.currentUser.firstName}}!</h1>
+      </ng-template>
+      <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
+        <h1>Welcome to involveU!</h1>
+      </ng-template>
+      <div class="involveUDescription">
+        <h3>involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h3>
+      </div>
+      <div class="involveUNext">
+        <h3>See What is going on this week at Southern New Hampshire University</h3>
+      </div>
+      <div class="thisWeekButton">
+        <button class="yellowButton" routerLink="/calendar">View Events</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #MobileView>
   <div class="images">
-      <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
+    <p-carousel [value]="imageArray" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showNavigators]="false" [showIndicators]="false">
       <ng-template let-image pTemplate="item">
-        <img src="assets/landingPageImages/{{image}}">
+        <img class="carouselImagesSmall" src="assets/landingPageImages/{{image}}" alt="Images of people on campus">
       </ng-template>
     </p-carousel>
   </div>
 
-  <div class="imageMask">
-    <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
-      <h1>Welcome to involveU, {{this.currentUser.firstName}}!</h1>
-    </ng-template>
-    <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
-      <h1>Welcome to involveU!</h1>
-    </ng-template>
-    <div class="involveUDescription">
-      <h3>involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h3>
+  <div class="blueBackground">
+    <div class="welcomeMessage">
+      <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
+        <h1 class="text-center yellow-text span-width">Welcome to involveU, {{this.currentUser.firstName}}!</h1>
+      </ng-template>
+      <ng-template [ngIf]="this.cookie.get('studentFName') === ''">
+        <h1 class="text-center yellow-text span-width">Welcome to involveU!</h1>
+      </ng-template>
     </div>
-    <div class="involveUNext">
-      <h3>See What is going on this week at Southern New Hampshire University</h3>
+
+    <div class="descriptionMessage">
+      <h5 class="text-center yellow-text span-width">involveU is a one-stop-shop for all campus activities. Students can join clubs they are interested in, or manage their existing clubs all from one spot!</h5>
     </div>
+
+    <h5 class="text-center yellow-text span-width">See What is going on this week at Southern New Hampshire University</h5>
+
     <div class="thisWeekButton">
-      <button class="blueButton" routerLink="/schedule">View Events</button>
+      <button class="yellowButton" routerLink="/schedule">View Events</button>
     </div>
   </div>
+</ng-template>
 
-  <div class="todaysEventsHeader">
-    <h1>What’s Going On Today at Southern New Hampshire University</h1>
+
+<div class="container">
+  <div [ngClass]="{'desktopTabletMargin' : responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'mobileMargin' : responsiveService.deviceMobile()}">
+    <h2 class="blueHeaders text-center">What’s Going On Today at Southern New Hampshire University</h2>
   </div>
 
-  <ng-template [ngIf]="todaysEvents.length === 0">
-    <div class="noEventsContent">
-      <h2>There are no events occurring today!</h2>
+  <ng-container *ngIf="todaysEvents.length === 0; else eventsPresent">
+    <div class="noContent">
+      <h3>There are no events occurring today!</h3>
     </div>
+  </ng-container>
+
+
+  <ng-template #eventsPresent>
+    <p-table [value]="todaysEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
+      <ng-template pTemplate="body" let-event>
+        <div class="eventCard text-center" (click)="showViewMoreInfoDialog(event)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+          <div class="eventCardPicture">
+            <div class="imageCenter">
+              <img class="eventImage" [src]="event.clubLogo" alt="{{event.clubName}} Logo"/>
+            </div>
+            <div class="imageMaskEvent"></div>
+            <h3 class="blueHeaders text-center">{{event.eventName}}</h3>
+            <h5 class="eventClubName">{{event.clubName}}</h5>
+            <ng-container *ngIf="isLoggedIn == true; else notLoggedIn">
+              <p>Date: {{event.eventDate | date:'MMMM dd, YYYY'}}</p>
+              <p>Time: {{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</p>
+              <p>Location: {{event.eventLocation}} -> {{event.spaceName}}</p>
+            </ng-container>
+            <ng-template #notLoggedIn>
+              <p>Login to view more information!</p>
+            </ng-template>
+            <ng-container *ngIf="isLoggedIn">
+              <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
+                <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+              </ng-container>
+              <ng-template #ShowRSVP>
+                <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+              </ng-template>
+            </ng-container>
+          </div>
+        </div>
+      </ng-template>
+    </p-table>
   </ng-template>
 
-  <div class="todaysEventsContainer">
-    <ng-template [ngIf]="todaysEvents.length !== 0">
-      <p-carousel styleClass="eventsCaro" [value]="todaysEvents" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-event pTemplate="item">
-          <div class="clubCard">
-            <div class="clubContent">
-              <div>
-                <h3 class="p-mb-1">{{event.eventName}}</h3>
-                <hr>
-                <div class="parent">
-                  <div class="div1">
-                    <h3 class="eventDataTitle">Date</h3>
-                    <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
-                  </div>
-                  <div class="div2">
-                    <h3 class="eventDataTitle">Time</h3>
-                    <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
-                  </div>
-                  <div class="div3">
-                    <h3 class="eventDataTitle">Location</h3>
-                    <h5 class="eventData">{{event.eventLocation}}</h5>
-                  </div>
-                  <div class="div4">
-                    <h3 class="eventDataTitle">Hosted By</h3>
-                    <h5 class="eventData">{{event.clubName}}</h5>
-                  </div>
-                  <div class="div5">
-                    <button class="blueButton" (click)="openViewMoreInfoDialog(event)">View More Information</button>
-                    <ng-container *ngIf="userID !== 0">
-                      <button class="blueButton" (click)="eventRSVP(event.eventID)">RSVP</button>
-                    </ng-container>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </p-carousel>
-    </ng-template>
+  <div [ngClass]="{'desktopTabletMargin' : responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'mobileMargin' : responsiveService.deviceMobile()}">
+    <h2 class="blueHeaders text-center">Announcements From the Office of Student Involvement</h2>
   </div>
 
-  <p-dialog  [(visible)]="viewMoreInfoDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
-    <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeViewMoreInfoDialog()">
-      <span class="fa fa-fw fa-close fa-lg"></span>
-    </a>
-    <h1 class="text-center">Event Information</h1>
-    <hr class="dialogLines">
-    <div *ngFor="let event of this.certainEvent" >
-      <div class="eventInfoContainer">
-        <div class="eventName">
-          <h3 class="eventDataTitle">Event Name: </h3>
-          <h5 class="eventData">{{event.eventName}}</h5>
+  <ng-container *ngIf="osiAnnouncements.length === 0; else announcementsPresent">
+    <div class="noContent">
+      <h3>There are no announcements to display!</h3>
+    </div>
+  </ng-container>
+
+  <ng-template #announcementsPresent>
+    <p-table [value]="osiAnnouncements" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows"  [loading]="isLoading">
+      <ng-template pTemplate="body" let-announcement>
+        <div class="announcementCard" (click)="showViewCertainAnnouncementDialog(announcement)" [ngClass]="{'announcementCardSizeWeb' : responsiveService.deviceDesktop(), 'announcementCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+          <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+          <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+          <p [ngClass]="{ 'line-clamp': !showMore }">{{announcement.contentOfAnnouncement}}</p>
         </div>
-        <div class="eventDate">
-          <h3 class="eventDataTitle">Event Date: </h3>
-          <h5 class="eventData">{{event.eventDate | date:'MMMM dd, YYYY'}}</h5>
-        </div>
-        <div class="eventTime">
-          <h3 class="eventDataTitle">Time: </h3>
-          <h5 class="eventData">{{event.startTime | timeFormat}} - {{event.endTime | timeFormat}}</h5>
-        </div>
-        <div class="eventLocation">
-          <h3 class="eventDataTitle">Event Location: </h3>
-          <h5 class="eventData">{{event.eventLocation}}</h5>
-        </div>
-        <div class="eventDesc">
-          <h3 class="eventDataTitle">Event Description: </h3>
-          <h5 class="eventData">{{event.eventDesc}}</h5>
-        </div>
-        <div class="eventHost">
-          <h3 class="eventDataTitle">Hosted By:</h3>
-          <h5 class="eventData">{{event.clubName}}</h5>
-        </div>
-        <div class="eventTransportation">
-          <h3 class="eventDataTitle">Transportation</h3>
-          <ng-container *ngIf="event.isTransportation; else noTransportation">
-            <h5 class="eventData">Transportation Provided</h5>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+</div>
+
+
+<p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
+  <div class="eventCardDialog text-center" *ngFor="let certainEvent of certainEvent">
+    <div class="eventCardPicture">
+      <div class="imageCenter">
+        <img class="eventImage" [src]="certainEvent.clubLogo" alt="{{certainEvent.clubName}} Logo"/>
+      </div>
+      <div class="imageMaskDialog"></div>
+      <h3 class="blueHeaders text-center">{{certainEvent.eventName}}</h3>
+      <h5 class="eventClubName">{{certainEvent.clubName}}</h5>
+
+      <div class="eventInformationDialogContainer">
+        <div class="eventDateDialog">
+          <h3 class="blueHeaders text-center">Date</h3>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{certainEvent.eventDate | date:'MMMM dd, YYYY'}}</p>
           </ng-container>
-          <ng-template #noTransportation>
-            <h5 class="eventData">Transportation NOT provided</h5>
+          <ng-template #notLoggedIn>
+            <p>Login to view event date</p>
           </ng-template>
         </div>
-        <div class="eventTicketLink">
-          <h3 class="eventDataTitle">Ticket Link:</h3>
-          <h5 class="eventData">{{event.ticketLink}}</h5>
+        <div class="eventTimeDialog">
+          <h3 class="blueHeaders text-center">Time</h3>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{certainEvent.startTime | timeFormat}} - {{certainEvent.endTime | timeFormat}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event time</p>
+          </ng-template>
+        </div>
+        <div class="eventTransportationDialog">
+          <h3 class="blueHeaders text-center">Transportation</h3>
+          <ng-container *ngIf="certainEvent.isTransportation; else noTransportation">
+            <p>Transportation Provided</p>
+          </ng-container>
+          <ng-template #noTransportation>
+            <p>Transportation NOT Provided</p>
+          </ng-template>
+        </div>
+        <div class="eventTicketLinkDialog">
+          <h3 class="blueHeaders text-center">Ticket Link</h3>
+          <ng-container *ngIf="certainEvent.ticketLink !== null && certainEvent.ticketLink !== ''; else noTicketLink">
+            <p>{{certainEvent.ticketLink}}</p>
+          </ng-container>
+          <ng-template #noTicketLink>
+            <p>N/A</p>
+          </ng-template>
+        </div>
+        <div class="eventDescriptionDialog">
+          <h3 class="blueHeaders text-center">Description</h3>
+          <p>{{certainEvent.eventDesc}}</p>
+        </div>
+        <div class="eventLocationDialog">
+          <h3 class="blueHeaders text-center">Location</h3>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+            <p>{{certainEvent.eventLocation}} -> {{certainEvent.spaceName}}</p>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <p>Login to view event location</p>
+          </ng-template>
         </div>
       </div>
-    </div>
-  </p-dialog>
-  <div class="clubAnnouncementsRight" [ngClass]="{'mobileTabletClubAnnouncementWidth clubAnnouncementsRightGridMobileTablet' : responsiveService.deviceMobile() || responsiveService.deviceTablet(), 'clubAnnouncementsRightGridWeb' : responsiveService.deviceDesktop()}">
-    <div class="announcementBorders">
-      <h2 class="blueHeaders text-center">OSI Announcements</h2>
-      <hr class="announcementLine">
-      <div class="announcementContent" *ngFor="let announcement of osiAnnouncements; index as index; last as last">
-        <em class="announcementDate" *ngIf="index < 5">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
-        <h4 class="blueHeaders convertToOswald announcementTitle" *ngIf="index < 5">{{announcement.announcementTitle}}</h4>
-        <p [ngClass]="{ 'line-clamp': !showMore }" *ngIf="index < 5">{{announcement.contentOfAnnouncement}}</p>
-        <hr class="announcementLine" *ngIf="index < 5">
-      </div>
-      <button class="blueButton">Show More</button>
+      <ng-container *ngIf="isLoggedIn">
+        <ng-container *ngIf="isUserRSVPd(certainEvent.eventID) === true; else ShowRSVP">
+          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(certainEvent.eventID)">Remove RSVP</button>
+        </ng-container>
+        <ng-template #ShowRSVP>
+          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(certainEvent.eventID)">RSVP</button>
+        </ng-template>
+      </ng-container>
+      <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
     </div>
   </div>
-</div>
+</p-dialog>
+
+<p-dialog [(visible)]="viewCertainAnnouncementDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewCertainAnnouncementDialog()">
+  <div class="announcementDialogContent" *ngFor="let announcement of certainAnnouncement">
+    <em class="announcementDate">Posted on {{announcement.postedOn | date:'MMMM dd, YYYY'}}</em>
+    <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
+    <p>{{announcement.contentOfAnnouncement}}</p>
+    <div class="text-center">
+      <button class="yellowButton" (click)="closeViewCertainAnnouncementDialog()">Close</button>
+    </div>
+  </div>
+</p-dialog>

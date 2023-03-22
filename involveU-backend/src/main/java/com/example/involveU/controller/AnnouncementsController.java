@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class AnnouncementsController extends DBServices {
     List<Announcement>  announcements;
     Boolean validQuery = false;
-   @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/annnouncements/getAllAnnouncements")
     private ResponseEntity<List<Announcement>> getAllAnnouncements()
     {
@@ -24,7 +24,7 @@ public class AnnouncementsController extends DBServices {
         return new ResponseEntity(announcements,HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @PostMapping("/announcements/createAnnouncements")
     private ResponseEntity<String> createAnnouncement(@RequestBody Announcement newAnounncement)
     {
@@ -41,7 +41,7 @@ public class AnnouncementsController extends DBServices {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/announcements/deleteAnnouncement/{announcementID}")
     private ResponseEntity<String> deleteAnnouncement(@PathVariable("announcementID") int announcementID)
     {
@@ -58,7 +58,7 @@ public class AnnouncementsController extends DBServices {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @PostMapping("/announcements/editAnnouncements")
     private ResponseEntity<String> editAnnouncement(@RequestBody Announcement anounncementToEdit)
     {
@@ -74,7 +74,7 @@ public class AnnouncementsController extends DBServices {
         }
 
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/announcements/getFavoritedAnnouncements/{userID}")
     private ResponseEntity<List<Announcement>> getFavoritedAnnouncements(@PathVariable("userID") int userID)
     {
@@ -83,7 +83,6 @@ public class AnnouncementsController extends DBServices {
         return new ResponseEntity<>(announcements, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/announcements/getClubAnnouncements/{clubID}")
     private ResponseEntity<List<Announcement>> getClubAnnouncements(@PathVariable("clubID") int clubID)
     {

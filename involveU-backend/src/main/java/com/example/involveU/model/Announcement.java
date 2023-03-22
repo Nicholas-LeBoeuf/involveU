@@ -4,6 +4,7 @@ public class Announcement {
 
     int announcementID;
     int clubID;
+    String clubName;
    String contentOfAnnouncement;
    String announcementTitle;
    String  expiresOn;
@@ -50,4 +51,12 @@ public class Announcement {
     }
     public String getPostedOn() {return postedOn;}
     public void setPostedOn(String postedOn) {this.postedOn = postedOn;}
+
+    public String getClubName() {
+        return clubName;
+    }
+
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
 }

@@ -1,25 +1,28 @@
 package com.example.involveU.controller;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.example.involveU.model.Events;
-import com.example.involveU.model.Club;
-import com.example.involveU.model.RSVP;
-import com.example.involveU.model.DBServices;
-import com.example.involveU.model.EBoard;
-import com.example.involveU.model.User;
+
+import com.example.involveU.model.*;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
- @RestController
+import org.springframework.web.multipart.MultipartFile;
+@RestController
 @RequestMapping("/api")
 public class ClubController extends DBServices{
   private List<Club>  clubs;
   private List<EBoard> EboardList;
   private Club currentClub;
   private String repsonse;
+  private List <SocialMedia> clubSMs;
 
-  @CrossOrigin(origins = "http://localhost:4200")
+
   @GetMapping("/clubs")
   private List<Club> getAllClubs()
     {
@@ -27,7 +30,7 @@ public class ClubController extends DBServices{
 
         return clubs;
     }
-  @CrossOrigin(origins = "http://localhost:4200")
+
   @GetMapping("/club/{id}")
   private ResponseEntity<Object> getSpecificClub(@PathVariable("id") int clubID)
   {
@@ -41,10 +44,25 @@ public class ClubController extends DBServices{
     {
      return new ResponseEntity<>( currentClub, HttpStatus.OK);
     }
-        
-  
+
+
   }
-  @CrossOrigin(origins = "http://localhost:4200")
+
+  @DeleteMapping ("/club/deleteClub/{clubID}")
+  private ResponseEntity<String> deleteClub(@PathVariable("clubID") int clubID)
+  {
+      if(deleteDBClub(clubID))
+      {
+          return new ResponseEntity<>("success", HttpStatus.OK);
+      }
+      else
+      {
+          return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+      }
+
+  }
+
+
   @PostMapping ("/club/insertClub")
   private ResponseEntity<String> insertClub(@RequestBody Club newClub)
   {
@@ -53,14 +71,78 @@ public class ClubController extends DBServices{
          else
              return new ResponseEntity<>("Could not insert Club", HttpStatus.BAD_REQUEST);
   }
-  @CrossOrigin(origins = "http://localhost:4200")
+
+  @PutMapping ("/club/updateClubData")
+  private ResponseEntity<String> updateClubData(@RequestBody Club newClub)
+    {
+        if(updateClubDBData(newClub))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+    /*@PutMapping ("/club/updateClubBio/{clubID}")
+    private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID, @PathVariable("newBio")String clubBio)
+    {
+        if(updateClubDBBio(clubID, clubBio))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/club/updateClubVision/{clubID}")
+    private ResponseEntity<String> updateClubVision(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBVision(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/club/updateClubMission/{clubID}")
+    private ResponseEntity<String> updateClubMission(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBMission(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping ("/club/updateClubValues/{clubID}")
+    private ResponseEntity<String> updateClubValues(@PathVariable("clubID") int clubID)
+    {
+        if(updateClubDBValues(clubID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+    }
+*/
   @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {
           clubs = searchDBClub(searchContent);
       return new ResponseEntity<>(clubs, HttpStatus.OK);
   }
-@CrossOrigin(origins = "http://localhost:4200")
+
 @GetMapping("/club/submitFavorite/{ID}/{clubID}")
  private ResponseEntity<String> submitFavorite(@PathVariable("ID") int userID, @PathVariable("clubID") int clubID)
  {
@@ -71,7 +153,7 @@ public class ClubController extends DBServices{
          return new ResponseEntity<>( "error", HttpStatus.BAD_REQUEST) ;
  }
 
-@CrossOrigin(origins ="http://localhost:4200")
+
 @GetMapping("/club/getUserFavorites/{ID}")
 private ResponseEntity<List<Club>> getUserFavorites(@PathVariable("ID") int ID) {
 
@@ -80,7 +162,7 @@ private ResponseEntity<List<Club>> getUserFavorites(@PathVariable("ID") int ID) 
       return new ResponseEntity<>(clubs,HttpStatus.OK);
 }
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @GetMapping("/club/removeFavorites/{clubID}/{id}")
 private ResponseEntity<String> removeFavorite(@PathVariable("clubID") int clubID, @PathVariable("id") int userID)
 {
@@ -97,7 +179,7 @@ private ResponseEntity<String> removeFavorite(@PathVariable("clubID") int clubID
   }
 
 }
-@CrossOrigin(origins = "http://localhost:4200")
+
 @GetMapping("/club/getClubAdvisor/{clubID}")
 private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubID)
 {
@@ -106,14 +188,14 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
      tempUser = getDBClubAdvisor(clubID);
      return new ResponseEntity<>(tempUser, HttpStatus.OK);
 }
- @CrossOrigin(origins = "http://localhost:4200")
+
  @GetMapping("/club/getNonFavoritedClubs/{userID}")
  private ResponseEntity<List<Club>> getNonFavoritedClubs(@PathVariable("userID") int userID)
  {
 
      return new ResponseEntity<>(clubs, HttpStatus.OK);
  }
-     @CrossOrigin(origins = "http://localhost:4200")
+
      @GetMapping("/club/getClubsEboard/{clubID}")
      private ResponseEntity<List<EBoard>> getClubEbaord(@PathVariable("clubID") int clubID)
      {
@@ -121,7 +203,7 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
          return new ResponseEntity<>(EboardList,HttpStatus.OK);
      }
 
-     @CrossOrigin(origins = "http://localhost:4200")
+
      @GetMapping("/club/checkIfEboard/{userID}")
      private ResponseEntity<Object>  checkIfEboard(@PathVariable("userID") int userID) {
          Club eboardClub;
@@ -133,6 +215,71 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
          }
             return new ResponseEntity<>("not eboard", HttpStatus.OK);
      }
+
+
+     @GetMapping("/club/getClubLogo/{clubID}")
+     private ResponseEntity<byte[]> downloadImage(@PathVariable("clubID") int clubID) throws IOException {
+
+
+        String fileName = getClubLogo(clubID);
+        S3Util bucket = new S3Util();
+         byte[] test = bucket.downloadFile(fileName);
+
+         return new ResponseEntity<>(test,HttpStatus.OK);
+
+     }
+    @GetMapping("/club/getClubSocialMedia/{clubID}")
+    private ResponseEntity<List<SocialMedia>> getSocialMedia(@PathVariable("clubID") int clubID)
+    {
+        clubSMs = getDBClubSocialMedia(clubID);
+        return new ResponseEntity<>(clubSMs, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/club/deleteClubSocialMedia/{socialMediaID}")
+    private ResponseEntity<String> deleteSocialMedia(@PathVariable("socialMediaID") int smID)
+    {
+        if(deleteDBSocialMedia(smID))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("/club/insertNewSocialMedia")
+    private ResponseEntity<String> insertNewSocialMedia(@RequestBody SocialMedia newSM)
+    {
+
+        if(insertDBNewSocialMedia(newSM))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);        }
+
+    }
+
+    @PutMapping("/club/editSocialMedia")
+    private ResponseEntity<String> eidtSocialMedia(@RequestBody SocialMedia newSM)
+    {
+        if(updateSocialMedia(newSM))
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
+
+
 }
 
 

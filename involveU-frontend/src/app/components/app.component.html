@@ -19,17 +19,22 @@
 </div>
 
 <nav class="navbar">
-  <ng-container *ngIf="this.isDesktop; else MobileAndTabletView">
+  <ng-container *ngIf="responsiveService.deviceDesktop(); else MobileAndTabletView">
     <div class="navButtons">
-      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+      <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="Southern New Hampshire University Logo" routerLink="/home">
       <div class="specificNavButton">
         <a #rla="routerLinkActive" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a>
       </div>
       <div class="specificNavButton">
-        <a #sla="routerLinkActive" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a>
+        <ng-template [ngIf]="isLoggedIn == true">
+          <a #sla="routerLinkActive" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a>
+        </ng-template>
       </div>
       <div class="specificNavButton">
         <a #ula="routerLinkActive" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a>
+      </div>
+      <div class="specificNavButton">
+        <a #mla="routerLinkActive" routerLink="/moreinfo" routerLinkActive="active" [class.active-span]="mla.isActive">More Information</a>
       </div>
       <div class="specificNavButton">
         <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
@@ -44,25 +49,26 @@
     </div>
     <div class="buttons">
       <ng-template [ngIf]="this.cookie.get('studentID') == ''">
-        <button class="blueButton" (click)="showSignupDialog()">Sign Up</button>
-        <button class="blueButton" (click)="showLoginDialog()">Login</button>
+        <button class="yellowButton" (click)="showSignupDialog()">Sign Up</button>
+        <button class="yellowButton" (click)="showLoginDialog()">Login</button>
       </ng-template>
       <ng-template [ngIf]="this.cookie.get('studentID') != ''">
-        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg">
+        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">
       </ng-template>
-      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png">
+      <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
     </div>
   </ng-container>
   <ng-template #MobileAndTabletView>
     <div class="navButtonsForMobile">
       <div class="dropdown mobileFlexNavButton">
-        <button class="blueButton" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="yellowButton" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           &#9776;
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li> <a #rla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/home" [class.active-span]="rla.isActive">Home</a></li>
-          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/schedule" routerLinkActive="active"  [class.active-span]="sla.isActive">Schedule</a></li>
+          <li><a #sla="routerLinkActive" class="dropdown-item" routerLink="/calendar" routerLinkActive="active"  [class.active-span]="sla.isActive">Calendar</a></li>
           <li><a #ula="routerLinkActive" class="dropdown-item" routerLink="/clubs" routerLinkActive="active" [class.active-span]="ula.isActive">Clubs</a></li>
+          <li><a #mla="routerLinkActive" class="dropdown-item" routerLink="/moreinfo" routerLinkActive="active" [class.active-span]="mla.isActive">More Information</a></li>
           <ng-template [ngIf]="this.cookie.get('isAdmin') == '1'">
             <li><a #vla="routerLinkActive" class="dropdown-item" routerLinkActive="active" routerLink="/admin" [class.active-span]="vla.isActive" >Admin</a></li>
           </ng-template>
@@ -80,9 +86,11 @@
         </ul>
       </div>
       <div class="mobileFlexSNHULogo">
-        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" alt="SNHU Logo" routerLink="/home">
+        <img class="SNHUlogoScale" src="assets/SNHU-Logo.png" routerLink="/home" alt="Southern New Hampshire University Logo">
       </div>
-      <img class="involveULogoScale mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png">
+      <div class="involveUCenter">
+        <img class="involveULogoScale mobileFlexInvolveULogo" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
+      </div>
     </div>
   </ng-template>
 </nav>
@@ -91,13 +99,10 @@
   <router-outlet></router-outlet>
 </main>
 
-<p-dialog [(visible)]="displayLoginDialog" [modal]="true" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
-  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeLoginDialog()">
-    <span class="fa fa-fw fa-close fa-lg"></span>
-  </a>
-  <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
+<p-dialog [(visible)]="displayLoginDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000">
+  <img class="involveUModalScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
   <hr class="dialogLines">
-  <h1 class="dialogTitle">Welcome Back, Login to Your Account</h1>
+  <h1 class="dialogTitle blueHeaders">Welcome Back, Login to Your Account</h1>
   <form [formGroup]="loginForm">
     <div class="form-group loginInputs">
       <input class="form-control formInputs" type="text" placeholder="Email" formControlName="username">
@@ -115,7 +120,11 @@
         </div>
       </div>
     </div>
-    <button class="blueButton centerButton" type="submit" (click)="onLoginSubmit()">Login</button>
+    <div class="centerButtonDiv">
+      <button class="yellowButton" type="submit" (click)="onLoginSubmit()">Login</button>
+      <button class="yellowButton" (click)="closeLoginDialog()">Close</button>
+    </div>
+
   </form>
   <hr class="dialogLines">
   <div class="bottomModal">
@@ -124,17 +133,14 @@
   </div>
 </p-dialog>
 
-<p-dialog [(visible)]="displaySignupDialog" [modal]="true" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">
-  <a class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all closeButtonDialog" role="button" (click)="closeSignupDialog()">
-    <span class="fa fa-fw fa-close fa-lg"></span>
-  </a>
-  <img class="involveUModalScale" src="assets/involveU-Logo-Black-Text.png">
+<p-dialog [(visible)]="displaySignupDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">
+  <img class="involveUModalScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
   <hr class="dialogLines">
-  <h1 class="dialogTitle">Create an Account, Join the Fun!</h1>
+  <h1 class="dialogTitle blueHeaders">Create an Account, Join the Fun!</h1>
   <form [formGroup]="signupForm">
     <div class="signupGrid">
       <div class="form-group">
-        <input class="form-control formInputs" type="text" placeholder="First Name" formControlName="firstName">
+        <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="First Name" formControlName="firstName">
         <div *ngIf="signupFormInputs?.['firstName']?.invalid && (signupFormInputs?.['firstName']?.dirty || signupFormInputs?.['firstName']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['firstName']?.errors?.['required']">
             First name is required
@@ -142,7 +148,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control formInputs" type="text" placeholder="Last Name" formControlName="lastName">
+        <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Last Name" formControlName="lastName">
         <div *ngIf="signupFormInputs?.['lastName']?.invalid && (signupFormInputs?.['lastName']?.dirty || signupFormInputs?.['lastName']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['lastName']?.errors?.['required']">
             Last name is required
@@ -150,7 +156,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control formInputs" type="text" placeholder="Email" email formControlName="email">
+        <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Email" email formControlName="email">
         <div *ngIf="signupFormInputs?.['email']?.invalid && (signupFormInputs?.['email']?.dirty || signupFormInputs?.['email']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['email']?.errors?.['required']">
             Email is required
@@ -161,7 +167,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
+        <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="password" placeholder="Password" formControlName="password">
         <div *ngIf="signupFormInputs?.['password']?.invalid && (signupFormInputs?.['password']?.dirty || signupFormInputs?.['password']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['password']?.errors?.['required']">
             Password is required
@@ -172,8 +178,8 @@
         </div>
       </div>
       <div class="form-group">
-        <select class="form-control formInputs formSelect" name="year" formControlName="year">
-          <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Your Year...</option>
+        <select [ngClass]="{'formSelect': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'formSelectMobile': responsiveService.deviceMobile()}" class="form-control formInputs" name="year" formControlName="year">
+          <option ngValue="null" [selected]="true" [disabled]="true" [hidden]="true">Select Year...</option>
           <option value="Freshman">Freshman</option>
           <option value="Sophomore">Sophomore</option>
           <option value="Junior">Junior</option>
@@ -187,7 +193,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input class="form-control formInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
+        <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Pronouns" formControlName="pronouns">
         <div *ngIf="signupFormInputs?.['pronouns']?.invalid && (signupFormInputs?.['pronouns']?.dirty || signupFormInputs?.['pronouns']?.touched)" class="alert alert-danger">
           <div *ngIf="signupFormInputs?.['pronouns']?.errors?.['required']">
             Pronouns are required
@@ -195,7 +201,11 @@
         </div>
       </div>
     </div>
-    <button class="blueButton centerButton" type="submit" (click)="onSignupSubmit()">Signup</button>
+    <div class="centerButtonDiv">
+      <button class="yellowButton" type="submit" (click)="onSignupSubmit()">Signup</button>
+      <button class="yellowButton" (click)="closeSignupDialog()">Close</button>
+    </div>
+
   </form>
   <hr class="dialogLines">
   <div class="bottomModal">

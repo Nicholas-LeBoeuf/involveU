@@ -3,7 +3,11 @@ package com.example.involveU.controller;
 import com.example.involveU.model.EmailService;
 import com.example.involveU.model.EmailDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
+import java.util.List;
 
 // Annotation
 @RestController
@@ -15,11 +19,16 @@ public class EmailController {
 
     // Sending a simple Email
     @PostMapping("/email/sendMail")
-    public String
-    sendMail(@RequestBody EmailDetails details)
+    public ResponseEntity<String> sendMail(@RequestBody EmailDetails details)
     {
         String status = emailService.sendSimpleMail(details);
-
-        return status;
+        if(status != null)
+        {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -53,8 +53,11 @@
           <th [pSortableColumn]="'eventLocation'">Location <p-sortIcon [field]="'eventLocation'"></p-sortIcon></th>
           <th>Description</th>
           <th>Total RSVP's</th>
-          <th>Ticket Link</th>
-          <th [pSortableColumn]="'isTransportation'">Transportation <p-sortIcon [field]="'isTransportation'"></p-sortIcon></th>
+
+          <!--Deprecated-->
+         <!-- <th>Ticket Link</th>
+          <th [pSortableColumn]="'isTransportation'">Transportation <p-sortIcon [field]="'isTransportation'"></p-sortIcon></th>-->
+
           <th>Edit</th>
         </tr>
       </ng-template>
@@ -67,8 +70,11 @@
           <td [innerHTML]="event.location"></td>
           <td [innerHTML]="event.description"></td>
           <td>{{event.numOfRsvps}}</td>
-          <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
-          <td>{{event.isTransportation}}</td>
+
+          <!--Deprecated-->
+         <!-- <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
+          <td>{{event.isTransportation}}</td>-->
+          
           <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="blueButton">Edit</button></td>
         </tr>
       </ng-template>

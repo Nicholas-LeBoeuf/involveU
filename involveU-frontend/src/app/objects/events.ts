@@ -9,6 +9,7 @@ export interface Events {
   isTransportation: number;
   ticketLink?: string;
   clubName?: string;
+  numOfRsvps?: number;
 
   //derived
   clubID: number;

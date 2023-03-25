@@ -40,8 +40,8 @@ export class EventsService {
     return this.http.get<Events[]>(environment.apiURL + `events/getUserFutureRsvpEvents/${userID}`);
   }
 
-  rsvpToEvent(eventID: number, userID: number) {
-    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`, {responseType: 'text'});
+  rsvpToEvent(eventID: number, userID: number,clubID: number) {
+    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}/${clubID}`, {responseType: 'text'});
   }
 
   removeEventRSVP(eventID: number, userID: number) {

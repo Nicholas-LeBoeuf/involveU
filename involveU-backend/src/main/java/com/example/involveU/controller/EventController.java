@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.example.involveU.model.DBServices;
-import com.example.involveU.model.Events;
-import com.example.involveU.model.Space;
+import com.example.involveU.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,9 +69,11 @@ public class EventController extends DBServices{
         List<Events> sortedRSVPEvents = new ArrayList<>();
         Events currentEvent;
         rsvpList = getMostRSVPEvents();
+        //Loop for the List of Maps
         for(int i = 0; i < rsvpList.size(); i++)
         {
             int currentValue = Integer.parseInt(rsvpList.get(i).get("total").toString());
+            //Loop to check for the certain value picked first is the top
             for(int j = 0; j < rsvpList.size(); j++)
             {
                 int checkValue =  Integer.parseInt(rsvpList.get(j).get("total").toString());
@@ -96,10 +96,10 @@ public class EventController extends DBServices{
         return new ResponseEntity<>(sortedRSVPEvents, HttpStatus.OK) ;
     }
 
-    @GetMapping("events/rsvpEvent/{eventID}/{userID}")
-    private ResponseEntity<String> rsvpEvnt(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID)
+    @GetMapping("events/rsvpEvent/{eventID}/{userID}/{clubID}")
+    private ResponseEntity<String> rsvpEvnt(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID, @PathVariable("clubID") int clubID)
     {
-        if(insertRsvpEvent(eventID, userID))
+        if(insertRsvpEvent(eventID, userID,clubID))
             return new ResponseEntity<>("Success", HttpStatus.OK);
         else
             return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
@@ -133,6 +133,14 @@ public class EventController extends DBServices{
         events = getAllClubRsvp(clubID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @GetMapping("events/getClubRsvpEventDetails/{clubID}")
+    private  ResponseEntity<List<EboardEvent>> getClubRsvpEventDetails(@PathVariable("clubID") int clubID)
+    {
+        List<EboardEvent> eventsToDisplay;
+        eventsToDisplay = getAllEventDetails(clubID);
+
+        return new ResponseEntity<>(eventsToDisplay, HttpStatus.OK);
     }
 
 

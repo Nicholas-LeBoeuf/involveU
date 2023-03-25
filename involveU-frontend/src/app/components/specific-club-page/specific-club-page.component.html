@@ -136,7 +136,7 @@
                       <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
                     </ng-container>
                     <ng-template #ShowRSVP>
-                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID, event.clubID)">RSVP</button>
                     </ng-template>
                   </ng-container>
                 </div>
@@ -219,7 +219,7 @@
            <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
          </ng-container>
          <ng-template #ShowRSVP>
-           <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+           <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID, event.clubID)">RSVP</button>
          </ng-template>
        </ng-container>
        <button class="blueButton" (click)="closeViewMoreInfoDialog()">Close</button>

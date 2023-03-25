@@ -128,8 +128,8 @@ export class LandingPageComponent implements OnInit {
     this.viewMoreInfoDialog = false;
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+  eventRSVP(eventID: number,clubID:number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
 
     },
       error => {

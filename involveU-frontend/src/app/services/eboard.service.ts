@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import { SocialMedia } from "../objects/social-media";
 import {Club} from "../objects/club";
 import {Observable} from "rxjs";
+import {Events} from "../objects/events";
 
 
 @Injectable({
@@ -34,5 +35,9 @@ export class EboardService {
   }
   updateImage(selectedClub: Club, file: File) {
     return this.http.put(environment.apiURL + `club/ChangeClubImage`, [selectedClub, file]);
+  }
+
+  getClubEventInformation(clubID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getClubRsvpEventDetails/${clubID}`);
   }
 }

@@ -26,6 +26,10 @@ public class Events{
     private  int space_ID;
     private int location_ID;
     private  int clubID;
+    int numOfRsvps;
+
+
+
     private ExtraCustomField[] customFields;
     public long getEventID() {
         return eventID;
@@ -95,5 +99,13 @@ public class Events{
 
     public void setCustomFields(ExtraCustomField[] customFields) {
         this.customFields = customFields;
+    }
+
+    public int getNumOfRsvps() {
+        return numOfRsvps;
+    }
+
+    public void setNumOfRsvps(int numOfRsvps) {
+        this.numOfRsvps = numOfRsvps;
     }
 }

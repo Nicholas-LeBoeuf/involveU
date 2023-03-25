@@ -168,8 +168,9 @@ export class EboardPageComponent implements OnInit {
   }
 
   getClubEvents() {
-    this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
+    this.eboardService.getClubEventInformation(this.clubID).subscribe(response => {
       this.clubEvents = response;
+      console.log(response);
     })
   }
 

@@ -1,11 +1,14 @@
 package com.example.involveU.model;
 
+import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import software.amazon.awssdk.regions.servicemetadata.ElasticacheServiceMetadata;
+
 import java.util.regex.*;
 import java.text.ParseException;
 import java.util.List;
@@ -25,6 +28,7 @@ public class DBServices {
     private List<Club> clubs;
     private List<RSVP> rsvps;
     private List<SocialMedia> clubSMs;
+    private List<EboardEvent> eventDetails = new ArrayList<EboardEvent>();
     private String sql;
     private int validQuery;
     @Autowired
@@ -320,14 +324,7 @@ public class DBServices {
 
         return clubs;
     }
-    protected List<Map<String,Object>> getMostRSVPEvents()
-    {
-        List<Map<String,Object>> results;
-        sql = "select RSVP.eventID,count(*) as Total from RSVP group by eventID;";
-        results = JdbcTemplated.queryForList(sql);
 
-        return results;
-    }
     protected Boolean submitDBFavorite(int id, int clubID)
     {
         sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
@@ -530,7 +527,7 @@ public class DBServices {
         return  events;
     }
 //RSVP Controller
-    protected boolean insertRsvpEvent(int eventID, int userID)
+    protected boolean insertRsvpEvent(int eventID, int userID,int clubID)
     {
         //setting validQuery to 1 ensures that it won't accidentally be set to 0 on last use.
         validQuery = 1;
@@ -546,8 +543,8 @@ public class DBServices {
         }
         if(validQuery == 1) {
 
-            sql = "INSERT INTO RSVP (studentID, eventID) VALUES (?,?);";
-            validQuery = JdbcTemplated.update(sql, userID, eventID);
+            sql = "INSERT INTO RSVP (studentID, eventID,clubID) VALUES (?,?,?);";
+            validQuery = JdbcTemplated.update(sql, userID, eventID,clubID);
         }
 
         return validQuery == 1;
@@ -578,9 +575,8 @@ public class DBServices {
 
     protected List<Events> getAllClubRsvp(int clubID)
     {
-        sql = "SELECT Events.eventID ,title, startDateTime, location, endDateTime, dateTimeFormatted,description, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
+        sql = "SELECT Events.eventID ,title, startDateTime, location, endDateTime, dateTimeFormatted,description, isTransportation,ticketLink, clubName FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
 
         return events;
     }
@@ -591,6 +587,60 @@ public class DBServices {
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;
+    }
+    protected List<EboardEvent> getAllEventDetails(int clubID)
+    {
+
+        events = getDBClubEvents(clubID);
+
+        sql = "SELECT RSVP.eventID,count(*) as Total from RSVP WHERE clubID = "+ clubID +"  group by eventID;";
+
+        rsvps = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(RSVP.class));
+        int rsvpsSize = rsvps.size();
+        int counter = 0;
+        boolean eventFound = false;
+        for (Events event:events) {
+            EboardEvent newEvent = new EboardEvent();
+            if(counter < rsvpsSize) {
+                for (int i = 0; i < rsvps.size(); i++) {
+
+                    if (event.getEventID() == rsvps.get(i).getEventID()) {
+                        newEvent.convertEventClass(event);
+                        newEvent.setNumOfRsvps(rsvps.get(i).total);
+                        eventDetails.add(newEvent);
+                        counter++;
+                        eventFound = true;
+                        break;
+                    }
+                }
+                if(!eventFound)
+                {
+                    newEvent.convertEventClass(event);
+                    newEvent.setNumOfRsvps(0);
+                    eventDetails.add(newEvent);
+
+                }
+                else {
+                    eventFound = false;
+                }
+            }
+            else
+            {
+                newEvent.convertEventClass(event);
+                newEvent.setNumOfRsvps(0);
+                eventDetails.add(newEvent);
+            }
+        }
+
+        return eventDetails;
+    }
+    protected List<Map<String,Object>> getMostRSVPEvents()
+    {
+        List<Map<String,Object>> results;
+        sql = "select RSVP.eventID,count(*) as Total from RSVP group by eventID;";
+        results = JdbcTemplated.queryForList(sql);
+
+        return results;
     }
     //Announcements Controller
     protected List<Announcement> getAllDBAnnouncements()

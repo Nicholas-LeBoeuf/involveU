@@ -1,11 +1,14 @@
 package com.example.involveU.model;
 
+import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import software.amazon.awssdk.regions.servicemetadata.ElasticacheServiceMetadata;
+
 import java.util.regex.*;
 import java.text.ParseException;
 import java.util.List;
@@ -587,27 +590,45 @@ public class DBServices {
     }
     protected List<EboardEvent> getAllEventDetails(int clubID)
     {
-        events = getAllClubRsvp( clubID);
+
+        events = getDBClubEvents(clubID);
 
         sql = "SELECT RSVP.eventID,count(*) as Total from RSVP WHERE clubID = "+ clubID +"  group by eventID;";
 
         rsvps = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(RSVP.class));
+        int rsvpsSize = rsvps.size();
+        int counter = 0;
+        boolean eventFound = false;
+        for (Events event:events) {
+            EboardEvent newEvent = new EboardEvent();
+            if(counter < rsvpsSize) {
+                for (int i = 0; i < rsvps.size(); i++) {
 
-        //We need to map each event to its respective count
-        //loops through each rsvp grabbed from the database
-        for (RSVP current:rsvps) {
-
-            for(int i = 0; i < events.size();i++)
-            {
-                if(events.get(i).getEventID() == current.getEventID())
-                {
-                    //Ounce the respective event is found we create a new EboardEvent class and cast event to it
-                    //then we add the total to its numOfRSVPS and add it to a list to return
-                    EboardEvent newEvent = new EboardEvent();
-                    newEvent.convertEventClass(events.get(i));
-                    newEvent.setNumOfRsvps(current.total);
-                    eventDetails.add(newEvent);
+                    if (event.getEventID() == rsvps.get(i).getEventID()) {
+                        newEvent.convertEventClass(event);
+                        newEvent.setNumOfRsvps(rsvps.get(i).total);
+                        eventDetails.add(newEvent);
+                        counter++;
+                        eventFound = true;
+                        break;
+                    }
                 }
+                if(!eventFound)
+                {
+                    newEvent.convertEventClass(event);
+                    newEvent.setNumOfRsvps(0);
+                    eventDetails.add(newEvent);
+
+                }
+                else {
+                    eventFound = false;
+                }
+            }
+            else
+            {
+                newEvent.convertEventClass(event);
+                newEvent.setNumOfRsvps(0);
+                eventDetails.add(newEvent);
             }
         }
 

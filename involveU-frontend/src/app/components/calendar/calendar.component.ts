@@ -267,8 +267,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     return this.userRSVPdEvents.some(event => event.eventID === eventID);
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+  eventRSVP(eventID: number,clubID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
     },
       error => {
         this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});

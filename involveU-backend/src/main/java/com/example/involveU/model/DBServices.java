@@ -25,6 +25,7 @@ public class DBServices {
     private List<Club> clubs;
     private List<RSVP> rsvps;
     private List<SocialMedia> clubSMs;
+    private List<EboardEvent> eventDetails = new ArrayList<EboardEvent>();
     private String sql;
     private int validQuery;
     @Autowired
@@ -320,14 +321,7 @@ public class DBServices {
 
         return clubs;
     }
-    protected List<Map<String,Object>> getMostRSVPEvents()
-    {
-        List<Map<String,Object>> results;
-        sql = "select RSVP.eventID,count(*) as Total from RSVP group by eventID;";
-        results = JdbcTemplated.queryForList(sql);
 
-        return results;
-    }
     protected Boolean submitDBFavorite(int id, int clubID)
     {
         sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
@@ -530,7 +524,7 @@ public class DBServices {
         return  events;
     }
 //RSVP Controller
-    protected boolean insertRsvpEvent(int eventID, int userID)
+    protected boolean insertRsvpEvent(int eventID, int userID,int clubID)
     {
         //setting validQuery to 1 ensures that it won't accidentally be set to 0 on last use.
         validQuery = 1;
@@ -546,8 +540,8 @@ public class DBServices {
         }
         if(validQuery == 1) {
 
-            sql = "INSERT INTO RSVP (studentID, eventID) VALUES (?,?);";
-            validQuery = JdbcTemplated.update(sql, userID, eventID);
+            sql = "INSERT INTO RSVP (studentID, eventID,clubID) VALUES (?,?,?);";
+            validQuery = JdbcTemplated.update(sql, userID, eventID,clubID);
         }
 
         return validQuery == 1;
@@ -578,9 +572,8 @@ public class DBServices {
 
     protected List<Events> getAllClubRsvp(int clubID)
     {
-        sql = "SELECT Events.eventID ,title, startDateTime, location, endDateTime, dateTimeFormatted,description, isTransportation,ticketLink FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
+        sql = "SELECT Events.eventID ,title, startDateTime, location, endDateTime, dateTimeFormatted,description, isTransportation,ticketLink, clubName FROM Events JOIN RSVP AS R ON R.eventID = Events.eventID AND Events.clubID = "+clubID +";";
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
-
 
         return events;
     }
@@ -591,6 +584,42 @@ public class DBServices {
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 
         return events;
+    }
+    protected List<EboardEvent> getAllEventDetails(int clubID)
+    {
+        events = getAllClubRsvp( clubID);
+
+        sql = "SELECT RSVP.eventID,count(*) as Total from RSVP WHERE clubID = "+ clubID +"  group by eventID;";
+
+        rsvps = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(RSVP.class));
+
+        //We need to map each event to its respective count
+        //loops through each rsvp grabbed from the database
+        for (RSVP current:rsvps) {
+
+            for(int i = 0; i < events.size();i++)
+            {
+                if(events.get(i).getEventID() == current.getEventID())
+                {
+                    //Ounce the respective event is found we create a new EboardEvent class and cast event to it
+                    //then we add the total to its numOfRSVPS and add it to a list to return
+                    EboardEvent newEvent = new EboardEvent();
+                    newEvent.convertEventClass(events.get(i));
+                    newEvent.setNumOfRsvps(current.total);
+                    eventDetails.add(newEvent);
+                }
+            }
+        }
+
+        return eventDetails;
+    }
+    protected List<Map<String,Object>> getMostRSVPEvents()
+    {
+        List<Map<String,Object>> results;
+        sql = "select RSVP.eventID,count(*) as Total from RSVP group by eventID;";
+        results = JdbcTemplated.queryForList(sql);
+
+        return results;
     }
     //Announcements Controller
     protected List<Announcement> getAllDBAnnouncements()

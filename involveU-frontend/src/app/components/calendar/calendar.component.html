@@ -6,13 +6,13 @@
   <div class="filterFlex">
    <!-- Filter button deprecated as of right now-->
     <!--<button class="yellowButton removeMargin" (click)="openViewFilterDialog()">Filters</button>-->
-    <button class="yellowButton setAutoHeight" (click)="activateAllEventsFilter()">All Events</button>
-    <button class="yellowButton setAutoHeight" (click)="activateFavoritedClubEventsFilter()" [disabled]="!userID">Favorited Club Events</button>
-    <button class="yellowButton setAutoHeight" (click)="activateRSVPFilter()" [disabled]="!userID">RSVP'd Events</button>
+    <button [ngClass]="currentFilter === 'allEventsFilter' ? 'yellowButton' : 'blueButton'" class="setAutoHeight" (click)="activateAllEventsFilter()">All Events</button>
+    <button [ngClass]="currentFilter === 'favoritedClubEventsFilter' ? 'yellowButton' : 'blueButton'" class="setAutoHeight" (click)="activateFavoritedClubEventsFilter()" [disabled]="!userID">Favorited Club Events</button>
+    <button [ngClass]="currentFilter === 'RSVPEventsFilter' ? 'yellowButton' : 'blueButton'" class="setAutoHeight" (click)="activateRSVPFilter()" [disabled]="!userID">RSVP'd Events</button>
   </div>
   <div class="filterFlex">
     <div class="dropdownContentSize">
-      <p-dropdown [options]="dropdownOptions" [filter]="true" optionLabel="clubName" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" placeholder="Filter by Club" (onChange)="activateClubFilter($event)" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
+      <p-dropdown [options]="dropdownOptions" [filter]="true" optionLabel="clubName" [ngClass]="currentFilter === 'clubEventsFilter' ? 'calendarDropdownYellow' : 'calendarDropdownBlue'" placeholder="Filter by Club" (onChange)="activateClubFilter($event)" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
     </div>
 
     <!--    Deprecated as of right now-->
@@ -114,13 +114,13 @@
       </div>
       <ng-container *ngIf="isLoggedIn">
         <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
         </ng-container>
         <ng-template #ShowRSVP>
-          <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+          <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
         </ng-template>
       </ng-container>
-      <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
+      <button class="blueButton" (click)="closeViewMoreInfoDialog()">Close</button>
     </div>
   </div>
 </p-dialog>

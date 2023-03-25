@@ -639,8 +639,7 @@ public class DBServices {
 
     protected  List<Announcement> getDBClubAnnouncements(int clubID)
     {
-        sql = "select announcementID, Announcements.clubID, contentOfAnnouncement, expiresOn,postedOn, announcementTitle, Club.clubName from Announcements JOIN Club ON Announcements.clubID =  "+ clubID+ "  and Announcements.clubID = Club.clubID;";
-        sql = "select announcementID, Announcements.clubID, contentOfAnnouncement, expiresOn,postedOn, announcementTitle, Club.clubName from Announcements JOIN Club ON Announcements.clubID =  "+ clubID+ "  and Announcements.clubID = Club.clubID;";
+        sql = "select announcementID, Announcements.clubID, contentOfAnnouncement, expiresOn,postedOn, announcementTitle, Club.clubName from Announcements JOIN Club ON Announcements.clubID =  "+ clubID+ "  and Announcements.clubID = Club.clubID ORDER BY postedOn DESC;";
         announcements = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Announcement.class));
         return announcements;
     }

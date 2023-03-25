@@ -60,13 +60,37 @@ em {
   margin: 10px;
   color: $HeritageBlue;
   font-weight: 900;
+  transition: all ease-in-out 200ms;
 }
 
 .yellowButton:hover {
-  background-color: #fdcb54;
+  background-color: $HeritageBlue;
+  color: $GoldenYellow;
+
 }
 
 .yellowButton:disabled {
+  background-color: #8d8d8d;
+}
+
+.blueButton {
+  background-color: $HeritageBlue;
+  border: none;
+  border-radius: 14px;
+  height: 40px;
+  padding: 0 20px;
+  margin: 10px;
+  color: $GoldenYellow;
+  font-weight: 500;
+  transition: all ease-in-out 200ms;
+}
+
+.blueButton:hover {
+  background-color: $GoldenYellow;
+  color: $HeritageBlue;
+}
+
+.blueButton:disabled {
   background-color: #8d8d8d;
 }
 
@@ -407,8 +431,8 @@ em {
 //Tab View Styling
 ::ng-deep {
   .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-    background-color: $HeritageBlue;
-    color: $GoldenYellow;
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
     border: none;
   }
 
@@ -417,8 +441,9 @@ em {
   }
 
   .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    background-color: $GoldenYellow;
-    color: $HeritageBlue;
+
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
   }
 
   .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {

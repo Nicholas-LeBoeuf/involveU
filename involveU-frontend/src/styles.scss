@@ -94,6 +94,11 @@ em {
   background-color: #8d8d8d;
 }
 
+.yellowHover:hover {
+  background-color: #fdcb54 !important;
+  color: $HeritageBlue !important;
+}
+
 .form-control {
   height: 40px;
   width: 165px;

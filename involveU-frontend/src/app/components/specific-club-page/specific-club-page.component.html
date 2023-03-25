@@ -5,10 +5,10 @@
       <h1 class="clubNameMargin" [innerHTML]="clubInfo.clubName"></h1>
       <ng-container *ngIf="userID !== 0">
         <ng-container *ngIf="clubIsFav; else ClubNotFavorited">
-          <button class="yellowButton" (click)="removeFromFavorites()">Unfavorite Club</button>
+          <button class="yellowButton yellowHover" (click)="removeFromFavorites()">Unfavorite Club</button>
         </ng-container>
         <ng-template #ClubNotFavorited>
-          <button class="yellowButton" (click)="favoriteClub()">Favorite Club</button>
+          <button class="yellowButton yellowHover" (click)="favoriteClub()">Favorite Club</button>
         </ng-template>
       </ng-container>
     </div>

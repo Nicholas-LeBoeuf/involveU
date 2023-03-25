@@ -29,8 +29,8 @@
     </div>
     <div class="buttons">
       <ng-template [ngIf]="!this.isLoggedIn">
-        <button class="yellowButton" (click)="showSignupDialog()">Sign Up</button>
-        <button class="yellowButton" (click)="showLoginDialog()">Login</button>
+        <button class="yellowButton yellowHover" (click)="showSignupDialog()">Sign Up</button>
+        <button class="yellowButton yellowHover" (click)="showLoginDialog()">Login</button>
       </ng-template>
       <ng-template [ngIf]="this.isLoggedIn">
         <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">

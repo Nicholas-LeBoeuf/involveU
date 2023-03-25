@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import com.example.involveU.model.Space;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
 @RestController
 @RequestMapping("api/")
 public class EventController extends DBServices{
@@ -32,7 +35,6 @@ public class EventController extends DBServices{
        events = getDBTodaysEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
     @GetMapping("events/getClubEvents/{clubID}")
     private ResponseEntity<List<Events>> getEventsByClub(@PathVariable("clubID") int clubID)
     {
@@ -40,26 +42,20 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("events/getFutureEvents")
     private ResponseEntity<List<Events>> getFutureEvents()
     {
         events = getDBAllFutureEvents();
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
-
     @GetMapping("events/getFutureFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFutureFavoriteClubEvents(@PathVariable("userID") int userID)
     {
         events = getDBFutureFavoriteClubEvents(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
-
     @GetMapping("events/getFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFavoriteClubEvents(@PathVariable("userID") int userID)
     {
@@ -67,8 +63,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("/events/getTopRSVP")
     private ResponseEntity<List<Events>> getTopFavorite()
     {
@@ -118,10 +112,17 @@ public class EventController extends DBServices{
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-        @GetMapping("events/getUserRsvpEvent/{userID}")
+    @GetMapping("events/getUserRsvpEvent/{userID}")
     private  ResponseEntity<List<Events>> getUserRsvpEvents(@PathVariable("userID") int userID)
     {
         events = getAllUserRsvp(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @GetMapping("events/getUserFutureRsvpEvents/{userID}")
+    private  ResponseEntity<List<Events>> getUserFutureRsvpEvents(@PathVariable("userID") int userID)
+    {
+        events = getAllFutureRsvp(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
@@ -185,69 +186,26 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
-
-    //LOCATIONS  ENDPOINTS
-
-
-    @GetMapping("events/getAllLocations")
-    private ResponseEntity<List<Space>>getAllLocation()
-    {
-        spaces = getAllDBLocations();
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getLocationByID/{locationID}")
-    private ResponseEntity<List<Space>>getLocationID(@PathVariable("locationID") int locationID)
-    {
-        spaces = getDBLocationsByID(locationID);
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getSpacesByLocation/{locationID}")
-    private ResponseEntity<List<Space>>spacesByLocation(@PathVariable("locationID") int locationID)
-    {
-        spaces = getSpacesByLocation(locationID);
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getEventsBySpace/{locationID}")
-    private ResponseEntity<List<Events>>getEventBySpace(@PathVariable("locationID") String locationID)
-    {
-        events = getEventsByLocationID(locationID);
-
-        return new ResponseEntity<>(events,HttpStatus.OK);
-    }
-
     @GetMapping("events/test25live/{clubID}")
-    private  Object get25liveEvents(@PathVariable("clubID") int clubID) throws IOException {
+    private  ResponseEntity<String> get25liveEvents(@PathVariable("clubID") int clubID) throws IOException, ParseException {
 
-        String urlParameters = "24";
-        URL obj = new URL("https://webservices.collegenet.com/r25ws/wrd/snhu/run/events.json?oranization_id=24");
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type",
-                "application/x-www-form-urlencoded");
-        con.setRequestProperty("Content-Length",
-                Integer.toString(urlParameters.getBytes().length));
-        con.setRequestProperty("Content-Language", "en-US");
-            con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream (
-                con.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.close();
-        InputStream is = con.getInputStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
-        String line;
-        while ((line = rd.readLine()) != null) {
-            response.append(line);
-            response.append('\r');
-        }
-        rd.close();
-        return response.toString();
+
+        String url = "https://25livepub.collegenet.com/calendars/snhu-all-campus-events-calendar.json";
+        RestTemplate restTemplate = new RestTemplate();
+        Events [] events = restTemplate.getForObject(url,Events[].class);
+
+        upload25liveEvents(events);
+
+
+//        HttpEntity<CreateTaskInput> request = new HttpEntity<>(headers);
+//        String url = generateUrl("/tasks");
+//
+//        ResponseEntity<TaskItemResponse[]> result = restTemplate.exchange(url, HttpMethod.GET, request, TaskItemResponse[].class);
+//        TaskItemResponse[] tasks = result.getBody();
+//
+//        assert tasks != null;
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
 
 
     }

@@ -82,3 +82,7 @@
     width: 80%;
   }
 }
+
+::ng-deep .clubFilter.p-dropdown .p-dropdown-panel {
+  max-width: 100%;
+}

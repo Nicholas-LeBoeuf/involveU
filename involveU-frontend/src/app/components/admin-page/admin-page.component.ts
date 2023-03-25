@@ -10,6 +10,7 @@ import {Announcement} from "../../objects/announcements";
 import { DatePipe } from '@angular/common';
 import {Title} from "@angular/platform-browser";
 import {ResponsiveService} from "../../services/responsive.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-admin-page',
@@ -33,7 +34,8 @@ export class AdminPageComponent implements OnInit {
               private adminService: AdminService,
               public cookie: CookieService,
               private datePipe: DatePipe,
-              private title: Title) {
+              private title: Title,
+              private toastr: ToastrService) {
     this.title.setTitle("involveU | Admin")
 
     this.createClubForm = this.formBuilder.group({
@@ -82,7 +84,7 @@ export class AdminPageComponent implements OnInit {
     this.osiAnnouncementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
-      expiresOn: [''],
+      expiresOn: ['', Validators.required],
       announcementTitle: ['', Validators.required],
       postedOn: ['']
     });
@@ -90,22 +92,10 @@ export class AdminPageComponent implements OnInit {
   }
 
   //BOOLEANS
-  createClubMessage: boolean = false;
-  createClubFailed: boolean = false;
-  createUserSuccess: boolean = false;
-  createUserFailed: boolean = false;
-  deleteUserSuccess: boolean = false;
-  deleteClubSuccess: boolean = false;
-  deleteUserFailed: boolean = false;
-  deleteClubFailed: boolean = false;
-  assignAdvisorSuccess: boolean = false;
-  assignAdvisorFailed: boolean = false;
-  assignEboardSuccess: boolean = false;
-  assignEboardFailed: boolean = false;
-  removeEboardSuccess: boolean = false;
-  removeEboardFailed: boolean = false;
-  disableUserDropdown:boolean = true;
+  clubLogoUploaded: boolean = false;
   assign: boolean = true;
+  disableUserDropdown: boolean = true;
+  isUserAdmin: boolean = false;
 
   //NUMBERS
   clubID!: number;
@@ -114,7 +104,6 @@ export class AdminPageComponent implements OnInit {
 
 
   //OBJECTS
-  labelEboard: User[];
   clubNames: Club[] = [];
   userList: User[] = [];
   nonEboardList: User[] = [];
@@ -122,18 +111,26 @@ export class AdminPageComponent implements OnInit {
   advisorList: User[] = [];
   clubEboard: User[] = [];
   selectedClub: any = {};
+  yearNames = [
+    { yearName: 'Freshman' },
+    { yearName: 'Sophomore' },
+    { yearName: 'Junior' },
+    { yearName: 'Senior' },
+    { yearName: 'Faculty' },
+  ]
 
-  //FORM CONTROLSc
-  addEBoardClubID: FormControl = new FormControl(null);
-  removeEBoardClubID: FormControl = new FormControl(null);
-  removeClubID: FormControl = new FormControl(null);
-  assignAdvisorClubID: FormControl = new FormControl(null);
-  deleteUserID: FormControl = new FormControl(null);
-  nonEboardID: FormControl = new FormControl(null);
-  eboardID: FormControl = new FormControl(null);
-  advisorID: FormControl = new FormControl(null);
-  createClubAdvisorID: FormControl = new FormControl(null);
+  //FORM CONTROLS
+  addEBoardClubID: FormControl = new FormControl(null, Validators.required);
+  removeEBoardClubID: FormControl = new FormControl(null, Validators.required);
+  removeClubID: FormControl = new FormControl(null, Validators.required);
+  assignAdvisorClubID: FormControl = new FormControl(null, Validators.required);
+  deleteUserID: FormControl = new FormControl(null, Validators.required);
+  nonEboardID: FormControl = new FormControl(null, Validators.required);
+  eboardID: FormControl = new FormControl(null, Validators.required);
+  advisorID: FormControl = new FormControl(null, Validators.required);
+  createClubAdvisorID: FormControl = new FormControl(null, Validators.required);
   todaysDate = new Date().toString();
+  yearNameFC: FormControl = new FormControl(null, Validators.required);
 
 
   ngOnInit(): void {
@@ -143,13 +140,27 @@ export class AdminPageComponent implements OnInit {
     this.fillEboardList();
     this.fillAdvisorList();
     this.getEboardMembers();
+
+    if(+this.cookie.get('isAdmin') === 1) {
+      this.isUserAdmin = true;
+    }
+    else {
+      this.isUserAdmin = false;
+    }
   }
   onUpload(event) {
     const file:File = event.files[0];
 
     this.adminService.sendImage(file).subscribe(response => {
-      console.log(response);
-    })
+
+    },
+      error => {
+        this.toastr.error('Unsuccessful Club Logo Upload', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Uploaded Club Logo', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.clubLogoUploaded = true;
+      });
 
   }
 
@@ -198,141 +209,123 @@ export class AdminPageComponent implements OnInit {
       });
   }
 
-  get clubCreationFormInputs() {
-    return this.createClubForm.controls;
-  }
-
-  get createUserFormInputs() {
-    return this.createUserForm.controls;
-  }
-
-  get deleteUserFormInputs() {
-    return this.deleteUserForm.controls;
-  }
-
-  get deleteClubFormInputs() {
-    return this.deleteClubForm.controls;
-  }
-
-  get assignAdvisorFormInputs() {
-    return this.assignAdvisorForm.controls;
-  }
-
-  get addEBoardFormInputs() {
-    return this.addEBoardForm.controls;
-  }
-
-  get removeEBoardFormInputs() {
-    return this.removeEBoardForm.controls;
-  }
-
-  get osiAnnouncementFormInputs() {
-    return this.osiAnnouncementForm.controls;
-  }
-
   createClubSubmit(){
     const clubInfo : Club = {ownerID: this.cookie.get('studentID'), clubName: this.createClubForm.value.clubName, clubAffiliation: this.createClubForm.value.clubAffiliation, clubBio: this.createClubForm.value.clubBio, clubVision: this.createClubForm.value.clubVision, clubMission: this.createClubForm.value.clubMission, clubValues: this.createClubForm.value.clubValues, clubLogo: this.createClubForm.value.clubLogo, advisorID: this.createClubAdvisorID.value}
-    console.log(clubInfo);
+
     this.adminService.insertNewClub(clubInfo).subscribe(success =>{
-        this.createClubMessage = true;
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        this.createClubFailed = true;
-        console.log(error)
+      error => {
+        this.toastr.error('Unsuccessful Club Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.createClubForm.reset();
+        this.createClubAdvisorID.reset();
+        this.fillClubList();
+        this.clubLogoUploaded = false;
       });
   }
 
   createUserSubmit(){
-    const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.createUserForm.value.year, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
+    const newUser: User = { firstName: this.createUserForm.value.firstName, lastName: this.createUserForm.value.lastName, year: this.yearNameFC.value, email: this.createUserForm.value.email, isAdmin: 0, isEboard: 0, pronouns: this.createUserForm.value.pronouns, userPassword: this.createUserForm.value.password};
     this.adminService.createUser(newUser).subscribe(success =>{
-        this.createUserSuccess = true;
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        this.createUserFailed = true;
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful User Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created User', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.createUserForm.reset();
+        this.yearNameFC.reset();
+        this.fillUserList();
       });
   }
 
   deleteUserSubmit(){
     this.adminService.deleteUser(this.deleteUserID.value).subscribe(success =>{
-        console.log(success);
-        this.deleteUserSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
-        this.deleteUserFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful User Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Deleted User', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.deleteUserID.reset();
+        this.fillUserList();
       });
   }
 
   deleteClubSubmit(){
     this.adminService.deleteClub(this.removeClubID.value).subscribe(success =>{
-        console.log(success);
-        console.log("test");
-        this.deleteClubSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
-        if(error.status === 200)
-        {
-          this.deleteClubSuccess = true;
-          location.reload();
-        }
-        this.deleteClubFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful Club Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Deleted Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.removeClubID.reset();
+        this.fillClubList();
       });
   }
 
   addEBoardSubmit(){
     this.adminService.addEBoardMember(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role).subscribe(success =>{
-        console.log(success);
-        this.assignEboardSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        this.assignEboardFailed = true;
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful Eboard Addition Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Assigned Eboard Position', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.nonEboardID.reset();
+        this.addEBoardClubID.reset();
+        this.addEBoardForm.reset();
       });
-    console.log(this.nonEboardID.value, this.addEBoardClubID.value, this.addEBoardForm.value.role)
   }
 
   removeEBoardSubmit(){
     this.adminService.removeEBoardMember(this.eboardID.value).subscribe(success =>{
-        console.log(success);
-        this.removeEboardSuccess = true;
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
-        this.removeEboardFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful Eboard Deletion Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed Eboard Member', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.eboardID.reset();
+        this.removeEBoardClubID.reset();
       });
   }
 
   assignAdvisorSubmit(){
-    this.adminService.assignNewAdvisor(this.advisorID.value, this.assignAdvisorClubID.value).subscribe(success =>{
-        console.log(success);
-        this.assignAdvisorSuccess = true;
-        location.reload();
+    this.adminService.assignNewAdvisor(this.advisorID.value, this.assignAdvisorClubID.value).subscribe(response =>{
       },
-      (error) => {
-        console.log(error);
-        this.assignAdvisorFailed = true;
+      error => {
+        this.toastr.error('Unsuccessful Assign Advisor Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Assigned Advisor', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.advisorID.reset();
+        this.assignAdvisorClubID.reset();
+        this.fillAdvisorList();
       });
   }
 
   createOSIAnnouncementSubmit(){
     const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle, postedOn: this.todaysDate};
-    console.log(newAnnouncement);
+
     this.adminService.createOSIAnnouncement(newAnnouncement).subscribe(success =>{
-        console.log(success);
-        location.reload();
+
       },
-      (error) => {
-        console.log(error);
+      error => {
+        this.toastr.error('Unsuccessful Announcement Creation Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Created Announcement', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.osiAnnouncementForm.reset();
       });
   }
 
@@ -340,20 +333,11 @@ export class AdminPageComponent implements OnInit {
   {
     this.clubService.getClubEboard(this.removeEBoardClubID.value).subscribe(response => {
       this.clubEboard = response;
-      console.log(response)
-      this.clubEboard.forEach(member =>
-        {
-          console.log(member);
+      this.clubEboard.forEach(member => {
           member.firstName = member.firstName + ' ' + member.lastName;
-
         }
-
       );
     })
-
-    console.log("List:"+this.labelEboard);
-
-
   }
 
   checkClubSelected() {
@@ -367,7 +351,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateClubValid() {
-    if (this.createClubForm.value.clubName == '' || this.createClubForm.value.clubAffiliation == '' ||  this.createClubForm.value.clubBio == '' ||  this.createClubForm.value.clubVision == '' ||  this.createClubForm.value.clubMission == '' ||  this.createClubForm.value.clubValues == '' || this.createClubAdvisorID.value == null) {
+    if (this.createClubForm.value.clubName === '' || this.createClubForm.value.clubAffiliation === '' ||  this.createClubForm.value.clubBio === '' ||  this.createClubForm.value.clubVision === '' ||  this.createClubForm.value.clubMission === '' ||  this.createClubForm.value.clubValues === '' || this.createClubAdvisorID.value === null  || this.clubLogoUploaded === false) {
       return true;
     }
     else {
@@ -376,7 +360,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isCreateUserValid() {
-    if (this.createUserForm.value.firstName == '' || this.createUserForm.value.lastName == '' || this.createUserForm.value.email == '' || this.createUserForm.value.password == '' || this.createUserForm.value.year == '' || this.createUserForm.value.pronouns == '') {
+    if (this.createUserForm.value.firstName === '' || this.createUserForm.value.lastName === '' || this.createUserForm.value.email === '' || this.createUserForm.value.password === '' || this.yearNameFC.value === null || this.createUserForm.value.pronouns === '') {
       return true;
     }
     else {
@@ -385,7 +369,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isDeleteUserValid() {
-    if (this.deleteUserID.value == null) {
+    if (this.deleteUserID.value === null) {
       return true;
     }
     else {
@@ -394,7 +378,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isDeleteClubValid() {
-    if (this.removeClubID.value == null) {
+    if (this.removeClubID.value === null) {
       return true;
     }
     else {
@@ -403,7 +387,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isAssignEboardValid() {
-    if (this.nonEboardID.value == null || this.addEBoardClubID.value == null || this.addEBoardForm.value.role == '') {
+    if (this.nonEboardID.value === null || this.addEBoardClubID.value === null || this.addEBoardForm.value.role === '') {
       return true;
     }
     else {
@@ -412,7 +396,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isAssignAdvisorValid() {
-    if (this.assignAdvisorClubID.value == null || this.advisorID.value == null) {
+    if (this.assignAdvisorClubID.value === null || this.advisorID.value === null) {
       return true;
     }
     else {
@@ -421,7 +405,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isRemoveEboardValid() {
-    if (this.eboardID.value == null || this.removeEBoardClubID == null) {
+    if (this.eboardID.value === null || this.removeEBoardClubID === null) {
       return true;
     }
     else {
@@ -430,7 +414,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   isOSIAnnouncementValid() {
-    if(this.osiAnnouncementForm.value.announcementTitle == '' || this.osiAnnouncementForm.value.contentOfAnnouncement == '' || this.osiAnnouncementForm.value.expiresOn == null || this.osiAnnouncementForm.value.postedOn == null) {
+    if(this.osiAnnouncementForm.value.announcementTitle === '' || this.osiAnnouncementForm.value.contentOfAnnouncement === '' || this.osiAnnouncementForm.value.expiresOn === null || this.osiAnnouncementForm.value.postedOn === null) {
       return true;
     }
     else {

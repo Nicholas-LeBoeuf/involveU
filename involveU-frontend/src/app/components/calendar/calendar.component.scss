@@ -4,55 +4,168 @@
 @import '~@fullcalendar/daygrid/main.min.css';
 @import '~@fullcalendar/timegrid/main.css';
 @import '~@fullcalendar/timegrid/main.min.css';
+@import 'src/styles';
 
 
 .fc { /* the calendar root */
   max-width: 95vw;
-  margin: 0 auto;
   white-space: pre-wrap;
+  margin: 0 auto 30px;
 }
 
-::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button {
-  background-color: #dadada;
-  border-color: #dadada;
-  color: #333333;
+::ng-deep {
+  .fc.fc-theme-standard .fc-toolbar .fc-button {
+    background-color: $HeritageBlue !important;
+    border: 3px solid white !important;
+    color: $GoldenYellow !important;
+    box-shadow: none !important;
+  }
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button:hover {
+    background-color: $GoldenYellow !important;
+    border: 3px solid white !important;
+    color: $HeritageBlue !important;
+    box-shadow: none !important;
+  }
+
+  .fc.fc-theme-standard .fc-view-harness th  {
+    background-color: $HeritageBlue !important;
+  }
+
+  .fc.fc-theme-standard .fc-view-harness .fc-cell-shaded {
+    background-color: $HeritageBlue !important;
+  }
+
+  .fc.fc-theme-standard .fc-view-harness th a {
+    color: $GoldenYellow !important;
+  }
+
+  .fc-daygrid-dot-event .fc-event-title {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+  }
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active,
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active,
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active,
+  .fc.fc-theme-standard .fc-toolbar .fc-button.fc-listWeek-button.fc-button-active {
+    background: $GoldenYellow !important;
+    color: $HeritageBlue !important;
+    box-shadow: none !important;
+  }
+
+  .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    cursor: pointer !important;
+  }
+
+  .fc-timegrid-event-harness {
+    cursor: pointer !important;
+  }
+
+  .fc .fc-event, .fc .fc-scrollgrid table tr {
+    cursor: pointer !important;
+  }
+
+  .fc.fc-theme-standard .fc-highlight {
+    background-color: $SkyBlue !important;
+  }
+
+  .fc .fc-toolbar-title {
+    color: $HeritageBlue;
+    font-size: 2rem !important;
+  }
+
+  .fc-day-grid-event > .fc-content:hover {
+    max-height:none!important;
+  }
+
+  .fc-day-grid-event > .fc-content {
+    white-space: normal;
+    text-overflow: ellipsis;
+    max-height:20px;
+  }
 }
 
-::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:hover {
-  background-color: #116fbf;
-  border-color: #116fbf;
-  color: white;
+
+@media (max-width: 768px) {
+  ::ng-deep {
+    .fc .fc-toolbar.fc-header-toolbar {
+      display: block;
+      text-align: center;
+    }
+
+    .fc-header-toolbar .fc-toolbar-chunk {
+      padding: 7px;
+      display: block;
+    }
+
+    .applyMargin {
+      text-align: center !important;
+    }
+
+    .removeMargin {
+      margin-left: 10px !important;
+    }
+  }
 }
 
-::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:active {
-  background-color: #007ad9 !important;
-  border-color: #007ad9 !important;
-  color: white;
+.applyMargin {
+  margin-left: 2.5%;
 }
 
-::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
-  background-color: #007ad9 !important;
-  border-color: #007ad9 !important;
-  color: white;
+.removeMargin {
+  margin-left: 0;
 }
 
-::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus {
-  box-shadow: 0 0 0 0.2rem #8dcdff !important;
+.filterSection {
 }
 
-::ng-deep .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
-  cursor: pointer !important;
+.filterSection button {
+  margin: 0 !important;
 }
 
-::ng-deep .fc-timegrid-event-harness {
-  cursor: pointer !important;
+::ng-deep .p-dropdown-item.p-ripple {
+  white-space: normal;
 }
 
-::ng-deep .fc .fc-event, .fc .fc-scrollgrid table tr {
-  cursor: pointer !important;
+.dialogContainer {
+  padding: 25px;
 }
 
-::ng-deep .fc-daygrid-dot-event .fc-event-title {
-  overflow: inherit !important;
-  white-space: normal !important;
+.dropdownContentSize {
+  margin: 20px;
+}
+
+.filterFlex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.setAutoHeight {
+  height: auto !important;
+  padding: 10px !important;
+}
+
+.calendarDropdownBlue::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+  }
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: $GoldenYellow;
+  }
+}
+
+.calendarDropdownYellow::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
+  }
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: $HeritageBlue;
+  }
 }

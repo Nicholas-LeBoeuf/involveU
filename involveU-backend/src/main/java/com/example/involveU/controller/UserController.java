@@ -68,8 +68,8 @@ public class UserController extends DBServices{
 
 		return foundUser;
 	}
-	@PutMapping("user/sendMail")
-	public ResponseEntity<String> sendMail(@RequestBody EmailDetails newEmail) throws IOException {
+	@PostMapping("user/sendMail")
+	public ResponseEntity<String>sendMail(@RequestBody EmailDetails newEmail) throws IOException {
 		System.out.println("Before email send");
 		emailService.sendEmail(newEmail.getRecipient(), newEmail.getSubject(), newEmail.getMsgBody());
 		System.out.println("Success");

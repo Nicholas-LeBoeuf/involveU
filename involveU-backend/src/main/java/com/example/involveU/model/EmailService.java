@@ -5,7 +5,9 @@ import com.example.involveU.model.EmailDetails;
 // Interface
 public interface EmailService {
 
-    // Method
+    /*// Method
     // To send a simple email
-    String sendSimpleMail(EmailDetails details);
+    String sendSimpleMail(EmailDetails details);*/
+
+    void sendEmail(String recipient, String subject, String msgBody);
 }

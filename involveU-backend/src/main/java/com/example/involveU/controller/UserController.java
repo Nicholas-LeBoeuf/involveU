@@ -2,6 +2,8 @@ package com.example.involveU.controller;
 import java.io.IOException;
 import java.util.List;
 import com.example.involveU.model.DBServices;
+import com.example.involveU.model.EmailDetails;
+import com.example.involveU.model.EmailService;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +17,7 @@ public class UserController extends DBServices{
 
 	@Autowired
 	private UserRepository userRepository;
+	private EmailService emailService;
 	private List<User> foundUser;
 	private Object singleUser;
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -64,6 +67,13 @@ public class UserController extends DBServices{
 		foundUser = getDBAllFaculty();
 
 		return foundUser;
+	}
+	@PutMapping("user/sendMail")
+	public ResponseEntity<String> sendMail(@RequestBody EmailDetails newEmail) throws IOException {
+		System.out.println("Before email send");
+		emailService.sendEmail(newEmail.getRecipient(), newEmail.getSubject(), newEmail.getMsgBody());
+		System.out.println("Success");
+		return new ResponseEntity<>("success",HttpStatus.OK);
 	}
 
 }

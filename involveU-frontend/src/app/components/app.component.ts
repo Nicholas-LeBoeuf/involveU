@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
+import {Email} from "../objects/email"
 import {ClubService} from "../services/club.service";
 import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
@@ -21,6 +22,7 @@ export class AppComponent {
 
   loginForm: FormGroup;
   signupForm: FormGroup;
+  forgotPasswordForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -42,6 +44,10 @@ export class AppComponent {
       password: ['',  Validators.required, Validators.minLength(8)],
       pronouns: ['', Validators.required]
     });
+
+    this.forgotPasswordForm = this.formBuilder.group({
+      email:['', Validators.required]
+    })
   }
 
   //BOOLEANS
@@ -49,9 +55,11 @@ export class AppComponent {
   isLoggedIn: boolean = false;
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
+  displayForgotPassDialog: boolean = false;
 
   //NUMBERS
   userID: number;
+  securityToken: number;
 
   //STRINGS
   title: string = 'involveU';
@@ -72,6 +80,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
+    this.securityToken= +this.cookie.get('securityToken');
     this.checkIfUserInEboard();
     this.isUserLoggedIn();
   }
@@ -93,6 +102,11 @@ export class AppComponent {
 
   showSignupDialog() {
     this.displaySignupDialog = true;
+  }
+
+  showForgotPassDialog() {
+    this.displayForgotPassDialog = true;
+    this.displayLoginDialog = false;
   }
 
   onLoginSubmit() {
@@ -137,6 +151,7 @@ export class AppComponent {
     this.cookie.delete('studentLName');
     this.cookie.delete('isAdmin');
     this.cookie.delete('isEboard');
+    this.cookie.delete('securityToken');
     this.usersEboardInfo = {};
     this.isEboard = false;
     this.isLoggedIn = false;
@@ -164,6 +179,7 @@ export class AppComponent {
     this.cookie.set("studentLName", JSON.stringify(this.loggedInUser.lastName));
     this.cookie.set("isAdmin", JSON.stringify(this.loggedInUser.isAdmin));
     this.cookie.set("isEboard", JSON.stringify(this.loggedInUser.isEboard));
+    this.cookie.set("securityToken", JSON.stringify(this.generateRandomNum()));
   }
 
   onLoginClickFromSignupModal() {
@@ -183,6 +199,10 @@ export class AppComponent {
 
   closeLoginDialog() {
     this.displayLoginDialog = false;
+  }
+
+  closeForgotPassDialog() {
+    this.displayForgotPassDialog = false;
   }
 
   activateContextMenu(contextMenu: ContextMenu, event: MouseEvent, xOffset: number = -20, yOffset: number = 50) {
@@ -207,6 +227,24 @@ export class AppComponent {
       (error) => {
         console.log(error);
       })
+  }
+
+  sendForgotPassEmail() {
+    this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
+      console.log("sending email");
+      console.log(response);
+      console.log("email sent");
+    },
+      (error) => {
+      console.log(this.forgotPasswordForm.value.email);
+      console.log(this.securityToken);
+      console.log(error);
+      })
+  }
+
+  generateRandomNum() {
+    let randNumber = Math.random() * 1000;
+    return randNumber;
   }
 
   isUserLoggedIn() {

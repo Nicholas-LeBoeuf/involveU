@@ -415,12 +415,11 @@ export class EboardPageComponent implements OnInit {
     const file:File = event.files[0];
     this.clubInfo.clubfile = event.files[0];
     this.eboardService.checkClubLogoPath(file.name,this.clubInfo.clubID).subscribe(response=>{
-
-      console.log(response);
     })
     this.eboardService.updateImage(this.clubInfo.clubID,file).subscribe(response => {
     },
       error => {
+        console.log(error);
         this.toastr.error('Unsuccessful Logo Upload Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
       () => {

@@ -24,6 +24,7 @@ export class AppComponent {
   signupForm: FormGroup;
   forgotPasswordForm: FormGroup;
   verificationForm: FormGroup;
+  changePasswordForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -52,7 +53,12 @@ export class AppComponent {
 
     this.verificationForm = this.formBuilder.group({
       verificationCode: ['', Validators.required]
-    })
+    });
+
+    this.changePasswordForm = this.formBuilder.group({
+      newPassword: ['', Validators.required, Validators.minLength(8)],
+      confirmPassword: ['', Validators.required, Validators.minLength(8)]
+    });
   }
 
   //BOOLEANS
@@ -62,6 +68,7 @@ export class AppComponent {
   displaySignupDialog: boolean = false;
   displayForgotPassDialog: boolean = false;
   displayVerificationDialog: boolean = false;
+  displayChangePasswordDialog: boolean = false;
 
   //NUMBERS
   userID: number;
@@ -115,9 +122,8 @@ export class AppComponent {
     this.displayLoginDialog = false;
   }
 
-  showVerificationDialog() {
-    this.displayVerificationDialog = true;
-    this.displayForgotPassDialog = false;
+  showChangePasswordDialog() {
+    this.displayChangePasswordDialog = true;
   }
 
   onLoginSubmit() {
@@ -218,6 +224,10 @@ export class AppComponent {
     this.displayVerificationDialog = false;
   }
 
+  closeChangePasswordDialog() {
+    this.displayChangePasswordDialog = false;
+  }
+
   activateContextMenu(contextMenu: ContextMenu, event: MouseEvent, xOffset: number = -20, yOffset: number = 50) {
     this.prevContextMenu?.hide();
     event.stopPropagation();
@@ -271,7 +281,7 @@ export class AppComponent {
     if(this.securityToken === +this.verificationForm.value.verificationCode){
       this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
       this.displayVerificationDialog = false;
-      this.displayLoginDialog = true;
+      this.displayChangePasswordDialog = true;
     }
     else{
       this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});

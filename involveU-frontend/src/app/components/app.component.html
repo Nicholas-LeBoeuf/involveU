@@ -171,4 +171,20 @@
   </div>
 </p-dialog>
 
+<p-dialog [(visible)]="displayChangePasswordDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">>
+  <h1 class="dialogTitle blueHeaders forgotPassHeader">Change Password</h1>
+  <form>
+    <div class="form-group">
+      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="New password" formControlName="newPassword">
+    </div>
+    <div class="form-group">
+      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Confirm password" formControlName="confirmPassword">
+    </div>
+  </form>
+  <div class="centerButtonDiv">
+    <button class="yellowButton" type="submit" (click)="checkVerificationCodeMatch()">Change Password</button>
+    <button class="yellowButton" (click)="closeChangePasswordDialog()">Cancel</button>
+  </div>
+</p-dialog>
+
 <p-contextMenu #profileContextMenu [model]="profileContextMenuItems"></p-contextMenu>

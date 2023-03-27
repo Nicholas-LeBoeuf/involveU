@@ -23,6 +23,7 @@ export class AppComponent {
   loginForm: FormGroup;
   signupForm: FormGroup;
   forgotPasswordForm: FormGroup;
+  verificationForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -47,6 +48,10 @@ export class AppComponent {
 
     this.forgotPasswordForm = this.formBuilder.group({
       email:['', Validators.required]
+    });
+
+    this.verificationForm = this.formBuilder.group({
+      verificationCode: ['', Validators.required]
     })
   }
 
@@ -56,6 +61,7 @@ export class AppComponent {
   displayLoginDialog: boolean = false;
   displaySignupDialog: boolean = false;
   displayForgotPassDialog: boolean = false;
+  displayVerificationDialog: boolean = false;
 
   //NUMBERS
   userID: number;
@@ -107,6 +113,11 @@ export class AppComponent {
   showForgotPassDialog() {
     this.displayForgotPassDialog = true;
     this.displayLoginDialog = false;
+  }
+
+  showVerificationDialog() {
+    this.displayVerificationDialog = true;
+    this.displayForgotPassDialog = false;
   }
 
   onLoginSubmit() {
@@ -203,6 +214,10 @@ export class AppComponent {
     this.displayForgotPassDialog = false;
   }
 
+  closeVerificationDialog() {
+    this.displayVerificationDialog = false;
+  }
+
   activateContextMenu(contextMenu: ContextMenu, event: MouseEvent, xOffset: number = -20, yOffset: number = 50) {
     this.prevContextMenu?.hide();
     event.stopPropagation();
@@ -232,18 +247,18 @@ export class AppComponent {
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
     },
       (error) => {
-      if(error.status === 200)
-      {
-        this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
-      }
-      else
-      {
-        this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
-      }
+        if(error.status === 200)
+        {
+          this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.displayVerificationDialog = true;
+          this.displayForgotPassDialog = false;
+        }
+        else
+        {
+          this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        }
         },
       () => {
-
-       
 
       })
   }

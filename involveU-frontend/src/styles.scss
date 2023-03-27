@@ -308,7 +308,9 @@ em {
   position: absolute;
   z-index: 0;
   text-align: center;
-  margin-top: 2px;
+  height: 130px;
+  width:134px;
+  object-fit: scale-down;
 }
 .imageMaskEvent {
   background-color: rgba(0, 0, 0, 0.5);

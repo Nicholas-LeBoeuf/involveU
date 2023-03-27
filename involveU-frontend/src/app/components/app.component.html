@@ -29,8 +29,8 @@
     </div>
     <div class="buttons">
       <ng-template [ngIf]="!this.isLoggedIn">
-        <button class="yellowButton" (click)="showSignupDialog()">Sign Up</button>
-        <button class="yellowButton" (click)="showLoginDialog()">Login</button>
+        <button class="yellowButton yellowHover" (click)="showSignupDialog()">Sign Up</button>
+        <button class="yellowButton yellowHover" (click)="showLoginDialog()">Login</button>
       </ng-template>
       <ng-template [ngIf]="this.isLoggedIn">
         <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">
@@ -93,8 +93,8 @@
       <input class="form-control formInputs" type="password" placeholder="Password" formControlName="password">
     </div>
     <div class="centerButtonDiv">
-      <button class="yellowButton" type="submit" [disabled]="isLoginValid()" (click)="onLoginSubmit()">Login</button>
-      <button class="yellowButton" (click)="closeLoginDialog()">Close</button>
+      <button class="blueButton" type="submit" [disabled]="isLoginValid()" (click)="onLoginSubmit()">Login</button>
+      <button class="blueButton" (click)="closeLoginDialog()">Close</button>
     </div>
     <div class="form-group loginInputs">
       <p class="text-center"><a (click)="showForgotPassDialog()">Forgot Password</a></p>
@@ -133,8 +133,8 @@
       </div>
     </div>
     <div class="centerButtonDiv">
-      <button class="yellowButton" type="submit" [disabled]="isSignupValid()" (click)="onSignupSubmit()">Sign Up</button>
-      <button class="yellowButton" (click)="closeSignupDialog()">Close</button>
+      <button class="blueButton" type="submit" [disabled]="isSignupValid()" (click)="onSignupSubmit()">Sign Up</button>
+      <button class="blueButton" (click)="closeSignupDialog()">Close</button>
     </div>
 
   </form>

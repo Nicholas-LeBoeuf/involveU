@@ -9,6 +9,7 @@ import {ClubService} from "../../services/club.service";
 import {CookieService} from "ngx-cookie-service";
 import {ResponsiveService} from "../../services/responsive.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -23,7 +24,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
               public cookie: CookieService,
               public responsiveService: ResponsiveService,
               private clubService: ClubService,
-              private title: Title) {
+              private title: Title,
+              private router: Router) {
     this.title.setTitle("involveU | Calendar");
   }
 
@@ -37,8 +39,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   userID: number;
   locationID: number;
   spaceID: number;
-
   // STRINGS
+  currentFilter: string;
 
   // OBJECTS or ARRAYS
   formattedEvents: CalendarFormat[] = [];
@@ -74,11 +76,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.getAllClubs();
     this.getLocations();
     this.isUserLoggedIn();
-   // this.getUserRSVPdEvents();
+    this.getUserRSVPdEvents();
   }
 
   ngAfterViewInit() {
-    this.activateAllEventsFilter();
+    if (this.isLoggedIn === true) {
+      this.activateAllEventsFilter();
+    }
   }
 
   formatAllEvents() {
@@ -88,7 +92,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     {
       this.formattedEvents.push({id: this.eventsToSend[i].eventID, title: this.eventsToSend[i].title, start: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].startDateTime, end: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].endDateTime, allDay: false})
     }
-    console.log(this.formattedEvents);
 
     this.options.events = this.formattedEvents; // Reset the events portion of the options object
   }
@@ -123,39 +126,35 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // getUserRSVPdEvents() {
-  //   this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
-  //     this.userRSVPdEvents = response;
-  //     console.log(response);
-  //     for(let i = 0; i < this.userRSVPdEvents.length; i++) {
-  //       this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
-  //         const reader = new FileReader();
-  //         reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
-  //         reader.readAsDataURL(new Blob([logo]));
-  //         this.userRSVPdEvents[i].clubLogo = logo;
-  //       })
-  //     }
-  //   })
-  // }
+  getUserRSVPdEvents() {
+    this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+      for(let i = 0; i < this.userRSVPdEvents.length; i++) {
+        this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.userRSVPdEvents[i].clubLogo = logo;
+        })
+      }
+    })
+  }
 
   // Calendar Activations
   activateAllEventsFilter() {
     this.eventsService.getAllEvents().subscribe(response => {
       this.eventsToSend = [];
       this.eventsToSend = response;
-      console.log(this.eventsToSend);
     },
       (error) => {
         console.log(error);
-        console.log("ello ello ello");
         this.toastr.error('Error Retrieving All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
       },
 
       () => {
-        console.log("jimmie crack corn");
         this.formatAllEvents();
-
         this.toastr.show('Currently Displaying All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.currentFilter = 'allEventsFilter';
       });
 
     this.closeViewFilterDialog();
@@ -174,6 +173,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       () => {
         this.formatAllEvents();
         this.toastr.show('Currently Displaying Favorited Club Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.currentFilter = 'favoritedClubEventsFilter';
       });
 
     this.closeViewFilterDialog();
@@ -193,9 +193,19 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       () => {
         this.formatAllEvents();
         this.toastr.show('Currently Displaying ' + event.value.clubName + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.currentFilter = 'clubEventsFilter';
       });
 
     this.closeViewFilterDialog();
+  }
+
+  activateRSVPFilter() {
+    this.eventsToSend = [];
+    this.eventsToSend = this.userRSVPdEvents;
+    this.eventsToSend = this.eventsToSend.slice();
+    this.formatAllEvents();
+    this.toastr.show('Currently Displaying ' + 'RSVP\'d Events' + ' Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    this.currentFilter = 'RSVPEventsFilter';
   }
 
   activateSpaceFilter() {
@@ -257,9 +267,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     return this.userRSVPdEvents.some(event => event.eventID === eventID);
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
+  eventRSVP(eventID: number,clubID: number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
     },
       error => {
         this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -272,7 +281,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
     },
       error => {
         console.log(error);
@@ -282,5 +290,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
         location.reload();
       });
+  }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
+  }
+
+  getCurrentFilter() {
+    return this.currentFilter;
   }
 }

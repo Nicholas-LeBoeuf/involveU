@@ -23,6 +23,13 @@ public class UserController extends DBServices{
 		this.emailService = emailService;
 	}
 
+
+	@GetMapping("/healthCheck")
+	public ResponseEntity<String> healthCheck()
+	{
+		return new ResponseEntity ("success", HttpStatus.OK);
+	}
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/getAllUsers")
 	public List<User> getUsers() {

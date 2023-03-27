@@ -10,6 +10,7 @@ import {Announcement} from "../../objects/announcements";
 import {Title} from "@angular/platform-browser";
 import {ClubService} from "../../services/club.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-landing-page',
@@ -24,7 +25,8 @@ export class LandingPageComponent implements OnInit {
               public responsiveService: ResponsiveService,
               public cookie: CookieService,
               private title: Title,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private router: Router) {
     this.title.setTitle("involveU")
   }
 
@@ -126,8 +128,8 @@ export class LandingPageComponent implements OnInit {
     this.viewMoreInfoDialog = false;
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+  eventRSVP(eventID: number,clubID:number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
 
     },
       error => {
@@ -174,5 +176,9 @@ export class LandingPageComponent implements OnInit {
     }
 
     return array;
+  }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
   }
 }

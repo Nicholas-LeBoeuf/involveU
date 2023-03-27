@@ -14,12 +14,14 @@
   align-items: center;
 }
 
-.imageResize {
-  width: 150px;
-  height: auto;
+.eboardClubLogo {
+  height: 125px;
+  width: 251px;
+  object-fit: scale-down;
 }
 
 ::ng-deep {
+
   .eboardTables.p-datatable-scrollable .p-datatable-thead>tr>th, .p-datatable-scrollable .p-datatable-tbody>tr>td, .p-datatable-scrollable .p-datatable-tfoot>tr>td {
     min-width: 175px;
     justify-content: center;

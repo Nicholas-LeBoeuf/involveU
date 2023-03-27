@@ -9,12 +9,9 @@ export interface Events {
   isTransportation: number;
   ticketLink?: string;
   clubName?: string;
+  numOfRsvps?: number;
 
   //derived
   clubID: number;
-/*  spaceName?: string;
-  locationName?: string;*/
-  space_ID?: number;
-  location_ID?: number;
-  clubLogo?: any;
+  clubLogo: any;
 }

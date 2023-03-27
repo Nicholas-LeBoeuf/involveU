@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-//import {environment} from "../../environments/environment";
-import {environment} from "../../environments/environment.prod";
+import {environment} from "../../environments/environment";
 import {Club} from "../objects/club";
 import {User} from "../objects/user";
 import {Announcement} from "../objects/announcements";
@@ -58,6 +57,8 @@ export class AdminService {
     console.log(data);
     return this.http.post(environment.apiURL + `admin/testImage`, data, {responseType: 'text'});
   }
+
+
 
   createOSIAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});

@@ -1,145 +1,155 @@
 <div class="blueTitleBar text-center eboardPagePadding" *ngIf="clubInfo">
-  <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+  <img class="eboardPageTitleMargin eboardClubLogo" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
   <h1 class="yellow-text eboardPageTitleMargin">{{clubInfo.clubName}} | Executive Board</h1>
 </div>
 
-<div class="container">
-  <h1 class="blueHeaders">Announcements</h1>
-  <p-table #clubAnnouncementTable styleClass="eboardTables" [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
-    <ng-template pTemplate="caption">
-      <div class="captionContainer">
-        <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterAnnouncements($event)" placeholder="Search" />
-        <button (click) = "showCreateAnnouncementDialog()" class="yellowButton">Create</button>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-announcement>
-      <tr>
-        <td>{{announcement.announcementTitle}}</td>
-        <td>{{announcement.contentOfAnnouncement}}</td>
-        <td>{{announcement.postedOn | date:'MMMM dd, YYYY'}}</td>
-        <td>{{announcement.expiresOn | date:'MMMM dd, YYYY'}}</td>
-        <td><button (click) = "showEditAnnouncementDialog(announcement)" class="yellowButton">Edit</button></td>
-        <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="yellowButton">Delete</button></td>
-      </tr>
-    </ng-template>
-  </p-table>
+<ng-container *ngIf="this.isInEboard === false; else isEboard">
+  <h1 class="text-center">You must be apart of <b>{{clubInfo.clubName}} Executive Board</b> to view this page!</h1>
+</ng-container>
 
-  <h1 class="blueHeaders">Events</h1>
-  <p-table #clubEventTable styleClass="eboardTables" [value]="clubEvents" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5" [globalFilterFields]="['eventName', 'eventLocation']">
-    <ng-template pTemplate="caption">
-      <div class="captionContainer">
-        <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
-        <button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="yellowButton">Add Event</button>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th [pSortableColumn]="'eventName'" pFrozenColumn>Name <p-sortIcon [field]="'eventName'"></p-sortIcon></th>
-        <th [pSortableColumn]="'eventDate'">Date <p-sortIcon [field]="'eventDate'"></p-sortIcon></th>
-        <th [pSortableColumn]="'startTime'">Start Time <p-sortIcon [field]="'startTime'"></p-sortIcon></th>
-        <th [pSortableColumn]="'endTime'">End Time <p-sortIcon [field]="'eventTime'"></p-sortIcon></th>
-        <th [pSortableColumn]="'eventLocation'">Location <p-sortIcon [field]="'eventLocation'"></p-sortIcon></th>
-        <th [pSortableColumn]="'spaceName'">Space <p-sortIcon [field]="'spaceName'"></p-sortIcon></th>
-        <th>Description</th>
-        <th>Ticket Link</th>
-        <th [pSortableColumn]="'isTransportation'">Transportation <p-sortIcon [field]="'isTransportation'"></p-sortIcon></th>
-        <th>Edit</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-event>
-      <tr>
-        <td pFrozenColumn [innerHTML]="event.title"></td>
-        <td>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</td>
-        <td>{{event.startDateTime | timeFormat}}</td>
-        <td>{{event.endDateTime | timeFormat}}</td>
-        <td [innerHTML]="event.location"></td>
-        <td [innerHTML]="event.description"></td>
-        <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
-        <td>{{event.isTransportation}}</td>
-        <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')"class="yellowButton">Edit</button></td>
-      </tr>
-    </ng-template>
-  </p-table>
+<ng-template #isEboard>
+  <div class="container">
+    <h1 class="blueHeaders">Announcements</h1>
+    <p-table #clubAnnouncementTable styleClass="eboardTables" [value]="clubAnnouncements" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5" [columns]="announcementCols" [globalFilterFields]="['announcementTitle', 'contentOfAnnouncement']">
+      <ng-template pTemplate="caption">
+        <div class="captionContainer">
+          <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterAnnouncements($event)" placeholder="Search" />
+          <button (click) = "showCreateAnnouncementDialog()" class="yellowButton">Create</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon></th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-announcement>
+        <tr>
+          <td>{{announcement.announcementTitle}}</td>
+          <td>{{announcement.contentOfAnnouncement}}</td>
+          <td>{{announcement.postedOn | date:'MMMM dd, YYYY'}}</td>
+          <td>{{announcement.expiresOn | date:'MMMM dd, YYYY'}}</td>
+          <td><button (click) = "showEditAnnouncementDialog(announcement)" class="blueButton">Edit</button></td>
+          <td><button (click)= "deleteAnnouncement(announcement.announcementID)" class="blueButton">Delete</button></td>
+        </tr>
+      </ng-template>
+    </p-table>
 
-  <h1 class="blueHeaders">Social Media</h1>
-  <p-table styleClass="eboardTables" [value]="clubSocialMedia" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5">
-    <ng-template pTemplate="caption">
-      <div class="captionContainer">
-        <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
-        <button class="yellowButton" (click)="showAddSocialMediaDialog()">Add Link</button>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Platform</th>
-        <th>Link</th>
-        <th>Profile Name</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-sm>
-      <tr>
-        <td>{{sm.platform}}</td>
-        <td><a class="hyperText" (click)="goToLink(sm.link)">{{sm.link}}</a></td>
-        <td>{{sm.profileName}}</td>
-        <td><button class="yellowButton" (click)="showEditSocialMediaDialog(sm)">Edit</button></td>
-        <td><button class="yellowButton" (click)="deleteSocialMedia(sm)">Delete</button></td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <h1 class="blueHeaders">Events</h1>
+    <p-table #clubEventTable styleClass="eboardTables" [value]="clubEvents" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5" [globalFilterFields]="['eventName', 'eventLocation']">
+      <ng-template pTemplate="caption">
+        <div class="captionContainer">
+          <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
+          <button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="yellowButton">Add Event</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th [pSortableColumn]="'eventName'" pFrozenColumn>Name <p-sortIcon [field]="'eventName'"></p-sortIcon></th>
+          <th [pSortableColumn]="'eventDate'">Date <p-sortIcon [field]="'eventDate'"></p-sortIcon></th>
+          <th [pSortableColumn]="'startTime'">Start Time <p-sortIcon [field]="'startTime'"></p-sortIcon></th>
+          <th [pSortableColumn]="'endTime'">End Time <p-sortIcon [field]="'eventTime'"></p-sortIcon></th>
+          <th [pSortableColumn]="'eventLocation'">Location <p-sortIcon [field]="'eventLocation'"></p-sortIcon></th>
+          <th>Description</th>
+          <th>Total RSVP's</th>
 
-  <div class="editTextFlex">
-    <h1 class="blueHeaders">Club Bio</h1>
-    <button class="yellowButton editMargin" (click)="showEditClubBioDialog()">Edit</button>
-  </div>
-  <div class=" ">
-    <p>{{clubInfo.clubBio}}</p>
-  </div>
+          <!--Deprecated-->
+         <!-- <th>Ticket Link</th>
+          <th [pSortableColumn]="'isTransportation'">Transportation <p-sortIcon [field]="'isTransportation'"></p-sortIcon></th>-->
 
-  <div class="editTextFlex">
-     <h1 class="blueHeaders">Club Vision</h1>
-     <button class="yellowButton editMargin" (click)="showEditClubVisionDialog()">Edit</button>
-  </div>
-  <div>
-    <p>{{clubInfo.clubVision}}</p>
-  </div>
+          <th>Edit</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-event>
+        <tr>
+          <td pFrozenColumn [innerHTML]="event.title"></td>
+          <td>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</td>
+          <td>{{event.startDateTime | timeFormat}}</td>
+          <td>{{event.endDateTime | timeFormat}}</td>
+          <td [innerHTML]="event.location"></td>
+          <td [innerHTML]="event.description"></td>
+          <td>{{event.numOfRsvps}}</td>
 
-  <div class="editTextFlex">
-     <h1 class="blueHeaders">Club Mission</h1>
-     <button class="yellowButton editMargin" (click)="showEditClubMissionDialog()">Edit</button>
-  </div>
-  <div>
-    <p>{{clubInfo.clubMission}}</p>
-  </div>
+          <!--Deprecated-->
+         <!-- <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
+          <td>{{event.isTransportation}}</td>-->
 
-  <div class="editTextFlex">
-    <h1 class="blueHeaders">Club Values</h1>
-    <button class="yellowButton editMargin" (click)="showEditClubValuesDialog()">Edit</button>
-  </div>
-  <div>
-    <p>{{clubInfo.clubValues}}</p>
-  </div>
+          <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="blueButton">Edit</button></td>
+        </tr>
+      </ng-template>
+    </p-table>
 
-  <h1 class="blueHeaders">Club Logo</h1>
-  <div class="updateClubLogoContainer text-center">
-    <h2 class="blueHeaders">Current Club Logo</h2>
+    <h1 class="blueHeaders">Social Media</h1>
+    <p-table styleClass="eboardTables" [value]="clubSocialMedia" [scrollable]="true" [scrollDirection]="'horizontal'" [paginator]="true" [pageLinks]="3" [rows]="5">
+      <ng-template pTemplate="caption">
+        <div class="captionContainer">
+          <input class="form-control formInputs leftAlignSearch" pInputText type="text" (input)="onFilterEventName($event)" placeholder="Search" />
+          <button class="yellowButton" (click)="showAddSocialMediaDialog()">Add Link</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Platform</th>
+          <th>Link</th>
+          <th>Profile Name</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-sm>
+        <tr>
+          <td>{{sm.platform}}</td>
+          <td><a class="hyperText" (click)="goToLink(sm.link)">{{sm.link}}</a></td>
+          <td>{{sm.profileName}}</td>
+          <td><button class="blueButton" (click)="showEditSocialMediaDialog(sm)">Edit</button></td>
+          <td><button class="blueButton" (click)="deleteSocialMedia(sm)">Delete</button></td>
+        </tr>
+      </ng-template>
+    </p-table>
 
-    <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
-    <h2 class="blueHeaders">Update Club Logo</h2>
-    <div class="blueBar">
-      <h3 class="yellow-text importantText">MAKE SURE TO NAME FILE '{{clubLogoName}}'</h3>
+    <div class="editTextFlex">
+      <h1 class="blueHeaders">Club Bio</h1>
+      <button class="yellowButton editMargin" (click)="showEditClubBioDialog()">Edit</button>
     </div>
-    <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)" [multiple]="false" [maxFileSize]="2000000"></p-fileUpload>
+    <div class=" ">
+      <p>{{clubInfo.clubBio}}</p>
+    </div>
+
+    <div class="editTextFlex">
+      <h1 class="blueHeaders">Club Vision</h1>
+      <button class="yellowButton editMargin" (click)="showEditClubVisionDialog()">Edit</button>
+    </div>
+    <div>
+      <p>{{clubInfo.clubVision}}</p>
+    </div>
+
+    <div class="editTextFlex">
+      <h1 class="blueHeaders">Club Mission</h1>
+      <button class="yellowButton editMargin" (click)="showEditClubMissionDialog()">Edit</button>
+    </div>
+    <div>
+      <p>{{clubInfo.clubMission}}</p>
+    </div>
+
+    <div class="editTextFlex">
+      <h1 class="blueHeaders">Club Values</h1>
+      <button class="yellowButton editMargin" (click)="showEditClubValuesDialog()">Edit</button>
+    </div>
+    <div>
+      <p>{{clubInfo.clubValues}}</p>
+    </div>
+
+    <h1 class="blueHeaders">Club Logo</h1>
+    <div class="updateClubLogoContainer text-center">
+      <h2 class="blueHeaders">Current Club Logo</h2>
+
+      <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+      <h2 class="blueHeaders">Update Club Logo (Max File Size 2MB)</h2>
+      <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)" [multiple]="false" [maxFileSize]="2000000"></p-fileUpload>
+    </div>
   </div>
-</div>
+</ng-template>
 
 
 <p-dialog [(visible)]="createAnnouncementDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [dismissableMask]="true" [baseZIndex]="10000" (onHide)="closeCreateAnnouncementDialog()">
@@ -157,8 +167,8 @@
           <textarea class="form-control formInputs largeTextField" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" placeholder="Announcement Content" formControlName="contentOfAnnouncement"></textarea>
         </div>
         <div class="centerButton">
-          <button class="form-submit-button yellowButton" type="submit" [disabled]="isCreateAnnouncementFormValid()" (click)="createAnnouncementSubmit()">Create Announcement</button>
-          <button class="yellowButton" (click)="closeCreateAnnouncementDialog()">Close</button>
+          <button class="form-submit-button blueButton" type="submit" [disabled]="isCreateAnnouncementFormValid()" (click)="createAnnouncementSubmit()">Create Announcement</button>
+          <button class="blueButton" (click)="closeCreateAnnouncementDialog()">Close</button>
         </div>
       </div>
     </form>
@@ -181,8 +191,8 @@
             <textarea class="form-control formInputs largeTextField" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" [(ngModel)] = "announcement.contentOfAnnouncement" formControlName="editContentOfAnnouncement"></textarea>
           </div>
           <div class="centerButton">
-            <button class="form-submit-button yellowButton" type="submit" [disabled]="isEditAnnouncementFormValid()" (click)="updateClubAnnouncementSubmit()">Edit Announcement</button>
-            <button class="yellowButton" (click)="closeEditAnnouncementDialog()">Close</button>
+            <button class="form-submit-button blueButton" type="submit" [disabled]="isEditAnnouncementFormValid()" (click)="updateClubAnnouncementSubmit()">Edit Announcement</button>
+            <button class="blueButton" (click)="closeEditAnnouncementDialog()">Close</button>
           </div>
         </div>
       </form>
@@ -198,8 +208,8 @@
       <input class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Link" formControlName="smLink">
       <input class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Profile Name" formControlName="smProfileName">
     </form>
-    <button class="yellowButton" [disabled]="isCreateSocialMediaFormValid()" (click)="addSocialMedia()">Add Link</button>
-    <button class="yellowButton" (click)="closeAddSocialMediaDialog()">Close</button>
+    <button class="blueButton" [disabled]="isCreateSocialMediaFormValid()" (click)="addSocialMedia()">Add Link</button>
+    <button class="blueButton" (click)="closeAddSocialMediaDialog()">Close</button>
   </div>
 </p-dialog>
 
@@ -211,8 +221,8 @@
       <input [(ngModel)]="editSM.link" class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Link" formControlName="editsmLink">
       <input [(ngModel)]="editSM.profileName" class="form-control formInputs eboardPageTitleMargin" [ngClass]="{'eboardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eboardInputWidthMobile': responsiveService.deviceMobile()}" type="text" placeholder="Profile Name" formControlName="editsmProfileName">
     </form>
-    <button class="yellowButton" [disabled]="isEditSocialMediaFormValid()" (click)="editSocialMedia()">Edit Link</button>
-    <button class="yellowButton" (click)="closeEditSocialMediaDialog()">Close</button>
+    <button class="blueButton" [disabled]="isEditSocialMediaFormValid()" (click)="editSocialMedia()">Edit Link</button>
+    <button class="blueButton" (click)="closeEditSocialMediaDialog()">Close</button>
   </div>
 </p-dialog>
 
@@ -222,8 +232,8 @@
     <form [formGroup]="editClubBioForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio"></textarea>
     </form>
-    <button class="yellowButton" [disabled]="isEditClubBioFormValid()" (click)="updateClubData()">Edit Club Bio</button>
-    <button class="yellowButton" (click)="closeEditClubBioDialog()">Close</button>
+    <button class="blueButton" [disabled]="isEditClubBioFormValid()" (click)="updateClubData()">Edit Club Bio</button>
+    <button class="blueButton" (click)="closeEditClubBioDialog()">Close</button>
   </div>
 </p-dialog>
 
@@ -233,8 +243,8 @@
     <form [formGroup]="editClubVisionForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubVision" formControlName="editClubVision"></textarea>
     </form>
-    <button class="yellowButton" [disabled]="isEditClubVisionFormValid()" (click)="updateClubData()">Edit Club Vision</button>
-    <button class="yellowButton" (click)="closeEditClubVisionDialog()">Close</button>
+    <button class="blueButton" [disabled]="isEditClubVisionFormValid()" (click)="updateClubData()">Edit Club Vision</button>
+    <button class="blueButton" (click)="closeEditClubVisionDialog()">Close</button>
   </div>
 </p-dialog>
 
@@ -244,8 +254,8 @@
     <form [formGroup]="editClubMissionForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubMission" formControlName="editClubMission"></textarea>
     </form>
-    <button class="yellowButton" [disabled]="isEditClubMissionFormValid()" (click)="updateClubData()">Edit Club Mission</button>
-    <button class="yellowButton" (click)="closeEditClubMissionDialog()">Close</button>
+    <button class="blueButton" [disabled]="isEditClubMissionFormValid()" (click)="updateClubData()">Edit Club Mission</button>
+    <button class="blueButton" (click)="closeEditClubMissionDialog()">Close</button>
   </div>
 </p-dialog>
 
@@ -255,7 +265,7 @@
     <form [formGroup]="editClubValuesForm">
       <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubValues" formControlName="editClubValues"></textarea>
     </form>
-    <button class="yellowButton" [disabled]="isEditClubValuesFormValid()" (click)="updateClubData()">Edit Club Values</button>
-    <button class="yellowButton" (click)="closeEditClubValuesDialog()">Close</button>
+    <button class="blueButton" [disabled]="isEditClubValuesFormValid()" (click)="updateClubData()">Edit Club Values</button>
+    <button class="blueButton" (click)="closeEditClubValuesDialog()">Close</button>
   </div>
 </p-dialog>

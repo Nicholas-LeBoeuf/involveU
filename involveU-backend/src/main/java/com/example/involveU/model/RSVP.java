@@ -4,6 +4,9 @@ public class RSVP {
 
     int studentID;
     int eventID;
+    int total;
+
+
 
     public int getStudentID() {return studentID;}
 
@@ -13,6 +16,8 @@ public class RSVP {
 
     public void setEventID(int eventID) {this.eventID = eventID;}
 
+    public int getTotal() {return total;}
 
+    public void setTotal(int total) {this.total = total;}
 
 }

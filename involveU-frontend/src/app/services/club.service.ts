@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-//import {environment} from "../../environments/environment";
-import {environment} from "../../environments/environment.prod";
-import {Observable, throwError} from "rxjs";
+import {environment} from "../../environments/environment";
+import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Club} from "../objects/club";
-import {Eboard} from "../objects/Eboard";
 import {User} from "../objects/user";
 
 @Injectable({

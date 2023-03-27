@@ -60,14 +60,43 @@ em {
   margin: 10px;
   color: $HeritageBlue;
   font-weight: 900;
+  transition: all ease-in-out 200ms;
 }
 
 .yellowButton:hover {
-  background-color: #fdcb54;
+  background-color: $HeritageBlue;
+  color: $GoldenYellow;
+
 }
 
 .yellowButton:disabled {
   background-color: #8d8d8d;
+}
+
+.blueButton {
+  background-color: $HeritageBlue;
+  border: none;
+  border-radius: 14px;
+  height: 40px;
+  padding: 0 20px;
+  margin: 10px;
+  color: $GoldenYellow;
+  font-weight: 500;
+  transition: all ease-in-out 200ms;
+}
+
+.blueButton:hover {
+  background-color: $GoldenYellow;
+  color: $HeritageBlue;
+}
+
+.blueButton:disabled {
+  background-color: #8d8d8d;
+}
+
+.yellowHover:hover {
+  background-color: #fdcb54 !important;
+  color: $HeritageBlue !important;
 }
 
 .form-control {
@@ -216,7 +245,7 @@ em {
 
 .eventInformationDialogContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
   grid-column-gap: 0;
   grid-row-gap: 0;
@@ -279,7 +308,9 @@ em {
   position: absolute;
   z-index: 0;
   text-align: center;
-  margin-top: 2px;
+  height: 130px;
+  width:134px;
+  object-fit: scale-down;
 }
 .imageMaskEvent {
   background-color: rgba(0, 0, 0, 0.5);
@@ -302,6 +333,11 @@ em {
 
 .eventClubName {
   margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.eventClubName:hover {
+  font-weight: bold;
 }
 
 
@@ -402,8 +438,8 @@ em {
 //Tab View Styling
 ::ng-deep {
   .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-    background-color: $HeritageBlue;
-    color: $GoldenYellow;
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
     border: none;
   }
 
@@ -412,8 +448,9 @@ em {
   }
 
   .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    background-color: $GoldenYellow;
-    color: $HeritageBlue;
+
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
   }
 
   .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {

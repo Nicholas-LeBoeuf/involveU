@@ -5,10 +5,10 @@
       <h1 class="clubNameMargin" [innerHTML]="clubInfo.clubName"></h1>
       <ng-container *ngIf="userID !== 0">
         <ng-container *ngIf="clubIsFav; else ClubNotFavorited">
-          <button class="yellowButton" (click)="removeFromFavorites()">Unfavorite Club</button>
+          <button class="yellowButton yellowHover" (click)="removeFromFavorites()">Unfavorite Club</button>
         </ng-container>
         <ng-template #ClubNotFavorited>
-          <button class="yellowButton" (click)="favoriteClub()">Favorite Club</button>
+          <button class="yellowButton yellowHover" (click)="favoriteClub()">Favorite Club</button>
         </ng-template>
       </ng-container>
     </div>
@@ -102,7 +102,7 @@
               <hr class="announcementLine" *ngIf="index < 5">
             </div>
             <div class="text-center" *ngIf="clubAnnouncements.length > 5">
-              <button class="yellowButton" (click)="showAllAnnouncementsDialog()">Show More</button>
+              <button class="blueButton" (click)="showAllAnnouncementsDialog()">Show More</button>
             </div>
           </ng-container>
          <ng-template #noAnnouncements>
@@ -133,10 +133,10 @@
                   </ng-template>
                   <ng-container *ngIf="isLoggedIn">
                     <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-                      <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
                     </ng-container>
                     <ng-template #ShowRSVP>
-                      <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+                      <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID, event.clubID)">RSVP</button>
                     </ng-template>
                   </ng-container>
                 </div>
@@ -216,13 +216,13 @@
        </div>
        <ng-container *ngIf="isLoggedIn">
          <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">
-           <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
+           <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(event.eventID)">Remove RSVP</button>
          </ng-container>
          <ng-template #ShowRSVP>
-           <button class="yellowButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID)">RSVP</button>
+           <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); eventRSVP(event.eventID, event.clubID)">RSVP</button>
          </ng-template>
        </ng-container>
-       <button class="yellowButton" (click)="closeViewMoreInfoDialog()">Close</button>
+       <button class="blueButton" (click)="closeViewMoreInfoDialog()">Close</button>
      </div>
    </div>
 </p-dialog>
@@ -233,7 +233,7 @@
     <h4 class="blueHeaders convertToOswald announcementTitle">{{announcement.announcementTitle}}</h4>
     <p>{{announcement.contentOfAnnouncement}}</p>
     <div class="text-center">
-      <button class="yellowButton" (click)="closeViewCertainAnnouncementDialog()">Close</button>
+      <button class="blueButton" (click)="closeViewCertainAnnouncementDialog()">Close</button>
     </div>
   </div>
 </p-dialog>
@@ -248,6 +248,6 @@
     <hr>
   </div>
   <div class="text-center">
-    <button class="yellowButton" (click)="closeAllAnnouncementsDialog()">Close</button>
+    <button class="blueButton" (click)="closeAllAnnouncementsDialog()">Close</button>
   </div>
 </p-dialog>

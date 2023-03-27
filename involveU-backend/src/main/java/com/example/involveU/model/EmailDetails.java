@@ -1,8 +1,5 @@
 package com.example.involveU.model;
 
-
-// Annotations
-
 // Class
 public class EmailDetails {
 

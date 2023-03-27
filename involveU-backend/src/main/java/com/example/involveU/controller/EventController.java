@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.example.involveU.model.DBServices;
-import com.example.involveU.model.Events;
-import com.example.involveU.model.Space;
+import com.example.involveU.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +33,6 @@ public class EventController extends DBServices{
        events = getDBTodaysEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
     @GetMapping("events/getClubEvents/{clubID}")
     private ResponseEntity<List<Events>> getEventsByClub(@PathVariable("clubID") int clubID)
     {
@@ -43,26 +40,20 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("events/getFutureEvents")
     private ResponseEntity<List<Events>> getFutureEvents()
     {
         events = getDBAllFutureEvents();
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
-
     @GetMapping("events/getFutureFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFutureFavoriteClubEvents(@PathVariable("userID") int userID)
     {
         events = getDBFutureFavoriteClubEvents(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
-
     }
-
     @GetMapping("events/getFavoriteClubEvents/{userID}")
     private ResponseEntity<List<Events>> getFavoriteClubEvents(@PathVariable("userID") int userID)
     {
@@ -70,8 +61,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-
     @GetMapping("/events/getTopRSVP")
     private ResponseEntity<List<Events>> getTopFavorite()
     {
@@ -80,9 +69,11 @@ public class EventController extends DBServices{
         List<Events> sortedRSVPEvents = new ArrayList<>();
         Events currentEvent;
         rsvpList = getMostRSVPEvents();
+        //Loop for the List of Maps
         for(int i = 0; i < rsvpList.size(); i++)
         {
             int currentValue = Integer.parseInt(rsvpList.get(i).get("total").toString());
+            //Loop to check for the certain value picked first is the top
             for(int j = 0; j < rsvpList.size(); j++)
             {
                 int checkValue =  Integer.parseInt(rsvpList.get(j).get("total").toString());
@@ -105,10 +96,10 @@ public class EventController extends DBServices{
         return new ResponseEntity<>(sortedRSVPEvents, HttpStatus.OK) ;
     }
 
-    @GetMapping("events/rsvpEvent/{eventID}/{userID}")
-    private ResponseEntity<String> rsvpEvnt(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID)
+    @GetMapping("events/rsvpEvent/{eventID}/{userID}/{clubID}")
+    private ResponseEntity<String> rsvpEvnt(@PathVariable("eventID") int eventID, @PathVariable("userID") int userID, @PathVariable("clubID") int clubID)
     {
-        if(insertRsvpEvent(eventID, userID))
+        if(insertRsvpEvent(eventID, userID,clubID))
             return new ResponseEntity<>("Success", HttpStatus.OK);
         else
             return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
@@ -121,10 +112,17 @@ public class EventController extends DBServices{
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-        @GetMapping("events/getUserRsvpEvent/{userID}")
+    @GetMapping("events/getUserRsvpEvent/{userID}")
     private  ResponseEntity<List<Events>> getUserRsvpEvents(@PathVariable("userID") int userID)
     {
         events = getAllUserRsvp(userID);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @GetMapping("events/getUserFutureRsvpEvents/{userID}")
+    private  ResponseEntity<List<Events>> getUserFutureRsvpEvents(@PathVariable("userID") int userID)
+    {
+        events = getAllFutureRsvp(userID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
@@ -135,6 +133,14 @@ public class EventController extends DBServices{
         events = getAllClubRsvp(clubID);
 
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @GetMapping("events/getClubRsvpEventDetails/{clubID}")
+    private  ResponseEntity<List<EboardEvent>> getClubRsvpEventDetails(@PathVariable("clubID") int clubID)
+    {
+        List<EboardEvent> eventsToDisplay;
+        eventsToDisplay = getAllEventDetails(clubID);
+
+        return new ResponseEntity<>(eventsToDisplay, HttpStatus.OK);
     }
 
 
@@ -188,42 +194,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
-
-    //LOCATIONS  ENDPOINTS
-
-
-    @GetMapping("events/getAllLocations")
-    private ResponseEntity<List<Space>>getAllLocation()
-    {
-        spaces = getAllDBLocations();
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getLocationByID/{locationID}")
-    private ResponseEntity<List<Space>>getLocationID(@PathVariable("locationID") int locationID)
-    {
-        spaces = getDBLocationsByID(locationID);
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getSpacesByLocation/{locationID}")
-    private ResponseEntity<List<Space>>spacesByLocation(@PathVariable("locationID") int locationID)
-    {
-        spaces = getSpacesByLocation(locationID);
-
-        return new ResponseEntity<>(spaces,HttpStatus.OK);
-    }
-
-    @GetMapping("events/getEventsBySpace/{locationID}")
-    private ResponseEntity<List<Events>>getEventBySpace(@PathVariable("locationID") String locationID)
-    {
-        events = getEventsByLocationID(locationID);
-
-        return new ResponseEntity<>(events,HttpStatus.OK);
-    }
-
     @GetMapping("events/test25live/{clubID}")
     private  ResponseEntity<String> get25liveEvents(@PathVariable("clubID") int clubID) throws IOException, ParseException {
 

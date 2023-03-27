@@ -197,8 +197,8 @@ export class SpecificClubPageComponent implements OnInit {
     return this.userRSVPdEvents.some(event => event.eventID === eventID);
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
+  eventRSVP(eventID: number, clubID:number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
 
     },
       error => {
@@ -212,8 +212,6 @@ export class SpecificClubPageComponent implements OnInit {
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
-
     },
       error => {
         this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
@@ -237,7 +235,6 @@ export class SpecificClubPageComponent implements OnInit {
   getClubSocialMedia() {
     this.eboardService.getClubSocialMedia(+this.clubID).subscribe(response => {
       this.clubSocialMedia = response;
-      console.log(response);
     })
   }
 

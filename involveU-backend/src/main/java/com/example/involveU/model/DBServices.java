@@ -267,6 +267,31 @@ public class DBServices {
 
     }
 
+    protected Boolean checkDBImagePath(String fileName, int clubID)
+    {
+        sql = "Select * FROM Club WHERE clubLogo = ' " +  fileName + "' ;";
+
+        clubs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
+
+        if(clubs.size() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            Club clubToDelete= getSpecficClub(clubID);
+
+            //if filename is not found in the database then the file in s3 is deleted to make room for new file with name
+            S3Util s3 = new S3Util();
+            s3.deleteImg(clubToDelete.getClubName() + "/" + clubToDelete.getClubLogo());
+
+            sql = "UPDATE Club SET  clubLogo =  ?  WHERE clubID = " + clubID + ";";
+            validQuery = JdbcTemplated.update(sql, fileName);
+
+            return validQuery == 1;
+        }
+
+    }
     protected Boolean updateClubDBData(Club newClub)
     {
         sql = "UPDATE Club SET ownerID =?, clubName = ?, clubAffiliation = ?, clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ?, advisorID = ? WHERE clubID = ?";
@@ -274,39 +299,6 @@ public class DBServices {
 
         return validQuery == 1;
     }
-
-   /* protected Boolean updateClubDBBio(int clubID, String newBio)
-    {
-        sql = "UPDATE Club SET clubBio = ? WHERE clubID = " + clubID + ";";
-        validQuery = JdbcTemplated.update(sql, clubID, newBio);
-
-        return validQuery == 1;
-    }
-
-    protected Boolean updateClubDBVision(int clubID)
-    {
-        sql = "UPDATE Club SET clubVision = ? WHERE clubID = " + clubID;
-        validQuery = JdbcTemplated.update(sql, clubID);
-
-        return validQuery == 1;
-    }
-
-    protected Boolean updateClubDBMission(int clubID)
-    {
-        sql = "UPDATE Club SET clubBio = ?, clubVision = ?, clubMission = ?, clubValues = ? WHERE clubID = " + clubID + ";";
-        validQuery = JdbcTemplated.update(sql, clubID);
-
-        return validQuery == 1;
-    }
-
-    protected Boolean updateClubDBValues(int clubID)
-    {
-        sql = "UPDATE Club SET clubValues = ? WHERE clubID = " + clubID;
-        validQuery = JdbcTemplated.update(sql, clubID);
-
-        return validQuery == 1;
-    }
-*/
     protected String getClubLogo(int clubID)
     {
         String clubLogoPath;
@@ -590,7 +582,6 @@ public class DBServices {
     }
     protected List<EboardEvent> getAllEventDetails(int clubID)
     {
-
         events = getDBClubEvents(clubID);
 
         sql = "SELECT RSVP.eventID,count(*) as Total from RSVP WHERE clubID = "+ clubID +"  group by eventID;";

@@ -78,7 +78,7 @@ public class UserController extends DBServices{
 
 		return foundUser;
 	}
-	@GetMapping("user/sendMail/{recipient}")
+	@PostMapping("user/sendMail/{recipient}/{securityCode}")
 	public ResponseEntity<String>sendMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
 		System.out.println("Before email send");
 		emailService.sendEmail(recipient, securityCode);

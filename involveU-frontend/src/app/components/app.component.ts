@@ -80,7 +80,6 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
-    this.securityToken= +this.cookie.get('securityToken');
     this.checkIfUserInEboard();
     this.isUserLoggedIn();
   }
@@ -151,7 +150,6 @@ export class AppComponent {
     this.cookie.delete('studentLName');
     this.cookie.delete('isAdmin');
     this.cookie.delete('isEboard');
-    this.cookie.delete('securityToken');
     this.usersEboardInfo = {};
     this.isEboard = false;
     this.isLoggedIn = false;
@@ -179,7 +177,6 @@ export class AppComponent {
     this.cookie.set("studentLName", JSON.stringify(this.loggedInUser.lastName));
     this.cookie.set("isAdmin", JSON.stringify(this.loggedInUser.isAdmin));
     this.cookie.set("isEboard", JSON.stringify(this.loggedInUser.isEboard));
-    this.cookie.set("securityToken", JSON.stringify(this.generateRandomNum()));
   }
 
   onLoginClickFromSignupModal() {
@@ -230,6 +227,7 @@ export class AppComponent {
   }
 
   sendForgotPassEmail() {
+    this.generateRandomNum();
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
       console.log("sending email");
       console.log(response);
@@ -243,8 +241,7 @@ export class AppComponent {
   }
 
   generateRandomNum() {
-    let randNumber = Math.random() * 1000;
-    return randNumber;
+    this.securityToken = Math.floor(100000 + Math.random() * 900000);
   }
 
   isUserLoggedIn() {

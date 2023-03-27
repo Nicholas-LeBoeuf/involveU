@@ -28,6 +28,6 @@ export class UserService {
   }
 
   sendEmail(recipient?:string, securityCode?:number){
-    return this.http.get(environment.apiURL + `email/sendMail/${recipient}/${securityCode}`, {responseType: 'text'});
+    return this.http.post(environment.apiURL + `user/sendMail/${recipient}/${securityCode}`, {responseType: 'text'});
   }
 }

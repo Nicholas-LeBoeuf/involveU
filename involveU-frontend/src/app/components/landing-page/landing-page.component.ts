@@ -9,6 +9,8 @@ import {AnnouncementsService} from "../../services/announcements.service";
 import {Announcement} from "../../objects/announcements";
 import {Title} from "@angular/platform-browser";
 import {ClubService} from "../../services/club.service";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-landing-page',
@@ -22,7 +24,9 @@ export class LandingPageComponent implements OnInit {
               private announcementsService: AnnouncementsService,
               public responsiveService: ResponsiveService,
               public cookie: CookieService,
-              private title: Title) {
+              private title: Title,
+              private toastr: ToastrService,
+              private router: Router) {
     this.title.setTitle("involveU")
   }
 
@@ -31,25 +35,25 @@ export class LandingPageComponent implements OnInit {
   showMore: boolean = false;
   isLoading: boolean = true;
   isLoggedIn: boolean = false;
-  successMessage: boolean = false;
-  failMessage: boolean = false;
+  viewCertainAnnouncementDialog: boolean = false;
 
   //NUMBERS
   userID: number;
   numberOfRows: number;
 
   //STRINGS
-  message: string;
 
   //OBJECTS or ARRAYS
-  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"];
+  imageArray = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg", "img9.jpg", "img10.jpg", "img11.jpg", "img12.jpg", "img13.jpg", "img14.jpg", "img15.jpg"];
   currentUser: User;
   todaysEvents: Events[] = [];
   certainEvent: Events[] = [];
   osiAnnouncements: Announcement[] =[];
   userRSVPdEvents: Events[] = [];
+  certainAnnouncement: Announcement[] = [];
 
   ngOnInit(): void {
+    this.imageArray = this.shuffleArray(this.imageArray);
     this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
 
@@ -124,20 +128,57 @@ export class LandingPageComponent implements OnInit {
     this.viewMoreInfoDialog = false;
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
-    })
+  eventRSVP(eventID: number,clubID:number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
+
+    },
+      error => {
+        this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
 
-    })
+    },
+      error => {
+        console.log(error);
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
+  }
 
-    this.message = "Successfully Removed RSVP!";
-    this.successMessage = true;
-    location.reload();
+  showViewCertainAnnouncementDialog(announcement: Announcement) {
+    this.certainAnnouncement.push(announcement);
+    this.viewCertainAnnouncementDialog = true;
+  }
+
+  closeViewCertainAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.viewCertainAnnouncementDialog = false;
+  }
+
+  shuffleArray(array) {
+    let size = array.length, temp, i;
+
+    while (size) {
+      i = Math.floor(Math.random() * size--);
+      temp = array[size];
+      array[size] = array[i];
+      array[i] = temp;
+    }
+
+    return array;
+  }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
   }
 }

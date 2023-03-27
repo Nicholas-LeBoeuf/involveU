@@ -1,38 +1,5 @@
 @import "src/styles";
 
-.eventAlerts {
-  position: absolute;
-  z-index: 1000000;
-
-  left: 50%;
-  right: 50%;
-
-  transform: translate(-50%, -50%);
-
-  height: 5%;
-  margin-top: 2% !important;
-  width: 30%;
-}
-
-.eventAlerts p {
-  font-size: 1.8em;
-}
-
-.alert-dismissible .btn-close {
-  padding: 1rem  1rem;
-}
-
-.alert {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: center;
-  border-radius: 10px;
-  top: 35px;
-  position: sticky;
-}
-
-//Actual Page
-
 .clubLogo {
   margin-bottom: 10px;
 }
@@ -111,17 +78,14 @@
   width: 99%;
 }
 
+.announcementContent:hover {
+  background-color: #efefef;
+  cursor: pointer;
+}
+
 .announcementLine {
   margin-top: 0 !important;
   margin-bottom: 5px !important;
-}
-
-.announcementDate {
-  color: gray;
-}
-
-.announcementTitle {
-  margin-top: 3px;
 }
 
 .line-clamp {
@@ -159,3 +123,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.allAnnouncementsHeader {
+  margin-top: 1rem;
+}
+
+.allAnnouncementDialog {
+  padding: 0 15px;
+}
+
+

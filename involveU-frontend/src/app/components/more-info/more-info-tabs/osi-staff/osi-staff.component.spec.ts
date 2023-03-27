@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduleComponent } from './schedule.component';
+import { OsiStaffComponent } from './osi-staff.component';
 
-describe('ScheduleComponent', () => {
-  let component: ScheduleComponent;
-  let fixture: ComponentFixture<ScheduleComponent>;
+describe('OsiStaffComponent', () => {
+  let component: OsiStaffComponent;
+  let fixture: ComponentFixture<OsiStaffComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScheduleComponent ]
+      declarations: [ OsiStaffComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ScheduleComponent);
+    fixture = TestBed.createComponent(OsiStaffComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -60,14 +60,43 @@ em {
   margin: 10px;
   color: $HeritageBlue;
   font-weight: 900;
+  transition: all ease-in-out 200ms;
 }
 
 .yellowButton:hover {
-  background-color: #fdcb54;
+  background-color: $HeritageBlue;
+  color: $GoldenYellow;
+
 }
 
 .yellowButton:disabled {
   background-color: #8d8d8d;
+}
+
+.blueButton {
+  background-color: $HeritageBlue;
+  border: none;
+  border-radius: 14px;
+  height: 40px;
+  padding: 0 20px;
+  margin: 10px;
+  color: $GoldenYellow;
+  font-weight: 500;
+  transition: all ease-in-out 200ms;
+}
+
+.blueButton:hover {
+  background-color: $GoldenYellow;
+  color: $HeritageBlue;
+}
+
+.blueButton:disabled {
+  background-color: #8d8d8d;
+}
+
+.yellowHover:hover {
+  background-color: #fdcb54 !important;
+  color: $HeritageBlue !important;
 }
 
 .form-control {
@@ -95,7 +124,7 @@ em {
 
 .formInputs {
   border: 2px solid #0667B3;
-  color: #0667B3
+  color: #0667B3;
 }
 
 .formInputs::placeholder {
@@ -165,6 +194,7 @@ em {
   .p-dialog {
     border-radius: 20px;
     border: none !important;
+    max-width: 1220px;
   }
 
   .p-dialog .p-dialog-content {
@@ -215,7 +245,7 @@ em {
 
 .eventInformationDialogContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: [header-start] 1fr [header-end content-start] min-content [content-end footer-start] min-content [footer-end];
   grid-column-gap: 0;
   grid-row-gap: 0;
@@ -242,6 +272,15 @@ em {
 .eventLocationDialog {
   grid-area: 3 / 2 / 4 / 3;
 }
+.descriptionStyling {
+  max-height: 200px;
+  overflow: auto
+}
+
+.setMargin {
+  margin: 0 20px;
+}
+
 
 
 //Event Card "Carousel"
@@ -253,6 +292,7 @@ em {
 }
 .eventCard:hover {
   cursor: pointer;
+  background-color: #efefef;
 }
 
 .eventCardSizeWeb {
@@ -291,6 +331,11 @@ em {
 
 .eventClubName {
   margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.eventClubName:hover {
+  font-weight: bold;
 }
 
 
@@ -391,8 +436,8 @@ em {
 //Tab View Styling
 ::ng-deep {
   .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-    background-color: $HeritageBlue;
-    color: $GoldenYellow;
+    background-color: $GoldenYellow;
+    color: $HeritageBlue;
     border: none;
   }
 
@@ -401,8 +446,9 @@ em {
   }
 
   .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    background-color: $GoldenYellow;
-    color: $HeritageBlue;
+
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
   }
 
   .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
@@ -413,5 +459,87 @@ em {
   .p-tabview .p-tabview-nav-btn.p-link {
     background-color: $HeritageBlue;
     color: $GoldenYellow;
+  }
+}
+
+//PrimeNG Table Styling
+::ng-deep {
+  .p-datatable .p-datatable-thead > tr > th {
+    background-color: $HeritageBlue;
+    color: $GoldenYellow;
+    border-color: $InkBlue;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    color: $InkBlue;
+    border-color: $InkBlue;
+    background-color: #F4F4F4;
+  }
+}
+
+//Announcement Dialog Styling
+.announcementDialogContent {
+  padding: 15px 20px 5px 20px;
+}
+
+.announcementDialogContent p {
+  margin-bottom: 0;
+}
+
+//Center Items in Carousel
+::ng-deep .centerItems tbody.p-element.p-datatable-tbody{
+  display: flex !important;
+  justify-content: center !important;
+}
+
+//Toastr
+::ng-deep {
+  .toast-container {
+    margin-top: 10px !important;
+    width: 100%;
+    text-align: center;
+  }
+
+  .toast-container .ngx-toastr {
+    padding: 15px !important;
+  }
+
+  .toast-container .toast-error {
+    background-image: none !important;
+  }
+  .toast-container .toast-success {
+    background-image: none !important;
+  }
+}
+
+//P-Dropdown Color
+::ng-deep {
+  .p-dropdown .p-dropdown-label, .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #0667B3;
+  }
+}
+
+input, textarea, date {
+  transition: .4s ease-in-out;
+}
+
+::ng-deep {
+  textarea.ng-invalid.ng-touched, input.ng-invalid.ng-touched, date.ng-invalid.ng-touched {
+    border: red 2px solid;
+    background-color: #ffc0c0;
+  }
+}
+
+::ng-deep {
+  .p-dropdown {
+    transition: .4s ease-in-out;
+  }
+}
+
+.ng-invalid.ng-touched {
+  ::ng-deep > .p-dropdown,
+  select#{&} {
+    border: 2px solid red !important;
+    background-color: #ffc0c0;
   }
 }

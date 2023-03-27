@@ -29,6 +29,12 @@ ul {
 .involveULogoScale {
   height: auto;
   width: 60px;
+  margin-left: 10px;
+}
+
+.involveULogoScaleMobile {
+  height: auto;
+  width: 60px;
 }
 
 
@@ -105,7 +111,6 @@ ul {
   display:none!important;
 }
 
-
 .closeButtonDialog {
   float: right;
   color: black;
@@ -114,28 +119,6 @@ ul {
 .loginInputs {
   display: table;
   margin: 0 auto 4%;
-}
-
-.loginSignupAlerts {
-  position: absolute;
-  z-index: 1000000;
-
-  left: 50%;
-  right: 50%;
-
-  transform: translate(-50%, -50%);
-
-  height: 5%;
-  margin-top: 2% !important;
-  width: 30%;
-}
-
-.loginSignupAlerts p {
-  font-size: 1.8em;
-}
-
-.alert-dismissible .btn-close {
-  padding: 1rem  1rem;
 }
 
 ::ng-deep .p-contextmenu {
@@ -164,7 +147,7 @@ ul {
 }
 
 .specificNavButton {
-  margin-left: 15px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -213,4 +196,29 @@ ul {
 
 .buttonMargin {
   margin-bottom: 10px;
+}
+
+.involveUCenter {
+  display: flex;
+  height: 60px;
+  align-items: center;
+  float: right;
+}
+
+
+//Dropdown input
+.signupDropdown::ng-deep {
+  .p-dropdown {
+    height: 40px;
+    width: 165px;
+    text-align: left;
+  }
+}
+
+.signupDropdownMobile::ng-deep {
+  .p-dropdown {
+    text-align: center;
+    width: 100px;
+    height: 40px;
+  }
 }

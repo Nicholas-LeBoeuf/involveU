@@ -14,6 +14,7 @@ import {Announcement} from "../../objects/announcements";
 import {ResponsiveService} from "../../services/responsive.service";
 import {Title} from "@angular/platform-browser";
 import {SocialMedia} from "../../objects/social-media";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -30,6 +31,7 @@ export class SpecificClubPageComponent implements OnInit {
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
+              private toastr: ToastrService,
               public cookie: CookieService,
               private title: Title) {
     this.title.setTitle("involveU | Club")
@@ -38,10 +40,9 @@ export class SpecificClubPageComponent implements OnInit {
   //BOOLEANS
   isLoggedIn: boolean = false;
   clubIsFav: boolean = false;
-  isEboard: boolean = false;
-  successMessage: boolean = false;
-  failMessage: boolean = false;
   viewMoreInfoDialog: boolean = false;
+  viewCertainAnnouncementDialog: boolean = false;
+  viewAllAnnouncementsDialog: boolean = false;
   showMore: boolean = false;
   isLoading: boolean = true;
 
@@ -51,7 +52,6 @@ export class SpecificClubPageComponent implements OnInit {
   numberOfRows: number;
 
   //STRINGS
-  message: string;
 
   //OBJECTS
   clubInfo: Club;
@@ -62,6 +62,7 @@ export class SpecificClubPageComponent implements OnInit {
   userRSVPdEvents: Events[] = [];
   clubAnnouncements: Announcement[] = [];
   clubSocialMedia: SocialMedia[] = [];
+  certainAnnouncement: Announcement[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
 
@@ -103,9 +104,14 @@ export class SpecificClubPageComponent implements OnInit {
   getClubInfo() {
     this.clubService.getSpecificClub(this.clubID).subscribe(response => {
       this.clubInfo = response;
+      this.clubService.getClubLogo(this.clubInfo.clubID).subscribe(logo => {
+        const reader = new FileReader();
+        reader.onload = (e) => this.clubInfo.clubLogo = e.target.result;
+        reader.readAsDataURL(new Blob([logo]));
+        this.clubInfo.clubLogo = logo;
+      })
     })
   }
-
   getUsersFavoritedClubs() {
     this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe(response => {
         this.favoritedClubs = response;
@@ -126,22 +132,41 @@ export class SpecificClubPageComponent implements OnInit {
   }
 
   favoriteClub() {
-    this.clubService.favoriteClub(this.userID, this.clubID).subscribe()
-    this.message = 'Club successfully favorited!';
-    this.successMessage = true;
-    location.reload();
+    this.clubService.favoriteClub(this.userID, this.clubID).subscribe(response => {
+    },
+      error => {
+        this.toastr.error('Unsuccessful Favorite Club Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Favorited Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   removeFromFavorites() {
-    this.clubService.unfavoriteClub(this.clubID, this.userID).subscribe()
-    this.message = 'Club successfully unfavorited!';
-    this.successMessage = true;
-    location.reload();
+    this.clubService.unfavoriteClub(this.clubID, this.userID).subscribe(response => {
+
+    },
+      error => {
+        this.toastr.error('Unsuccessful Unfavorite Club Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Unfavorited Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   getClubEvents() {
     this.eventsService.getSpecificClubEvents(this.clubID).subscribe(response => {
       this.clubEvents = response;
+      for(let i = 0; i < this.clubEvents.length; i++) {
+        this.clubService.getClubLogo(this.clubEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.clubEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.clubEvents[i].clubLogo = logo;
+        })
+      }
     })
   }
 
@@ -150,20 +175,6 @@ export class SpecificClubPageComponent implements OnInit {
     this.clubService.getClubEboard(this.clubID).subscribe(response => {
       this.clubEboard = response;
     })
-  }
-  isInEboard()
-  {
-    //console.log(arr.find(e => e.foo === 'bar'))
-    let studentID : number = +this.cookie.get('userID');
-    //console.log("Boolean value:", array1.includes(44));
-    if(this.clubEboard.some(e => e.studentID === this.userID)=== false)
-    {
-      return false;
-    }
-    else
-    {
-     return true;
-    }
   }
 
   showViewMoreInfoDialog(SpecificEvent: Events){
@@ -186,26 +197,29 @@ export class SpecificClubPageComponent implements OnInit {
     return this.userRSVPdEvents.some(event => event.eventID === eventID);
   }
 
-  eventRSVP(eventID: number) {
-    this.eventsService.rsvpToEvent(eventID, this.userID).subscribe(response => {
-      console.log(response);
+  eventRSVP(eventID: number, clubID:number) {
+    this.eventsService.rsvpToEvent(eventID, this.userID,clubID).subscribe(response => {
 
-    })
-
-    this.message = "Event Successfully RSVPd!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        this.toastr.error('Unsuccessful RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully RSVPd To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
   removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
-      console.log(response);
-
-    })
-
-    this.message = "Successfully Removed RSVP!";
-    this.successMessage = true;
-    location.reload();
+    },
+      error => {
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
   }
 
 
@@ -226,6 +240,24 @@ export class SpecificClubPageComponent implements OnInit {
 
   goToLink(url: string){
     window.open(url, "_blank");
+  }
+
+  showViewCertainAnnouncementDialog(announcement: Announcement) {
+    this.certainAnnouncement.push(announcement);
+    this.viewCertainAnnouncementDialog = true;
+  }
+
+  closeViewCertainAnnouncementDialog() {
+    this.certainAnnouncement = [];
+    this.viewCertainAnnouncementDialog = false;
+  }
+
+  showAllAnnouncementsDialog() {
+    this.viewAllAnnouncementsDialog = true;
+  }
+
+  closeAllAnnouncementsDialog() {
+    this.viewAllAnnouncementsDialog = false;
   }
 }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Events} from "../objects/events";
-import {environment} from "../../environments/environment";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
@@ -36,26 +36,16 @@ export class EventsService {
     return this.http.get<Events[]>(environment.apiURL + `events/getUserRsvpEvent/${userID}`);
   }
 
-  rsvpToEvent(eventID: number, userID: number) {
-    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}`);
+  getUserFutureRSVPdEvents(userID: number): Observable<Events[]> {
+    return this.http.get<Events[]>(environment.apiURL + `events/getUserFutureRsvpEvents/${userID}`);
+  }
+
+  rsvpToEvent(eventID: number, userID: number,clubID: number) {
+    return this.http.get(environment.apiURL + `events/rsvpEvent/${eventID}/${userID}/${clubID}`, {responseType: 'text'});
   }
 
   removeEventRSVP(eventID: number, userID: number) {
-    return this.http.get(environment.apiURL + `events/removeRsvpEvent/${eventID}/${userID}`);
-  }
-
-  submitNewEvent(event: Events)
-  {
-    return this.http.post(environment.apiURL +`events/createNewEvent/`, event, {responseType: 'text'} );
-  }
-
-  updateEvent(event: Events)
-  {
-    return this.http.post(environment.apiURL + `events/updateEvents`, event, {responseType: 'text'});
-  }
-
-  deleteEvent(eventID: number) {
-    return this.http.get(environment.apiURL + `events/deleteEvent/${eventID}`);
+    return this.http.get(environment.apiURL + `events/removeRsvpEvent/${eventID}/${userID}`, {responseType: 'text'});
   }
 
   getSpecificEvent(eventID: number): Observable<Events> {

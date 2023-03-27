@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { environment } from "../../environments/environment";
+//import {environment} from "../../environments/environment";
+import {environment} from "../../environments/environment.prod";
 import {Observable, throwError} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Club} from "../objects/club";
@@ -24,7 +25,11 @@ export class ClubService {
   }
 
   favoriteClub(ID: number, clubID: number) {
-    return this.http.get(environment.apiURL + `club/submitFavorite/${ID}/${clubID}`);
+    return this.http.get(environment.apiURL + `club/submitFavorite/${ID}/${clubID}`, {responseType: 'text'});
+  }
+
+  unfavoriteClub(clubID: number, id: number) {
+    return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`, {responseType: 'text'});
   }
 
   getUsersFavoritedClubs(ID: number): Observable<Club[]> {
@@ -33,10 +38,6 @@ export class ClubService {
 
   getSpecificClub(id: number): Observable<Club> {
     return this.http.get<Club>(environment.apiURL + `club/${id}`);
-  }
-
-  unfavoriteClub(clubID: number, id: number) {
-    return this.http.get(environment.apiURL + `club/removeFavorites/${clubID}/${id}`);
   }
 
   getClubEboard(clubID: number): Observable<User[]> {

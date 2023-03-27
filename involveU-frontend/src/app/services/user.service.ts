@@ -28,7 +28,7 @@ export class UserService {
     return this.http.get<User[]>(environment.apiURL + `user/getAllFaculty`);
   }
 
-  sendEmail(recipient?:string, subject?:string, message?:string) : Observable<User> {
-    return this.http.get<User>(environment.apiURL + `email/sendMail/${recipient}/${subject}/${message}`);
+  sendEmail(recipient?:string, securityCode?:number){
+    return this.http.get(environment.apiURL + `email/sendMail/${recipient}/${securityCode}`, {responseType: 'text'});
   }
 }

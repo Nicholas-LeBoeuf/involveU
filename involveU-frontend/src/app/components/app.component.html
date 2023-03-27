@@ -163,10 +163,10 @@
 <p-dialog [(visible)]="displayVerificationDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">
   <h1 class="dialogTitle blueHeaders forgotPassHeader">Enter Verification Code</h1>
   <form [formGroup]="verificationForm">
-    <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Enter verification code" formControlName="code">
+    <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Enter verification code" formControlName="verificationCode">
   </form>
   <div class="centerButtonDiv">
-    <button class="yellowButton" type="submit" (click)="sendForgotPassEmail()">Verify</button>
+    <button class="yellowButton" type="submit" (click)="checkVerificationCodeMatch()">Verify</button>
     <button class="yellowButton" (click)="closeVerificationDialog()">Cancel</button>
   </div>
 </p-dialog>

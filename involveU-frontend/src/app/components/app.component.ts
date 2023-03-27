@@ -267,6 +267,17 @@ export class AppComponent {
     this.securityToken = Math.floor(100000 + Math.random() * 900000);
   }
 
+  checkVerificationCodeMatch() {
+    if(this.securityToken === +this.verificationForm.value.verificationCode){
+      this.displayVerificationDialog = false;
+      this.displayLoginDialog = true;
+    }
+    else{
+      console.log(this.securityToken);
+      console.log(this.verificationForm.value.verificationCode);
+    }
+  }
+
   isUserLoggedIn() {
     this.isLoggedIn = this.userID !== 0;
   }

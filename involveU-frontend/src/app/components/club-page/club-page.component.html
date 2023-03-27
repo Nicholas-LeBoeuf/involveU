@@ -13,7 +13,7 @@
         <h2 class="blueHeaders text-center topMargin">Featured Club</h2>
         <hr>
         <div *ngIf="featuredClubs.length > 0" class="text-center">
-          <img src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
+          <img class="featuredClubLogo" src="assets/{{featuredClubs[0].clubLogo}}" alt="Featured Club Logo - {{featuredClubs[0].clubName}}">
           <h3 class="topMargin blueHeaders" [innerHTML]="featuredClubs[0].clubName"></h3>
           <p class="clubBioMargin">{{featuredClubs[0].clubBio}}</p>
           <button class="yellowButton" (click)="goToClubPage(featuredClubs[0].clubID)">Learn More</button>

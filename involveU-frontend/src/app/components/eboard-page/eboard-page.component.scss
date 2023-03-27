@@ -14,9 +14,10 @@
   align-items: center;
 }
 
-.imageResize {
-  width: 150px;
-  height: auto;
+.eboardClubLogo {
+  height: 125px;
+  width: 251px;
+  object-fit: scale-down;
 }
 
 ::ng-deep {

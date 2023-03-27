@@ -74,7 +74,7 @@
           <!--Deprecated-->
          <!-- <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
           <td>{{event.isTransportation}}</td>-->
-          
+
           <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="blueButton">Edit</button></td>
         </tr>
       </ng-template>
@@ -145,10 +145,7 @@
       <h2 class="blueHeaders">Current Club Logo</h2>
 
       <img class="eboardPageTitleMargin imageResize" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
-      <h2 class="blueHeaders">Update Club Logo</h2>
-      <div class="blueBar">
-        <h3 class="yellow-text importantText">MAKE SURE TO NAME FILE '{{clubLogoName}}'</h3>
-      </div>
+      <h2 class="blueHeaders">Update Club Logo (Max File Size 2MB)</h2>
       <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)" [multiple]="false" [maxFileSize]="2000000"></p-fileUpload>
     </div>
   </div>

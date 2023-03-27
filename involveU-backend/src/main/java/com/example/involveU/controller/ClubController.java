@@ -85,58 +85,6 @@ public class ClubController extends DBServices{
             return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
         }
     }
-    /*@PutMapping ("/club/updateClubBio/{clubID}")
-    private ResponseEntity<String> updateClubBio(@PathVariable("clubID") int clubID, @PathVariable("newBio")String clubBio)
-    {
-        if(updateClubDBBio(clubID, clubBio))
-        {
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping ("/club/updateClubVision/{clubID}")
-    private ResponseEntity<String> updateClubVision(@PathVariable("clubID") int clubID)
-    {
-        if(updateClubDBVision(clubID))
-        {
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping ("/club/updateClubMission/{clubID}")
-    private ResponseEntity<String> updateClubMission(@PathVariable("clubID") int clubID)
-    {
-        if(updateClubDBMission(clubID))
-        {
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping ("/club/updateClubValues/{clubID}")
-    private ResponseEntity<String> updateClubValues(@PathVariable("clubID") int clubID)
-    {
-        if(updateClubDBValues(clubID))
-        {
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
-        }
-    }
-*/
   @GetMapping("/club/searchClubs/{searchContent}")
    private ResponseEntity<List<Club>> searchClub(@PathVariable("searchContent") String searchContent )
   {
@@ -220,13 +168,15 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
      @GetMapping("/club/getClubLogo/{clubID}")
      private ResponseEntity<byte[]> downloadImage(@PathVariable("clubID") int clubID) throws IOException {
+      Club newClub = new Club();
 
+      newClub = getSpecficClub(clubID);
 
         String fileName = getClubLogo(clubID);
         S3Util bucket = new S3Util();
-         byte[] test = bucket.downloadFile(fileName);
+         byte[] file = bucket.downloadFile(newClub.getClubName() + "/" + fileName);
 
-         return new ResponseEntity<>(test,HttpStatus.OK);
+         return new ResponseEntity<>(file,HttpStatus.OK);
 
      }
     @GetMapping("/club/getClubSocialMedia/{clubID}")
@@ -277,33 +227,52 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
         }
 
     }
-
-    @PutMapping("/club/CheckDBImageName")
-    private ResponseEntity<String> changeClubImage(@RequestBody List<Object> json) throws IOException {
-
-//      Object obj = json.get(0);
-//        int newClub;
-//        newClub = obj ;
+    @PostMapping("/club/CheckDBImageName/{fileName}/{clubID}")
+    private ResponseEntity<String> changeClubImage(@PathVariable("fileName") String fileName, @PathVariable("clubID") int clubID) {
 
 
-//        String currentClubName =  clubInfo.getClubName();
-//        String clubFile = clubNewFile.getOriginalFilename();
-//
-//
-//      if(checkForSameFileName(clubFile, currentClubName))
-//      {
-//          s3.uploadFile(clubFile, clubNewFile.getInputStream());
-//      }
-//      else
-//      {
-//          s3.deleteImg(clubInfo.getClubLogo());
-//          s3.uploadFile(clubFile, clubNewFile.getInputStream());
-//      }
+        if(checkDBImagePath(fileName, clubID))
+        {
+            return new ResponseEntity<>("file path found", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("file path not found", HttpStatus.OK);
+        }
 
-
-        return new ResponseEntity<>("test", HttpStatus.OK);
     }
 
+    @GetMapping("/club/createClubFolders")
+    private ResponseEntity<String> createClubFodlers()
+    {
+        clubs = getAllDBClubs();
+        S3Util S3 = new S3Util();
+
+        for(Club club: clubs)
+        {
+          S3.createFolders(club.getClubName()+"/");
+        }
+
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
+
+    }
+
+    @PutMapping("club/uploadNewLogo/{clubID}")
+    public ResponseEntity<String> uploadNewLogo(@RequestParam("file") MultipartFile newImage, @PathVariable("clubID") int clubID) throws IOException {
+
+      Club clubToUpload = new Club();
+
+        clubToUpload = getSpecficClub(clubID);
+
+        S3Util s3 = new S3Util();
+        String filename = newImage.getOriginalFilename();
+        System.out.println(filename);
+
+        s3.uploadFile(filename, newImage.getInputStream(),clubToUpload.getClubName());
+
+        return new ResponseEntity<>("Success",HttpStatus.OK	);
+    }
 
 
 

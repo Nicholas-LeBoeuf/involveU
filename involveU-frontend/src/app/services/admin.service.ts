@@ -59,6 +59,8 @@ export class AdminService {
     return this.http.post(environment.apiURL + `admin/testImage`, data, {responseType: 'text'});
   }
 
+
+
   createOSIAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }

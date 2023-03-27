@@ -269,12 +269,12 @@ export class AppComponent {
 
   checkVerificationCodeMatch() {
     if(this.securityToken === +this.verificationForm.value.verificationCode){
+      this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
       this.displayVerificationDialog = false;
       this.displayLoginDialog = true;
     }
     else{
-      console.log(this.securityToken);
-      console.log(this.verificationForm.value.verificationCode);
+      this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
   }
 

@@ -28,8 +28,6 @@ public class InvolveUBackendApplication extends SpringBootServletInitializer {
 	private UserRepository userRepo;
 
 
-//	public void run(String... args) throws Exception {
-////		List<User> Results = db_Handler.getAllUsers();
-////		Results.forEach(System.out :: println);
-//	}
+
+
 }

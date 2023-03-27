@@ -25,10 +25,15 @@ public class S3Util {
     private static final String accessKeyId = "AKIAUBDAJ3HEDPM7IYGG";
     private static final String secretAccessKey = "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";
     Region region = Region.US_EAST_1;
-    public void uploadFile(String fileName, InputStream inputStream) throws IOException {
+    S3Client client;
 
+    //establishes the connection to the s3Bucket
+    public S3Util()
+    {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-        S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
+        client =  S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
+    }
+    public void uploadFile(String fileName, InputStream inputStream) throws IOException {
 
         PutObjectRequest request = PutObjectRequest.builder().bucket(BUCKET).key(fileName).acl("public-read").build();
 
@@ -36,9 +41,6 @@ public class S3Util {
     }
 
     public byte[] downloadFile(String keyName) throws IOException {
-
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-        S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 
         GetObjectRequest request = GetObjectRequest.builder().bucket(BUCKET).key(keyName).build();
 
@@ -56,8 +58,6 @@ public class S3Util {
     }
 
     public boolean deleteImg(String filePath) {
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-        S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(BUCKET)
@@ -76,8 +76,6 @@ public class S3Util {
     public void createFolders(String folderName)
     {
 
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-        S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET).key(folderName).build();
@@ -87,9 +85,6 @@ public class S3Util {
     }
 //Overload the uploadFile function to work with folders
     public void uploadFile(String fileName, InputStream inputStream,String clubName) throws IOException {
-
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-        S3Client client = S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 
         PutObjectRequest request = PutObjectRequest.builder().bucket(BUCKET).key(clubName +"/"+fileName).acl("public-read").build();
 

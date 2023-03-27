@@ -84,14 +84,23 @@ public class UserController extends DBServices{
 	public ResponseEntity<String>sendMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
 
 		if(checkUserExistence(recipient) == false) {
-			System.out.println("Before email send");
 			emailService.sendEmail(recipient, securityCode);
-			System.out.println("Success");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else {
-			System.out.println("oh hey");
-			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);}
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
 	}
 
+	@PostMapping("user/changePassword/{email}/{newPassword}")
+	public ResponseEntity<String>changePassword(@PathVariable("email")String email, @PathVariable("newPassword")String newPassword) {
+		if(dbChangePassword(email, newPassword) == true) {
+			System.out.println("Success");
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else{
+			System.out.println("Fail");
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+	}
 }

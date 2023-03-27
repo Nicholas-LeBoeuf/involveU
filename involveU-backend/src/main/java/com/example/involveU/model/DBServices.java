@@ -103,6 +103,20 @@ public class DBServices {
             return "error";
         }
     }
+
+    protected Boolean dbChangePassword(String email, String newPassword){
+        sql = "UPDATE User SET password = ? WHERE email = ?;";
+        validQuery = JdbcTemplated.update(sql,email,newPassword);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));

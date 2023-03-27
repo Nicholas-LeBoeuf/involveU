@@ -2,11 +2,9 @@ package com.example.involveU.controller;
 import java.io.IOException;
 import java.util.List;
 import com.example.involveU.model.DBServices;
-import com.example.involveU.model.EmailDetails;
 import com.example.involveU.model.EmailService;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +18,11 @@ public class UserController extends DBServices{
 	private EmailService emailService;
 	private List<User> foundUser;
 	private Object singleUser;
+
+	public UserController(EmailService emailService) {
+		this.emailService = emailService;
+	}
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("user/getAllUsers")
 	public List<User> getUsers() {
@@ -68,10 +71,10 @@ public class UserController extends DBServices{
 
 		return foundUser;
 	}
-	@PostMapping("user/sendMail")
-	public ResponseEntity<String>sendMail(@RequestBody EmailDetails newEmail) throws IOException {
+	@GetMapping("user/sendMail/{recipient}")
+	public ResponseEntity<String>sendMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
 		System.out.println("Before email send");
-		emailService.sendEmail(newEmail.getRecipient(), newEmail.getSubject(), newEmail.getMsgBody());
+		emailService.sendEmail(recipient, securityCode);
 		System.out.println("Success");
 		return new ResponseEntity<>("success",HttpStatus.OK);
 	}

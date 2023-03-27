@@ -1,4 +1,4 @@
 export interface Email {
-  newPassCode: number;
+  newPassCode?: number;
   recipientEmail: string;
 }

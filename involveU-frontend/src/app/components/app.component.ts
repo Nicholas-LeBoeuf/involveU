@@ -63,6 +63,7 @@ export class AppComponent {
 
   //STRINGS
   title: string = 'involveU';
+  statusMessage: string;
 
   //OBJECTS or ARRAYS
   loggedInUser: User;
@@ -229,14 +230,21 @@ export class AppComponent {
   sendForgotPassEmail() {
     this.generateRandomNum();
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
-      console.log("sending email");
-      console.log(response);
-      console.log("email sent");
     },
       (error) => {
-      console.log(this.forgotPasswordForm.value.email);
-      console.log(this.securityToken);
-      console.log(error);
+      if(error.status === 200)
+      {
+        this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      }
+      else
+      {
+        this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      }
+        },
+      () => {
+
+       
+
       })
   }
 

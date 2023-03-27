@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.ls.LSOutput;
+
 @RestController
 @RequestMapping("api/")
 public class UserController extends DBServices{
@@ -80,10 +82,16 @@ public class UserController extends DBServices{
 	}
 	@PostMapping("user/sendMail/{recipient}/{securityCode}")
 	public ResponseEntity<String>sendMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
-		System.out.println("Before email send");
-		emailService.sendEmail(recipient, securityCode);
-		System.out.println("Success");
-		return new ResponseEntity<>("success",HttpStatus.OK);
+
+		if(checkUserExistence(recipient) == false) {
+			System.out.println("Before email send");
+			emailService.sendEmail(recipient, securityCode);
+			System.out.println("Success");
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			System.out.println("oh hey");
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);}
 	}
 
 }

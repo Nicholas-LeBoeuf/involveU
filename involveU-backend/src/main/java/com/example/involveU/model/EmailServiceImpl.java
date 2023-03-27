@@ -26,6 +26,5 @@ public class EmailServiceImpl implements EmailService {
         simpleMailMessage.setSubject("involveU Forgot Password");
         simpleMailMessage.setText("Hello user! Here is your verification code for your account: " + securityCode);
         mailSender.send(simpleMailMessage);
-        System.out.println("Mail Sent...");
     }
 }

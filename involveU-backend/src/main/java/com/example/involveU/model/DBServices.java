@@ -1,6 +1,7 @@
 package com.example.involveU.model;
 
 import jdk.jfr.Event;
+import org.hibernate.sql.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -783,8 +784,14 @@ public class DBServices {
                     df.parse(event.getEndDateTime());
                     shortTimeStr = sdf.format(date);
                     event.setEndDateTime(shortTimeStr);
+                    if(checkIfEventExsists(event))
+                    {
+                        insertNewEvent(event);
+                    }
+                    else {
+                        continue;
+                    }
 
-                    insertNewEvent(event);
             }
             //If club does not exist in InvovleU database then a new club with defualt values is created
             else
@@ -799,11 +806,28 @@ public class DBServices {
                 newClub.setClubMission("check back for more information");
                 newClub.setClubValues("check back for more information");
                 newClub.setClubVision("check back for more information");
-                insertNewClub(newClub);
+                if(checkIfEventExsists(event))
+                {
+                    insertNewEvent(event);
+                }
+                else {
+                    continue;
+                }
             }
         }
         return false;
     }
+
+    protected Boolean checkIfEventExsists(Events eventToCheck)
+    {
+        List<Events> checkEvents;
+        sql = "SELECT * FROM Events WHERE dateTimeFormatted = '" + eventToCheck.getDateTimeFormatted() + "' " +
+                "AND title = '" + eventToCheck.getTitle() +"';";
+        checkEvents = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
+
+        return checkEvents.size() == 0;
+    }
+
     //We do not have a definite list of clubs on campus so if the club doesn't exist for
     // a certain event we create one in the database
     protected boolean checkIfClubExisits(String clubName)

@@ -189,4 +189,17 @@
   </div>
 </p-dialog>
 
+<p-dialog [(visible)]="displayVerifyAccountDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">
+  <h1 class="dialogTitle blueHeaders verificationHeader">Enter Verification Code</h1>
+  <form [formGroup]="verifyAccountForm">
+    <div class="form-group text-center">
+      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Enter verification code" formControlName="verificationCode">
+    </div>
+  </form>
+  <div class="centerButtonDiv verificationButtons">
+    <button class="yellowButton" type="submit" (click)="checkVerifyAccountCodeMatch()">Verify</button>
+    <button class="yellowButton" (click)="closeVerifyAccountDialog()">Cancel</button>
+  </div>
+</p-dialog>
+
 <p-contextMenu #profileContextMenu [model]="profileContextMenuItems"></p-contextMenu>

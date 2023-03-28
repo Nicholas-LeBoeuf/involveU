@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
@@ -25,6 +25,7 @@ export class AppComponent {
   forgotPasswordForm: FormGroup;
   verificationForm: FormGroup;
   changePasswordForm: FormGroup;
+  verifyAccountForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -59,6 +60,11 @@ export class AppComponent {
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     });
+
+    this.verifyAccountForm = this.formBuilder.group({
+      verificationCode: ['', Validators.required]
+    });
+
   }
 
   //BOOLEANS
@@ -69,6 +75,7 @@ export class AppComponent {
   displayForgotPassDialog: boolean = false;
   displayVerificationDialog: boolean = false;
   displayChangePasswordDialog: boolean = false;
+  displayVerifyAccountDialog: boolean = false;
 
   //NUMBERS
   userID: number;
@@ -76,7 +83,7 @@ export class AppComponent {
 
   //STRINGS
   title: string = 'involveU';
-  statusMessage: string;
+  endingEmail: string;
 
   //OBJECTS or ARRAYS
   loggedInUser: User;
@@ -126,6 +133,10 @@ export class AppComponent {
     this.displayChangePasswordDialog = true;
   }
 
+  showVerifyAccountDialog() {
+    this.displayVerifyAccountDialog = true;
+  }
+
   onLoginSubmit() {
 
     const hashedPass = SHA256(this.loginForm.value.password).toString(enc.Hex);
@@ -146,20 +157,13 @@ export class AppComponent {
   }
 
   onSignupSubmit() {
-    const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.yearNameFC.value, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
-
-    this.userService.signupNewUser(userInfo).subscribe(success =>{
-
-    },
-      error => {
-        this.toastr.error('Create Account Unsuccessful', undefined, {positionClass: 'toast-top-center', progressBar: true});
-      },
-      () => {
-        this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
-        this.displaySignupDialog = false;
-        this.signupForm.reset();
-        this.yearNameFC.reset();
-      });
+    this.endingEmail = this.signupForm.value.email.split("@");
+    if(this.endingEmail[1] === "snhu.edu"){
+      this.sendAccountVerificationEmail();
+    }
+    else {
+      this.toastr.error('Account needs to be created with a snhu.edu email', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    }
   }
 
   logoutUser() {
@@ -228,6 +232,10 @@ export class AppComponent {
     this.displayChangePasswordDialog = false;
   }
 
+  closeVerifyAccountDialog() {
+    this.displayVerifyAccountDialog = false;
+  }
+
   activateContextMenu(contextMenu: ContextMenu, event: MouseEvent, xOffset: number = -20, yOffset: number = 50) {
     this.prevContextMenu?.hide();
     event.stopPropagation();
@@ -273,6 +281,27 @@ export class AppComponent {
       })
   }
 
+  sendAccountVerificationEmail() {
+    this.generateRandomNum();
+    this.userService.verifyAccountMail(this.signupForm.value.email, this.securityToken).subscribe(response => {
+      },
+      (error) => {
+        if(error.status === 200)
+        {
+          this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.displayVerifyAccountDialog = true;
+          this.displayForgotPassDialog = false;
+        }
+        else
+        {
+          this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        }
+      },
+      () => {
+
+      })
+  }
+
   generateRandomNum() {
     this.securityToken = Math.floor(100000 + Math.random() * 900000);
   }
@@ -282,6 +311,42 @@ export class AppComponent {
       this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
       this.displayVerificationDialog = false;
       this.displayChangePasswordDialog = true;
+    }
+    else{
+      this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    }
+  }
+
+  checkVerifyAccountCodeMatch() {
+    if(this.securityToken === +this.verifyAccountForm.value.verificationCode){
+      this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      this.displayVerificationDialog = false;
+      const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.yearNameFC.value, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
+      userInfo.userPassword = SHA256(userInfo.userPassword).toString(enc.Hex);
+      this.userService.signupNewUser(userInfo).subscribe(success =>{
+
+        },
+        error => {
+          this.toastr.error('Create Account Unsuccessful', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        },
+        () => {
+          this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.displaySignupDialog = false;
+          const hashedPass = SHA256(this.signupForm.value.password).toString(enc.Hex);
+          this.userService.checkLoginCredentials(this.signupForm.value.email, hashedPass).subscribe((response: User) => {
+              this.loggedInUser = response;
+            },
+            error => {
+              this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+            },
+            () => {
+              this.toastr.success('Successfully Logged In', undefined, {positionClass: 'toast-top-center', progressBar: true});
+
+              this.setCookie();
+              this.displayLoginDialog = false;
+              location.reload();
+            });
+        });
     }
     else{
       this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});

@@ -92,6 +92,12 @@ public class UserController extends DBServices{
 		}
 	}
 
+	@PostMapping("user/verifyAccountMail/{recipient}/{securityCode}")
+	public ResponseEntity<String>verifyAccountMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
+		emailService.sendEmail(recipient, securityCode);
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+
 	@PutMapping("user/changePassword/{email}/{newPassword}")
 	public ResponseEntity<String>changePassword(@PathVariable("email")String email, @PathVariable("newPassword")String newPassword) {
 		if(dbChangePassword(email, newPassword) == true) {

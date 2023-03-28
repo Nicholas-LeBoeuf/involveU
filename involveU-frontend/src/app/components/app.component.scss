@@ -102,6 +102,11 @@ ul {
   cursor: pointer;
 }
 
+.forgotPasswordLink {
+  color: #0000EE;
+  cursor: pointer;
+}
+
 :host ::ng-deep p-dialog,
 :host ::ng-deep .p-dialog-mask.p-component-overlay {
   background-color: rgba(0, 0, 0, 0.4);
@@ -224,5 +229,17 @@ ul {
 }
 
 .forgotPassHeader {
+  margin-top: 20px;
+}
+
+.forgotPassButtons {
+  margin-bottom: 20px;
+}
+
+.verificationButtons {
+  margin-bottom: 20px;
+}
+
+.verificationHeader {
   margin-top: 20px;
 }

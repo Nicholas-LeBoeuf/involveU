@@ -56,8 +56,8 @@ export class AppComponent {
     });
 
     this.changePasswordForm = this.formBuilder.group({
-      newPassword: ['', Validators.required, Validators.minLength(8)],
-      confirmPassword: ['', Validators.required, Validators.minLength(8)]
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
 
@@ -285,6 +285,22 @@ export class AppComponent {
     }
     else{
       this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    }
+  }
+
+  changePassword() {
+    const hashedPass = SHA256(this.changePasswordForm.value.newPassword).toString(enc.Hex);
+    const confirmHashedPass = SHA256(this.changePasswordForm.value.confirmPassword).toString(enc.Hex);
+    if(hashedPass === confirmHashedPass) {
+      this.userService.changePassword(this.forgotPasswordForm.value.email ,hashedPass).subscribe(response => {
+
+      })
+      this.displayChangePasswordDialog = false;
+      this.displayLoginDialog = true;
+      this.toastr.success('Password has been changed', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    }
+    else {
+      this.toastr.error('Passwords do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
   }
 

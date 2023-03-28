@@ -92,7 +92,7 @@ public class UserController extends DBServices{
 		}
 	}
 
-	@PostMapping("user/changePassword/{email}/{newPassword}")
+	@PutMapping("user/changePassword/{email}/{newPassword}")
 	public ResponseEntity<String>changePassword(@PathVariable("email")String email, @PathVariable("newPassword")String newPassword) {
 		if(dbChangePassword(email, newPassword) == true) {
 			System.out.println("Success");

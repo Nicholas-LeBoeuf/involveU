@@ -105,8 +105,8 @@ public class DBServices {
     }
 
     protected Boolean dbChangePassword(String email, String newPassword){
-        sql = "UPDATE User SET password = ? WHERE email = ?;";
-        validQuery = JdbcTemplated.update(sql,email,newPassword);
+        sql = "UPDATE User SET userPassword = ? WHERE email = ?;";
+        validQuery = JdbcTemplated.update(sql,newPassword, email);
 
         if(validQuery == 1)
         {

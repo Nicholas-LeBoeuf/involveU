@@ -96,8 +96,8 @@
       <button class="blueButton" type="submit" [disabled]="isLoginValid()" (click)="onLoginSubmit()">Login</button>
       <button class="blueButton" (click)="closeLoginDialog()">Close</button>
     </div>
-    <div class="form-group loginInputs">
-      <p class="text-center"><a (click)="showForgotPassDialog()">Forgot Password</a></p>
+    <div class="form-group">
+      <p class="text-center forgotPasswordLink"><a (click)="showForgotPassDialog()">Forgot Password</a></p>
     </div>
   </form>
   <hr class="dialogLines">
@@ -150,22 +150,24 @@
 <p-dialog [(visible)]="displayForgotPassDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">
   <h1 class="dialogTitle blueHeaders forgotPassHeader">Forgot Password</h1>
   <form [formGroup]="forgotPasswordForm">
-    <div class="form-group">
+    <div class="form-group text-center">
       <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Enter your email" formControlName="email">
     </div>
   </form>
-  <div class="centerButtonDiv">
+  <div class="centerButtonDiv forgotPassButtons">
     <button class="yellowButton" type="submit" (click)="sendForgotPassEmail()">Send Email</button>
     <button class="yellowButton" (click)="closeForgotPassDialog()">Cancel</button>
   </div>
 </p-dialog>
 
 <p-dialog [(visible)]="displayVerificationDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">
-  <h1 class="dialogTitle blueHeaders forgotPassHeader">Enter Verification Code</h1>
+  <h1 class="dialogTitle blueHeaders verificationHeader">Enter Verification Code</h1>
   <form [formGroup]="verificationForm">
-    <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Enter verification code" formControlName="verificationCode">
+    <div class="form-group text-center">
+      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Enter verification code" formControlName="verificationCode">
+    </div>
   </form>
-  <div class="centerButtonDiv">
+  <div class="centerButtonDiv verificationButtons">
     <button class="yellowButton" type="submit" (click)="checkVerificationCodeMatch()">Verify</button>
     <button class="yellowButton" (click)="closeVerificationDialog()">Cancel</button>
   </div>
@@ -173,16 +175,16 @@
 
 <p-dialog [(visible)]="displayChangePasswordDialog" [modal]="true" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}"  [dismissableMask]="true"  [baseZIndex]="10000">>
   <h1 class="dialogTitle blueHeaders forgotPassHeader">Change Password</h1>
-  <form>
-    <div class="form-group">
-      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="New password" formControlName="newPassword">
+  <form [formGroup]="changePasswordForm">
+    <div class="form-group text-center">
+      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="password" placeholder="New password" formControlName="newPassword">
     </div>
-    <div class="form-group">
-      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="text" placeholder="Confirm password" formControlName="confirmPassword">
+    <div class="form-group text-center">
+      <input [ngClass]="{'form-control': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'form-control-mobile': responsiveService.deviceMobile()}" class="formInputs" type="password" placeholder="Confirm password" formControlName="confirmPassword">
     </div>
   </form>
-  <div class="centerButtonDiv">
-    <button class="yellowButton" type="submit" (click)="checkVerificationCodeMatch()">Change Password</button>
+  <div class="centerButtonDiv forgotPassButtons">
+    <button class="yellowButton" type="submit" (click)="changePassword()">Change Password</button>
     <button class="yellowButton" (click)="closeChangePasswordDialog()">Cancel</button>
   </div>
 </p-dialog>

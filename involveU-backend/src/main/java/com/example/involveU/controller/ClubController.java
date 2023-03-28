@@ -273,7 +273,22 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
         return new ResponseEntity<>("Success",HttpStatus.OK	);
     }
+    @GetMapping("/club/uploadAllFiles")
+    private ResponseEntity<String> uploadAllFiles(@RequestParam("file") MultipartFile newImage) throws IOException {
+        clubs = getAllDBClubs();
+        S3Util S3 = new S3Util();
+        String filename = newImage.getOriginalFilename();
+        System.out.println(filename);
+        for(Club club: clubs)
+        {
 
+            S3.uploadFile(filename, newImage.getInputStream(),club.getClubName());
+    }
+
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
+
+    }
 
 
 }

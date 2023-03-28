@@ -49,6 +49,7 @@ import { ProgramPlanningChecklistComponent } from './components/more-info/more-i
 import { PreTripAgendaComponent } from './components/more-info/more-info-tabs/pre-trip-agenda/pre-trip-agenda.component';
 import { TripPlanningGuideComponent } from './components/more-info/more-info-tabs/trip-planning-guide/trip-planning-guide.component';
 import {ToastrModule} from "ngx-toastr";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 
 FullCalendarModule.registerPlugins([
@@ -100,6 +101,7 @@ FullCalendarModule.registerPlugins([
         FontAwesomeModule,
         TabViewModule,
         ToastrModule.forRoot(),
+        ProgressSpinnerModule,
     ],
   providers: [
     CookieService,

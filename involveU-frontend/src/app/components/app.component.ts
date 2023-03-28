@@ -76,6 +76,7 @@ export class AppComponent {
   displayVerificationDialog: boolean = false;
   displayChangePasswordDialog: boolean = false;
   displayVerifyAccountDialog: boolean = false;
+  showProgressSpinner: boolean = false;
 
   //NUMBERS
   userID: number;
@@ -157,11 +158,13 @@ export class AppComponent {
   }
 
   onSignupSubmit() {
+    this.showProgressSpinner = true;
     this.endingEmail = this.signupForm.value.email.split("@");
     if(this.endingEmail[1] === "snhu.edu"){
       this.sendAccountVerificationEmail();
     }
     else {
+      this.showProgressSpinner = false;
       this.toastr.error('Account needs to be created with a snhu.edu email', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
   }
@@ -261,6 +264,7 @@ export class AppComponent {
   }
 
   sendForgotPassEmail() {
+    this.showProgressSpinner = true;
     this.generateRandomNum();
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
     },
@@ -269,11 +273,13 @@ export class AppComponent {
         {
           this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
           this.displayVerificationDialog = true;
+          this.showProgressSpinner = false;
           this.displayForgotPassDialog = false;
         }
         else
         {
           this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.showProgressSpinner = false;
         }
         },
       () => {
@@ -290,11 +296,12 @@ export class AppComponent {
         {
           this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
           this.displayVerifyAccountDialog = true;
-          this.displayForgotPassDialog = false;
+          this.showProgressSpinner = false;
         }
         else
         {
-          this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.showProgressSpinner = false;
+          this.toastr.error('Cannot send email verification at this time. Please try again later.', undefined, {positionClass: 'toast-top-center', progressBar: true});
         }
       },
       () => {

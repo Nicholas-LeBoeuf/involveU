@@ -88,11 +88,23 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   formatAllEvents() {
     this.formattedEvents = []; // Clear previously filtered events
 
+    // What this is doing is checking each title string in the array and replacing encoded HTML symbols with the correct symbol to display on the calendar
+    for(let j = 0; j < this.eventsToSend.length; j++)
+    {
+      this.eventsToSend[j].title = this.eventsToSend[j].title.replace(/&#39;/g,"\'");
+      this.eventsToSend[j].title = this.eventsToSend[j].title.replace(/&quot;/g, "\"");
+      this.eventsToSend[j].title = this.eventsToSend[j].title.replace(/&lt;/g, "<");
+      this.eventsToSend[j].title = this.eventsToSend[j].title.replace(/&gt;/g, ">");
+      this.eventsToSend[j].title = this.eventsToSend[j].title.replace(/&amp;/g, "&");
+    }
+
+    //Formatting the events into the correct format for the calendar library
     for (let i = 0; i < this.eventsToSend.length; i++) // Put the events in the proper FullCalendar format
     {
       this.formattedEvents.push({id: this.eventsToSend[i].eventID, title: this.eventsToSend[i].title, start: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].startDateTime, end: this.eventsToSend[i].dateTimeFormatted + 'T' + this.eventsToSend[i].endDateTime, allDay: false})
     }
 
+    //Sets the events in the options object. Options object is sent to the calendar component
     this.options.events = this.formattedEvents; // Reset the events portion of the options object
   }
 

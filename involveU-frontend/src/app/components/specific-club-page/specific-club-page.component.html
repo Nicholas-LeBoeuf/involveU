@@ -52,7 +52,7 @@
             </p-table>
           </ng-container>
           <ng-template #notLoggedIn>
-            <p>Login to see Executive Board Members!</p>
+
           </ng-template>
         </ng-container>
         <ng-container *ngIf="clubSocialMedia.length !== 0">
@@ -157,7 +157,7 @@
    <div class="eventCardDialog text-center" *ngFor="let event of certainEvent">
      <div class="eventCardPicture">
        <div class="imageCenter">
-         <img class="eventImageDialog" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
+         <img class="eventImage" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
        </div>
        <div class="imageMaskDialog"></div>
        <h3 class="blueHeaders text-center setMargin" [innerHTML]="event.title"></h3>
@@ -166,19 +166,19 @@
        <div class="eventInformationDialogContainer">
          <div class="eventDateDialog">
            <h3 class="blueHeaders text-center">Date</h3>
-           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+           <ng-container *ngIf="isLoggedIn == true; else  notLoggedInDate">
              <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
            </ng-container>
-           <ng-template #notLoggedIn>
+           <ng-template #notLoggedInDate>
              <p>Login to view event date</p>
            </ng-template>
          </div>
          <div class="eventTimeDialog">
            <h3 class="blueHeaders text-center">Time</h3>
-           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+           <ng-container *ngIf="isLoggedIn == true; else  notLoggedInTime">
              <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
            </ng-container>
-           <ng-template #notLoggedIn>
+           <ng-template #notLoggedInTime>
              <p>Login to view event time</p>
            </ng-template>
          </div>
@@ -206,10 +206,10 @@
          </div>
          <div class="eventLocationDialog">
            <h3 class="blueHeaders text-center">Location</h3>
-           <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+           <ng-container *ngIf="isLoggedIn == true; else  notLoggedInLocation">
              <p [innerHTML]="event.location"></p>
            </ng-container>
-           <ng-template #notLoggedIn>
+           <ng-template #notLoggedInLocation>
              <p>Login to view event location</p>
            </ng-template>
          </div>

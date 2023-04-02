@@ -27,7 +27,7 @@
         <ng-container *ngIf="topRSVPdEvents.length > 0; else NoTop5">
           <table class="top5Table">
             <tbody>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[0]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
                 </td>
@@ -36,7 +36,7 @@
                   <h5>({{topRSVPdEvents[0].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[1]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
                 </td>
@@ -45,7 +45,7 @@
                   <h5>({{topRSVPdEvents[1].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[2]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
                 </td>
@@ -54,7 +54,7 @@
                   <h5>({{topRSVPdEvents[2].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[3]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin"></i>
                 </td>
@@ -63,13 +63,13 @@
                   <h5>({{topRSVPdEvents[3].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[4]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin"></i>
                 </td>
                 <td>
-                  <h5 class="top5Text" [innerHTML]="'5th : ' + topRSVPdEvents[5].title"></h5>
-                  <h5>({{topRSVPdEvents[5].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                  <h5 class="top5Text" [innerHTML]="'5th : ' + topRSVPdEvents[4].title"></h5>
+                  <h5>({{topRSVPdEvents[4].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
             </tbody>
@@ -214,7 +214,7 @@
         <ng-container *ngIf="topRSVPdEvents.length !== 0; else NoTop5Events">
           <table class="top5Table">
             <tbody>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[0]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin goldTrophy"></i>
                 </td>
@@ -223,7 +223,7 @@
                   <h5>({{topRSVPdEvents[0].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[1]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin silverTrophy"></i>
                 </td>
@@ -232,7 +232,7 @@
                   <h5>({{topRSVPdEvents[1].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[2]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin bronzeTrophy"></i>
                 </td>
@@ -241,7 +241,7 @@
                   <h5>({{topRSVPdEvents[2].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[3]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin"></i>
                 </td>
@@ -250,13 +250,13 @@
                   <h5>({{topRSVPdEvents[3].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="topRSVPdEvents[4]">
                 <td>
                   <i class="fa fa-3x fa-trophy iconMargin"></i>
                 </td>
                 <td>
-                  <h5 class="top5Text" [innerHTML]="'5th : ' + topRSVPdEvents[5].title"></h5>
-                  <h5>({{topRSVPdEvents[5].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
+                  <h5 class="top5Text" [innerHTML]="'5th : ' + topRSVPdEvents[4].title"></h5>
+                  <h5>({{topRSVPdEvents[4].dateTimeFormatted | date:'MMMM dd, YYYY'}})</h5>
                 </td>
               </tr>
             </tbody>
@@ -330,17 +330,21 @@
       <div class="eventInformationDialogContainer">
         <div class="eventDateDialog">
           <h3 class="blueHeaders text-center">Date</h3>
-          <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
-          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedInDate">
             <p>{{event.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
           </ng-container>
-          <ng-template #notLoggedIn>
+          <ng-template #notLoggedInDate>
             <p>Login to view event date</p>
           </ng-template>
         </div>
         <div class="eventTimeDialog">
           <h3 class="blueHeaders text-center">Time</h3>
-          <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedInTime">
+            <p>{{event.startDateTime | timeFormat}} - {{event.endDateTime | timeFormat}}</p>
+          </ng-container>
+          <ng-template #notLoggedInTime>
+            <p>Login to view event time</p>
+          </ng-template>
         </div>
         <div class="eventTransportationDialog">
           <h3 class="blueHeaders text-center">Transportation</h3>
@@ -366,10 +370,10 @@
         </div>
         <div class="eventLocationDialog">
           <h3 class="blueHeaders text-center">Location</h3>
-          <ng-container *ngIf="isLoggedIn == true; else  notLoggedIn">
+          <ng-container *ngIf="isLoggedIn == true; else  notLoggedInLocation">
             <p [innerHTML]="event.location"></p>
           </ng-container>
-          <ng-template #notLoggedIn>
+          <ng-template #notLoggedInLocation>
             <p>Login to view event location</p>
           </ng-template>
         </div>

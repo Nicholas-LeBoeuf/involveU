@@ -14,10 +14,7 @@ import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.*;
 
 public class S3Util {
 
@@ -40,19 +37,31 @@ public class S3Util {
         client.putObject(request, RequestBody.fromInputStream(inputStream, inputStream.available()));
     }
 
-    public byte[] downloadFile(String keyName) throws IOException {
-
-        GetObjectRequest request = GetObjectRequest.builder().bucket(BUCKET).key(keyName).build();
-
-        ResponseInputStream<GetObjectResponse> inputStream = client.getObject(request);
+    public byte[] downloadFile(String keyName) throws IOException
+    {
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
+        client =  S3Client.builder().region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-        int nRead;
-        byte[] data = new byte[16384];
+        GetObjectRequest request = GetObjectRequest.builder().bucket(BUCKET).key(keyName).build();
 
-        ByteArrayOutputStream outputStream = null;
-        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {buffer.write(data, 0, nRead);}
+        try
+        {
+            ResponseInputStream<GetObjectResponse> inputStream =  client.getObject(request);
+
+             buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[16384];
+
+            ByteArrayOutputStream outputStream = null;
+            while ((nRead = inputStream.read(data, 0, data.length)) != -1) {buffer.write(data, 0, nRead);}
+
+
+        }catch(Exception e)
+        {
+            System.out.println(keyName);
+        }
 
         return buffer.toByteArray();
     }

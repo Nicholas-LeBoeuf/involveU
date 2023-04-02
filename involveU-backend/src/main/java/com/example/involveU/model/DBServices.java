@@ -608,11 +608,12 @@ public class DBServices {
         for (Events event:events) {
             EboardEvent newEvent = new EboardEvent();
             if(counter < rsvpsSize) {
+
                 for (int i = 0; i < rsvps.size(); i++) {
 
                     if (event.getEventID() == rsvps.get(i).getEventID()) {
                         newEvent.convertEventClass(event);
-                        newEvent.setNumOfRsvps(rsvps.get(i).total);
+                        newEvent.setNumOfRsvps(rsvps.get(i).getTotal()      );
                         eventDetails.add(newEvent);
                         counter++;
                         eventFound = true;
@@ -752,8 +753,10 @@ public class DBServices {
     protected boolean upload25liveEvents(Events[] eventsList) throws ParseException {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat dfTwo = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = null;
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sdfTwo = new SimpleDateFormat("HH:mm");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 
        //loops through all events that have been grabbed from Publisher
@@ -795,9 +798,10 @@ public class DBServices {
                     event.setStartDateTime(shortTimeStr);
 
 
-                    df.parse(event.getEndDateTime());
-                    shortTimeStr = sdf.format(date);
-                    event.setEndDateTime(shortTimeStr);
+                   date = dfTwo.parse(event.getEndDateTime());
+                    String shortTimeStrTwo = sdfTwo.format(date);
+                    event.setEndDateTime(shortTimeStrTwo);
+
                     if(checkIfEventExsists(event))
                     {
                         insertNewEvent(event);
@@ -810,6 +814,7 @@ public class DBServices {
             //If club does not exist in InvovleU database then a new club with defualt values is created
             else
             {
+                S3Util newFolder = new S3Util();
                 Club newClub = new Club();
                 newClub.setClubName(event.getClubName());
                 newClub.setClubBio("check back for more information");
@@ -820,6 +825,7 @@ public class DBServices {
                 newClub.setClubMission("check back for more information");
                 newClub.setClubValues("check back for more information");
                 newClub.setClubVision("check back for more information");
+                newFolder.createFolders(newClub.getClubName() + "/");
                 if(checkIfEventExsists(event))
                 {
                     insertNewEvent(event);

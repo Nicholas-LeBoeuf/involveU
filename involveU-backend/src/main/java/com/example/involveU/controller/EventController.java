@@ -204,15 +204,6 @@ public class EventController extends DBServices{
 
         upload25liveEvents(events);
 
-
-//        HttpEntity<CreateTaskInput> request = new HttpEntity<>(headers);
-//        String url = generateUrl("/tasks");
-//
-//        ResponseEntity<TaskItemResponse[]> result = restTemplate.exchange(url, HttpMethod.GET, request, TaskItemResponse[].class);
-//        TaskItemResponse[] tasks = result.getBody();
-//
-//        assert tasks != null;
-
         return new ResponseEntity<>("success", HttpStatus.OK);
 
 

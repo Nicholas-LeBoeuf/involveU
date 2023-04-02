@@ -215,7 +215,7 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
     }
 
     @PutMapping("/club/editSocialMedia")
-    private ResponseEntity<String> eidtSocialMedia(@RequestBody SocialMedia newSM)
+    private ResponseEntity<String> editSocialMedia(@RequestBody SocialMedia newSM)
     {
         if(updateSocialMedia(newSM))
         {

@@ -457,9 +457,14 @@ public class DBServices {
 
          sql = "INSERT INTO Events (title, startDateTime, location,endDateTime,dateTimeFormatted,description, isTransportation, ticketLink,clubName,clubId) Values (?,?,?,?,?,?,?,?,?,?)";
 
+        try {
 
-         validQuery = JdbcTemplated.update(sql, newEvent.getTitle(), newEvent.getStartDateTime(), newEvent.getLocation(), newEvent.getEndDateTime(), newEvent.getDateTimeFormatted(), newEvent.getDescription(), newEvent.getIsTransportation(), newEvent.getTicketLink(), newEvent.getClubName(), newEvent.getClubID());
-
+            validQuery = JdbcTemplated.update(sql, newEvent.getTitle(), newEvent.getStartDateTime(), newEvent.getLocation(), newEvent.getEndDateTime(), newEvent.getDateTimeFormatted(), newEvent.getDescription(), newEvent.getIsTransportation(), newEvent.getTicketLink(), newEvent.getClubName(), newEvent.getClubID());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
          return validQuery == 1;
     }
     protected boolean updateDBEvent(Events eventToUpdate)
@@ -787,6 +792,7 @@ public class DBServices {
                        newLocation = (String) m.group().subSequence(1, m.group().length()-1);
                        event.setLocation(newLocation);
                        System.out.println((m.group().subSequence(1, m.group().length()-1)));
+
                    }
 
                     //Re formates date to simple date format
@@ -800,13 +806,19 @@ public class DBServices {
                     event.setStartDateTime(shortTimeStr);
 
 
-                   date = dfTwo.parse(event.getEndDateTime());
+                    date = dfTwo.parse(event.getEndDateTime());
                     String shortTimeStrTwo = sdfTwo.format(date);
                     event.setEndDateTime(shortTimeStrTwo);
 
                     if(checkIfEventExsists(event))
                     {
-                        insertNewEvent(event);
+                        try {
+                            insertNewEvent(event);
+                        }
+                        catch(Exception e)
+                        {
+                            System.out.println(e);
+                        }
                     }
                     else {
                         continue;

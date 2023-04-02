@@ -597,6 +597,8 @@ public class DBServices {
     }
     protected List<EboardEvent> getAllEventDetails(int clubID)
     {
+        events = null;
+        eventDetails.clear();
         events = getDBClubEvents(clubID);
 
         sql = "SELECT RSVP.eventID,count(*) as Total from RSVP WHERE clubID = "+ clubID +"  group by eventID;";

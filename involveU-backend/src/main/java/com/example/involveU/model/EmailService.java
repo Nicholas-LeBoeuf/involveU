@@ -6,4 +6,6 @@ import com.example.involveU.model.EmailDetails;
 public interface EmailService {
 
     void sendEmail(String recipient, int securityCode);
+
+    void sendWelcomeEmail(String recipient, int securityCode);
 }

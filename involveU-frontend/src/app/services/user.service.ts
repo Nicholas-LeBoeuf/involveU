@@ -31,8 +31,8 @@ export class UserService {
     return this.http.post(environment.apiURL + `user/sendMail/${recipient}/${securityCode}`, {responseType: 'text'});
   }
 
-  verifyAccountMail(recipient:string, securityCode?:number) {
-    return this.http.post(environment.apiURL + `user/verifyAccountMail/${recipient}/${securityCode}`, {responseType: 'text'});
+  sendWelcomeMail(recipient:string, securityCode?:number) {
+    return this.http.post(environment.apiURL + `user/sendWelcomeMail/${recipient}/${securityCode}`, {responseType: 'text'});
   }
 
   changePassword(email:string, newPassword:string){

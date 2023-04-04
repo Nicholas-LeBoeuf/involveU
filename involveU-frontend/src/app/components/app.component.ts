@@ -289,7 +289,7 @@ export class AppComponent {
 
   sendAccountVerificationEmail() {
     this.generateRandomNum();
-    this.userService.verifyAccountMail(this.signupForm.value.email, this.securityToken).subscribe(response => {
+    this.userService.sendWelcomeMail(this.signupForm.value.email, this.securityToken).subscribe(response => {
       },
       (error) => {
         if(error.status === 200)

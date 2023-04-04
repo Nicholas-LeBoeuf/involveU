@@ -27,4 +27,13 @@ public class EmailServiceImpl implements EmailService {
         simpleMailMessage.setText("Hello user! Here is your verification code for your account: " + securityCode);
         mailSender.send(simpleMailMessage);
     }
+
+    public void sendWelcomeEmail(String recipient, int securityCode) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("involveUSNHU@gmail.com");
+        simpleMailMessage.setTo(recipient);
+        simpleMailMessage.setSubject("Welcome to involveU!");
+        simpleMailMessage.setText("Hello user! Welcome to involveU! Here is your verification code to finish creating your account: " + securityCode);
+        mailSender.send(simpleMailMessage);
+    }
 }

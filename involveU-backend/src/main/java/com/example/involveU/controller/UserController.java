@@ -92,10 +92,16 @@ public class UserController extends DBServices{
 		}
 	}
 
-	@PostMapping("user/verifyAccountMail/{recipient}/{securityCode}")
-	public ResponseEntity<String>verifyAccountMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
-		emailService.sendEmail(recipient, securityCode);
-		return new ResponseEntity<>("success", HttpStatus.OK);
+	@PostMapping("user/sendWelcomeMail/{recipient}/{securityCode}")
+	public ResponseEntity<String>sendWelcomeMail(@PathVariable("recipient")String recipient, @PathVariable("securityCode")int securityCode) throws IOException {
+
+		if(checkUserExistence(recipient) == true) {
+			emailService.sendWelcomeEmail(recipient, securityCode);
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PutMapping("user/changePassword/{email}/{newPassword}")

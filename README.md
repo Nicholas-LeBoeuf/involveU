@@ -1,8 +1,10 @@
 <h1 align = "center"> involveU </h1>
 <p  align = "center" > <img src = "https://user-images.githubusercontent.com/59942769/199515690-39584d38-d989-41ef-b7f9-bf47716a10a4.png"/> </p>
 
+<h1><a href="https://involveu.us">involveU</h1>
+
 ## Description
-<p font-size = "18px">InvolveU is a one stop shop for everything student involvement. Students will be able to view events on campus as well as favorite their favorite clubs. This bridges the gap between all parts of campus life. This means not only student involvement receives benefit from this application. involveU can serve admissions, women’s centers any many more offices. </p>
+<p font-size = "18px">InvolveU is a one stop shop for everything student involvement. Students will be able to view events on campus as well as favorite their favorite clubs. This bridges the gap between all parts of campus life. This means not only student involvement receives benefit from this application. involveU can serve admissions, the women’s center, athletics, and many more offices. </p>
 
 ## Structure
 
@@ -28,3 +30,6 @@ Database for involveU is hosted on an AWS MySQL RDS server and is a MySQL Relati
 ## Dependencies
               
 [Dependencies](https://github.com/Nicholas-LeBoeuf/involveU/network/dependencies)
+
+## Documentation
+View our confluence documentation using [this link](https://involveu.atlassian.net/wiki/spaces/ID1/overview?homepageId=491597)!

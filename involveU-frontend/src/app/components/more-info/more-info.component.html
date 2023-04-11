@@ -47,7 +47,7 @@
     <div class="tabViewWeb">
       <p-tabView [scrollable]="true" styleClass="moreInfoTabs">
         <p-tabPanel header="Intro to Clubs and Orgs">
-          <app-intro-clubs-orgs></app-intro-clubs-orgs>
+          <app-intro-clubs-orgs></app-intro-clubs-orgs>   <!--How to call a component inside a component-->
         </p-tabPanel>
 
         <p-tabPanel header="OSI Staff">
@@ -80,7 +80,7 @@
     <div class="quickLinksWeb">
       <h1 class="blueHeaders text-center">SNHU Quick Links</h1>
       <hr>
-      <h4 class="quickLinkPage">
+      <h4 class="quickLinkPage">                             <!--Able to open link in a new tab if given target="_blank"-->
         <a href="https://mysnhu.force.com/mysnhu/s/student-involvement" target="_blank">Student Involvement</a>
       </h4>
       <hr>
@@ -119,7 +119,7 @@
   </div>
 </ng-container>
 
-<ng-template #MobileView>
+<ng-template #MobileView>  <!--Need a mobile view to display data more user friendly-->
   <div class="mobileTabletWelcomeText">
     <h4 class="text-center">
       At Southern New Hampshire University, your time is about more than just earning a degree. The Office of Student Involvement provides you with opportunities for involvement and peer collaboration. From clubs to leadership organizations and honor societies, there are many ways to get involved, network, attend events and explore learning communities.

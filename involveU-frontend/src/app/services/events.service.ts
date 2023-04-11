@@ -55,16 +55,8 @@ export class EventsService {
   getFutureFavortedClubEvents(userID: number): Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getFutureFavoriteClubEvents/${userID}`);
   }
-  getLocations(): Observable<Events[]> {
-    return this.http.get<Events[]>(environment.apiURL + `events/getAllLocations`);
-  }
-  getSpaceByLocation(locationID: number): Observable<Events[]> {
-    return this.http.get<Events[]>(environment.apiURL + `events/getSpacesByLocation/${locationID}`);
-  }
+
   getTopRSVP():Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTopRSVP`);
-  }
-  getEventsBySpace(locationID: number): Observable<Events[]> {
-    return this.http.get<Events[]>(environment.apiURL + `events/getEventsBySpace/${locationID}`)
   }
 }

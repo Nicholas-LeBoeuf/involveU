@@ -165,7 +165,7 @@ export class LandingPageComponent implements OnInit {
     this.viewCertainAnnouncementDialog = false;
   }
 
-  shuffleArray(array) {
+  shuffleArray(array) { // Function to shuffle the images on the landing page so it is different each time
     let size = array.length, temp, i;
 
     while (size) {

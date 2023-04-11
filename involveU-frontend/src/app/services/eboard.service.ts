@@ -29,6 +29,7 @@ export class EboardService {
   editSocialMedia(socialMediaContent: SocialMedia) {
     return this.http.put(environment.apiURL + `club/editSocialMedia`, socialMediaContent, {responseType: 'text'});
   }
+
   //edits all club data for that club in one function
   editClubData(clubData: Club) {
     return this.http.put(environment.apiURL + `club/updateClubData`, clubData, {responseType: 'text'});

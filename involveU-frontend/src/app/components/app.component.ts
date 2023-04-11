@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../objects/user";
-import {Email} from "../objects/email"
 import {ClubService} from "../services/club.service";
 import {Router} from "@angular/router";
 import {MenuItem} from 'primeng/api';
@@ -130,14 +129,6 @@ export class AppComponent {
     this.displayLoginDialog = false;
   }
 
-  showChangePasswordDialog() {
-    this.displayChangePasswordDialog = true;
-  }
-
-  showVerifyAccountDialog() {
-    this.displayVerifyAccountDialog = true;
-  }
-
   onLoginSubmit() {
 
     const hashedPass = SHA256(this.loginForm.value.password).toString(enc.Hex);
@@ -160,7 +151,8 @@ export class AppComponent {
   onSignupSubmit() {
     this.showProgressSpinner = true;
     this.endingEmail = this.signupForm.value.email.split("@");
-    if(this.endingEmail[1] === "snhu.edu"){
+    //Checks to see if the email submitted is a snhu.edu email
+    if (this.endingEmail[1] === "snhu.edu") {
       this.sendAccountVerificationEmail();
     }
     else {
@@ -170,6 +162,7 @@ export class AppComponent {
   }
 
   logoutUser() {
+    //Remove all user information cookies saved to browser
     this.cookie.delete('studentID');
     this.cookie.delete('studentFName');
     this.cookie.delete('studentLName');
@@ -186,14 +179,6 @@ export class AppComponent {
     });
 
     this.toastr.success('Successfully Logged Out', undefined, {positionClass: 'toast-top-center', progressBar: true});
-  }
-
-  get signupFormInputs() {
-    return this.signupForm.controls;
-  }
-
-  get loginFormInputs() {
-    return this.loginForm.controls;
   }
 
   setCookie() {
@@ -269,7 +254,7 @@ export class AppComponent {
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
     },
       (error) => {
-        if(error.status === 200)
+        if (error.status === 200)
         {
           this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
           this.displayVerificationDialog = true;
@@ -292,7 +277,7 @@ export class AppComponent {
     this.userService.sendWelcomeMail(this.signupForm.value.email, this.securityToken).subscribe(response => {
       },
       (error) => {
-        if(error.status === 200)
+        if (error.status === 200)
         {
           this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
           this.displayVerifyAccountDialog = true;
@@ -314,7 +299,7 @@ export class AppComponent {
   }
 
   checkVerificationCodeMatch() {
-    if(this.securityToken === +this.verificationForm.value.verificationCode){
+    if (this.securityToken === +this.verificationForm.value.verificationCode){
       this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
       this.displayVerificationDialog = false;
       this.displayChangePasswordDialog = true;
@@ -325,7 +310,7 @@ export class AppComponent {
   }
 
   checkVerifyAccountCodeMatch() {
-    if(this.securityToken === +this.verifyAccountForm.value.verificationCode){
+    if (this.securityToken === +this.verifyAccountForm.value.verificationCode){
       this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
       this.displayVerificationDialog = false;
       const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.yearNameFC.value, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
@@ -363,7 +348,7 @@ export class AppComponent {
   changePassword() {
     const hashedPass = SHA256(this.changePasswordForm.value.newPassword).toString(enc.Hex);
     const confirmHashedPass = SHA256(this.changePasswordForm.value.confirmPassword).toString(enc.Hex);
-    if(hashedPass === confirmHashedPass) {
+    if (hashedPass === confirmHashedPass) {
       this.userService.changePassword(this.forgotPasswordForm.value.email ,hashedPass).subscribe(response => {
 
       })

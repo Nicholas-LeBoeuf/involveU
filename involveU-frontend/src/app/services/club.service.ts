@@ -10,12 +10,6 @@ import {User} from "../objects/user";
 })
 export class ClubService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
-
   constructor(private http: HttpClient ) { }
 
   getAllClubs(): Observable<Club[]> {
@@ -48,6 +42,5 @@ export class ClubService {
 
   getClubLogo(clubID : number){
     return this.http.get(environment.apiURL + `club/getClubLogo/${clubID}`, {responseType: 'blob'});
-
   }
 }

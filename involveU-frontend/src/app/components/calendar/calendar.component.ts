@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Events} from "../../objects/events";
 import {CalendarFormat} from "../../objects/calendar-format";
 import {EventClickArg} from "@fullcalendar/angular";
@@ -37,8 +37,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   // NUMBERS
   userID: number;
-  locationID: number;
-  spaceID: number;
+
   // STRINGS
   currentFilter: string;
 
@@ -51,6 +50,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   spacesList: Events[] = [];
   userRSVPdEvents: Events[] = [];
 
+  // There are the options for the FullCalendar that is sent to the FullCalendar component.
+  // Here is the documentation for FullCalendar https://fullcalendar.io/docs
   options = {
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -74,7 +75,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
     this.getAllClubs();
-    this.getLocations();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
   }
@@ -120,23 +120,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     })
   }
 
-  getLocations() {
-    this.eventsService.getLocations().subscribe((response: Events[]) => {
-        this.locationsList = response;
-      },
-      (error) => {
-        console.log(error)
-      });
-  }
-
-  getSpacesByLocation() {
-    this.eventsService.getSpaceByLocation(this.locationID).subscribe(response => {
-        this.spacesList = response;
-      },
-      (error) => {
-        console.log(error);
-      });
-  }
 
   getUserRSVPdEvents() {
     this.eventsService.getUserRSVPdEvents(this.userID).subscribe(response => {
@@ -195,6 +178,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.eventsService.getSpecificClubEvents(event.value.clubID).subscribe(response => {
         this.eventsToSend = [];
         this.eventsToSend = response;
+        console.log(response);
         this.eventsToSend = this.eventsToSend.slice();
       },
       (error) => {
@@ -220,29 +204,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.currentFilter = 'RSVPEventsFilter';
   }
 
-  activateSpaceFilter() {
-    this.eventsService.getEventsBySpace(this.spaceID).subscribe(response => {
-        this.eventsToSend = response;
-      },
-      (error) => {
-        this.toastr.error('Error Retrieving Location Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
-        console.log(error);
-      },
-
-      () => {
-        this.toastr.show('Currently Displaying Events Filtered By Location', undefined, {positionClass: 'toast-top-center', progressBar: true});
-        this.formatAllEvents();
-      });
-
-    this.closeViewFilterDialog();
-  }
-
   // MISC functions
-  checkLocationSelected() {
-    this.disableSpaceDropdown = false;
-    this.getSpacesByLocation();
-  }
-
   showEventInformation(clickInfo: EventClickArg) {
     this.eventsService.getSpecificEvent(+clickInfo.event.id).subscribe(response => {
       this.selectedEvent.push(response);
@@ -265,10 +227,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   closeViewMoreInfoDialog() {
     this.selectedEvent = [];
     this.viewMoreInfoDialog = false;
-  }
-
-  openViewFilterDialog() {
-    this.viewFilterDialog = true;
   }
 
   closeViewFilterDialog() {
@@ -306,9 +264,5 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
-  }
-
-  getCurrentFilter() {
-    return this.currentFilter;
   }
 }

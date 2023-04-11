@@ -507,7 +507,7 @@ public class DBServices {
     }
     protected  List<Events> getDBClubEvents(int clubID)
     {
-        sql = "SELECT * FROM Events  WHERE clubID = 3 AND DATE(NOW()) <= dateTimeFormatted ORDER BY dateTimeFormatted ASC ;";
+        sql = "SELECT * FROM Events  WHERE clubID = '" + clubID + "' AND DATE(NOW()) <= dateTimeFormatted ORDER BY dateTimeFormatted ASC ;";
 
         events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
 

@@ -4,7 +4,7 @@
 </div>
 
 <ng-container *ngIf="this.isInEboard === false; else isEboard">
-  <h1 class="text-center">You must be apart of <b>{{clubInfo.clubName}} Executive Board</b> to view this page!</h1>
+  <h1 *ngIf="clubInfo" class="text-center">You must be apart of <b>{{clubInfo.clubName}} Executive Board</b> to view this page!</h1>
 </ng-container>
 
 <ng-template #isEboard>
@@ -219,7 +219,7 @@
   <div class="form-group text-center eboardDialogs">
     <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Bio</h1>
     <form [formGroup]="editClubBioForm">
-      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio"></textarea>
+      <textarea *ngIf="clubInfo" class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubBio" formControlName="editClubBio"></textarea>
     </form>
     <button class="blueButton" [disabled]="isEditClubBioFormValid()" (click)="updateClubData()">Edit Club Bio</button>
     <button class="blueButton" (click)="closeEditClubBioDialog()">Close</button>
@@ -230,7 +230,7 @@
   <div class="form-group text-center eboardDialogs">
     <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Vision</h1>
     <form [formGroup]="editClubVisionForm">
-      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubVision" formControlName="editClubVision"></textarea>
+      <textarea *ngIf="clubInfo" class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubVision" formControlName="editClubVision"></textarea>
     </form>
     <button class="blueButton" [disabled]="isEditClubVisionFormValid()" (click)="updateClubData()">Edit Club Vision</button>
     <button class="blueButton" (click)="closeEditClubVisionDialog()">Close</button>
@@ -241,7 +241,7 @@
   <div class="form-group text-center eboardDialogs">
     <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Mission</h1>
     <form [formGroup]="editClubMissionForm">
-      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubMission" formControlName="editClubMission"></textarea>
+      <textarea *ngIf="clubInfo" class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubMission" formControlName="editClubMission"></textarea>
     </form>
     <button class="blueButton" [disabled]="isEditClubMissionFormValid()" (click)="updateClubData()">Edit Club Mission</button>
     <button class="blueButton" (click)="closeEditClubMissionDialog()">Close</button>
@@ -252,7 +252,7 @@
   <div class="form-group text-center eboardDialogs">
     <h1 class="blueHeaders eboardPageTitleMargin">Edit Club Values</h1>
     <form [formGroup]="editClubValuesForm">
-      <textarea class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubValues" formControlName="editClubValues"></textarea>
+      <textarea *ngIf="clubInfo" class="form-control formInputs largeTextField eboardPageTitleMargin" [ngClass]="{'eBoardInputWidth': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'eBoardInputWidthMobile': responsiveService.deviceMobile()}" type="text" [(ngModel)] = "clubInfo.clubValues" formControlName="editClubValues"></textarea>
     </form>
     <button class="blueButton" [disabled]="isEditClubValuesFormValid()" (click)="updateClubData()">Edit Club Values</button>
     <button class="blueButton" (click)="closeEditClubValuesDialog()">Close</button>

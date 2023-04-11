@@ -4,8 +4,6 @@
 
 <ng-template #UserIsLoggedIn>
   <div class="filterFlex">
-   <!-- Filter button deprecated as of right now-->
-    <!--<button class="yellowButton removeMargin" (click)="openViewFilterDialog()">Filters</button>-->
     <button [ngClass]="currentFilter === 'allEventsFilter' ? 'yellowButton' : 'blueButton'" class="setAutoHeight" (click)="activateAllEventsFilter()">All Events</button>
     <button [ngClass]="currentFilter === 'favoritedClubEventsFilter' ? 'yellowButton' : 'blueButton'" class="setAutoHeight" (click)="activateFavoritedClubEventsFilter()" [disabled]="!userID">Favorited Club Events</button>
     <button [ngClass]="currentFilter === 'RSVPEventsFilter' ? 'yellowButton' : 'blueButton'" class="setAutoHeight" (click)="activateRSVPFilter()" [disabled]="!userID">RSVP'd Events</button>
@@ -14,57 +12,12 @@
     <div class="dropdownContentSize">
       <p-dropdown [options]="dropdownOptions" [filter]="true" optionLabel="clubName" [ngClass]="currentFilter === 'clubEventsFilter' ? 'calendarDropdownYellow' : 'calendarDropdownBlue'" placeholder="Filter by Club" (onChange)="activateClubFilter($event)" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
     </div>
-
-    <!--    Deprecated as of right now-->
-
-    <!--<h3 class="blueHeaders">Filter by Location</h3>
-    <div class="dropdownContentSize">
-      <p-dropdown  [(ngModel)]="locationID" [options]="locationsList" [filter]="true" [autoDisplayFirst]="false" appendTo="body" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" (onChange)="checkLocationSelected()" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-    </div>
-    <div class="dropdownContentSize">
-      <p-dropdown [(ngModel)]="spaceID" [options]="spacesList" [filter]="true" [autoDisplayFirst]="false" appendTo="body" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" [disabled]="disableSpaceDropdown" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" (onChange)="activateSpaceFilter()" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-    </div>-->
   </div>
 
+<!--  FullCalendar call  -->
   <full-calendar [options]="options"></full-calendar>
-</ng-template>
 
-<p-dialog [(visible)]="viewFilterDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewFilterDialog()">
-  <div class="text-center dialogContainer">
-    <h1 class="blueHeaders">Filter Calendar</h1>
-    <hr>
-    <div class="filterSection">
-      <button class="yellowButton" (click)="activateAllEventsFilter()">Show All Events</button>
-    </div>
-    <hr>
-    <div class="filterSection">
-      <button class="yellowButton" (click)="activateFavoritedClubEventsFilter()" [disabled]="!userID">Show Favorited Club Events</button>
-    </div>
-    <hr>
-    <div class="filterSection">
-      <h3 class="blueHeaders">Filter by Club</h3>
-      <div class="dropdownContentSize">
-        <p-dropdown [options]="dropdownOptions" [filter]="true" optionLabel="clubName" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" placeholder="Select a Club to View Events" (onChange)="activateClubFilter($event)" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-      </div>
-    </div>
-    <hr>
-    <div class="filterSection">
-      <div class="filterByLocation">
-        <h3 class="blueHeaders">Filter by Location</h3>
-        <div class="dropdownContentSize">
-          <p-dropdown  [(ngModel)]="locationID" [options]="locationsList" [filter]="true" [autoDisplayFirst]="false" appendTo="body" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" optionValue="location_ID" optionLabel="locationName" placeholder="Select Location" (onChange)="checkLocationSelected()" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-        </div>
-        <div class="dropdownContentSize">
-          <p-dropdown [(ngModel)]="spaceID" [options]="spacesList" [filter]="true" [autoDisplayFirst]="false" appendTo="body" [ngClass]="{'calendarDropdown': responsiveService.deviceDesktop() || responsiveService.deviceTablet(), 'calendarDropdownMobile': responsiveService.deviceMobile()}" [disabled]="disableSpaceDropdown" optionValue="space_ID" optionLabel="spaceName" placeholder="Select Space" (onChange)="activateSpaceFilter()" [style]="{'border':'2px solid #0667B3', 'border-radius':'10px'}"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="text-center marginButton">
-      <button class="yellowButton" (click)="closeViewFilterDialog()">Close</button>
-    </div>
-  </div>
-</p-dialog>
+</ng-template>
 
 <p-dialog [(visible)]="viewMoreInfoDialog" [breakpoints]="{'1080px': '80vw', '600px' : '100vw', '400px': '120vw'}" [style]="{width: '35vw'}" [modal]="true" [dismissableMask]="true"  [baseZIndex]="10000" (onHide)="closeViewMoreInfoDialog()">
   <div class="eventCardDialog text-center" *ngFor="let event of selectedEvent">

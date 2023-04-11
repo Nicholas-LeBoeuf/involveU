@@ -106,11 +106,9 @@ public class UserController extends DBServices{
 	@PutMapping("user/changePassword/{email}/{newPassword}")
 	public ResponseEntity<String>changePassword(@PathVariable("email")String email, @PathVariable("newPassword")String newPassword) {
 		if(dbChangePassword(email, newPassword) == true) {
-			System.out.println("Success");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else{
-			System.out.println("Fail");
 			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 		}
 	}

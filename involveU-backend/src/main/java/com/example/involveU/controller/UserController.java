@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.ls.LSOutput;
 
 @RestController
 @RequestMapping("api/")
@@ -38,7 +37,7 @@ public class UserController extends DBServices{
 		List<User> Results = getAllUsers();
 		return Results;
 	}
-	//@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("user/{id}")
 	public List<User> getSpecificUser(@PathVariable("id") int id )
 	{

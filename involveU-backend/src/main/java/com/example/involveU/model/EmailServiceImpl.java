@@ -17,7 +17,9 @@ public class EmailServiceImpl implements EmailService {
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-
+    //We send emails when users create an account or if they forget their password. We set the email and password of
+    //our account in the application.properties file so the mail kit can access our gmail.
+    //WARNING: IF TESTING ON LOCALHOST MAKE SURE TO USE HOTSPOT OR NOT BE ON SNHU WI-FI SINCE SNHU WI-FI BLOCKS THE MAIL KIT
     @Override
     public void sendEmail(String recipient, int securityCode) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

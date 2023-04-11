@@ -265,7 +265,7 @@ export class AppComponent {
 
   sendForgotPassEmail() {
     this.showProgressSpinner = true;
-    this.generateRandomNum();
+    this.generateRandomNum();    //generates a 6 digit random number so user can verify email
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
     },
       (error) => {
@@ -288,7 +288,7 @@ export class AppComponent {
   }
 
   sendAccountVerificationEmail() {
-    this.generateRandomNum();
+    this.generateRandomNum();  //generates a random 6 digit token so user can verify account
     this.userService.sendWelcomeMail(this.signupForm.value.email, this.securityToken).subscribe(response => {
       },
       (error) => {

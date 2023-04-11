@@ -58,14 +58,11 @@ export class AdminService {
     return this.http.post(environment.apiURL + `admin/testImage`, data, {responseType: 'text'});
   }
 
-
-
   createOSIAnnouncement(newAnnouncement: Announcement) {
     return this.http.post(environment.apiURL + `announcements/createAnnouncements`, newAnnouncement, {responseType: 'text'});
   }
 
-
-  getClubLogo(clubID: number) {
+  /*getClubLogo(clubID: number) {
     return this.http.get(environment.apiURL + `api/club/getClubLogo/${clubID}`, {responseType: 'blob'});
-  }
+  }*/
 }

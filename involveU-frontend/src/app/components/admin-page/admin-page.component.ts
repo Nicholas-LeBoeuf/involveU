@@ -18,6 +18,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./admin-page.component.scss']
 })
 export class AdminPageComponent implements OnInit {
+  //initializing all forms
   createUserForm: FormGroup;
   deleteUserForm: FormGroup;
   createClubForm : FormGroup;
@@ -37,7 +38,7 @@ export class AdminPageComponent implements OnInit {
               private title: Title,
               private toastr: ToastrService) {
     this.title.setTitle("involveU | Admin")
-
+    //setting all variable names in each form (Lines 42-90)
     this.createClubForm = this.formBuilder.group({
       clubName: ['', Validators.required],
       clubAffiliation: ['', Validators.required],
@@ -181,7 +182,7 @@ export class AdminPageComponent implements OnInit {
         console.log(error)
       });
   }
-
+  //Grabs all users that are eBoard members of clubs
   fillEboardList() {
     this.adminService.getAllEboard().subscribe((response: User[]) => {
         this.eboardList = response;
@@ -190,7 +191,7 @@ export class AdminPageComponent implements OnInit {
         console.log(error)
       });
   }
-
+  //Grabs all users that are not currently eBoard members
   fillNonEboardList() {
     this.adminService.getAllNonEboard().subscribe((response: User[]) => {
       this.nonEboardList = response;
@@ -199,7 +200,7 @@ export class AdminPageComponent implements OnInit {
       console.log(error)
       });
   }
-
+  //Grabs all users with faculty accounts
   fillAdvisorList() {
     this.userService.getAllFaculty().subscribe((response: User[]) => {
         this.advisorList = response;
@@ -313,7 +314,7 @@ export class AdminPageComponent implements OnInit {
         this.fillAdvisorList();
       });
   }
-
+  //We set the clubID to 275 since that corresponds to OSI in the database
   createOSIAnnouncementSubmit(){
     const newAnnouncement: Announcement = {clubID: 275, contentOfAnnouncement: this.osiAnnouncementForm.value.contentOfAnnouncement, expiresOn: this.osiAnnouncementForm.value.expiresOn, announcementTitle: this.osiAnnouncementForm.value.announcementTitle, postedOn: this.todaysDate};
 
@@ -339,7 +340,7 @@ export class AdminPageComponent implements OnInit {
       );
     })
   }
-
+  //Checks if a club is selected, if so, user dropdown get enabled, if not, stays disabled
   checkClubSelected() {
     if(this.selectedClub!=='Select Club'){
       this.disableUserDropdown = false;
@@ -358,7 +359,7 @@ export class AdminPageComponent implements OnInit {
       return false;
     }
   }
-
+  //Checks if all required inputs in the form have data (Lines 362-423)
   isCreateUserValid() {
     if (this.createUserForm.value.firstName === '' || this.createUserForm.value.lastName === '' || this.createUserForm.value.email === '' || this.createUserForm.value.password === '' || this.yearNameFC.value === null || this.createUserForm.value.pronouns === '') {
       return true;

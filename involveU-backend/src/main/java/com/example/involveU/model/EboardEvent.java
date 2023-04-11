@@ -21,7 +21,7 @@ public class EboardEvent extends Events {
         this.setTitle(oldEvent.getTitle());
         this.setLocation(oldEvent.getLocation());
         this.setStartDateTime(oldEvent.getStartDateTime());
-        this.setEndDateTime(oldEvent.getStartDateTime());
+        this.setEndDateTime(oldEvent.getEndDateTime());
         this.setDescription(oldEvent.getDescription());
         this.setIsTransportation(oldEvent.getIsTransportation());
         this.setTicketLink(oldEvent.getTicketLink());

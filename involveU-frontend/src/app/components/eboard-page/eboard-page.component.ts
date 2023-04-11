@@ -24,6 +24,7 @@ import {User} from "../../objects/user";
   styleUrls: ['./eboard-page.component.scss']
 })
 export class EboardPageComponent implements OnInit {
+  //Initializing forms
   announcementForm : FormGroup;
   editAnnouncementForm: FormGroup;
   socialMediaForm : FormGroup;
@@ -48,6 +49,7 @@ export class EboardPageComponent implements OnInit {
               private title: Title,
               private toastr: ToastrService) {
     this.title.setTitle("involveU | E-Board")
+    //Setting form variables (Lines 53-92)
     this.announcementForm = this.formBuilder.group({
       clubID: [''],
       contentOfAnnouncement: ['', Validators.required],
@@ -388,7 +390,7 @@ export class EboardPageComponent implements OnInit {
         this.getClubSocialMedia();
       });
   }
-
+  //Updates all club data in one function
   updateClubData() {
     const updateClubData : Club = {advisorID: this.clubInfo.advisorID, clubAffiliation: this.clubInfo.clubAffiliation, clubBio: this.editClubBioForm.value.editClubBio, clubMission: this.editClubMissionForm.value.editClubMission, clubName: this.clubInfo.clubName, clubValues: this.editClubValuesForm.value.editClubValues, clubVision: this.editClubVisionForm.value.editClubVision, ownerID: this.clubInfo.ownerID, clubID: this.clubID};
     this.eboardService.editClubData(updateClubData).subscribe(response => {

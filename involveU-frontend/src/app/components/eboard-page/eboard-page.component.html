@@ -24,7 +24,7 @@
           <th>Delete</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-announcement>
+      <ng-template pTemplate="body" let-announcement>     <!--grabs data from database, must match all names of columns in DB-->
         <tr>
           <td>{{announcement.announcementTitle}}</td>
           <td>{{announcement.contentOfAnnouncement}}</td>
@@ -53,11 +53,6 @@
           <th [pSortableColumn]="'eventLocation'">Location <p-sortIcon [field]="'eventLocation'"></p-sortIcon></th>
           <th>Description</th>
           <th>Total RSVP's</th>
-
-          <!--Deprecated-->
-         <!-- <th>Ticket Link</th>
-          <th [pSortableColumn]="'isTransportation'">Transportation <p-sortIcon [field]="'isTransportation'"></p-sortIcon></th>-->
-
           <th>Edit</th>
         </tr>
       </ng-template>
@@ -70,11 +65,6 @@
           <td [innerHTML]="event.location"></td>
           <td [innerHTML]="event.description"></td>
           <td>{{event.numOfRsvps}}</td>
-
-          <!--Deprecated-->
-         <!-- <td><a class="hyperText" (click)="goToLink(event.ticketLink)">{{event.ticketLink}}</a></td>
-          <td>{{event.isTransportation}}</td>-->
-
           <td><button (click)="goToLink('https://25live.collegenet.com/pro/snhu#!/home/dash')" class="blueButton">Edit</button></td>
         </tr>
       </ng-template>
@@ -112,7 +102,7 @@
       <h1 class="blueHeaders">Club Bio</h1>
       <button class="yellowButton editMargin" (click)="showEditClubBioDialog()">Edit</button>
     </div>
-    <div class=" ">
+    <div>
       <p>{{clubInfo.clubBio}}</p>
     </div>
 
@@ -143,7 +133,6 @@
     <h1 class="blueHeaders">Club Logo</h1>
     <div class="updateClubLogoContainer text-center">
       <h2 class="blueHeaders">Current Club Logo</h2>
-
       <img class="eboardPageTitleMargin eboardClubLogo" [src]="clubInfo.clubLogo" alt="{{clubInfo.clubName}} Logo">
       <h2 class="blueHeaders">Update Club Logo (Max File Size 2MB)</h2>
       <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)= "onUpload($event)" [multiple]="false" [maxFileSize]="2000000"></p-fileUpload>

@@ -61,6 +61,13 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+    @GetMapping("events/getEventsByLocation/{location}")
+    private ResponseEntity<List<Events>> getEventsByLocation(@PathVariable("location") String location)
+    {
+        events = getDBEventsByLocation(location);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
     @GetMapping("/events/getTopRSVP")
     private ResponseEntity<List<Events>> getTopFavorite()
     {

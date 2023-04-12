@@ -538,6 +538,14 @@ public class DBServices {
 
         return  events;
     }
+
+    protected List<Events> getDBEventsByLocation(String location)
+    {
+        sql = "SELECT * FROM Events WHERE location = '" + location + "';";
+        events = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Events.class));
+
+        return  events;
+    }
 //RSVP Controller
     protected boolean insertRsvpEvent(int eventID, int userID,int clubID)
     {

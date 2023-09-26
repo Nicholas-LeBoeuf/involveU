@@ -70,6 +70,14 @@ public class DBServices {
 
         return users;
     }
+
+    protected User getDBUserProfile(int userID)
+    {
+        sql = "SELECT firstName, lastName, year, email FROM User WHERE studentID = " + userID + ";";
+        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        return users.get(0);
+    }
     protected int insertDBNewUser(User newUser)
     {
         if( checkUserExistence(newUser.getEmail()))

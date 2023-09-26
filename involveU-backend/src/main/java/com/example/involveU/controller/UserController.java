@@ -112,4 +112,11 @@ public class UserController extends DBServices{
 			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@GetMapping("user/getUserProfile/{userID}")
+	public ResponseEntity<User>getUserProfile(@PathVariable("userID") int userID ) {
+		User newUser;
+		newUser = getDBUserProfile(userID);
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
+	}
 }

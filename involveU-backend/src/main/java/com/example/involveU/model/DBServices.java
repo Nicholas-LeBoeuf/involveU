@@ -73,7 +73,7 @@ public class DBServices {
 
     protected User getDBUserProfile(int userID)
     {
-        sql = "SELECT firstName, lastName, year, email FROM User WHERE studentID = " + userID + ";";
+        sql = "SELECT firstName, lastName, year, email, pronouns FROM User WHERE studentID = " + userID + ";";
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users.get(0);
@@ -112,6 +112,14 @@ public class DBServices {
             return "error";
         }
     }
+
+    protected Boolean checkDBPassword(int userID, String currentPassword) {
+        String sql = "SELECT COUNT(*) FROM User WHERE studentID = ? AND userPassword = ?"; // Better for security to avoid SQL Injection attack
+        Integer count = JdbcTemplated.queryForObject(sql, Integer.class, userID, currentPassword);
+
+        return count != null && count > 0;
+    }
+
 
     protected Boolean dbChangePassword(String email, String newPassword){
         sql = "UPDATE User SET userPassword = ? WHERE email = ?;";

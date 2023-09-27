@@ -114,9 +114,20 @@ public class UserController extends DBServices{
 	}
 
 	@GetMapping("user/getUserProfile/{userID}")
-	public ResponseEntity<User>getUserProfile(@PathVariable("userID") int userID ) {
+	public ResponseEntity<User>getUserProfile(@PathVariable("userID")int userID ) {
 		User newUser;
 		newUser = getDBUserProfile(userID);
 		return new ResponseEntity<>(newUser, HttpStatus.OK);
+	}
+
+	@GetMapping("user/checkPassword/{userID}/{currentPassword}")
+	public ResponseEntity<Boolean>checkPassword(@PathVariable("userID")int userID, @PathVariable("currentPassword")String currentPassword) {
+		if (checkDBPassword(userID, currentPassword))
+		{
+			return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

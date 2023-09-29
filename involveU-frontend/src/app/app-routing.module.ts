@@ -7,6 +7,7 @@ import {AdminPageComponent} from "./components/admin-page/admin-page.component";
 import {EboardPageComponent} from "./components/eboard-page/eboard-page.component";
 import {MoreInfoComponent} from "./components/more-info/more-info.component"
 import {CalendarComponent} from "./components/calendar/calendar.component";
+import {ProfilePageComponent} from "./components/profile-page/profile-page.component";
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'moreinfo',
     component: MoreInfoComponent
+  },
+  {
+    path: 'profile',
+    component: ProfilePageComponent
   }
 ];
 

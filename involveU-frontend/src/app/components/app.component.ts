@@ -109,6 +109,12 @@ export class AppComponent {
 
   public profileContextMenuItems: MenuItem[] = [
     {
+      label: 'Profile',
+      command: () => {
+        this.openProfile();
+      }
+    },
+    {
       label: 'Logout',
       command: () => {
         this.logoutUser();
@@ -159,6 +165,14 @@ export class AppComponent {
       this.showProgressSpinner = false;
       this.toastr.error('Account needs to be created with a snhu.edu email', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
+  }
+
+  openProfile() {
+    this.router.navigateByUrl('/profile').then(nav => {
+      console.log(nav); // true if navigation is successful
+    }, err => {
+      console.log(err) // when there's an error
+    });
   }
 
   logoutUser() {

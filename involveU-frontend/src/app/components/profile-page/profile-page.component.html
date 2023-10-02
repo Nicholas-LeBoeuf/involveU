@@ -1,6 +1,27 @@
 <ng-container *ngIf="isLoggedIn === false; else UserIsLoggedIn">
   <h1 class="text-center">You must be <b>Logged In</b> to view this page!</h1>
 </ng-container>
+
 <ng-template #UserIsLoggedIn>
- <h1 class="text-center"> Welcome to your profile!</h1>
+<div class="blueTitleBar">
+  <div class="text-center">
+    <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
+      <h1 class="yellow-text">{{this.currentUser.firstName}}'s Profile!</h1>
+    </ng-template>
+  </div>
+</div>
+
+  <ng-container>
+    <div class="editProfileCardWeb text-center">
+      <h3 class="blueHeaders">Account Information</h3>
+      <h4>Name: {{this.currentUser.firstName}} {{this.currentUser.lastName}}</h4>
+      <h4>Birthday: </h4>
+      <h4>Pronouns: </h4>
+      <h4>Year: </h4>
+      <h4>Email: </h4>
+      <h4>Password: </h4>
+    </div>
+  </ng-container>
+
 </ng-template>
+

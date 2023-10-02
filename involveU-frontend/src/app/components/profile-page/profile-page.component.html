@@ -1,1 +1,6 @@
-<p>profile-page works!</p>
+<ng-container *ngIf="isLoggedIn === false; else UserIsLoggedIn">
+  <h1 class="text-center">You must be <b>Logged In</b> to view this page!</h1>
+</ng-container>
+<ng-template #UserIsLoggedIn>
+ <h1 class="text-center"> Welcome to your profile!</h1>
+</ng-template>

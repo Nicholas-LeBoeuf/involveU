@@ -5,6 +5,7 @@ import com.example.involveU.model.DBServices;
 import com.example.involveU.model.EmailService;
 import com.example.involveU.repository.UserRepository;
 import com.example.involveU.model.User;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -108,7 +109,7 @@ public class UserController extends DBServices{
 		if(dbChangePassword(email, newPassword) == true) {
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
-		else{
+		else {
 			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -130,4 +131,16 @@ public class UserController extends DBServices{
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PutMapping("user/changePronouns/{userID}") // The pronouns need to be sent in the body of the request because of the "/"
+	public ResponseEntity<String>changePronouns(@PathVariable("userID")int userID, @RequestBody String newPronouns) {
+		if(dbChangePronouns(userID, newPronouns)) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+	}
 }
+
+

@@ -123,7 +123,7 @@ public class DBServices {
 
     protected Boolean dbChangePassword(String email, String newPassword){
         sql = "UPDATE User SET userPassword = ? WHERE email = ?;";
-        validQuery = JdbcTemplated.update(sql,newPassword, email);
+        validQuery = JdbcTemplated.update(sql, newPassword, email);
 
         if(validQuery == 1)
         {
@@ -134,6 +134,21 @@ public class DBServices {
             return false;
         }
     }
+
+    protected Boolean dbChangePronouns(int userID, String newPronouns) {
+        sql = "UPDATE User SET pronouns = ? WHERE studentID = ?;";
+        validQuery = JdbcTemplated.update(sql,newPronouns, userID);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
         sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
         eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));

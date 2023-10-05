@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-template #UserIsLoggedIn>
-<div class="blueTitleBar">
+<div class="blueTitleBar profilePadding">
   <div class="text-center">
     <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
       <h1 class="yellow-text">{{this.currentUser.firstName}}'s Profile!</h1>
@@ -12,16 +12,43 @@
 </div>
 
   <ng-container>
-    <div class="editProfileCardWeb text-center">
-      <h3 class="blueHeaders">Account Information</h3>
-      <h4>Name: {{this.currentUser.firstName}} {{this.currentUser.lastName}}</h4>
-      <h4>Birthday: </h4>
-      <h4>Pronouns: </h4>
-      <h4>Year: </h4>
-      <h4>Email: </h4>
-      <h4>Password: </h4>
+    <div class="profileParentGridWeb">
+      <div class="editProfileCard text-center">
+        <h2 class="blueHeaders accountPadding">Account Information:</h2>
+          <div class="input-container">
+            <h4>
+              <i class="fa fa-user icon"></i>
+              <input class="input-field" value="{{this.currentUser.firstName}} {{this.currentUser.lastName}}" placeholder="Name" name="username">
+            </h4>
+          </div>
+          <div class="input-container">
+            <h4>
+              <i class="fa fa-calendar icon"></i>
+              <input class="input-field " type="date" placeholder="Date of Birth" name="bday">
+            </h4>
+          </div>
+          <div class="input-container">
+            <h4>
+              <i class="fa fa-smile icon"></i>
+              <input class="input-field" type="text" placeholder="Pronouns" name="pnouns">
+            </h4>
+          </div>
+          <div class="input-container">
+            <h4>
+              <i class="fa fa-graduation-cap icon"></i>
+              <input class="input-field" type="text" placeholder="Current Year" name="currYear">
+            </h4>
+          </div>
+          <div class="input-container">
+            <h4>
+              <i class="fa fa-envelope icon"></i>
+              <input class="input-field" type="email" placeholder="Email" name="email">
+            </h4>
+          </div>
+          <button id="edit" class="editProfile yellowButton">Edit Profile</button>
+          <button class="saveInfo yellowButton" type="submit">Save</button>
+      </div>
     </div>
   </ng-container>
-
 </ng-template>
 

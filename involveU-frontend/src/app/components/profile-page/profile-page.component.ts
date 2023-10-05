@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../objects/user";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-profile-page',
@@ -9,8 +10,10 @@ import {User} from "../../objects/user";
 })
 export class ProfilePageComponent implements OnInit {
 
+
   constructor(public cookie: CookieService) {
   }
+
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
     this.isUserLoggedIn();
@@ -29,6 +32,10 @@ export class ProfilePageComponent implements OnInit {
     this.currentUser = {studentID: +this.cookie.get('studentID'), firstName: this.cookie.get('studentFName'), lastName: this.cookie.get('studentLName')};
     this.currentUser.firstName = this.currentUser.firstName.replace(/['"]/g, '');
     this.currentUser.lastName = this.currentUser.lastName.replace(/['"]/g, '');
+  }
+
+  disableInputField() {
+
   }
 
 }

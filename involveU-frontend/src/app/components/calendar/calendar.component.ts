@@ -26,6 +26,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
               private clubService: ClubService,
               private title: Title,
               private router: Router) {
+
     this.title.setTitle("involveU | Calendar");
   }
 
@@ -67,9 +68,15 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     contentHeight: '75vh',
     events: this.formattedEvents,
     eventClick: this.showEventInformation.bind(this),
+    eventBackgroundColor: 'blue',
+    eventTextColor: 'white',
     nowIndicator: true,
     displayEventTime: false
+
+
   };
+
+
 
 
   ngOnInit(): void {
@@ -150,6 +157,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.formatAllEvents();
         this.toastr.show('Currently Displaying All Events', undefined, {positionClass: 'toast-top-center', progressBar: true});
         this.currentFilter = 'allEventsFilter';
+
       });
 
     this.closeViewFilterDialog();

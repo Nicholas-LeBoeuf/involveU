@@ -8,7 +8,6 @@ import {EboardPageComponent} from "./components/eboard-page/eboard-page.componen
 import {MoreInfoComponent} from "./components/more-info/more-info.component"
 import {CalendarComponent} from "./components/calendar/calendar.component";
 import {ProfilePageComponent} from "./components/profile-page/profile-page.component";
-import {PrivacySettingsPageComponent} from "./components/privacy-settings-page/privacy-settings-page.component";
 
 const routes: Routes = [
   {
@@ -46,10 +45,6 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfilePageComponent
-  },
-  {
-    path: 'privacySettings',
-    component: PrivacySettingsPageComponent
   }
 ];
 

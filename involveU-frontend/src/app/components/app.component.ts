@@ -115,12 +115,6 @@ export class AppComponent {
       }
     },
     {
-      label: 'Privacy Settings',
-      command: () => {
-        this.openPrivacySettings();
-      }
-    },
-    {
       label: 'Logout',
       command: () => {
         this.logoutUser();
@@ -175,14 +169,6 @@ export class AppComponent {
 
   openProfile() {
     this.router.navigateByUrl('/profile').then(nav => {
-      console.log(nav); // true if navigation is successful
-    }, err => {
-      console.log(err) // when there's an error
-    });
-  }
-
-  openPrivacySettings() {
-    this.router.navigateByUrl('/privacySettings').then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {
       console.log(err) // when there's an error

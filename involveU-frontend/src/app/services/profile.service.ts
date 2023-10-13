@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { User } from '../objects/user'
 import {environment} from "../../environments/environment";
+import {Club} from "../objects/club";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ProfileService {
     return this.http.get<User[]>(environment.apiURL + `user/GetUserProfile/${UserID}`);
   }
 
-  changeUserPronouns(UserID: number): Observable<User[]> {
-    return this.http.get<User[]>(environment.apiURL + `user/changePronouns/${UserID}`);
+  changeUserPronouns(UserID: number, Pronouns: string) {
+    return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, Pronouns,{responseType: 'text'});
   }
 
   checkUserPassword(UserID: number, password?: string): Observable<User> {

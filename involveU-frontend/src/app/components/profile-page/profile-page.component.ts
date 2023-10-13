@@ -4,6 +4,8 @@ import {User} from "../../objects/user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CalendarComponent} from "../calendar/calendar.component";
 
+import {ProfileService} from "../../services/profile.service";
+
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -12,8 +14,11 @@ import {CalendarComponent} from "../calendar/calendar.component";
 export class ProfilePageComponent implements OnInit {
 
 
-  constructor(public cookie: CookieService) {
+  constructor(public cookie: CookieService,
+              public profileService: ProfileService) {
   }
+
+  disableInputFields: boolean = true;
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
@@ -23,16 +28,31 @@ export class ProfilePageComponent implements OnInit {
     this.changeUserCalendarColors();
   }
 
+
   isLoggedIn: boolean = false;
   userID: number;
   currentUser: User;
+
+  userProfileInfo: User[] = [];
 
 
   isUserLoggedIn() {
     this.isLoggedIn = this.userID !== 0;
   }
 
+  enableDisableFields() {
+    this.disableInputFields = !this.disableInputFields;
+  }
+
   getUserInfo() {
+    this.profileService.getUserProfile(this.userID).subscribe((response: User[]) => {
+      this.userProfileInfo = response;
+    },
+      (error) => {
+        console.log(error)
+      });
+
+
     this.currentUser = {studentID: +this.cookie.get('studentID'), firstName: this.cookie.get('studentFName'), lastName: this.cookie.get('studentLName')};
     this.currentUser.firstName = this.currentUser.firstName.replace(/['"]/g, '');
     this.currentUser.lastName = this.currentUser.lastName.replace(/['"]/g, '');
@@ -40,7 +60,7 @@ export class ProfilePageComponent implements OnInit {
 
   getUserCalendarOptions()
   {
-    
+
 
 
   }
@@ -57,4 +77,21 @@ export class ProfilePageComponent implements OnInit {
 
   }
 
+  updatePronouns(event: any) {
+    console.log(event.target.data);
+
+    this.profileService.changeUserPronouns(this.userID, event.target.data).subscribe((response) => {
+      console.log(response);
+    },
+      (error) => {
+        console.log(error)
+      },
+      () => {
+        this.getUserInfo();
+      });
+
+
+  }
+
+  protected readonly event = event;
 }

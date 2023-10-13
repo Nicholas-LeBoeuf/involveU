@@ -141,6 +141,16 @@ public class UserController extends DBServices{
 			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PutMapping("user/changeYear/{userID}/{newYear}")
+	public ResponseEntity<String>changeYear(@PathVariable("userID")int userID, @PathVariable("newYear")String newYear) {
+		if(dbChangeYear(userID, newYear)) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+	}
 }
 
 

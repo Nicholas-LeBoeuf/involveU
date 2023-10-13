@@ -51,6 +51,7 @@ import { TripPlanningGuideComponent } from './components/more-info/more-info-tab
 import {ToastrModule} from "ngx-toastr";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { PrivacySettingsPageComponent } from './components/privacy-settings-page/privacy-settings-page.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -80,6 +81,7 @@ FullCalendarModule.registerPlugins([
     PreTripAgendaComponent,
     TripPlanningGuideComponent,
     ProfilePageComponent,
+    PrivacySettingsPageComponent,
   ],
     imports: [
         BrowserModule,

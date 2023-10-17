@@ -135,6 +135,20 @@ public class DBServices {
         }
     }
 
+    protected Boolean dbChangeYear(int userID, String newYear) {
+        sql = "UPDATE User SET year = ? WHERE studentID = ?;";
+        validQuery = JdbcTemplated.update(sql, newYear, userID);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     protected Boolean dbChangePronouns(int userID, String newPronouns) {
         sql = "UPDATE User SET pronouns = ? WHERE studentID = ?;";
         validQuery = JdbcTemplated.update(sql,newPronouns, userID);

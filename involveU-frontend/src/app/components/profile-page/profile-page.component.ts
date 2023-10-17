@@ -19,6 +19,10 @@ export class ProfilePageComponent implements OnInit {
   }
 
   disableInputFields: boolean = true;
+  isLoggedIn: boolean = false;
+  userID: number;
+  currentUser: User;
+  userProfileInfo: User;
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
@@ -27,13 +31,6 @@ export class ProfilePageComponent implements OnInit {
     this.getUserCalendarOptions();
     this.changeUserCalendarColors();
   }
-
-
-  isLoggedIn: boolean = false;
-  userID: number;
-  currentUser: User;
-
-  userProfileInfo: User[] = [];
 
 
   isUserLoggedIn() {
@@ -45,7 +42,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.profileService.getUserProfile(this.userID).subscribe((response: User[]) => {
+    this.profileService.getUserProfile(this.userID).subscribe((response: User) => {
       this.userProfileInfo = response;
     },
       (error) => {
@@ -58,12 +55,9 @@ export class ProfilePageComponent implements OnInit {
     this.currentUser.lastName = this.currentUser.lastName.replace(/['"]/g, '');
   }
 
-  getUserCalendarOptions()
-  {
-
-
-
+  getUserCalendarOptions() {
   }
+
   changeUserCalendarColors()
   {
 

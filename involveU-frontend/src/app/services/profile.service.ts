@@ -10,15 +10,15 @@ import {Club} from "../objects/club";
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
 
-  getUserProfile(UserID: number): Observable<User[]> {
-    return this.http.get<User[]>(environment.apiURL + `user/GetUserProfile/${UserID}`);
+  getUserProfile(UserID: number): Observable<User> {
+    return this.http.get<User>(environment.apiURL + `user/getUserProfile/${UserID}`);
   }
 
   changeUserPronouns(UserID: number, Pronouns: string) {
-    return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, Pronouns,{responseType: 'text'});
+    return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, {newPronouns: Pronouns});
   }
 
   checkUserPassword(UserID: number, password?: string): Observable<User> {

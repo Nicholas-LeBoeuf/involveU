@@ -12,37 +12,35 @@
 </div>
 
   <ng-container>
-    <div class="profileParentGridWeb">
-      <div class="editProfileCard text-center">
+      <div class="text-center">
         <h2 class="blueHeaders accountPadding">Account Information:</h2>
           <div class="input-container">
             <h4>
               <i class="fa fa-user icon"></i>
-              <input class="input-field"  [disabled]="disableInputFields" value="{{this.userProfileInfo[0].firstName}} {{this.userProfileInfo[0].lastName}}" placeholder="Name" name="username">
+              <input class="input-field p-disabled"  [disabled]="disableInputFields" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
             </h4>
           </div>
           <div class="input-container">
             <h4>
               <i class="fa fa-smile icon"></i>
-              <input class="input-field" value="{{this.userProfileInfo[0].pronouns}}" (change)="updatePronouns($event)" type="text" placeholder="Pronouns" name="pnouns">
+              <input class="input-field" [disabled]="disableInputFields" value="{{this.userProfileInfo.pronouns}}" (change)="updatePronouns($event)" type="text" placeholder="Pronouns" name="pnouns">
             </h4>
           </div>
           <div class="input-container">
             <h4>
               <i class="fa fa-graduation-cap icon"></i>
-              <input class="input-field" type="text" placeholder="Current Year" name="currYear">
+              <input class="input-field" [disabled]="disableInputFields" value="{{this.userProfileInfo.year}}" type="text" placeholder="Current Year" name="currYear">
             </h4>
           </div>
           <div class="input-container">
             <h4>
               <i class="fa fa-envelope icon"></i>
-              <input class="input-field" type="email" placeholder="Email" name="email">
+              <input class="input-field p-disabled" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
             </h4>
           </div>
           <button id="edit" class="editProfile yellowButton" (click)="this.disableInputFields = !this.disableInputFields">Edit Profile</button>
 <!--          <button class="saveInfo yellowButton" type="submit">Save</button>-->
       </div>
-    </div>
   </ng-container>
 </ng-template>
 

@@ -91,7 +91,7 @@ export class ProfilePageComponent implements OnInit {
 
   updateUserCalendarColor(event: any)
   {
-    this.profileService.changeUserCalendarColorSettings(this.UserID, )
+   // this.profileService.changeUserCalendarColorSettings(this.UserID, )
   }
 
   protected readonly event = event;

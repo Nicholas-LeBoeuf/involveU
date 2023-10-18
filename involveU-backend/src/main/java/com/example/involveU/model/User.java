@@ -28,6 +28,9 @@ public class User {
     @Column(name = "pronouns")
     private String pronouns;
 
+    @Column(name = "calendarcolor")
+    private String calendarcolor;
+
     @Column(name = "userPassword")
     private String userPassword;
 
@@ -77,6 +80,10 @@ public class User {
 
     public String getPronouns() {
         return pronouns;
+    }
+
+    public String getCalendarColor() {
+        return calendarcolor;
     }
 
     public void setPronouns(String dbPronouns) {

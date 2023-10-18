@@ -37,6 +37,9 @@
               <i class="fa fa-envelope icon"></i>
               <input class="input-field p-disabled" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
             </h4>
+            <h4 class="blueHeaders accountPadding">Calendar Color Settings:
+              <p-colorPicker [(ngModel)]="userCalendarColor"></p-colorPicker>
+            </h4>
           </div>
           <button id="edit" class="editProfile yellowButton" (click)="this.disableInputFields = !this.disableInputFields">Edit Profile</button>
 <!--          <button class="saveInfo yellowButton" type="submit">Save</button>-->

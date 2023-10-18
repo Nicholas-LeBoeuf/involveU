@@ -142,6 +142,16 @@ public class UserController extends DBServices{
 		}
 	}
 
+	@PutMapping("user/changeUserCalendarColorSettings/{userID}") // The color need to be sent in the body of the request because of the "/"
+	public ResponseEntity<String>changeUserCalendarColorSettings(@PathVariable("userID")int userID, @RequestBody String newColor) {
+		if(dbChangePronouns(userID, newColor)) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@PutMapping("user/changeYear/{userID}/{newYear}")
 	public ResponseEntity<String>changeYear(@PathVariable("userID")int userID, @PathVariable("newYear")String newYear) {
 		if(dbChangeYear(userID, newYear)) {

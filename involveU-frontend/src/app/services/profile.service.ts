@@ -21,6 +21,11 @@ export class ProfileService {
     return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, {newPronouns: Pronouns});
   }
 
+  changeUserCalendarColorSettings(UserID: number, ColorSetting: string)
+  {
+    return this.http.put(environment.apiURL + `user/changeUserCalendarColorSettings/${UserID}`, {newColor: ColorSetting});
+  }
+
   checkUserPassword(UserID: number, password?: string): Observable<User> {
     return this.http.get<User>(environment.apiURL + `user/checkPassword/${UserID}/${password}`);
   }

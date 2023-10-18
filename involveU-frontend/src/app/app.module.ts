@@ -52,6 +52,7 @@ import {ToastrModule} from "ngx-toastr";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { PrivacySettingsPageComponent } from './components/privacy-settings-page/privacy-settings-page.component';
+import {ColorPickerModule} from "primeng/colorpicker";
 
 
 FullCalendarModule.registerPlugins([
@@ -83,30 +84,31 @@ FullCalendarModule.registerPlugins([
     ProfilePageComponent,
     PrivacySettingsPageComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        DialogModule,
-        ButtonModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        RouterOutlet,
-        AppRoutingModule,
-        CarouselModule,
-        FormsModule,
-        RippleModule,
-        TableModule,
-        InputTextModule,
-        ContextMenuModule,
-        DropdownModule,
-        FullCalendarModule,
-        FileUploadModule,
-        LayoutModule,
-        FontAwesomeModule,
-        TabViewModule,
-        ToastrModule.forRoot(),
-        ProgressSpinnerModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    DialogModule,
+    ButtonModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    RouterOutlet,
+    AppRoutingModule,
+    CarouselModule,
+    FormsModule,
+    RippleModule,
+    TableModule,
+    InputTextModule,
+    ContextMenuModule,
+    DropdownModule,
+    FullCalendarModule,
+    FileUploadModule,
+    LayoutModule,
+    FontAwesomeModule,
+    TabViewModule,
+    ToastrModule.forRoot(),
+    ProgressSpinnerModule,
+    ColorPickerModule,
+  ],
   providers: [
     CookieService,
     ResponsiveService,

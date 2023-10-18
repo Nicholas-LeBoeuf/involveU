@@ -3,6 +3,7 @@ import {CookieService} from "ngx-cookie-service";
 import {User} from "../../objects/user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CalendarComponent} from "../calendar/calendar.component";
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 import {ProfileService} from "../../services/profile.service";
 
@@ -18,6 +19,7 @@ export class ProfilePageComponent implements OnInit {
               public profileService: ProfileService) {
   }
 
+  userCalendarColor: string;
   disableInputFields: boolean = true;
   isLoggedIn: boolean = false;
   userID: number;
@@ -85,6 +87,11 @@ export class ProfilePageComponent implements OnInit {
       });
 
 
+  }
+
+  updateUserCalendarColor(event: any)
+  {
+    this.profileService.changeUserCalendarColorSettings(this.UserID, )
   }
 
   protected readonly event = event;

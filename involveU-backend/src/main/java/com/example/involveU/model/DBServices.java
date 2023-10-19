@@ -979,9 +979,9 @@ public class DBServices {
     }
 
     protected int dbFavoriteCount(int clubID) {
-        String sql = "SELECT COUNT(c.favoriteID) AS numberOfUsers " +
+        String sql = "SELECT COUNT(f.favoriteID) AS numberOfUsers " +
                 "FROM Club c " +
-                "JOIN User u ON c.userID = u.studentID " +
+                "JOIN Favorites f ON c.clubID = f.clubID " +
                 "WHERE c.clubID = ? " +
                 "GROUP BY c.clubID";
 
@@ -990,7 +990,4 @@ public class DBServices {
 
         return (count != null) ? count : 0;
     }
-
-
-
 }

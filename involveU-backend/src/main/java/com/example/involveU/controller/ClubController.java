@@ -300,6 +300,12 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
     }
 
+    @GetMapping("club/favoriteCount/{clubID}")
+    public ResponseEntity<Integer> getFavoriteCount(@PathVariable("clubID") int clubID) {
+        int count = dbFavoriteCount(clubID);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
 
 }
 

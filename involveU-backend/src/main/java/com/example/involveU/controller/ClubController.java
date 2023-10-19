@@ -173,12 +173,12 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
       newClub = getSpecficClub(clubID);
 
         String fileName = getClubLogo(clubID);
-        S3Util bucket = new S3Util();
+        S3Util bucket = new S3Util("involveu-image");
          byte[] file = bucket.downloadFile(newClub.getClubName() + "/" + fileName);
 
          return new ResponseEntity<>(file,HttpStatus.OK);
-
      }
+
     @GetMapping("/club/getClubSocialMedia/{clubID}")
     private ResponseEntity<List<SocialMedia>> getSocialMedia(@PathVariable("clubID") int clubID)
     {
@@ -246,7 +246,7 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
     private ResponseEntity<String> createClubFodlers()
     {
         clubs = getAllDBClubs();
-        S3Util S3 = new S3Util();
+        S3Util S3 = new S3Util("involveu-image");
 
         for(Club club: clubs)
         {
@@ -265,7 +265,7 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
         clubToUpload = getSpecficClub(clubID);
 
-        S3Util s3 = new S3Util();
+        S3Util s3 = new S3Util("involveu-image");
         String filename = newImage.getOriginalFilename();
         System.out.println(filename);
 
@@ -277,7 +277,7 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
     @GetMapping("/club/uploadAllFiles")
     private ResponseEntity<String> uploadAllFiles(@RequestParam("file") MultipartFile newImage) throws IOException {
         clubs = getAllDBClubs();
-        S3Util S3 = new S3Util();
+        S3Util S3 = new S3Util("involveu-image");
         String filename = newImage.getOriginalFilename();
         System.out.println(filename);
         for(Club club: clubs)

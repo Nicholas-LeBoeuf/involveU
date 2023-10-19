@@ -34,6 +34,9 @@ public class User {
     @Column(name = "userPassword")
     private String userPassword;
 
+    @Column(name = "profilePic")
+    private String profilePic;
+
     public long getStudentID() {return studentID;}
 
     public void setStudentID(long studentID) {this.studentID = studentID;}
@@ -91,4 +94,8 @@ public class User {
     public String getUserPassword() {return userPassword;}
 
     public void setUserPassword(String userPassword) {this.userPassword = userPassword;}
+
+    public String getUserName() {return firstName;}
+
+    public String getUserProfilePictureName() {return profilePic;}
 }

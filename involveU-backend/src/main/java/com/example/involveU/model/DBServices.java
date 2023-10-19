@@ -990,4 +990,17 @@ public class DBServices {
 
         return (count != null) ? count : 0;
     }
+
+    protected int dbMemberCount(int clubID) {
+        String sql = "SELECT COUNT(m.memberID) AS numberOfUsers " +
+                "FROM Club c " +
+                "JOIN Member m ON c.clubID = m.clubID " +
+                "WHERE c.clubID = ? " +
+                "GROUP BY c.clubID";
+
+        // Query for a single integer value
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{clubID}, Integer.class);
+
+        return (count != null) ? count : 0;
+    }
 }

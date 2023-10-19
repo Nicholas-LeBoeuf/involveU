@@ -1,14 +1,11 @@
 package com.example.involveU.model;
 
-import jdk.jfr.Event;
-import org.hibernate.sql.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import software.amazon.awssdk.regions.servicemetadata.ElasticacheServiceMetadata;
 
 import java.util.regex.*;
 import java.text.ParseException;
@@ -926,7 +923,7 @@ public class DBServices {
                 "AND title = '" + eventToCheck.getTitle() +"';";
         checkEvents = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
 
-        return checkEvents.size() == 0;
+        return checkEvents.isEmpty();
     }
 
     //We do not have a definite list of clubs on campus so if the club doesn't exist for

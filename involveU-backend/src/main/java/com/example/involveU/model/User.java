@@ -82,9 +82,7 @@ public class User {
         return pronouns;
     }
 
-    public String getCalendarColor() {
-        return calendarcolor;
-    }
+    public String getCalendarColor() { return calendarcolor;}
 
     public void setPronouns(String dbPronouns) {
         pronouns = dbPronouns;

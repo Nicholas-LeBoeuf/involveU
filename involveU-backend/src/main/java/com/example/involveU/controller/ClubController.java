@@ -258,6 +258,16 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
 
     }
 
+    @GetMapping("/club/favoriteCount/{clubID}")
+    public ResponseEntity<Integer> favoriteCount(@PathVariable("clubID") int clubID) {
+        try {
+            int count = dbFavoriteCount(clubID);
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("club/uploadNewLogo/{clubID}")
     public ResponseEntity<String> uploadNewLogo(@RequestParam("file") MultipartFile newImage, @PathVariable("clubID") int clubID) throws IOException {
 

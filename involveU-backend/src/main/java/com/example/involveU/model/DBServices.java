@@ -73,7 +73,7 @@ public class DBServices {
 
     protected User getDBUserProfile(int userID)
     {
-        sql = "SELECT firstName, lastName, year, email, pronouns FROM User WHERE studentID = " + userID + ";";
+        sql = "SELECT firstName, lastName, year, email, pronouns, calendarcolor FROM User WHERE studentID = " + userID + ";";
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users.get(0);
@@ -135,6 +135,20 @@ public class DBServices {
         }
     }
 
+    protected Boolean dbChangeCalColor(int userID, String newColor){
+        sql = "UPDATE User SET calendarcolor = ? WHERE studentID = ?;";
+        validQuery = JdbcTemplated.update(sql, newColor, userID);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     protected Boolean dbChangeYear(int userID, String newYear) {
         sql = "UPDATE User SET year = ? WHERE studentID = ?;";
         validQuery = JdbcTemplated.update(sql, newYear, userID);
@@ -151,7 +165,7 @@ public class DBServices {
 
     protected Boolean dbChangePronouns(int userID, String newPronouns) {
         sql = "UPDATE User SET pronouns = ? WHERE studentID = ?;";
-        validQuery = JdbcTemplated.update(sql,newPronouns, userID);
+        validQuery = JdbcTemplated.update(sql, newPronouns, userID);
 
         if(validQuery == 1)
         {
@@ -962,6 +976,19 @@ public class DBServices {
 
         return clubs.get(0).getClubID();
 
+    }
+
+    protected int dbFavoriteCount(int clubID) {
+        String sql = "SELECT COUNT(c.favoriteID) AS numberOfUsers " +
+                "FROM Club c " +
+                "JOIN User u ON c.userID = u.studentID " +
+                "WHERE c.clubID = ? " +
+                "GROUP BY c.clubID";
+
+        // Query for a single integer value
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{clubID}, Integer.class);
+
+        return (count != null) ? count : 0;
     }
 
 

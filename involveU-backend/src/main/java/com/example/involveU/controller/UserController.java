@@ -106,7 +106,7 @@ public class UserController extends DBServices{
 
 	@PutMapping("user/changePassword/{email}/{newPassword}")
 	public ResponseEntity<String>changePassword(@PathVariable("email")String email, @PathVariable("newPassword")String newPassword) {
-		if(dbChangePassword(email, newPassword) == true) {
+		if(dbChangePassword(email, newPassword)) {
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else {
@@ -142,9 +142,9 @@ public class UserController extends DBServices{
 		}
 	}
 
-	@PutMapping("user/changeUserCalendarColorSettings/{userID}") // The color need to be sent in the body of the request because of the "/"
-	public ResponseEntity<String>changeUserCalendarColorSettings(@PathVariable("userID")int userID, @RequestBody String newColor) {
-		if(dbChangePronouns(userID, newColor)) {
+	@PutMapping("user/changeCalColor/{userID}/{newColor}")
+	public ResponseEntity<String>changeCalColor(@PathVariable("userID")int userID, @PathVariable("newColor")String newColor) {
+		if(dbChangeCalColor(userID, newColor)) {
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else {

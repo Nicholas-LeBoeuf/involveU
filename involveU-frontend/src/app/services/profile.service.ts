@@ -18,7 +18,7 @@ export class ProfileService {
   }
 
   changeUserPronouns(UserID: number, Pronouns: string) {
-    return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, {newPronouns: Pronouns});
+    return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, Pronouns);
   }
 
   checkUserPassword(UserID: number, password?: string): Observable<User> {

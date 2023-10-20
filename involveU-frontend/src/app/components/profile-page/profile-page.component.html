@@ -12,7 +12,7 @@
 </div>
 
   <ng-container>
-      <div class="text-center">
+      <div class="text-center div">
         <h2 class="blueHeaders accountPadding">Account Information:</h2>
           <div class="input-container">
             <h4>
@@ -23,7 +23,7 @@
           <div class="input-container">
             <h4>
               <i class="fa fa-smile icon"></i>
-              <input class="input-field" [disabled]="disableInputFields" value="{{this.userProfileInfo.pronouns}}" (change)="updatePronouns($event)" type="text" placeholder="Pronouns" name="pnouns">
+              <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.pronouns" (change)="updatePronouns()" type="text" placeholder="Pronouns" name="pnouns">
             </h4>
           </div>
           <div class="input-container">
@@ -42,5 +42,12 @@
 <!--          <button class="saveInfo yellowButton" type="submit">Save</button>-->
       </div>
   </ng-container>
+
+  <ng-container>
+    <div class="card fa-align-right"></div>
+
+
+  </ng-container>
+
 </ng-template>
 

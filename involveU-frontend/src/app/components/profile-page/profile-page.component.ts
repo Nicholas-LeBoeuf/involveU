@@ -71,10 +71,9 @@ export class ProfilePageComponent implements OnInit {
 
   }
 
-  updatePronouns(event: any) {
-    console.log(event.target.data);
+  updatePronouns() {
 
-    this.profileService.changeUserPronouns(this.userID, event.target.data).subscribe((response) => {
+    this.profileService.changeUserPronouns(this.userID, this.userProfileInfo.pronouns).subscribe((response) => {
       console.log(response);
     },
       (error) => {

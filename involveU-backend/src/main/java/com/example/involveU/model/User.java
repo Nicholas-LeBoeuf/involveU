@@ -28,8 +28,14 @@ public class User {
     @Column(name = "pronouns")
     private String pronouns;
 
+    @Column(name = "calendarcolor")
+    private String calendarcolor;
+
     @Column(name = "userPassword")
     private String userPassword;
+
+    @Column(name = "profilePic")
+    private String profilePic;
 
     public long getStudentID() {return studentID;}
 
@@ -79,6 +85,8 @@ public class User {
         return pronouns;
     }
 
+    public String getCalendarColor() { return calendarcolor;}
+
     public void setPronouns(String dbPronouns) {
         pronouns = dbPronouns;
     }
@@ -86,4 +94,8 @@ public class User {
     public String getUserPassword() {return userPassword;}
 
     public void setUserPassword(String userPassword) {this.userPassword = userPassword;}
+
+    public String getUserName() {return firstName;}
+
+    public String getUserProfilePictureName() {return profilePic;}
 }

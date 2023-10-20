@@ -1,14 +1,11 @@
 package com.example.involveU.model;
 
-import jdk.jfr.Event;
-import org.hibernate.sql.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import software.amazon.awssdk.regions.servicemetadata.ElasticacheServiceMetadata;
 
 import java.util.regex.*;
 import java.text.ParseException;
@@ -73,7 +70,7 @@ public class DBServices {
 
     protected User getDBUserProfile(int userID)
     {
-        sql = "SELECT firstName, lastName, year, email, pronouns FROM User WHERE studentID = " + userID + ";";
+        sql = "SELECT firstName, lastName, year, email, pronouns, calendarcolor FROM User WHERE studentID = " + userID + ";";
         users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
         return users.get(0);
@@ -135,6 +132,28 @@ public class DBServices {
         }
     }
 
+    protected Boolean dbChangeCalColor(int userID, String newColor){
+        sql = "UPDATE User SET calendarcolor = ? WHERE studentID = ?;";
+        validQuery = JdbcTemplated.update(sql, newColor, userID);
+
+        if(validQuery == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    protected Boolean updateUserProfilePicPath(int userID, String s3Path) {
+        String sql = "UPDATE User SET profilePic = ? WHERE studentID = ?;";
+        int validQuery = JdbcTemplated.update(sql, s3Path, userID);
+
+        return validQuery == 1;
+    }
+
     protected Boolean dbChangeYear(int userID, String newYear) {
         sql = "UPDATE User SET year = ? WHERE studentID = ?;";
         validQuery = JdbcTemplated.update(sql, newYear, userID);
@@ -151,7 +170,7 @@ public class DBServices {
 
     protected Boolean dbChangePronouns(int userID, String newPronouns) {
         sql = "UPDATE User SET pronouns = ? WHERE studentID = ?;";
-        validQuery = JdbcTemplated.update(sql,newPronouns, userID);
+        validQuery = JdbcTemplated.update(sql, newPronouns, userID);
 
         if(validQuery == 1)
         {
@@ -284,13 +303,29 @@ public class DBServices {
 
         clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
 
-        if (clubs.size() == 0) {
+        if (clubs.isEmpty()) {
 
             return null;
         }
         else
         {
             return clubs.get(0);
+        }
+    }
+
+    protected User getUser(int studentID)
+    {
+        sql = "SELECT * FROM User WHERE studentID = " + studentID + ";";
+
+        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
+
+        if (users.isEmpty()) {
+
+            return null;
+        }
+        else
+        {
+            return users.get(0);
         }
     }
     protected  Boolean deleteDBClub(int clubID)
@@ -342,7 +377,7 @@ public class DBServices {
             Club clubToDelete= getSpecficClub(clubID);
 
             //if filename is not found in the database then the file in s3 is deleted to make room for new file with name
-            S3Util s3 = new S3Util();
+            S3Util s3 = new S3Util("involveu-image");
             s3.deleteImg(clubToDelete.getClubName() + "/" + clubToDelete.getClubLogo());
 
             sql = "UPDATE Club SET  clubLogo =  ?  WHERE clubID = " + clubID + ";";
@@ -367,8 +402,18 @@ public class DBServices {
         clubLogoPath = JdbcTemplated.queryForObject(sql,new Object[]{clubID}, String.class);
 
         return clubLogoPath;
-
     }
+
+    protected String getUserProfilePictureName(int userID)
+    {
+        String profilePicPath;
+        sql = "SELECT profilePic FROM User WHERE studentID = ?;";
+
+        profilePicPath = JdbcTemplated.queryForObject(sql,new Object[]{userID}, String.class);
+
+        return profilePicPath;
+    }
+
     protected List<Club> searchDBClub(String searchContent)
     {
         sql = "SELECT * FROM Club WHERE Club.clubName LIKE '%" + searchContent +"%';";
@@ -881,7 +926,7 @@ public class DBServices {
             //If club does not exist in InvovleU database then a new club with defualt values is created
             else
             {
-                S3Util newFolder = new S3Util();
+                S3Util newFolder = new S3Util("involveu-image");
                 Club newClub = new Club();
                 newClub.setClubName(event.getClubName());
                 newClub.setClubBio("check back for more information");
@@ -912,7 +957,7 @@ public class DBServices {
                 "AND title = '" + eventToCheck.getTitle() +"';";
         checkEvents = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Events.class));
 
-        return checkEvents.size() == 0;
+        return checkEvents.isEmpty();
     }
 
     //We do not have a definite list of clubs on campus so if the club doesn't exist for
@@ -964,6 +1009,29 @@ public class DBServices {
 
     }
 
+    protected int dbFavoriteCount(int clubID) {
+        String sql = "SELECT COUNT(f.favoriteID) AS numberOfUsers " +
+                "FROM Club c " +
+                "JOIN Favorites f ON c.clubID = f.clubID " +
+                "WHERE c.clubID = ? " +
+                "GROUP BY c.clubID";
 
+        // Query for a single integer value
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{clubID}, Integer.class);
 
+        return (count != null) ? count : 0;
+    }
+
+    protected int dbMemberCount(int clubID) {
+        String sql = "SELECT COUNT(m.memberID) AS numberOfUsers " +
+                "FROM Club c " +
+                "JOIN Member m ON c.clubID = m.clubID " +
+                "WHERE c.clubID = ? " +
+                "GROUP BY c.clubID";
+
+        // Query for a single integer value
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{clubID}, Integer.class);
+
+        return (count != null) ? count : 0;
+    }
 }

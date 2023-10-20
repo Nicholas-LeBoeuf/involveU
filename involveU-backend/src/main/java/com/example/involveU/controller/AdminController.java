@@ -109,7 +109,7 @@ public class AdminController extends DBServices {
     @PostMapping("admin/testImage")
     public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile newImage) throws IOException {
 
-        S3Util s3 = new S3Util();
+        S3Util s3 = new S3Util("involveu-image");
         String filename = newImage.getOriginalFilename();
         System.out.println(filename);
 

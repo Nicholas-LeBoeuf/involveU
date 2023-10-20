@@ -31,9 +31,7 @@ public class Club {
         this.clubID = clubID;
     }
 
-    public String getClubName() {
-        return clubName;
-    }
+    public String getClubName() { return clubName; }
 
     public void setClubName(String clubName) {
         this.clubName = clubName;

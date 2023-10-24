@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../objects/user";
+import { DialogModule } from 'primeng/dialog';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CalendarComponent} from "../calendar/calendar.component";
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -19,6 +20,7 @@ export class ProfilePageComponent implements OnInit {
               public profileService: ProfileService) {
   }
 
+  viewChangePasswordDialog: boolean = false;
   userCalendarColor: string;
   disableInputFields: boolean = true;
   isLoggedIn: boolean = false;
@@ -94,4 +96,12 @@ export class ProfilePageComponent implements OnInit {
   }
 
   protected readonly event = event;
+
+  openViewChangePasswordDialog() {
+    this.viewChangePasswordDialog = true;
+  }
+
+  closeViewChangePasswordDialog() {
+    this.viewChangePasswordDialog = false;
+  }
 }

@@ -108,7 +108,7 @@ public class UserController extends DBServices{
 		}
 	}
 
-	@PutMapping("user/changePassword/{email}/{newPassword}")
+	/*@PutMapping("user/changePassword/{email}/{newPassword}")
 	public ResponseEntity<String>changePassword(@PathVariable("email")String email, @PathVariable("newPassword")String newPassword) {
 		if(dbChangePassword(email, newPassword)) {
 			return new ResponseEntity<>("success", HttpStatus.OK);
@@ -116,7 +116,7 @@ public class UserController extends DBServices{
 		else {
 			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 		}
-	}
+	}*/
 
 	@GetMapping("user/getUserProfile/{userID}")
 	public ResponseEntity<User>getUserProfile(@PathVariable("userID")int userID ) {
@@ -125,7 +125,7 @@ public class UserController extends DBServices{
 		return new ResponseEntity<>(newUser, HttpStatus.OK);
 	}
 
-	@GetMapping("user/checkPassword/{userID}/{currentPassword}")
+	/*@GetMapping("user/checkPassword/{userID}/{currentPassword}")
 	public ResponseEntity<Boolean>checkPassword(@PathVariable("userID")int userID, @PathVariable("currentPassword")String currentPassword) {
 		if (checkDBPassword(userID, currentPassword))
 		{
@@ -134,7 +134,21 @@ public class UserController extends DBServices{
 		else {
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
 		}
+	}*/
+
+	@PutMapping("user/updatePassword/{userID}/{currentPassword}/{newPassword}")
+	public ResponseEntity<String> updatePassword(@PathVariable("userID") int userID, @PathVariable("currentPassword") String currentPassword, @PathVariable("newPassword") String newPassword) {
+		if (checkDBPassword(userID, currentPassword)) {
+			if (dbChangePassword(userID, newPassword)) {
+				return new ResponseEntity<>("success", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Failed to change password", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+		}
 	}
+
 
 	@PutMapping("user/changePronouns/{userID}") // The pronouns need to be sent in the body of the request because of the "/"
 	public ResponseEntity<String>changePronouns(@PathVariable("userID")int userID, @RequestBody String newPronouns) {

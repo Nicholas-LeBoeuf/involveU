@@ -44,29 +44,29 @@
           <button id="edit" class="editProfile yellowButton" (click)="this.disableInputFields = !this.disableInputFields">Edit Profile</button>
 <!--          <button class="saveInfo yellowButton" type="submit">Save</button>-->
         <button (click)="openViewChangePasswordDialog()" class="editProfile yellowButton" >Change Password</button>
-        <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw'}" (onHide)="closeViewChangePasswordDialog()">
+        <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw', height: '52vh'}" [modal]="true" [dismissableMask]="true" (onHide)="closeViewChangePasswordDialog()">
           <div class="changePasswordDialog">
-            <div class="input-container">
+            <div class="input-container div">
               <h4>
-                <label>Old Password</label>
+                <label>Old Password:</label> &nbsp;
                 <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.userPassword">
               </h4>
             </div>
               <div class="input-container">
                 <h4>
-                  <label>New Password</label>
+                  <label>New Password:</label> &nbsp;
                   <input class="input-field" [disabled]="disableInputFields" >
                 </h4>
               </div>
                 <div class="input-container">
                   <h4>
-                    <label>Repeat New Password</label>
+                    <label>Repeat New Password:</label> &nbsp;
                     <input class="input-field" [disabled]="disableInputFields" >
                   </h4>
                 </div>
 
           </div>
-          <button class="blueButton" (click)="closeViewChangePasswordDialog()">Change Password</button>
+          <button class="blueButton">Change Password</button>
           <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
         </p-dialog>
       </div>

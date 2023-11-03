@@ -12,14 +12,18 @@
 </div>
 
   <ng-container>
-      <div class="text-center div">
-        <h2 class="blueHeaders accountPadding">Account Information:</h2>
-          <div class="input-container">
-            <h4>
-              <i class="fa fa-user icon"></i>
-              <input class="input-field p-disabled"  [disabled]="disableInputFields" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
-            </h4>
-          </div>
+        <div class="text-center divA profile-picture-container">
+          <img class="profile-picture" src="blahblah.jpg" alt="Profile Image" class="profile-image">
+          <input type="file" (change)="onFileSelected($event)" *ngIf="isLoggedIn"/>
+          <button class="yellowButton" (click)="uploadProfilePicture()" *ngIf="isLoggedIn">Upload Image</button>
+          <img *ngIf="selectedFile" alt="Selected Image">
+          <h2 class="blueHeaders accountPadding">Account Information:</h2>
+            <div class="input-container">
+              <h4>
+                <i class="fa fa-user icon"></i>
+                <input class="input-field p-disabled"  [disabled]="disableInputFields" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
+              </h4>
+            </div>
           <div class="input-container">
             <h4>
               <i class="fa fa-smile icon"></i>
@@ -29,7 +33,7 @@
           <div class="input-container">
             <h4>
               <i class="fa fa-graduation-cap icon"></i>
-              <input class="input-field" [disabled]="disableInputFields" value="{{this.userProfileInfo.year}}" type="text" placeholder="Current Year" name="currYear">
+              <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.year" (change)="changeYear()" type="text" placeholder="Current Year" name="currYear">
             </h4>
           </div>
           <div class="input-container">
@@ -45,8 +49,8 @@
 <!--          <button class="saveInfo yellowButton" type="submit">Save</button>-->
         <button (click)="openViewChangePasswordDialog()" class="editProfile yellowButton" >Change Password</button>
         <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw', height: '52vh'}" [modal]="true" [dismissableMask]="true" (onHide)="closeViewChangePasswordDialog()">
-          <div class="changePasswordDialog">
-            <div class="input-container div">
+          <div class="changePasswordDialog divA">
+            <div class="input-container">
               <h4>
                 <label>Old Password:</label> &nbsp;
                 <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.userPassword">
@@ -64,12 +68,11 @@
                     <input class="input-field" [disabled]="disableInputFields" >
                   </h4>
                 </div>
-
-          </div>
-          <button class="blueButton">Change Password</button>
-          <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
+            </div>
+            <button class="blueButton">Change Password</button>
+            <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
         </p-dialog>
-      </div>
+        </div>
   </ng-container>
 
   <ng-container>

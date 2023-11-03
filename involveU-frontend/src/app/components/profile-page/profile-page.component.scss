@@ -3,6 +3,11 @@
 
 .div {
   margin-top: 50px;
+  margin-left: 50px;
+}
+
+.divA {
+  margin-top: 50px;
 }
 
 .accountPadding {
@@ -40,3 +45,17 @@
   min-width: 50px;
   text-align: center;
 }
+
+.profile-picture-container {
+  flex-shrink: 0; /* Don't allow the picture to shrink */
+  margin-right: 2px; /* Add some spacing between the picture and account information */
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+

@@ -10,7 +10,8 @@ import {Club} from "../objects/club";
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
 
   getUserProfile(UserID: number): Observable<User> {
@@ -21,12 +22,26 @@ export class ProfileService {
     return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, Pronouns);
   }
 
-  changeUserCalendarColorSettings(UserID: number, ColorSetting: string)
-  {
+  changeUserYear(UserID: number, newYear: string) {
+    return this.http.put(environment.apiURL + `user/changeYear/${UserID}/${newYear}`, {});
+  }
+
+  changeUserCalendarColorSettings(UserID: number, ColorSetting: string) {
     return this.http.put(environment.apiURL + `user/changeUserCalendarColorSettings/${UserID}`, {newColor: ColorSetting});
   }
 
   checkUserPassword(UserID: number, password?: string): Observable<User> {
     return this.http.get<User>(environment.apiURL + `user/checkPassword/${UserID}/${password}`);
+  }
+
+  downloadUserProfilePicture(userID: number) {
+    return this.http.get(environment.apiURL + `user/getProfilePicture/{userID}`, {responseType: 'arraybuffer'});
+  }
+
+  uploadProfilePicture(userID: number, file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.put(environment.apiURL + `user/uploadProfilePicture/{userID}`, formData);
   }
 }

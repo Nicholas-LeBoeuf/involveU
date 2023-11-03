@@ -27,6 +27,7 @@ export class ProfilePageComponent implements OnInit {
   userID: number;
   currentUser: User;
   userProfileInfo: User;
+  selectedFile: File;
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
@@ -47,14 +48,18 @@ export class ProfilePageComponent implements OnInit {
 
   getUserInfo() {
     this.profileService.getUserProfile(this.userID).subscribe((response: User) => {
-      this.userProfileInfo = response;
-    },
+        this.userProfileInfo = response;
+      },
       (error) => {
         console.log(error)
       });
 
 
-    this.currentUser = {studentID: +this.cookie.get('studentID'), firstName: this.cookie.get('studentFName'), lastName: this.cookie.get('studentLName')};
+    this.currentUser = {
+      studentID: +this.cookie.get('studentID'),
+      firstName: this.cookie.get('studentFName'),
+      lastName: this.cookie.get('studentLName')
+    };
     this.currentUser.firstName = this.currentUser.firstName.replace(/['"]/g, '');
     this.currentUser.lastName = this.currentUser.lastName.replace(/['"]/g, '');
   }
@@ -62,8 +67,7 @@ export class ProfilePageComponent implements OnInit {
   getUserCalendarOptions() {
   }
 
-  changeUserCalendarColors()
-  {
+  changeUserCalendarColors() {
 
     //CalendarComponent.options.eventBackgroundColor = 'blue';
 
@@ -78,8 +82,8 @@ export class ProfilePageComponent implements OnInit {
   updatePronouns() {
 
     this.profileService.changeUserPronouns(this.userID, this.userProfileInfo.pronouns).subscribe((response) => {
-      console.log(response);
-    },
+        console.log(response);
+      },
       (error) => {
         console.log(error)
       },
@@ -90,9 +94,14 @@ export class ProfilePageComponent implements OnInit {
 
   }
 
-  updateUserCalendarColor(event: any)
-  {
-   // this.profileService.changeUserCalendarColorSettings(this.UserID, )
+  changeYear() {
+    this.profileService.changeUserYear(this.userID, this.userProfileInfo.year).subscribe((response: string) => {
+      this.getUserInfo()
+    })
+  }
+
+  updateUserCalendarColor(event: any) {
+    // this.profileService.changeUserCalendarColorSettings(this.UserID, )
   }
 
   protected readonly event = event;
@@ -103,5 +112,20 @@ export class ProfilePageComponent implements OnInit {
 
   closeViewChangePasswordDialog() {
     this.viewChangePasswordDialog = false;
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = event.start.files[0];
+  }
+
+  uploadProfilePicture() {
+    if (this.selectedFile) this.profileService.uploadProfilePicture(this.userID, this.selectedFile).subscribe(() => {
+        console.log('Profile picture uploaded!');
+        this.getUserInfo();
+      },
+      error => {
+        console.error("error", error);
+      }
+    )
   }
 }

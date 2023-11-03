@@ -115,12 +115,6 @@ export class AppComponent {
       }
     },
     {
-      label: 'Privacy Settings',
-      command: () => {
-        this.openPrivacySettings();
-      }
-    },
-    {
       label: 'Logout',
       command: () => {
         this.logoutUser();

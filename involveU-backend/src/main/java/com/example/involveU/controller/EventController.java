@@ -218,6 +218,12 @@ public class EventController extends DBServices{
 
     }
 
+    @GetMapping("event/rsvpCount/{eventID}")
+    public ResponseEntity<Integer> getRSVPCount(@PathVariable("eventID") int eventID) {
+        int count = dbRSVPCount(eventID);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
 }
 
 

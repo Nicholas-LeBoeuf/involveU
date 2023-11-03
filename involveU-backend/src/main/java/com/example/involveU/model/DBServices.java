@@ -864,4 +864,29 @@ public class DBServices {
 
 
 
+<<<<<<< Updated upstream
+=======
+        return (count != null) ? count : 0;
+    }
+
+    protected int dbRSVPCount(int eventID) {
+        String sql = "SELECT COUNT(*) FROM RSVP WHERE eventID = ?";
+
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{eventID}, Integer.class);
+        return (count != null) ? count : 0;
+    }
+
+    protected int dbMemberCount(int clubID) {
+        String sql = "SELECT COUNT(m.memberID) AS numberOfUsers " +
+                "FROM Club c " +
+                "JOIN Member m ON c.clubID = m.clubID " +
+                "WHERE c.clubID = ? " +
+                "GROUP BY c.clubID";
+
+        // Query for a single integer value
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{clubID}, Integer.class);
+
+        return (count != null) ? count : 0;
+    }
+>>>>>>> Stashed changes
 }

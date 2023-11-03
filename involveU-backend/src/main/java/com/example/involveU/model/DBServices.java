@@ -1034,4 +1034,10 @@ public class DBServices {
 
         return (count != null) ? count : 0;
     }
+
+    protected int dbRSVPCount(int eventID) {
+        String sql = "SELECT COUNT(*) FROM RSVP WHERE eventID = ?";
+        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{eventID}, Integer.class);
+        return (count != null) ? count : 0;
+    }
 }

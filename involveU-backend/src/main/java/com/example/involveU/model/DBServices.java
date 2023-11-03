@@ -146,6 +146,13 @@ public class DBServices {
         return validQuery == 1;
     }
 
+    protected Boolean updateCLubBannerPath(int clubID, String s3Path) {
+        String sql = "UPDATE User SET bannerFile = ? WHERE clubID = ?;";
+        int validQuery = JdbcTemplated.update(sql, s3Path, clubID);
+
+        return validQuery == 1;
+    }
+
     protected Boolean dbChangeYear(int userID, String newYear) {
         sql = "UPDATE User SET year = ? WHERE studentID = ?;";
         validQuery = JdbcTemplated.update(sql, newYear, userID);
@@ -374,6 +381,16 @@ public class DBServices {
         profilePicPath = JdbcTemplated.queryForObject(sql,new Object[]{userID}, String.class);
 
         return profilePicPath;
+    }
+
+    protected String getClubBannerName(int clubID)
+    {
+        String bannerPath;
+        sql = "SELECT bannerFile FROM Club WHERE clubID = ?;";
+
+        bannerPath = JdbcTemplated.queryForObject(sql,new Object[]{clubID}, String.class);
+
+        return bannerPath;
     }
 
     protected List<Club> searchDBClub(String searchContent) {

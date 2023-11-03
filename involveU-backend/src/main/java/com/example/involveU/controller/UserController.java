@@ -182,7 +182,7 @@ public class UserController extends DBServices{
 
 	@GetMapping("/user/getProfilePicture/{userID}")
 	private ResponseEntity<byte[]> downloadUserProfilePicture(@PathVariable("userID") int userID) throws IOException {
-		User user = getUser(userID); // Assuming there's a method to fetch user details
+		User user = getUser(userID);
 
 		String fileName = getUserProfilePictureName(userID); // Fetch the profile picture name for the user
 

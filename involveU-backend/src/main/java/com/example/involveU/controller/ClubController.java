@@ -3,6 +3,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -298,6 +300,51 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
         int count = dbMemberCount(clubID);
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
+
+    @PutMapping("/club/uploadBannerDocument/{clubID}")
+    public ResponseEntity<String> uploadBannerDocument(@RequestParam("file") MultipartFile bannerDocument, @PathVariable("clubID") int clubID) throws IOException {
+        Club clubToUpdate = getSpecficClub(clubID);
+
+        S3Util s3 = new S3Util("involveu-clubfiles");
+        String filename = bannerDocument.getOriginalFilename();
+
+        if (!Arrays.asList("application/pdf", "image/jpeg", "image/png").contains(bannerDocument.getContentType())) {
+            return new ResponseEntity<>("Invalid file type", HttpStatus.BAD_REQUEST);
+        }
+
+        s3.uploadFile(filename, bannerDocument.getInputStream(), "banners/" + clubToUpdate.getClubName());
+
+        updateUserProfilePicPath(clubID, filename);
+
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @GetMapping("/club/getBannerDocument/{clubID}")
+    private ResponseEntity<byte[]> downloadBannerDocument(@PathVariable("clubID") int clubID) throws IOException {
+        Club club = getSpecficClub(clubID);
+
+        String fileName = getClubBannerName(clubID);
+
+        S3Util bucket = new S3Util("involveu-clubfiles");
+        byte[] file = bucket.downloadFile("banners/" + club.getClubName() + "/" + fileName);
+
+        HttpHeaders headers = new HttpHeaders();
+
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+            headers.setContentType(MediaType.IMAGE_JPEG);
+        } else if (fileName.endsWith(".png")) {
+            headers.setContentType(MediaType.IMAGE_PNG);
+        } else if (fileName.endsWith(".pdf")) {
+            headers.setContentType(MediaType.APPLICATION_PDF);
+        }
+        
+        headers.setContentDispositionFormData("attachment", fileName);
+
+        return new ResponseEntity<>(file, headers, HttpStatus.OK);
+    }
+
+
+
 
 
 }

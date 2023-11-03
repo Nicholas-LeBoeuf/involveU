@@ -61,13 +61,6 @@ public class EventController extends DBServices{
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-    @GetMapping("events/getEventsByLocation/{location}")
-    private ResponseEntity<List<Events>> getEventsByLocation(@PathVariable("location") String location)
-    {
-        events = getDBEventsByLocation(location);
-
-        return new ResponseEntity<>(events, HttpStatus.OK);
-    }
     @GetMapping("/events/getTopRSVP")
     private ResponseEntity<List<Events>> getTopFavorite()
     {
@@ -210,6 +203,15 @@ public class EventController extends DBServices{
         Events [] events = restTemplate.getForObject(url,Events[].class);
 
         upload25liveEvents(events);
+
+
+//        HttpEntity<CreateTaskInput> request = new HttpEntity<>(headers);
+//        String url = generateUrl("/tasks");
+//
+//        ResponseEntity<TaskItemResponse[]> result = restTemplate.exchange(url, HttpMethod.GET, request, TaskItemResponse[].class);
+//        TaskItemResponse[] tasks = result.getBody();
+//
+//        assert tasks != null;
 
         return new ResponseEntity<>("success", HttpStatus.OK);
 

@@ -60,21 +60,18 @@ public class DBServices {
         System.out.println(users);
         return users;
     }
-    protected List<User> getDBSpecificUser(int userID)
-    {
-        sql = "SELECT * FROM User WHERE StudentID = " + userID + ";";
-        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-
+    protected List<User> getDBSpecificUser(int userID) {
+        String sql = "SELECT * FROM User WHERE StudentID = ?";
+        users = this.JdbcTemplated.query(sql, new Object[]{userID}, BeanPropertyRowMapper.newInstance(User.class));
         return users;
     }
 
-    protected User getDBUserProfile(int userID)
-    {
-        sql = "SELECT firstName, lastName, year, email, pronouns, calendarcolor FROM User WHERE studentID = " + userID + ";";
-        users = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-
-        return users.get(0);
+    protected User getDBUserProfile(int userID) {
+        String sql = "SELECT firstName, lastName, year, email, pronouns, calendarcolor FROM User WHERE studentID = ?";
+        users = JdbcTemplated.query(sql, new Object[]{userID}, BeanPropertyRowMapper.newInstance(User.class));
+        return users.isEmpty() ? null : users.get(0);
     }
+
     protected int insertDBNewUser(User newUser)
     {
         if( checkUserExistence(newUser.getEmail()))
@@ -88,24 +85,19 @@ public class DBServices {
         //Query executes and sends back an integer for error checking
         return validQuery;
     }
-    protected Boolean checkUserExistence(String userEmail)
-    {
-        sql = "SELECT * FROM User WHERE email = '" + userEmail + "'";
-        users  = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-        return users.size() == 0;
+    protected Boolean checkUserExistence(String userEmail) {
+        String sql = "SELECT * FROM User WHERE email = ?";
+        users = this.JdbcTemplated.query(sql, new Object[]{userEmail}, BeanPropertyRowMapper.newInstance(User.class));
+        return users.isEmpty();
     }
-    protected Object DBcheckUserCredentials(String username, String password)
-    {
-        sql = "SELECT * FROM User WHERE email = '" + username + "'";
-        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 
-        //If size of the array is not checked then there will be a Whitelabel error
-        if(users.size() == 1 && users.get(0).getUserPassword().equals(password))
-        {
+    protected Object DBcheckUserCredentials(String username, String password) {
+        String sql = "SELECT * FROM User WHERE email = ?";
+        users = this.JdbcTemplated.query(sql, new Object[]{username}, BeanPropertyRowMapper.newInstance(User.class));
+
+        if (users.size() == 1 && users.get(0).getUserPassword().equals(password)) {
             return users.get(0);
-        }
-        else
-        {
+        } else {
             return "error";
         }
     }
@@ -183,14 +175,14 @@ public class DBServices {
     }
 
     protected List<EBoard> getDBClubEboardMembers(int clubID) {
-        sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID=Eboard.studentID AND clubID = "+ clubID +";";
-        eboardMembers = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(EBoard.class));
-
-        if(eboardMembers.size() > 1)
-         eboardMembers = sortEboardArray(eboardMembers);
-
+        String sql = "SELECT User.studentID, User.firstName, User.lastName, Eboard.eboardPosition FROM User INNER JOIN Eboard ON User.studentID = Eboard.studentID AND Eboard.clubID = ?";
+        eboardMembers = this.JdbcTemplated.query(sql, new Object[]{clubID}, BeanPropertyRowMapper.newInstance(EBoard.class));
+        if (eboardMembers.size() > 1) {
+            eboardMembers = sortEboardArray(eboardMembers);
+        }
         return eboardMembers;
     }
+
     protected List<EBoard> sortEboardArray(List<EBoard> listToSort)
     {
         int indexPresident, indexVPresident;
@@ -261,28 +253,18 @@ public class DBServices {
 
         return users;
     }
-    protected Boolean checkIfClubEboard(int userID)
-    {
-        sql = "SELECT * FROM User WHERE studentID = " + userID + " AND isEboard = 1;";
-        users = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(User.class));
-
-        if(users.isEmpty())
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+    protected Boolean checkIfClubEboard(int userID) {
+        String sql = "SELECT * FROM User WHERE studentID = ? AND isEboard = 1";
+        users = JdbcTemplated.query(sql, new Object[]{userID}, BeanPropertyRowMapper.newInstance(User.class));
+        return !users.isEmpty();
     }
-    protected Club getEboardClub(int userID)
-    {
-        Club foundClub;
-        sql = "SELECT * FROM Club JOIN Eboard WHERE studentID = "+ userID +" AND Club.clubID = Eboard.clubID;";
-        clubs = JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
 
-        return clubs.get(0);
+    protected Club getEboardClub(int userID) {
+        String sql = "SELECT Club.* FROM Club JOIN Eboard ON Club.clubID = Eboard.clubID WHERE Eboard.studentID = ?";
+        clubs = JdbcTemplated.query(sql, new Object[]{userID}, BeanPropertyRowMapper.newInstance(Club.class));
+        return clubs.isEmpty() ? null : clubs.get(0);
     }
+
     protected List<User> getDBNonEboard()
     {
         sql = "SELECT * FROM User WHERE isEboard = 0";
@@ -297,45 +279,25 @@ public class DBServices {
 
         return clubs;
     }
-    protected Club getSpecficClub(int clubID)
-    {
-        sql = "SELECT * FROM Club WHERE ClubID = " + clubID + ";";
-
-        clubs = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(Club.class));
-
-        if (clubs.isEmpty()) {
-
-            return null;
-        }
-        else
-        {
-            return clubs.get(0);
-        }
+    protected Club getSpecficClub(int clubID) {
+        String sql = "SELECT * FROM Club WHERE ClubID = ?";
+        clubs = this.JdbcTemplated.query(sql, new Object[]{clubID}, BeanPropertyRowMapper.newInstance(Club.class));
+        return clubs.isEmpty() ? null : clubs.get(0);
     }
 
-    protected User getUser(int studentID)
-    {
-        sql = "SELECT * FROM User WHERE studentID = " + studentID + ";";
 
-        users = this.JdbcTemplated.query(sql, BeanPropertyRowMapper.newInstance(User.class));
-
-        if (users.isEmpty()) {
-
-            return null;
-        }
-        else
-        {
-            return users.get(0);
-        }
+    protected User getUser(int studentID) {
+        String sql = "SELECT * FROM User WHERE studentID = ?";
+        users = this.JdbcTemplated.query(sql, new Object[]{studentID}, BeanPropertyRowMapper.newInstance(User.class));
+        return users.isEmpty() ? null : users.get(0);
     }
-    protected  Boolean deleteDBClub(int clubID)
-    {
-        sql = "DELETE FROM Club WHERE clubID = ?";
 
-        validQuery = JdbcTemplated.update(sql, clubID);
-
-        return validQuery ==1;
+    protected Boolean deleteDBClub(int clubID) {
+        String sql = "DELETE FROM Club WHERE clubID = ?";
+        int updateCount = JdbcTemplated.update(sql, clubID);
+        return updateCount == 1;
     }
+
 
     protected Boolean insertNewClub(Club newClub)
     {
@@ -414,36 +376,31 @@ public class DBServices {
         return profilePicPath;
     }
 
-    protected List<Club> searchDBClub(String searchContent)
-    {
-        sql = "SELECT * FROM Club WHERE Club.clubName LIKE '%" + searchContent +"%';";
-        clubs = this.JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
-
+    protected List<Club> searchDBClub(String searchContent) {
+        String sql = "SELECT * FROM Club WHERE Club.clubName LIKE ?";
+        clubs = this.JdbcTemplated.query(sql, new Object[]{"%" + searchContent + "%"}, BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;
     }
 
-    protected Boolean submitDBFavorite(int id, int clubID)
-    {
-        sql = "INSERT INTO Favorites (userID, clubID) values (?,?);";
-        validQuery = JdbcTemplated.update(sql,String.valueOf(id),String.valueOf(clubID));
 
-       return validQuery == 1;
+    protected Boolean submitDBFavorite(int id, int clubID) {
+        String sql = "INSERT INTO Favorites (userID, clubID) VALUES (?, ?)";
+        int updateCount = JdbcTemplated.update(sql, id, clubID);
+        return updateCount == 1;
     }
-    protected List<Club> getDBUserFavorites(int userID)
-    {
-        sql = "SELECT Club.clubID, Club.clubName, Club.clubAffiliation, Club.clubBio, Club.clubVision, Club.clubLogo, Club.advisorID FROM Club INNER JOIN Favorites ON Club.ClubID = Favorites.ClubID AND Favorites.UserID = "+userID+";";
 
-        clubs = JdbcTemplated.query(sql,BeanPropertyRowMapper.newInstance(Club.class));
+    protected List<Club> getDBUserFavorites(int userID) {
+        String sql = "SELECT Club.clubID, Club.clubName, Club.clubAffiliation, Club.clubBio, Club.clubVision, Club.clubLogo, Club.advisorID FROM Club INNER JOIN Favorites ON Club.ClubID = Favorites.ClubID WHERE Favorites.UserID = ?";
+        clubs = JdbcTemplated.query(sql, new Object[]{userID}, BeanPropertyRowMapper.newInstance(Club.class));
         return clubs;
     }
-    protected Boolean removeDBFavorite(int clubID, int userID)
-    {
-        sql = "DELETE FROM Favorites WHERE userID = ? AND clubID = ? ;";
 
-        validQuery = JdbcTemplated.update(sql,userID, clubID);
-
-        return validQuery == 1;
+    protected Boolean removeDBFavorite(int clubID, int userID) {
+        String sql = "DELETE FROM Favorites WHERE userID = ? AND clubID = ?";
+        int updateCount = JdbcTemplated.update(sql, userID, clubID);
+        return updateCount == 1;
     }
+
     protected User getDBClubAdvisor(int clubID)
     {
         sql = "SELECT User.firstName, User.LastName FROM User JOIN Club C on C.clubID = " + clubID + "  AND User.studentID = advisorID;";

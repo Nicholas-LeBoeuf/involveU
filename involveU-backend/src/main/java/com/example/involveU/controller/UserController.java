@@ -223,7 +223,7 @@ public class UserController extends DBServices{
 
 		updateUserProfilePicPath(userID, filename);
 
-		return new ResponseEntity<>("Success", HttpStatus.OK);
+		return new ResponseEntity<>("true", HttpStatus.OK);
 	}
 
 	@GetMapping("/user/uploadProfilePicturesForAll")

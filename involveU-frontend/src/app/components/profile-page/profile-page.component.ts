@@ -5,6 +5,7 @@ import { DialogModule } from 'primeng/dialog';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CalendarComponent} from "../calendar/calendar.component";
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { ToastrService } from 'ngx-toastr';
 
 import {ProfileService} from "../../services/profile.service";
 
@@ -16,9 +17,11 @@ import {ProfileService} from "../../services/profile.service";
 export class ProfilePageComponent implements OnInit {
 
 
-  constructor(public cookie: CookieService,
-              public profileService: ProfileService) {
-  }
+  constructor(
+    public cookie: CookieService,
+    public profileService: ProfileService,
+    private toastr: ToastrService
+  ) {}
 
   viewChangePasswordDialog: boolean = false;
   userCalendarColor: string;
@@ -36,7 +39,6 @@ export class ProfilePageComponent implements OnInit {
     this.getUserCalendarOptions();
     this.changeUserCalendarColors();
   }
-
 
   isUserLoggedIn() {
     this.isLoggedIn = this.userID !== 0;
@@ -127,15 +129,29 @@ export class ProfilePageComponent implements OnInit {
 
       this.profileService.uploadProfilePicture(this.userID, formData)
         .subscribe(
-          () => {
+          response => {
             console.log('Profile picture uploaded!');
+            this.toastr.success('Your photo has been successfully uploaded!');
+
+            // Reset the file input
+            this.resetFileInput();
           },
           error => {
             console.error("Error during upload:", error);
+            this.toastr.error('There was an error uploading your photo.');
           }
         );
     } else {
       console.log('No file selected');
+      this.toastr.warning('Please select a file to upload.');
     }
   }
+
+  private resetFileInput() {
+    let fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
 }

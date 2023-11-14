@@ -41,5 +41,4 @@ export class ProfileService {
   uploadProfilePicture(userID: number, formData: FormData) {
     return this.http.put(environment.apiURL + `user/uploadProfilePicture/${userID}`, formData);
   }
-
 }

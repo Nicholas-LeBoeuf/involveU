@@ -14,7 +14,7 @@
   <ng-container>
         <div class="text-center divA profile-picture-container">
           <img class="profile-picture" src="blahblah.jpg" alt="Profile Image" class="profile-image">
-          <input type="file" (change)="onFileSelected($event)" *ngIf="isLoggedIn"/>
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" *ngIf="isLoggedIn"/>
           <button class="yellowButton" (click)="uploadProfilePicture()" *ngIf="isLoggedIn">Upload Image</button>
           <img *ngIf="selectedFile" alt="Selected Image">
           <h2 class="blueHeaders accountPadding">Account Information:</h2>

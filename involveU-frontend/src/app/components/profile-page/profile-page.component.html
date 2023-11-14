@@ -12,73 +12,62 @@
 </div>
 
   <ng-container>
-        <div class="text-center divA profile-picture-container">
-          <img class="profile-picture" src="blahblah.jpg" alt="Profile Image" class="profile-image">
-          <input type="file" id="fileInput" (change)="onFileSelected($event)" *ngIf="isLoggedIn"/>
-          <button class="yellowButton" (click)="uploadProfilePicture()" *ngIf="isLoggedIn">Upload Image</button>
-          <img *ngIf="selectedFile" alt="Selected Image">
-          <h2 class="blueHeaders accountPadding">Account Information:</h2>
-            <div class="input-container">
-              <h4>
-                <i class="fa fa-user icon"></i>
-                <input class="input-field p-disabled"  [disabled]="disableInputFields" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
-              </h4>
-            </div>
-          <div class="input-container">
-            <h4>
-              <i class="fa fa-smile icon"></i>
-              <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.pronouns" (change)="updatePronouns()" type="text" placeholder="Pronouns" name="pnouns">
-            </h4>
-          </div>
-          <div class="input-container">
-            <h4>
-              <i class="fa fa-graduation-cap icon"></i>
-              <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.year" (change)="changeYear()" type="text" placeholder="Current Year" name="currYear">
-            </h4>
-          </div>
-          <div class="input-container">
-            <h4>
-              <i class="fa fa-envelope icon"></i>
-              <input class="input-field p-disabled" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
-            </h4>
-            <h4 class="blueHeaders accountPadding">Calendar Color Settings:
-              <p-colorPicker [(ngModel)]="userCalendarColor"></p-colorPicker>
-            </h4>
-          </div>
-          <button id="edit" class="editProfile yellowButton" (click)="this.disableInputFields = !this.disableInputFields">Edit Profile</button>
-<!--          <button class="saveInfo yellowButton" type="submit">Save</button>-->
-        <button (click)="openViewChangePasswordDialog()" class="editProfile yellowButton" >Change Password</button>
-        <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw', height: '52vh'}" [modal]="true" [dismissableMask]="true" (onHide)="closeViewChangePasswordDialog()">
-          <div class="changePasswordDialog divA">
-            <div class="input-container">
-              <h4>
-                <label>Old Password:</label> &nbsp;
-                <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.userPassword">
-              </h4>
-            </div>
-              <div class="input-container">
-                <h4>
-                  <label>New Password:</label> &nbsp;
-                  <input class="input-field" [disabled]="disableInputFields" >
-                </h4>
-              </div>
-                <div class="input-container">
-                  <h4>
-                    <label>Repeat New Password:</label> &nbsp;
-                    <input class="input-field" [disabled]="disableInputFields" >
-                  </h4>
-                </div>
-            </div>
-            <button class="blueButton">Change Password</button>
-            <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
-        </p-dialog>
+    <div class="text-center divA profile-picture-container">
+
+      <!-- Styled file input label -->
+      <!-- Use label with the same class as the upload button -->
+      <!-- ... -->
+      <label for="fileInput" class="yellowButton" *ngIf="isLoggedIn">
+        Choose File
+      </label>
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" *ngIf="isLoggedIn" hidden>
+      <button class="yellowButton" (click)="uploadProfilePicture()" *ngIf="isLoggedIn">Upload Image</button>
+      <!-- ... -->
+
+
+
+      <!-- Removed the "Selected Image" display -->
+
+      <h2 class="blueHeaders accountPadding">Account Information:</h2>
+      <div class="input-container">
+        <h4>
+          <i class="fa fa-user icon"></i>
+          <input class="input-field p-disabled" [disabled]="disableInputFields" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
+        </h4>
+      </div>
+      <div class="input-container">
+        <h4>
+          <i class="fa fa-smile icon"></i>
+          <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.pronouns" (change)="updatePronouns()" type="text" placeholder="Pronouns" name="pnouns">
+        </h4>
+      </div>
+      <div class="input-container">
+        <h4>
+          <i class="fa fa-graduation-cap icon"></i>
+          <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.year" (change)="changeYear()" type="text" placeholder="Current Year" name="currYear">
+        </h4>
+      </div>
+      <div class="input-container">
+        <h4>
+          <i class="fa fa-envelope icon"></i>
+          <input class="input-field p-disabled" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
+        </h4>
+        <h4 class="blueHeaders accountPadding">Calendar Color Settings:
+          <p-colorPicker [(ngModel)]="userCalendarColor"></p-colorPicker>
+        </h4>
+      </div>
+      <button id="edit" class="editProfile yellowButton" (click)="this.disableInputFields = !this.disableInputFields">Edit Profile</button>
+      <button (click)="openViewChangePasswordDialog()" class="editProfile yellowButton">Change Password</button>
+
+      <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw', height: '52vh'}" [modal]="true" [dismissableMask]="true" (onHide)="closeViewChangePasswordDialog()">
+        <div class="changePasswordDialog divA">
+          <!-- Change password form elements -->
+          <!-- ... -->
         </div>
-  </ng-container>
-
-  <ng-container>
-    <div class="card fa-align-right"></div>
-
-
+        <button class="blueButton">Change Password</button>
+        <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
+      </p-dialog>
+    </div>
   </ng-container>
 
 </ng-template>

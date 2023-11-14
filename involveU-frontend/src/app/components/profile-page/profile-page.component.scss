@@ -48,13 +48,16 @@
 .profile-picture-container {
   flex-shrink: 0;
   margin-right: 2px;
+  margin-top: 20px;
+
 }
 
 .profile-picture {
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 175px;
+  height: 175px;
   object-fit: cover;
+  margin-bottom: 0;
 }
 
 .yellowButton, .custom-file-upload {
@@ -95,10 +98,15 @@
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
-  padding: 6px 12px;
+  padding: 10px 12px;
   cursor: pointer;
   border-radius: 5px;
   background-color: #FFC107;
+}
+
+.pfp {
+  text-align: center;
+  padding-top: 10px;
 }
 
 

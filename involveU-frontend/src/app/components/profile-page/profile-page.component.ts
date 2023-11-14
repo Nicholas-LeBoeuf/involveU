@@ -8,6 +8,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { ToastrService } from 'ngx-toastr';
 
 import {ProfileService} from "../../services/profile.service";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile-page',
@@ -16,10 +17,12 @@ import {ProfileService} from "../../services/profile.service";
 })
 export class ProfilePageComponent implements OnInit {
   fileInputLabel: string = 'Choose File';
+  userProfileImageUrl: SafeUrl | null = null;
   constructor(
     public cookie: CookieService,
     public profileService: ProfileService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sanitizer: DomSanitizer
   ) {}
 
   viewChangePasswordDialog: boolean = false;
@@ -37,6 +40,7 @@ export class ProfilePageComponent implements OnInit {
     this.getUserInfo();
     this.getUserCalendarOptions();
     this.changeUserCalendarColors();
+    this.loadUserProfileImage();
   }
 
   isUserLoggedIn() {
@@ -162,4 +166,20 @@ export class ProfilePageComponent implements OnInit {
     }
   }
 
+  loadUserProfileImage() {
+    if (this.userID) {
+      this.profileService.downloadUserProfilePicture(this.userID)
+        .subscribe(
+          fileData => {
+            // If the response is an ArrayBuffer, you need to convert it to a Blob
+            let blob = new Blob([fileData], { type: 'image/jpeg' });
+            let objectURL = URL.createObjectURL(blob);
+            this.userProfileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          },
+          error => {
+            console.error("Error loading user profile image:", error);
+          }
+        );
+    }
+  }
 }

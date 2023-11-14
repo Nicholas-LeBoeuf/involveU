@@ -12,6 +12,9 @@
 </div>
 
   <ng-container>
+    <div class="pfp">
+      <img *ngIf="userProfileImageUrl" [src]="userProfileImageUrl" alt="Profile Picture" class="profile-picture">
+    </div>
     <div class="text-center divA profile-picture-container">
       <label for="fileInput" class="yellowButton" *ngIf="isLoggedIn">
         {{ fileInputLabel }}

@@ -34,11 +34,11 @@ export class ProfileService {
     return this.http.get<User>(environment.apiURL + `user/checkPassword/${UserID}/${password}`);
   }
 
-  downloadUserProfilePicture(userID: number) {
-    return this.http.get(environment.apiURL + `user/getProfilePicture/{userID}`, {responseType: 'arraybuffer'});
-  }
-
   uploadProfilePicture(userID: number, formData: FormData) {
     return this.http.put(environment.apiURL + `user/uploadProfilePicture/${userID}`, formData);
+  }
+
+  downloadUserProfilePicture(userID: number): Observable<Blob> {
+    return this.http.get(`${environment.apiURL}/user/getProfilePicture/${userID}`, { responseType: 'blob' });
   }
 }

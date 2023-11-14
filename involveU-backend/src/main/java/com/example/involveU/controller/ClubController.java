@@ -337,7 +337,7 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
         } else if (fileName.endsWith(".pdf")) {
             headers.setContentType(MediaType.APPLICATION_PDF);
         }
-        
+
         headers.setContentDispositionFormData("attachment", fileName);
 
         return new ResponseEntity<>(file, headers, HttpStatus.OK);

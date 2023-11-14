@@ -38,10 +38,8 @@ export class ProfileService {
     return this.http.get(environment.apiURL + `user/getProfilePicture/{userID}`, {responseType: 'arraybuffer'});
   }
 
-  uploadProfilePicture(userID: number, file: File) {
-    const formData: FormData = new FormData();
-    formData.append('file', file, file.name);
-
-    return this.http.put(environment.apiURL + `user/uploadProfilePicture/{userID}`, formData);
+  uploadProfilePicture(userID: number, formData: FormData) {
+    return this.http.put(environment.apiURL + `user/uploadProfilePicture/${userID}`, formData);
   }
+
 }

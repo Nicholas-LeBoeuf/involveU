@@ -115,17 +115,27 @@ export class ProfilePageComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    this.selectedFile = event.start.files[0];
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
   }
 
   uploadProfilePicture() {
-    if (this.selectedFile) this.profileService.uploadProfilePicture(this.userID, this.selectedFile).subscribe(() => {
-        console.log('Profile picture uploaded!');
-        this.getUserInfo();
-      },
-      error => {
-        console.error("error", error);
-      }
-    )
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+
+      this.profileService.uploadProfilePicture(this.userID, formData)
+        .subscribe(
+          () => {
+            console.log('Profile picture uploaded!');
+          },
+          error => {
+            console.error("Error during upload:", error);
+          }
+        );
+    } else {
+      console.log('No file selected');
+    }
   }
 }

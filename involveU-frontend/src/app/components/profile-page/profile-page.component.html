@@ -13,21 +13,11 @@
 
   <ng-container>
     <div class="text-center divA profile-picture-container">
-
-      <!-- Styled file input label -->
-      <!-- Use label with the same class as the upload button -->
-      <!-- ... -->
       <label for="fileInput" class="yellowButton" *ngIf="isLoggedIn">
-        Choose File
+        {{ fileInputLabel }}
       </label>
       <input type="file" id="fileInput" (change)="onFileSelected($event)" *ngIf="isLoggedIn" hidden>
       <button class="yellowButton" (click)="uploadProfilePicture()" *ngIf="isLoggedIn">Upload Image</button>
-      <!-- ... -->
-
-
-
-      <!-- Removed the "Selected Image" display -->
-
       <h2 class="blueHeaders accountPadding">Account Information:</h2>
       <div class="input-container">
         <h4>
@@ -61,14 +51,11 @@
 
       <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw', height: '52vh'}" [modal]="true" [dismissableMask]="true" (onHide)="closeViewChangePasswordDialog()">
         <div class="changePasswordDialog divA">
-          <!-- Change password form elements -->
-          <!-- ... -->
         </div>
         <button class="blueButton">Change Password</button>
         <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
       </p-dialog>
     </div>
   </ng-container>
-
 </ng-template>
 

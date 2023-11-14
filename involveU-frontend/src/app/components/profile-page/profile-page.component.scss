@@ -1,6 +1,5 @@
 @import "src/styles";
 
-
 .div {
   margin-top: 50px;
   margin-left: 50px;
@@ -47,8 +46,8 @@
 }
 
 .profile-picture-container {
-  flex-shrink: 0; /* Don't allow the picture to shrink */
-  margin-right: 2px; /* Add some spacing between the picture and account information */
+  flex-shrink: 0;
+  margin-right: 2px;
 }
 
 .profile-picture {
@@ -66,10 +65,10 @@
   padding: 0 20px;
   margin: 10px;
   color: $HeritageBlue;
-  font-weight: 350; /* Adjust font-weight as needed */
+  font-weight: 350;
   transition: all ease-in-out 200ms;
-  display: inline-block; /* Added to make label display like a button */
-  line-height: 40px; /* Adjust line height to vertically center the text in the button */
+  display: inline-block;
+  line-height: 40px;
 }
 
 .yellowButton:hover, .custom-file-upload:hover {
@@ -82,14 +81,10 @@
   cursor: pointer;
 }
 
-/* Apply the yellowHover class if it includes important styles */
 .yellowHover:hover {
-  background-color: #fdcb54 !important; /* Example hover color */
+  background-color: #fdcb54 !important;
   color: $HeritageBlue !important;
 }
-
-
-
 
 .custom-file-upload {
   display: inline-block;
@@ -97,15 +92,13 @@
   cursor: pointer;
 }
 
-// Style the "Choose File" button to look like your "Upload Image" button
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
   border-radius: 5px;
-  background-color: #FFC107; // Adjust to match your theme
-  // Add any additional styling to match the "Upload Image" button
+  background-color: #FFC107;
 }
 
 

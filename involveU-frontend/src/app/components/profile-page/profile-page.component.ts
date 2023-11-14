@@ -15,8 +15,7 @@ import {ProfileService} from "../../services/profile.service";
   styleUrls: ['./profile-page.component.scss']
 })
 export class ProfilePageComponent implements OnInit {
-
-
+  fileInputLabel: string = 'Choose File';
   constructor(
     public cookie: CookieService,
     public profileService: ProfileService,
@@ -55,7 +54,6 @@ export class ProfilePageComponent implements OnInit {
       (error) => {
         console.log(error)
       });
-
 
     this.currentUser = {
       studentID: +this.cookie.get('studentID'),
@@ -116,9 +114,15 @@ export class ProfilePageComponent implements OnInit {
     this.viewChangePasswordDialog = false;
   }
 
-  onFileSelected(event) {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+  onFileSelected(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    let fileList: FileList | null = element.files;
+    if (fileList && fileList.length > 0) {
+      this.selectedFile = fileList[0];
+      this.fileInputLabel = this.selectedFile.name;
+    } else {
+      this.fileInputLabel = 'Choose File';
+      this.selectedFile = null;
     }
   }
 
@@ -133,8 +137,9 @@ export class ProfilePageComponent implements OnInit {
             console.log('Profile picture uploaded!');
             this.toastr.success('Your photo has been successfully uploaded!');
 
-            // Reset the file input
+            // Reset the file input and label after successful upload
             this.resetFileInput();
+            this.fileInputLabel = 'Choose File';
           },
           error => {
             console.error("Error during upload:", error);

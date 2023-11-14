@@ -122,7 +122,7 @@ export class ProfilePageComponent implements OnInit {
       this.fileInputLabel = this.selectedFile.name;
     } else {
       this.fileInputLabel = 'Choose File';
-      this.selectedFile = null;
+      this.resetFileInput();
     }
   }
 
@@ -136,6 +136,7 @@ export class ProfilePageComponent implements OnInit {
           response => {
             console.log('Profile picture uploaded!');
             this.toastr.success('Your photo has been successfully uploaded!');
+            this.resetFileInput();
 
             // Reset the file input and label after successful upload
             this.resetFileInput();
@@ -156,6 +157,8 @@ export class ProfilePageComponent implements OnInit {
     let fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
+      this.selectedFile = null;
+      this.fileInputLabel = 'Choose File';
     }
   }
 

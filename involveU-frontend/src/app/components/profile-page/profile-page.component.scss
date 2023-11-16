@@ -25,17 +25,36 @@
   margin-bottom: 15px;
 }
 
-.input-field {
+.input-field, .input-field select {
   width: 30%;
   padding: 10px;
   outline: none;
+  border: 2px;
   border-style: inset;
   border-radius: 20px;
   border-color: $HeritageBlue;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: white;
+  cursor: pointer;
 }
 
 .input-field:focus {
-  border: 2xp solid $HeritageBlue;
+  border: 2px solid $HeritageBlue;
+}
+
+.input-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.input-field:disabled {
+  color: Black !important;
 }
 
 .icon {

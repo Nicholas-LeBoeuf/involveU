@@ -25,7 +25,7 @@
       <div class="input-container">
         <h4>
           <i class="fa fa-user icon"></i>
-          <input class="input-field p-disabled" [disabled]="disableInputFields" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
+          <input class="input-field" disabled="true" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
         </h4>
       </div>
       <div class="input-container">
@@ -37,13 +37,18 @@
       <div class="input-container">
         <h4>
           <i class="fa fa-graduation-cap icon"></i>
-          <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.year" (change)="changeYear()" type="text" placeholder="Current Year" name="currYear">
+          <select class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.year" (change)="changeYear()">
+            <option value="Freshman">Freshman</option>
+            <option value="Sophomore">Sophomore</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+          </select>
         </h4>
       </div>
       <div class="input-container">
         <h4>
           <i class="fa fa-envelope icon"></i>
-          <input class="input-field p-disabled" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
+          <input class="input-field" disabled="true" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
         </h4>
         <h4 class="blueHeaders accountPadding">Calendar Color Settings:
           <p-colorPicker [(ngModel)]="userCalendarColor"></p-colorPicker>

@@ -63,8 +63,10 @@ export class SpecificClubPageComponent implements OnInit {
   clubAnnouncements: Announcement[] = [];
   clubSocialMedia: SocialMedia[] = [];
   certainAnnouncement: Announcement[] = [];
+  favoritedUsers: User[] = [];
 
   @ViewChild('clubEventTable') clubEventTable: Table;
+
 
 
   ngOnInit(): void {

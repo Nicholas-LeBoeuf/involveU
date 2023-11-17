@@ -51,7 +51,7 @@ export class ClubPageComponent implements OnInit {
   //OBJECTS or ARRAYS
   allClubs: Club[] = [];
   favoritedClubs: Club[] = [];
-  featuredClubs: Club[] = [];
+  featuredClubs: Club[] = [];nu
   favoritedClubsEvents: Events[] = [];
   allFutureEvents: Events[] = [];
   certainEvent: Events[] = [];

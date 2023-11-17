@@ -13,6 +13,9 @@ import {ResponsiveService} from "../../services/responsive.service";
 import {Club} from "../../objects/club";
 import {ClubService} from "../../services/club.service";
 import {Router} from "@angular/router";
+import {Events} from "../../objects/events";
+import {timeout} from "rxjs";
+import {EventsService} from "../../services/events.service";
 
 @Component({
   selector: 'app-profile-page',
@@ -30,6 +33,7 @@ export class ProfilePageComponent implements OnInit {
     public responsiveService: ResponsiveService,
     private clubService: ClubService,
     private router: Router,
+    private eventsService: EventsService
   ) {}
 
   viewChangePasswordDialog: boolean = false;
@@ -41,9 +45,16 @@ export class ProfilePageComponent implements OnInit {
   userProfileInfo: User;
   selectedFile: File;
   userFirstName: string;
+  userRSVPdEvents: Events[] = [];
+  certainEvent: Events[] = [];
+  viewMoreInfoDialog: boolean = false;
+  loading: boolean = true;
+  isLoading: boolean = true;
+  numberOfRows: number;
   favoritedClubs: Club[] = [];
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userID = +this.cookie.get('studentID');
     this.userFirstName = this.cookie.get('studentFName');
     this.userFirstName = this.userFirstName.replace(/['"]/g, '');
@@ -53,6 +64,19 @@ export class ProfilePageComponent implements OnInit {
     this.changeUserCalendarColors();
     this.loadUserProfileImage();
     this.getUsersFavoritedClubs();
+    /*this.getUserRSVPdEvents();*/
+
+    if (this.responsiveService.deviceDesktop()) {
+      this.numberOfRows = 2;
+    }
+    else {
+      this.numberOfRows = 1;
+    }
+    this.loading = false;
+
+    setTimeout(() => {
+      this.isLoading = false;
+    },1000);
   }
 
   isUserLoggedIn() {
@@ -176,7 +200,7 @@ export class ProfilePageComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-      })
+      });
   }
 
   removeFromFavorites(clubID: number) {
@@ -196,5 +220,36 @@ export class ProfilePageComponent implements OnInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+
+  /*removeEventRSVP(eventID: number) {
+    this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
+      },
+      error => {
+        console.log(error);
+        this.toastr.error('Unsuccessful Remove RSVP Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        location.reload();
+      });
+  }
+
+  /*getUserRSVPdEvents() {
+    this.eventsService.getUserFutureRSVPdEvents(this.userID).subscribe(response => {
+      this.userRSVPdEvents = response;
+      for(let i = 0; i < this.userRSVPdEvents.length; i++) {
+        this.clubService.getClubLogo(this.userRSVPdEvents[i].clubID).subscribe(logo => {
+          const reader = new FileReader();
+          reader.onload = (e) => this.userRSVPdEvents[i].clubLogo = e.target.result;
+          reader.readAsDataURL(new Blob([logo]));
+          this.userRSVPdEvents[i].clubLogo = logo;
+        })
+      }
+    })
+  } */
 
 }

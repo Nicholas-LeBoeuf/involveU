@@ -52,6 +52,7 @@ import {ToastrModule} from "ngx-toastr";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import {ColorPickerModule} from "primeng/colorpicker";
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -81,6 +82,7 @@ FullCalendarModule.registerPlugins([
     PreTripAgendaComponent,
     TripPlanningGuideComponent,
     ProfilePageComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

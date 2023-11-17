@@ -9,6 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 
 import {ProfileService} from "../../services/profile.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ResponsiveService} from "../../services/responsive.service";
+import {Club} from "../../objects/club";
+import {ClubService} from "../../services/club.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile-page',
@@ -22,7 +26,10 @@ export class ProfilePageComponent implements OnInit {
     public cookie: CookieService,
     public profileService: ProfileService,
     private toastr: ToastrService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public responsiveService: ResponsiveService,
+    private clubService: ClubService,
+    private router: Router,
   ) {}
 
   viewChangePasswordDialog: boolean = false;
@@ -33,14 +40,19 @@ export class ProfilePageComponent implements OnInit {
   currentUser: User;
   userProfileInfo: User;
   selectedFile: File;
+  userFirstName: string;
+  favoritedClubs: Club[] = [];
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
+    this.userFirstName = this.cookie.get('studentFName');
+    this.userFirstName = this.userFirstName.replace(/['"]/g, '');
     this.isUserLoggedIn();
     this.getUserInfo();
     this.getUserCalendarOptions();
     this.changeUserCalendarColors();
     this.loadUserProfileImage();
+    this.getUsersFavoritedClubs();
   }
 
   isUserLoggedIn() {
@@ -78,32 +90,6 @@ export class ProfilePageComponent implements OnInit {
 
   }
 
-
-  disableInputField() {
-
-  }
-
-  updatePronouns() {
-
-    this.profileService.changeUserPronouns(this.userID, this.userProfileInfo.pronouns).subscribe((response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error)
-      },
-      () => {
-        this.getUserInfo();
-      });
-
-
-  }
-
-  changeYear() {
-    this.profileService.changeUserYear(this.userID, this.userProfileInfo.year).subscribe((response: string) => {
-      this.getUserInfo()
-    })
-  }
-
   updateUserCalendarColor(event: any) {
     // this.profileService.changeUserCalendarColorSettings(this.UserID, )
   }
@@ -124,6 +110,7 @@ export class ProfilePageComponent implements OnInit {
     if (fileList && fileList.length > 0) {
       this.selectedFile = fileList[0];
       this.fileInputLabel = this.selectedFile.name;
+      this.uploadProfilePicture();
     } else {
       this.fileInputLabel = 'Choose File';
       this.resetFileInput();
@@ -182,4 +169,32 @@ export class ProfilePageComponent implements OnInit {
         );
     }
   }
+
+  getUsersFavoritedClubs() {
+    this.clubService.getUsersFavoritedClubs(+this.cookie.get('studentID')).subscribe(response => {
+        this.favoritedClubs = response;
+      },
+      (error) => {
+        console.log(error);
+      })
+  }
+
+  removeFromFavorites(clubID: number) {
+    this.clubService.unfavoriteClub(clubID, this.userID).subscribe( response => {
+
+      },
+      error => {
+        this.toastr.error('Unsuccessful Unfavorite Club Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      },
+      () => {
+        this.toastr.success('Successfully Unfavorited Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.getUsersFavoritedClubs();
+      });
+  }
+
+  goToClubPage(clubID: number) {
+    this.router.navigate(['/clubs/' + clubID]).then();
+  }
+
+
 }

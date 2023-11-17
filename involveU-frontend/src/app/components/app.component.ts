@@ -10,6 +10,8 @@ import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
 import { SHA256, enc } from "crypto-js";
 import {ToastrService} from "ngx-toastr";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ProfileService} from "../services/profile.service";
 
 @Component({
   selector: 'app-root',
@@ -32,7 +34,7 @@ export class AppComponent {
               private clubService: ClubService,
               private router: Router,
               private toastr: ToastrService,
-              public responsiveService: ResponsiveService) {
+              public responsiveService: ResponsiveService,) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -404,4 +406,5 @@ export class AppComponent {
       return false;
     }
   }
+
 }

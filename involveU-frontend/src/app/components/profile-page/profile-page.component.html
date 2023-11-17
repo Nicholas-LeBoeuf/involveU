@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-template #UserIsLoggedIn>
-<div class="blueTitleBar profilePadding">
+<div class="blueTitleBar">
   <div class="text-center">
     <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
       <h1 class="yellow-text">{{this.currentUser.firstName}}'s Profile!</h1>
@@ -11,59 +11,68 @@
   </div>
 </div>
 
-  <ng-container>
-    <div class="pfp">
-      <img *ngIf="userProfileImageUrl" [src]="userProfileImageUrl" alt="Profile Picture" class="profile-picture">
-    </div>
-    <div class="text-center divA profile-picture-container">
-      <label for="fileInput" class="yellowButton" *ngIf="isLoggedIn">
-        {{ fileInputLabel }}
-      </label>
-      <input type="file" id="fileInput" (change)="onFileSelected($event)" *ngIf="isLoggedIn" hidden>
-      <button class="yellowButton" (click)="uploadProfilePicture()" *ngIf="isLoggedIn">Upload Image</button>
-      <h2 class="blueHeaders accountPadding">Account Information:</h2>
-      <div class="input-container">
-        <h4>
-          <i class="fa fa-user icon"></i>
-          <input class="input-field" disabled="true" value="{{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}" placeholder="First and Last name" name="flname">
-        </h4>
-      </div>
-      <div class="input-container">
-        <h4>
-          <i class="fa fa-smile icon"></i>
-          <input class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.pronouns" (change)="updatePronouns()" type="text" placeholder="Pronouns" name="pnouns">
-        </h4>
-      </div>
-      <div class="input-container">
-        <h4>
-          <i class="fa fa-graduation-cap icon"></i>
-          <select class="input-field" [disabled]="disableInputFields" [(ngModel)]="this.userProfileInfo.year" (change)="changeYear()">
-            <option value="Freshman">Freshman</option>
-            <option value="Sophomore">Sophomore</option>
-            <option value="Junior">Junior</option>
-            <option value="Senior">Senior</option>
-          </select>
-        </h4>
-      </div>
-      <div class="input-container">
-        <h4>
-          <i class="fa fa-envelope icon"></i>
-          <input class="input-field" disabled="true" value="{{this.userProfileInfo.email}}" type="email" placeholder="Email" name="email">
-        </h4>
-        <h4 class="blueHeaders accountPadding">Calendar Color Settings:
-          <p-colorPicker [(ngModel)]="userCalendarColor"></p-colorPicker>
-        </h4>
-      </div>
-      <button id="edit" class="editProfile yellowButton" (click)="this.disableInputFields = !this.disableInputFields">Edit Profile</button>
-      <button (click)="openViewChangePasswordDialog()" class="editProfile yellowButton">Change Password</button>
+  <div class="layout-container">
+    <div class="sidebar-container">
 
-      <p-dialog header="Header" [(visible)]="viewChangePasswordDialog" [style]="{width: '50vw', height: '52vh'}" [modal]="true" [dismissableMask]="true" (onHide)="closeViewChangePasswordDialog()">
-        <div class="changePasswordDialog divA">
-        </div>
-        <button class="blueButton">Change Password</button>
-        <button class="blueButton" (click)="closeViewChangePasswordDialog()">Cancel</button>
-      </p-dialog>
+    <div class="profile-picture-container">
+      <input type="file" id="pfp" name="pfp" accept="image/*" (change)="onFileSelected($event)"
+           style="display: none;">
+      <label for="pfp" class="profile-picture-label">
+        <img [src]="userProfileImageUrl || 'assets/account.svg'" alt="Profile Picture" id="profilePic" />
+      </label>
+      <div *ngIf="fileInputLabel !== 'Choose File'">{{ fileInputLabel }}</div>
     </div>
-  </ng-container>
+
+
+  <div class="name-pronouns-info">
+    <h2 class="name-display text-center">
+      {{this.userProfileInfo.firstName}} {{this.userProfileInfo.lastName}}
+      <span class="p-display pronouns"> {{this.userProfileInfo.pronouns}}</span>
+    </h2>
+  </div>
+  <div class="year-major">
+  <h2 class="year-major-display">{{this.userProfileInfo.year}} | Computer Science</h2>
+  </div>
+  <div class="email">
+    <h2 class="email-display">{{this.userProfileInfo.email}}</h2>
+  </div>
+
+  <div class="bio-card">
+    <h2 class="bio-title yellow-text">About Me:</h2>
+    <h2 class="bio-card-content"> I am a graduating senior studying computer science. I love my friends and family.
+      I play video games and enjoy learning about software engineering and artifical intelligence. My favorite class
+      right now is obviously CS-413 Capstone. I am also the treasurer of the Computer Science Student Association!
+      Hope you all are having a great year :) </h2>
+  </div>
+
+</div>
+
+    <div class="main-content">
+      <div *ngIf="userID !== 0;">
+        <h2 class="blueHeaders club-title-padding">Favorite Clubs</h2>
+        <ng-container *ngIf="favoritedClubs.length !== 0; else NoFavoritedClubs">
+        <p-table styleClass="favoritedClubsTable" [value]="favoritedClubs" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="text-center">Club</th>
+              <th class="text-center">View Club</th>
+              <th class="text-center">Unfavorite Club</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-club>
+            <tr>
+              <td class="text-center" [innerHTML]="club.clubName"></td>
+              <td class="text-center"><button class="blueButton" (click)="goToClubPage(club.clubID)">View</button></td>
+              <td class="text-center"><button class="blueButton" (click)="removeFromFavorites(club.clubID)">Unfavorite</button></td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-container>
+      <ng-template #NoFavoritedClubs>
+        <h3 class="club-title-padding">You currently have no favorited clubs to show!</h3>
+      </ng-template>
+  </div>
+  </div>
+  </div>
 </ng-template>
 

@@ -5,122 +5,122 @@
   margin-left: 50px;
 }
 
-.divA {
-  margin-top: 50px;
-}
-
-.accountPadding {
-  padding-top: 12px;
-  padding-bottom: 15px;
-}
-
 .profilePadding {
   padding-top: 30px;
   padding-bottom: 30px;
 }
 
-.input-container {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 15px;
+.blueTitleBar {
+  padding-top: 10px;
+  height: 100px;
 }
 
-.input-field, .input-field select {
-  width: 30%;
-  padding: 10px;
-  outline: none;
-  border: 2px;
-  border-style: inset;
-  border-radius: 20px;
-  border-color: $HeritageBlue;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: white;
-  cursor: pointer;
+.layout-container {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
-.input-field:focus {
-  border: 2px solid $HeritageBlue;
+.main-content {
+  padding-top: 40px;
+  flex-grow: 1;
 }
 
-.input-field select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-position: right 10px center;
-  background-size: 12px;
-  cursor: pointer;
+.club-title-padding {
+  padding-left: 75px;
 }
 
-.input-field:disabled {
-  color: Black !important;
+::ng-deep .favoritedClubsTable {
+  margin-bottom: 1.5rem !important;
+  width: 90%;
+  padding-left: 75px;
 }
 
-.icon {
-  padding: 10px;
-  color: $HeritageBlue;
-  min-width: 50px;
-  text-align: center;
+.sidebar-container {
+  top: 167px; /* Adjust this value to the height of your title bar */
+  left: 0;
+  bottom: 0;
+  width: 450px; /* Width of the sidebar */
+  height: calc(100% - 50px); /* Full height minus the title bar height */
+  color: white;
+  background-color: $HeritageBlue; /* Sidebar background color */
+  overflow-y: auto; /* Allows scrolling of sidebar content */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: adds shadow to the sidebar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-picture-container {
-  flex-shrink: 0;
-  margin-right: 2px;
-  margin-top: 20px;
-
+  padding-top: 25px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.profile-picture {
-  border-radius: 50%;
-  width: 175px;
-  height: 175px;
+.profile-picture-container img {
+  width: 180px;
+  height: 180px;
+  border-radius: 100%;
   object-fit: cover;
-  margin-bottom: 0;
-}
-
-.yellowButton, .custom-file-upload {
-  background-color: $GoldenYellow;
-  border: none;
-  border-radius: 14px;
-  height: 40px;
-  padding: 0 20px;
-  margin: 10px;
-  color: $HeritageBlue;
-  font-weight: 350;
-  transition: all ease-in-out 200ms;
-  display: inline-block;
-  line-height: 40px;
-}
-
-.yellowButton:hover, .custom-file-upload:hover {
-  background-color: $HeritageBlue;
-  color: $GoldenYellow;
-}
-
-/* Ensure this only applies to the label and not the actual file input */
-.custom-file-upload {
   cursor: pointer;
 }
 
-.yellowHover:hover {
-  background-color: #fdcb54 !important;
-  color: $HeritageBlue !important;
+.profile-picture-label img{
+  display: block;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid $GoldenYellow;
 }
 
-.custom-file-upload {
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
+input[type="file"] {
+  display: none;
 }
 
-.custom-file-upload {
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 10px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  background-color: #FFC107;
+.name-pronouns-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name-display {
+  font-size: 2em;
+}
+
+.p-display {
+  font-size: 0.6em;
+  color: lightgray;
+}
+
+.year-major-display {
+  font-size: 1.6em;
+}
+
+.email-display {
+  font-size: 1.4em;
+}
+
+.bio-card {
+  background-color: #1d437d; /* Or any color you prefer */
+  border-radius: 3px; /* Rounded corners */
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  padding: 20px; /* Space inside the card */
+  margin: 20px 0; /* Spacing outside the card */
+  max-width: 400px;
+  height: auto;
+  width: 350px;
+}
+
+.bio-title {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.bio-card-content {
+  font-size: 0.9em;
+  color: white;
+  line-height: 1.5;
 }
 
 .pfp {

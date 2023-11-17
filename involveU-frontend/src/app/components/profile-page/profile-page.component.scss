@@ -36,20 +36,18 @@
 }
 
 .sidebar-container {
+  position: sticky; /* This will make it stick to the top of the viewport */
   top: 167px; /* Adjust this value to the height of your title bar */
-  left: 0;
-  bottom: 0;
   width: 450px; /* Width of the sidebar */
-  height: calc(100% - 50px); /* Full height minus the title bar height */
   color: white;
   background-color: $HeritageBlue; /* Sidebar background color */
   overflow-y: auto; /* Allows scrolling of sidebar content */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: adds shadow to the sidebar */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  height: calc(100vh - 167px); /* Full viewport height minus the top offset */
 }
+
 
 .profile-picture-container {
   padding-top: 25px;

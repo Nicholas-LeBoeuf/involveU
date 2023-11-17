@@ -10,8 +10,9 @@ import {ContextMenu} from 'primeng/contextmenu';
 import {ResponsiveService} from "../services/responsive.service";
 import { SHA256, enc } from "crypto-js";
 import {ToastrService} from "ngx-toastr";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {ProfileService} from "../services/profile.service";
+import { ProfileService } from "../services/profile.service";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,9 @@ export class AppComponent {
               private clubService: ClubService,
               private router: Router,
               private toastr: ToastrService,
-              public responsiveService: ResponsiveService,) {
+              public responsiveService: ResponsiveService,
+              private profileService: ProfileService,
+              private sanitizer: DomSanitizer) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -45,12 +48,12 @@ export class AppComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['',  Validators.required, Validators.minLength(8)],
+      password: ['', Validators.required, Validators.minLength(8)],
       pronouns: ['', Validators.required]
     });
 
     this.forgotPasswordForm = this.formBuilder.group({
-      email:['', Validators.required]
+      email: ['', Validators.required]
     });
 
     this.verificationForm = this.formBuilder.group({
@@ -91,20 +94,23 @@ export class AppComponent {
   loggedInUser: User;
   usersEboardInfo: any;
   yearNames = [
-    { yearName: 'Freshman' },
-    { yearName: 'Sophomore' },
-    { yearName: 'Junior' },
-    { yearName: 'Senior' },
-    { yearName: 'Faculty' },
+    {yearName: 'Freshman'},
+    {yearName: 'Sophomore'},
+    {yearName: 'Junior'},
+    {yearName: 'Senior'},
+    {yearName: 'Faculty'},
   ]
 
   //FORM CONTROLS
   yearNameFC: FormControl = new FormControl(null, Validators.required);
 
+  userProfileImageUrl: SafeUrl | null = null;
+
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
     this.checkIfUserInEboard();
     this.isUserLoggedIn();
+    this.loadUserProfileImage();
   }
 
   private prevContextMenu!: ContextMenu;
@@ -142,13 +148,19 @@ export class AppComponent {
     const hashedPass = SHA256(this.loginForm.value.password).toString(enc.Hex);
 
     this.userService.checkLoginCredentials(this.loginForm.value.username, hashedPass).subscribe((response: User) => {
-      this.loggedInUser = response;
-    },
+        this.loggedInUser = response;
+      },
       error => {
-        this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.toastr.error('Unsuccessful Login Attempt', undefined, {
+          positionClass: 'toast-top-center',
+          progressBar: true
+        });
       },
       () => {
-        this.toastr.success('Successfully Logged In', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.toastr.success('Successfully Logged In', undefined, {
+          positionClass: 'toast-top-center',
+          progressBar: true
+        });
 
         this.setCookie();
         this.displayLoginDialog = false;
@@ -162,10 +174,12 @@ export class AppComponent {
     //Checks to see if the email submitted is a snhu.edu email
     if (this.endingEmail[1] === "snhu.edu") {
       this.sendAccountVerificationEmail();
-    }
-    else {
+    } else {
       this.showProgressSpinner = false;
-      this.toastr.error('Account needs to be created with a snhu.edu email', undefined, {positionClass: 'toast-top-center', progressBar: true});
+      this.toastr.error('Account needs to be created with a snhu.edu email', undefined, {
+        positionClass: 'toast-top-center',
+        progressBar: true
+      });
     }
   }
 
@@ -252,21 +266,26 @@ export class AppComponent {
     this.prevContextMenu?.hide();
     event.stopPropagation();
     contextMenu.show(new MouseEvent(event.type,
-      { 'view': window, 'bubbles': true, 'cancelable': true, 'clientX': event.clientX-event.offsetX+xOffset, 'clientY': event.clientY-event.offsetY+yOffset}
+      {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true,
+        'clientX': event.clientX - event.offsetX + xOffset,
+        'clientY': event.clientY - event.offsetY + yOffset
+      }
     ));
     this.prevContextMenu = contextMenu;
   }
 
   checkIfUserInEboard() {
     this.clubService.checkIfEboard(this.userID).subscribe(response => {
-      if (response === "not eboard") {
-        this.isEboard = false;
-      }
-      else {
-        this.isEboard = true;
-        this.usersEboardInfo = response;
-      }
-    },
+        if (response === "not eboard") {
+          this.isEboard = false;
+        } else {
+          this.isEboard = true;
+          this.usersEboardInfo = response;
+        }
+      },
       (error) => {
         console.log(error);
       })
@@ -276,21 +295,21 @@ export class AppComponent {
     this.showProgressSpinner = true;
     this.generateRandomNum();    //generates a 6 digit random number so user can verify email
     this.userService.sendEmail(this.forgotPasswordForm.value.email, this.securityToken).subscribe(response => {
-    },
+      },
       (error) => {
-        if (error.status === 200)
-        {
-          this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        if (error.status === 200) {
+          this.toastr.success('Sent Email Successfully', undefined, {
+            positionClass: 'toast-top-center',
+            progressBar: true
+          });
           this.displayVerificationDialog = true;
           this.showProgressSpinner = false;
           this.displayForgotPassDialog = false;
-        }
-        else
-        {
+        } else {
           this.toastr.error('Email not found', undefined, {positionClass: 'toast-top-center', progressBar: true});
           this.showProgressSpinner = false;
         }
-        },
+      },
       () => {
 
       })
@@ -301,16 +320,19 @@ export class AppComponent {
     this.userService.sendWelcomeMail(this.signupForm.value.email, this.securityToken).subscribe(response => {
       },
       (error) => {
-        if (error.status === 200)
-        {
-          this.toastr.success('Sent Email Successfully', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        if (error.status === 200) {
+          this.toastr.success('Sent Email Successfully', undefined, {
+            positionClass: 'toast-top-center',
+            progressBar: true
+          });
           this.displayVerifyAccountDialog = true;
           this.showProgressSpinner = false;
-        }
-        else
-        {
+        } else {
           this.showProgressSpinner = false;
-          this.toastr.error('Cannot send email verification at this time. Please try again later.', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.toastr.error('Cannot send email verification at this time. Please try again later.', undefined, {
+            positionClass: 'toast-top-center',
+            progressBar: true
+          });
         }
       },
       () => {
@@ -323,48 +345,73 @@ export class AppComponent {
   }
 
   checkVerificationCodeMatch() {
-    if (this.securityToken === +this.verificationForm.value.verificationCode){
-      this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    if (this.securityToken === +this.verificationForm.value.verificationCode) {
+      this.toastr.success('Verification code matches', undefined, {
+        positionClass: 'toast-top-center',
+        progressBar: true
+      });
       this.displayVerificationDialog = false;
       this.displayChangePasswordDialog = true;
-    }
-    else{
+    } else {
       this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
   }
 
   checkVerifyAccountCodeMatch() {
-    if (this.securityToken === +this.verifyAccountForm.value.verificationCode){
-      this.toastr.success('Verification code matches', undefined, {positionClass: 'toast-top-center', progressBar: true});
+    if (this.securityToken === +this.verifyAccountForm.value.verificationCode) {
+      this.toastr.success('Verification code matches', undefined, {
+        positionClass: 'toast-top-center',
+        progressBar: true
+      });
       this.displayVerificationDialog = false;
-      const userInfo: User = { firstName: this.signupForm.value.firstName, lastName: this.signupForm.value.lastName, year: this.yearNameFC.value, email: this.signupForm.value.email, pronouns: this.signupForm.value.pronouns, isAdmin: 0, isEboard: 0, userPassword: this.signupForm.value.password};
+      const userInfo: User = {
+        firstName: this.signupForm.value.firstName,
+        lastName: this.signupForm.value.lastName,
+        year: this.yearNameFC.value,
+        email: this.signupForm.value.email,
+        pronouns: this.signupForm.value.pronouns,
+        isAdmin: 0,
+        isEboard: 0,
+        userPassword: this.signupForm.value.password
+      };
       userInfo.userPassword = SHA256(userInfo.userPassword).toString(enc.Hex);
-      this.userService.signupNewUser(userInfo).subscribe(success =>{
+      this.userService.signupNewUser(userInfo).subscribe(success => {
 
         },
         error => {
-          this.toastr.error('Create Account Unsuccessful', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.toastr.error('Create Account Unsuccessful', undefined, {
+            positionClass: 'toast-top-center',
+            progressBar: true
+          });
         },
         () => {
-          this.toastr.success('Successfully Created Account', undefined, {positionClass: 'toast-top-center', progressBar: true});
+          this.toastr.success('Successfully Created Account', undefined, {
+            positionClass: 'toast-top-center',
+            progressBar: true
+          });
           this.displaySignupDialog = false;
           const hashedPass = SHA256(this.signupForm.value.password).toString(enc.Hex);
           this.userService.checkLoginCredentials(this.signupForm.value.email, hashedPass).subscribe((response: User) => {
               this.loggedInUser = response;
             },
             error => {
-              this.toastr.error('Unsuccessful Login Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+              this.toastr.error('Unsuccessful Login Attempt', undefined, {
+                positionClass: 'toast-top-center',
+                progressBar: true
+              });
             },
             () => {
-              this.toastr.success('Successfully Logged In', undefined, {positionClass: 'toast-top-center', progressBar: true});
+              this.toastr.success('Successfully Logged In', undefined, {
+                positionClass: 'toast-top-center',
+                progressBar: true
+              });
 
               this.setCookie();
               this.displayLoginDialog = false;
               location.reload();
             });
         });
-    }
-    else{
+    } else {
       this.toastr.error('Codes do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
   }
@@ -373,14 +420,16 @@ export class AppComponent {
     const hashedPass = SHA256(this.changePasswordForm.value.newPassword).toString(enc.Hex);
     const confirmHashedPass = SHA256(this.changePasswordForm.value.confirmPassword).toString(enc.Hex);
     if (hashedPass === confirmHashedPass) {
-      this.userService.changePassword(this.forgotPasswordForm.value.email ,hashedPass).subscribe(response => {
+      this.userService.changePassword(this.forgotPasswordForm.value.email, hashedPass).subscribe(response => {
 
       })
       this.displayChangePasswordDialog = false;
       this.displayLoginDialog = true;
-      this.toastr.success('Password has been changed', undefined, {positionClass: 'toast-top-center', progressBar: true});
-    }
-    else {
+      this.toastr.success('Password has been changed', undefined, {
+        positionClass: 'toast-top-center',
+        progressBar: true
+      });
+    } else {
       this.toastr.error('Passwords do not match', undefined, {positionClass: 'toast-top-center', progressBar: true});
     }
   }
@@ -392,8 +441,7 @@ export class AppComponent {
   isSignupValid() {
     if (this.signupForm.value.firstName === '' || this.signupForm.value.lastName === '' || this.signupForm.value.email === '' || this.signupForm.value.password === '' || this.yearNameFC.value === null || this.signupForm.value.pronouns === '') {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -401,10 +449,25 @@ export class AppComponent {
   isLoginValid() {
     if (this.loginForm.value.username === '' || this.loginForm.value.password === '') {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
 
+  loadUserProfileImage() {
+    if (this.userID) {
+      this.profileService.downloadUserProfilePicture(this.userID)
+        .subscribe(
+          fileData => {
+            // If the response is an ArrayBuffer, you need to convert it to a Blob
+            let blob = new Blob([fileData], {type: 'image/jpeg'});
+            let objectURL = URL.createObjectURL(blob);
+            this.userProfileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          },
+          error => {
+            console.error("Error loading user profile image:", error);
+          }
+        );
+    }
+  }
 }

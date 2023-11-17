@@ -33,7 +33,11 @@
         <button class="yellowButton yellowHover" (click)="showLoginDialog()">Login</button>
       </ng-template>
       <ng-template [ngIf]="this.isLoggedIn">
-        <img class="profileIcon" (click)="activateContextMenu(profileContextMenu, $event)" src="assets/account.svg" alt="Profile Icon (Click)">
+        <ng-template [ngIf]="this.isLoggedIn">
+          <img class="profileIcon" class="navbar-profile-pic" (click)="activateContextMenu(profileContextMenu, $event)"
+               [src]="userProfileImageUrl || 'assets/account.svg'" alt="Profile Icon (Click)">
+        </ng-template>
+
       </ng-template>
       <img class="involveULogoScale" src="assets/involveU-Logo-White-Text.png" alt="involveU Logo">
     </div>

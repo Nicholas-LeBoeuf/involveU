@@ -243,3 +243,11 @@ ul {
 .verificationHeader {
   margin-top: 20px;
 }
+
+.navbar-profile-pic {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid $GoldenYellow;
+}

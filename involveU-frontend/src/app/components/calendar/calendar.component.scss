@@ -15,10 +15,15 @@
 
 ::ng-deep {
   .fc.fc-theme-standard .fc-toolbar .fc-button {
+
     background-color: $HeritageBlue !important;
     border: 3px solid white !important;
     color: $GoldenYellow !important;
     box-shadow: none !important;
+    text-transform: capitalize;
+    border-collapse: separate;
+    border-radius: 30px;
+
   }
 
   .fc.fc-theme-standard .fc-toolbar .fc-button:hover {
@@ -26,6 +31,7 @@
     border: 3px solid white !important;
     color: $HeritageBlue !important;
     box-shadow: none !important;
+    
   }
 
   .fc.fc-theme-standard .fc-view-harness th  {
@@ -43,6 +49,7 @@
   .fc-daygrid-dot-event .fc-event-title {
     text-overflow: ellipsis !important;
     overflow: hidden !important;
+
   }
 
   .fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active,
@@ -52,6 +59,11 @@
     background: $GoldenYellow !important;
     color: $HeritageBlue !important;
     box-shadow: none !important;
+    text-transform: capitalize;
+    border-collapse: separate;
+
+
+
   }
 
   .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
@@ -73,6 +85,7 @@
   .fc .fc-toolbar-title {
     color: $HeritageBlue;
     font-size: 2rem !important;
+
   }
 
   .fc-day-grid-event > .fc-content:hover {

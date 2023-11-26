@@ -170,6 +170,26 @@ public class UserController extends DBServices{
 		}
 	}
 
+	@PutMapping("user/changeMajor/{userID}/{newMajor}")
+	public ResponseEntity<String>changeMajor(@PathVariable("userID")int userID, @PathVariable("newMajor")String newMajor) {
+		if(dbChangeMajor(userID, newMajor)) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping("user/changeBio/{userID}/{newBio}")
+	public ResponseEntity<String>changeBio(@PathVariable("userID")int userID, @PathVariable("newBio")String newBio) {
+		if(dbChangeMajor(userID, newBio)) {
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@PutMapping("user/changeYear/{userID}/{newYear}")
 	public ResponseEntity<String>changeYear(@PathVariable("userID")int userID, @PathVariable("newYear")String newYear) {
 		if(dbChangeYear(userID, newYear)) {

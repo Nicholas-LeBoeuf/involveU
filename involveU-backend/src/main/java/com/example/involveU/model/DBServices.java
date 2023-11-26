@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.regex.*;
 import java.text.ParseException;
@@ -157,14 +158,21 @@ public class DBServices {
         sql = "UPDATE User SET year = ? WHERE studentID = ?;";
         validQuery = JdbcTemplated.update(sql, newYear, userID);
 
-        if(validQuery == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return validQuery == 1;
+    }
+
+    protected Boolean dbChangeMajor(int userID, String newMajor) {
+        sql = "UPDATE User SET userMajor = ? WHERE studentID = ?;";
+        validQuery = JdbcTemplated.update(sql, newMajor, userID);
+
+        return validQuery == 1;
+    }
+
+    protected Boolean dbChangeBio(int userID, String newBio) {
+        sql = "UPDATE User SET userBio = ? WHERE studentID = ?;";
+        validQuery = JdbcTemplated.update(sql, newBio, userID);
+
+        return validQuery == 1;
     }
 
     protected Boolean dbChangePronouns(int userID, String newPronouns) {

@@ -8,6 +8,7 @@ import {EboardPageComponent} from "./components/eboard-page/eboard-page.componen
 import {MoreInfoComponent} from "./components/more-info/more-info.component"
 import {CalendarComponent} from "./components/calendar/calendar.component";
 import {ProfilePageComponent} from "./components/profile-page/profile-page.component";
+import {PublicProfileComponent} from "./components/public-profile/public-profile.component";
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfilePageComponent
+  },
+  {
+    path: 'public-profile/:id', // Add this line for public profile route
+    component: PublicProfileComponent
   }
 ];
 

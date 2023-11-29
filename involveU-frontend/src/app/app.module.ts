@@ -53,6 +53,7 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import {ColorPickerModule} from "primeng/colorpicker";
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -83,6 +84,7 @@ FullCalendarModule.registerPlugins([
     TripPlanningGuideComponent,
     ProfilePageComponent,
     SidebarComponent,
+    PublicProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,42 @@
+<ng-container *ngIf="userProfileInfo">
+  <div class="blueTitleBar">
+    <div class="text-center">
+      <h1 class="yellow-text">{{userProfileInfo.firstName}}'s Public Profile</h1>
+    </div>
+  </div>
+
+  <div class="layout-container">
+    <div class="sidebar-container">
+      <div class="profile-picture-container">
+        <img [src]="userProfileInfo.profileImageUrl || 'assets/default-profile.svg'" alt="Profile Picture" />
+      </div>
+
+      <div class="name-pronouns-info">
+        <h2 class="name-display text-center">
+          {{userProfileInfo.firstName}} {{userProfileInfo.lastName}}
+          <span class="p-display pronouns"> {{userProfileInfo.pronouns}}</span>
+        </h2>
+      </div>
+
+      <div class="year-major">
+        <h2 class="year-major-display">{{userProfileInfo.year}} | {{userProfileInfo.major}}</h2>
+      </div>
+
+      <div class="email">
+        <h2 class="email-display">{{userProfileInfo.email}}</h2>
+      </div>
+
+      <div class="bio-card">
+        <h2 class="bio-title yellow-text">About Me:</h2>
+        <h2 class="bio-card-content">{{userProfileInfo.bio}}</h2>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!userProfileInfo">
+  <div class="text-center">
+    <h2>Loading profile...</h2>
+    <!-- Or any other placeholder content -->
+  </div>
+</ng-container>

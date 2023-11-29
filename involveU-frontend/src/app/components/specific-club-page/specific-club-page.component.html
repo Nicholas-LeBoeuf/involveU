@@ -111,12 +111,13 @@
          </ng-template>
         </div>
 
-        <ng-container *ngIf="clubEboard.length !== 0">
+        <ng-container *ngIf="clubMembers.length !== 0">
             <h2 class="blueHeaders">Club Members</h2>
-            <p-table styleClass="eboardTable" [value]="clubEboard" responsiveLayout="scroll">
+            <p-table styleClass="eboardTable" [value]="clubMembers" responsiveLayout="scroll">
               <ng-template pTemplate="body" let-member>
-                <tr>
-                  <td class="text-center">{{member.firstName}} {{member.lastName}}</td>
+                <tr class="memberList" (click)="goToPublicProfile(member.studentID)">
+
+                  <td class="text-center memberList">{{member.firstName}} {{member.lastName}}</td>
                 </tr>
               </ng-template>
             </p-table>

@@ -14,8 +14,24 @@
 }
 
 ::ng-deep {
-  .fc.fc-theme-standard .fc-toolbar .fc-button {
 
+
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button:first-child{
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button:last-child{
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+  .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button{
+
+    border-radius: 30px;
+  }
+
+  .fc.fc-theme-standard .fc-toolbar .fc-button {
     background-color: $HeritageBlue !important;
     border: 3px solid white !important;
     color: $GoldenYellow !important;
@@ -31,7 +47,7 @@
     border: 3px solid white !important;
     color: $HeritageBlue !important;
     box-shadow: none !important;
-    
+
   }
 
   .fc.fc-theme-standard .fc-view-harness th  {
@@ -85,6 +101,7 @@
   .fc .fc-toolbar-title {
     color: $HeritageBlue;
     font-size: 2rem !important;
+    border-radius: 30px;
 
   }
 

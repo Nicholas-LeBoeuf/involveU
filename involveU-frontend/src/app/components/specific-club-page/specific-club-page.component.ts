@@ -15,6 +15,7 @@ import {ResponsiveService} from "../../services/responsive.service";
 import {Title} from "@angular/platform-browser";
 import {SocialMedia} from "../../objects/social-media";
 import {ToastrService} from "ngx-toastr";
+import {ClubMembers} from "../../objects/club-members";
 
 @Component({
   selector: 'app-specific-club-page',
@@ -54,6 +55,7 @@ export class SpecificClubPageComponent implements OnInit {
   //STRINGS
 
   //OBJECTS
+  clubMembers: User[] = [];
   clubInfo: Club;
   favoritedClubs: Club[] = [];
   clubEboard: User[] = [];
@@ -85,6 +87,7 @@ export class SpecificClubPageComponent implements OnInit {
       this.numberOfRows = 1;
     }
 
+    this.getClubMembers();
     this.getClubEvents();
     this.isUserLoggedIn();
     this.getClubInfo();
@@ -260,6 +263,16 @@ export class SpecificClubPageComponent implements OnInit {
 
   closeAllAnnouncementsDialog() {
     this.viewAllAnnouncementsDialog = false;
+  }
+
+  getClubMembers(){
+    this.clubService.getMembersOfClub(+this.clubID).subscribe(response => {
+      this.clubMembers = response;
+    })
+  }
+
+  goToPublicProfile(studentid: number){
+    this.router.navigate(['/public-profile/' + studentid]).then();
   }
 }
 

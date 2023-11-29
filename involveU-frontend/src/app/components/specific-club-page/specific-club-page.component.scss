@@ -7,6 +7,17 @@
   object-fit: scale-down;
 }
 
+.memberList{
+  cursor:pointer;
+
+}
+
+.memberList:hover{
+  cursor:pointer;
+  background-color: #efefef;
+
+}
+
 .logoAndName {
   display: flex;
   justify-content: center;

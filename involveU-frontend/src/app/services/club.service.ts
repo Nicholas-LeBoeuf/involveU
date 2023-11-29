@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Club} from "../objects/club";
 import {User} from "../objects/user";
+import {ClubMembers} from "../objects/club-members";
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,9 @@ export class ClubService {
 
   getClubLogo(clubID : number){
     return this.http.get(environment.apiURL + `club/getClubLogo/${clubID}`, {responseType: 'blob'});
+  }
+
+  getMembersOfClub(clubID : number): Observable<User[]> {
+    return this.http.get<User[]>(environment.apiURL + `club/favoriteUsers/${clubID}`);
   }
 }

@@ -37,6 +37,11 @@ public class User {
     @Column(name = "profilePic")
     private String profilePic;
 
+    @Column(name = "userMajor")
+    private String userMajor;
+
+    @Column(name = "userBio")
+    private String userBio;
     public long getStudentID() {return studentID;}
 
     public void setStudentID(long studentID) {this.studentID = studentID;}
@@ -98,4 +103,12 @@ public class User {
     public String getUserName() {return firstName;}
 
     public String getUserProfilePictureName() {return profilePic;}
+
+    public String getUserMajor() {return userMajor;}
+
+    public void setUserMajor(String userMajor) {this.userMajor = userMajor;}
+
+    public String getUserBio() {return userBio;}
+
+    public void setUserBio(String userBio) {this.userBio = userBio;}
 }

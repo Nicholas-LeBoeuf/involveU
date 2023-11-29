@@ -13,22 +13,25 @@ export class PublicProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService // Use ProfileService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    const userID = this.route.snapshot.paramMap.get('id'); // Get 'id' from the route
+    const userID = this.route.snapshot.paramMap.get('id');
+    console.log('UserID:', userID); // Check if the userID is being retrieved correctly
     this.loadUserProfile(userID);
   }
 
+
   loadUserProfile(userID: string | null) {
     if (userID) {
-      this.profileService.getUserProfile(+userID).subscribe( // Use ProfileService
+      this.profileService.getUserProfile(+userID).subscribe(
         (data) => {
+          console.log(data); // Check the structure and data of the userProfileInfo
           this.userProfileInfo = data;
         },
         (error) => {
           console.error('Error fetching user profile', error);
-          // Handle errors here (e.g., user not found)
         }
       );
     }

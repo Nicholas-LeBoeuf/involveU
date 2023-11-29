@@ -68,7 +68,7 @@ public class DBServices {
     }
 
     protected User getDBUserProfile(int userID) {
-        String sql = "SELECT firstName, lastName, year, email, pronouns, calendarcolor, profilePic, userMajor, userBio user FROM User WHERE studentID = ?";
+        String sql = "SELECT firstName, lastName, year, email, pronouns, calendarcolor, profilePic, userMajor, userBio FROM User WHERE studentID = ?";
         users = JdbcTemplated.query(sql, new Object[]{userID}, BeanPropertyRowMapper.newInstance(User.class));
         return users.isEmpty() ? null : users.get(0);
     }

@@ -118,13 +118,6 @@ public class UserController extends DBServices{
 		}
 	}*/
 
-	@GetMapping("user/getUserProfile/{userID}")
-	public ResponseEntity<User>getUserProfile(@PathVariable("userID")int userID ) {
-		User newUser;
-		newUser = getDBUserProfile(userID);
-		return new ResponseEntity<>(newUser, HttpStatus.OK);
-	}
-
 	/*@GetMapping("user/checkPassword/{userID}/{currentPassword}")
 	public ResponseEntity<Boolean>checkPassword(@PathVariable("userID")int userID, @PathVariable("currentPassword")String currentPassword) {
 		if (checkDBPassword(userID, currentPassword))
@@ -135,6 +128,13 @@ public class UserController extends DBServices{
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
 		}
 	}*/
+
+	@GetMapping("user/getUserProfile/{userID}")
+	public ResponseEntity<User>getUserProfile(@PathVariable("userID")int userID ) {
+		User newUser;
+		newUser = getDBUserProfile(userID);
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
+	}
 
 	@PutMapping("user/updatePassword/{userID}/{currentPassword}/{newPassword}")
 	public ResponseEntity<String> updatePassword(@PathVariable("userID") int userID, @PathVariable("currentPassword") String currentPassword, @PathVariable("newPassword") String newPassword) {

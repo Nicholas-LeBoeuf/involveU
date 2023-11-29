@@ -991,18 +991,16 @@ public class DBServices {
 
     }
 
-    protected int dbFavoriteCount(int clubID) {
-        String sql = "SELECT COUNT(f.favoriteID) AS numberOfUsers " +
+    protected List<User> dbFavoriteUsers(int clubID) {
+        String sql = "SELECT u.studentID, u.firstName, u.lastName " +
                 "FROM Club c " +
                 "JOIN Favorites f ON c.clubID = f.clubID " +
-                "WHERE c.clubID = ? " +
-                "GROUP BY c.clubID";
+                "JOIN User u ON f.userID = u.studentID " + // Adjust based on your table structure
+                "WHERE c.clubID = ?";
 
-        // Query for a single integer value
-        Integer count = JdbcTemplated.queryForObject(sql, new Object[]{clubID}, Integer.class);
-
-        return (count != null) ? count : 0;
+        return JdbcTemplated.query(sql, new Object[]{clubID}, BeanPropertyRowMapper.newInstance(User.class));
     }
+
 
     protected int dbMemberCount(int clubID) {
         String sql = "SELECT COUNT(m.memberID) AS numberOfUsers " +

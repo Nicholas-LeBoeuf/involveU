@@ -289,10 +289,10 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @GetMapping("club/favoriteCount/{clubID}")
-    public ResponseEntity<Integer> getFavoriteCount(@PathVariable("clubID") int clubID) {
-        int count = dbFavoriteCount(clubID);
-        return new ResponseEntity<>(count, HttpStatus.OK);
+    @GetMapping("club/favoriteUsers/{clubID}")
+    public ResponseEntity<List<User>> getFavoriteUsers(@PathVariable("clubID") int clubID) {
+        List<User> users = dbFavoriteUsers(clubID);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("club/memberCount/{clubID}")

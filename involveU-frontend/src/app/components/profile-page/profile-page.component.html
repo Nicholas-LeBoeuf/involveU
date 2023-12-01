@@ -6,14 +6,40 @@
 <div class="blueTitleBar">
   <div class="text-center">
     <ng-template [ngIf]="this.cookie.get('studentFName') != ''">
-      <h1 class="yellow-text">{{this.currentUser.firstName}}'s Profile!</h1>
+      <h1 class="yellow-text profile-title">{{this.currentUser.firstName}}'s Profile!</h1>
+        <p-dialog header="Settings" class="styling-dialog"
+                  [(visible)]="viewSettingsDialog"
+                  [modal]="true"
+                  [dismissableMask]="true"
+                  (onHide)="closeSettingsDialog()"
+                  [style]="{width: '50vw', height: '68vh'}">
+          <div class="settings-dialog">
+              <div class="dialog-header">
+                <i class="fa fa-close padding-x" (click)="closeSettingsDialog()"></i>
+                <h2 class="blueHeaders settings-padding">Account Settings</h2>
+              </div>
+              <div class="settings-container">
+                <label class="pronoun-label blueHeaders">Pronouns:</label>
+                <p-dropdown [options]="pronouns" placeholder="Select Your Pronouns" [style]="{ width: '450px' }"></p-dropdown>
+                <label class="major-label blueHeaders">Major:</label>
+                <p-dropdown [options]="majors" placeholder="Select Your Major" [style]="{ width: '450px' }"></p-dropdown>
+                <label class="bio-label blueHeaders">Bio:</label>
+                <div class="input-bio">
+                  <textarea pInputTextarea id="bio" placeholder="Tell us about yourself..." [style]="{ width: '450px', height: '160px'}"></textarea>
+                </div>
+                <div class="padding-bio-input"></div>
+              </div>
+          </div>
+        </p-dialog>
     </ng-template>
   </div>
 </div>
 
   <div class="layout-container">
     <div class="sidebar-container">
-
+      <div class="settings-icon-container">
+        <i class="fa fa-cog" id="settingsIcon" (click)="openSettingsDialog()"></i>
+      </div>
     <div class="profile-picture-container">
       <input type="file" id="pfp" name="pfp" accept="image/*" (change)="onFileSelected($event)"
            style="display: none;">

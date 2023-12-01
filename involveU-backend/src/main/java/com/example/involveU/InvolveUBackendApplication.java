@@ -28,6 +28,4 @@ public class InvolveUBackendApplication extends SpringBootServletInitializer {
 	private UserRepository userRepo;
 
 
-
-
 }

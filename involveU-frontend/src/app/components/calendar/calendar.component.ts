@@ -37,8 +37,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   isLoggedIn: boolean = false;
 
   // NUMBERS
+  eventID: number;
   userID: number;
-
+  RSVPEventCount: number;
   // STRINGS
   currentFilter: string;
 
@@ -81,6 +82,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.userID = +this.cookie.get('studentID');
+    this.eventID = +this.cookie.get('eventID');
     this.getAllClubs();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
@@ -273,4 +275,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
+
+  getRSVPEventCount(eventID: number)
+  {
+    this.eventsService.getCountOfRSVP(+this.eventID).subscribe(response => {
+      this.RSVPEventCount = response;
+    })
+  }
+
+  protected readonly ResponsiveService = ResponsiveService;
 }

@@ -48,4 +48,10 @@ export class ClubService {
   getMembersOfClub(clubID : number): Observable<User[]> {
     return this.http.get<User[]>(environment.apiURL + `club/favoriteUsers/${clubID}`);
   }
+
+  getCountOfClub(clubID : number): Observable<number> {
+   return this.http.get<number>(environment.apiURL + `club/memberCount/${clubID}`);
+  }
+
+
 }

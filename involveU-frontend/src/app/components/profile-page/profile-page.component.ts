@@ -33,7 +33,6 @@ export class ProfilePageComponent implements OnInit {
     private clubService: ClubService,
     private router: Router,
     private eventsService: EventsService,
-    private dialogModule: DialogModule
   ) {}
 
   viewChangePasswordDialog: boolean = false;
@@ -68,9 +67,9 @@ export class ProfilePageComponent implements OnInit {
     /*this.getUserRSVPdEvents();*/
 
     this.pronouns = [
-      {label: 'He/Him', value: 'he/him'},
-      {label: 'She/Her', value: 'she/her'},
-      {label: 'They/Them', value: 'they/them'}
+      {label: 'He/Him', value: 'He/Him'},
+      {label: 'She/Her', value: 'She/Her'},
+      {label: 'They/Them', value: 'They/Them'}
     ]
 
     this.majors = [
@@ -119,10 +118,6 @@ export class ProfilePageComponent implements OnInit {
     this.isLoggedIn = this.userID !== 0;
   }
 
-  enableDisableFields() {
-    this.disableInputFields = !this.disableInputFields;
-  }
-
   getUserInfo() {
     this.profileService.getUserProfile(this.userID).subscribe((response: User) => {
         this.userProfileInfo = response;
@@ -153,8 +148,6 @@ export class ProfilePageComponent implements OnInit {
   updateUserCalendarColor(event: any) {
     // this.profileService.changeUserCalendarColorSettings(this.UserID, )
   }
-
-  protected readonly event = event;
 
   openViewChangePasswordDialog() {
     this.viewChangePasswordDialog = true;
@@ -296,4 +289,17 @@ export class ProfilePageComponent implements OnInit {
     })
   } */
 
+  updatePronouns(event: any) {
+    const newPronouns = event.value;
+      this.profileService.changeUserPronouns(this.userID, newPronouns).subscribe((response) => {
+          console.log(response);
+          this.getUserInfo();
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          this.getUserInfo();
+        });
+    }
 }

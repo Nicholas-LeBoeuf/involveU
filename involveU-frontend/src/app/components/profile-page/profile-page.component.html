@@ -20,7 +20,11 @@
               </div>
               <div class="settings-container">
                 <label class="pronoun-label blueHeaders">Pronouns:</label>
-                <p-dropdown [options]="pronouns" placeholder="Select Your Pronouns" [style]="{ width: '450px' }"></p-dropdown>
+                <p-dropdown [options]="pronouns"
+                            (onChange)="updatePronouns($event)"
+                            placeholder="Select Your Pronouns"
+                            [style]="{ width: '450px' }">
+                </p-dropdown>
                 <label class="major-label blueHeaders">Major:</label>
                 <p-dropdown [options]="majors" placeholder="Select Your Major" [style]="{ width: '450px' }"></p-dropdown>
                 <label class="bio-label blueHeaders">Bio:</label>

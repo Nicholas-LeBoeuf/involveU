@@ -182,7 +182,7 @@ public class UserController extends DBServices{
 
 	@PutMapping("user/changeBio/{userID}/{newBio}")
 	public ResponseEntity<String>changeBio(@PathVariable("userID")int userID, @PathVariable("newBio")String newBio) {
-		if(dbChangeMajor(userID, newBio)) {
+		if(dbChangeBio(userID, newBio)) {
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else {

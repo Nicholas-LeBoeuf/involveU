@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../objects/user";
-import { DialogModule } from 'primeng/dialog';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CalendarComponent} from "../calendar/calendar.component";
-import { ColorPickerModule } from 'primeng/colorpicker';
 import { ToastrService } from 'ngx-toastr';
 import { SelectItem } from "primeng/api";
 import { InputTextModule } from "primeng/inputtext";
@@ -16,7 +12,6 @@ import {Club} from "../../objects/club";
 import {ClubService} from "../../services/club.service";
 import {Router} from "@angular/router";
 import {Events} from "../../objects/events";
-import {timeout} from "rxjs";
 import {EventsService} from "../../services/events.service";
 
 @Component({

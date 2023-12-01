@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CalendarComponent} from "../calendar/calendar.component";
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ToastrService } from 'ngx-toastr';
+import { SelectItem } from "primeng/api";
+import { InputTextModule } from "primeng/inputtext";
 
 import {ProfileService} from "../../services/profile.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
@@ -25,6 +27,8 @@ import {EventsService} from "../../services/events.service";
 export class ProfilePageComponent implements OnInit {
   fileInputLabel: string = 'Choose File';
   userProfileImageUrl: SafeUrl | null = null;
+  pronouns: SelectItem[];
+  majors: SelectItem[];
   constructor(
     public cookie: CookieService,
     public profileService: ProfileService,
@@ -33,7 +37,8 @@ export class ProfilePageComponent implements OnInit {
     public responsiveService: ResponsiveService,
     private clubService: ClubService,
     private router: Router,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private dialogModule: DialogModule
   ) {}
 
   viewChangePasswordDialog: boolean = false;
@@ -52,6 +57,7 @@ export class ProfilePageComponent implements OnInit {
   isLoading: boolean = true;
   numberOfRows: number;
   favoritedClubs: Club[] = [];
+  viewSettingsDialog: boolean = false;
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -65,6 +71,41 @@ export class ProfilePageComponent implements OnInit {
     this.loadUserProfileImage();
     this.getUsersFavoritedClubs();
     /*this.getUserRSVPdEvents();*/
+
+    this.pronouns = [
+      {label: 'He/Him', value: 'he/him'},
+      {label: 'She/Her', value: 'she/her'},
+      {label: 'They/Them', value: 'they/them'}
+    ]
+
+    this.majors = [
+      {label: 'Accounting', value: 'accounting'},
+      {label: 'Advertising', value: 'advertising'},
+      {label: 'Aeronautical Engineering', value: 'aeronautical engineering'},
+      {label: 'Aviation', value: 'aviation'},
+      {label: 'Biology', value: 'biology'},
+      {label: 'Business', value: 'business'},
+      {label: 'Chemistry', value: 'chemistry'},
+      {label: 'Computer Information Systems', value: 'cis'},
+      {label: 'Communications', value: 'communications'},
+      {label: 'Computer Science', value: 'computer science'},
+      {label: 'Criminal Justice', value: 'criminal justice'},
+      {label: 'Cyber Security', value: 'cyber security'},
+      {label: 'Economics', value: 'economics'},
+      {label: 'Education', value: 'education'},
+      {label: 'Electrical Engineering', value: 'ee'},
+      {label: 'English', value: 'english'},
+      {label: 'Environmental Science', value: 'environmental science'},
+      {label: 'Game Design', value: 'game design'},
+      {label: 'History', value: 'history'},
+      {label: 'Information Technologies', value: 'it'},
+      {label: 'Mathematics', value: 'mathematics'},
+      {label: 'Mechanical Engineering', value: 'me'},
+      {label: 'Physics', value: 'physics'},
+      {label: 'Politics', value: 'politics'},
+      {label: 'Psychology', value: 'psychology'},
+      {label: 'Sociology', value: 'sociology'},
+    ]
 
     if (this.responsiveService.deviceDesktop()) {
       this.numberOfRows = 2;
@@ -223,6 +264,14 @@ export class ProfilePageComponent implements OnInit {
   showViewMoreInfoDialog(SpecificEvent: Events){
     this.certainEvent.push(SpecificEvent);
     this.viewMoreInfoDialog = true;
+  }
+
+  openSettingsDialog() {
+    this.viewSettingsDialog = true;
+  }
+
+  closeSettingsDialog() {
+    this.viewSettingsDialog = false;
   }
 
   /*removeEventRSVP(eventID: number) {

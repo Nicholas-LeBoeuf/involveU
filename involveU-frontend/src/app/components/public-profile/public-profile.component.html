@@ -8,13 +8,13 @@
   <div class="layout-container">
     <div class="sidebar-container">
       <div class="profile-picture-container">
-        <img [src]="userProfileInfo.profileImageUrl || 'assets/default-profile.svg'" alt="Profile Picture" />
+        <img [src]="userProfileImageUrl || 'assets/account.svg'" alt="Profile Picture" class="profile-picture" />
       </div>
 
       <div class="name-pronouns-info">
         <h2 class="name-display text-center">
           {{userProfileInfo.firstName}} {{userProfileInfo.lastName}}
-          <span class="p-display pronouns"> {{userProfileInfo.pronouns}}</span>
+          <span class="p-display pronouns">{{userProfileInfo.pronouns}}</span>
         </h2>
       </div>
 
@@ -31,12 +31,36 @@
         <h2 class="bio-card-content">{{userProfileInfo.userBio}}</h2>
       </div>
     </div>
+
+    <div class="main-content">
+      <h2 class="blueHeaders club-title-padding">Favorite Clubs</h2>
+      <ng-container *ngIf="favoritedClubs.length > 0; else NoFavoritedClubs">
+        <table class="favoritedClubsTable">
+          <thead>
+          <tr>
+            <th class="text-center">Club</th>
+            <th class="text-center">View Club</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let club of favoritedClubs">
+            <td class="text-center">{{ club.clubName }}</td>
+            <td class="text-center">
+              <button class="blueButton" (click)="goToClubPage(club.clubID)">View</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #NoFavoritedClubs>
+        <h3 class="club-title-padding">No favorited clubs to show</h3>
+      </ng-template>
+    </div>
   </div>
 </ng-container>
 
 <ng-container *ngIf="!userProfileInfo">
   <div class="text-center">
     <h2>Loading profile...</h2>
-    <!-- Or any other placeholder content -->
   </div>
 </ng-container>

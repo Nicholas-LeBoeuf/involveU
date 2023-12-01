@@ -1,5 +1,6 @@
 @import "src/styles";
 
+/* General layout and spacing */
 .div {
   margin-top: 50px;
   margin-left: 50px;
@@ -20,34 +21,57 @@
   flex-wrap: nowrap;
 }
 
+/* Main content styling */
 .main-content {
   padding-top: 40px;
   flex-grow: 1;
+  padding-left: 75px; /* Align with the table */
 }
 
-.club-title-padding {
-  padding-left: 75px;
-}
-
+/* Favorite Clubs Table Styling */
 ::ng-deep .favoritedClubsTable {
   margin-bottom: 1.5rem !important;
   width: 90%;
-  padding-left: 75px;
+  margin-left: 75px; /* Align with the sidebar */
+  border-collapse: collapse; /* Optional, for styling borders */
+
+  th, td {
+    padding: 10px; /* Spacing inside each cell */
+    text-align: center; /* Center the text */
+    border-bottom: 1px solid #ddd; /* Border for each cell */
+  }
+
+  th {
+    background-color: $HeritageBlue; /* Color for the header */
+    color: white; /* Text color for the header */
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra striping for rows */
+  }
+
+  tr:hover {
+    background-color: #ddd; /* Hover effect for rows */
+  }
+
+  .blueButton {
+    /* Additional styling for buttons if needed */
+  }
 }
 
+/* Sidebar styling */
 .sidebar-container {
-  position: sticky; /* This will make it stick to the top of the viewport */
-  top: 167px; /* Adjust this value to the height of your title bar */
-  width: 450px; /* Width of the sidebar */
+  position: sticky;
+  top: 167px;
+  width: 450px;
   color: white;
-  background-color: $HeritageBlue; /* Sidebar background color */
-  overflow-y: auto; /* Allows scrolling of sidebar content */
+  background-color: $HeritageBlue; /* Ensure this variable is defined */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 167px); /* Full viewport height minus the top offset */
+  height: calc(100vh - 167px);
 }
-
 
 .profile-picture-container {
   padding-top: 25px;
@@ -60,22 +84,13 @@
   width: 180px;
   height: 180px;
   border-radius: 100%;
-  object-fit: cover;
-  cursor: pointer;
-}
-
-.profile-picture-label img{
-  display: block;
-  cursor: pointer;
-  object-fit: cover;
-  border-radius: 50%;
   border: 3px solid $GoldenYellow;
+  object-fit: cover;
+  cursor: pointer;
 }
 
-input[type="file"] {
-  display: none;
-}
 
+/* Other styling */
 .name-pronouns-info {
   display: flex;
   align-items: center;
@@ -100,11 +115,11 @@ input[type="file"] {
 }
 
 .bio-card {
-  background-color: #1d437d; /* Or any color you prefer */
-  border-radius: 3px; /* Rounded corners */
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
-  padding: 20px; /* Space inside the card */
-  margin: 20px 0; /* Spacing outside the card */
+  background-color: #1d437d;
+  border-radius: 3px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px 0;
   max-width: 400px;
   height: auto;
   width: 350px;
@@ -120,11 +135,3 @@ input[type="file"] {
   color: white;
   line-height: 1.5;
 }
-
-.pfp {
-  text-align: center;
-  padding-top: 10px;
-}
-
-
-

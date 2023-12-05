@@ -295,9 +295,9 @@ private ResponseEntity<Object> getClubAdvisor (@PathVariable("clubID") int clubI
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("club/memberCount/{clubID}")
+    @GetMapping("club/favoriteCount/{clubID}")
     public ResponseEntity<Integer> getMemberCount(@PathVariable("clubID") int clubID) {
-        int count = dbMemberCount(clubID);
+        int count = dbFavoriteCount(clubID);
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
 

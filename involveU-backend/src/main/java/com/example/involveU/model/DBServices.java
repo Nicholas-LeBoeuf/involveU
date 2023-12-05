@@ -1002,10 +1002,10 @@ public class DBServices {
     }
 
 
-    protected int dbMemberCount(int clubID) {
-        String sql = "SELECT COUNT(m.memberID) AS numberOfUsers " +
+    protected int dbFavoriteCount(int clubID) {
+        String sql = "SELECT COUNT(m.favoriteID) AS numberOfUsers " +
                 "FROM Club c " +
-                "JOIN Member m ON c.clubID = m.clubID " +
+                "JOIN Favorites m ON c.clubID = m.clubID " +
                 "WHERE c.clubID = ? " +
                 "GROUP BY c.clubID";
 

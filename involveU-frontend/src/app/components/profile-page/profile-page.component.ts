@@ -33,7 +33,6 @@ export class ProfilePageComponent implements OnInit {
     private clubService: ClubService,
     private router: Router,
     private eventsService: EventsService,
-    private dialogModule: DialogModule
   ) {}
 
   viewChangePasswordDialog: boolean = false;

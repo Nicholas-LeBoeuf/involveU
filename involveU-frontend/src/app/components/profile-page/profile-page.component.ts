@@ -24,6 +24,7 @@ export class ProfilePageComponent implements OnInit {
   userProfileImageUrl: SafeUrl | null = null;
   pronouns: SelectItem[];
   majors: SelectItem[];
+
   constructor(
     public cookie: CookieService,
     public profileService: ProfileService,
@@ -33,7 +34,8 @@ export class ProfilePageComponent implements OnInit {
     private clubService: ClubService,
     private router: Router,
     private eventsService: EventsService,
-  ) {}
+  ) {
+  }
 
   viewChangePasswordDialog: boolean = false;
   userCalendarColor: string;
@@ -52,6 +54,7 @@ export class ProfilePageComponent implements OnInit {
   numberOfRows: number;
   favoritedClubs: Club[] = [];
   viewSettingsDialog: boolean = false;
+  userMajor: string;
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -103,15 +106,14 @@ export class ProfilePageComponent implements OnInit {
 
     if (this.responsiveService.deviceDesktop()) {
       this.numberOfRows = 2;
-    }
-    else {
+    } else {
       this.numberOfRows = 1;
     }
     this.loading = false;
 
     setTimeout(() => {
       this.isLoading = false;
-    },1000);
+    }, 1000);
   }
 
   isUserLoggedIn() {
@@ -151,6 +153,7 @@ export class ProfilePageComponent implements OnInit {
 
   openViewChangePasswordDialog() {
     this.viewChangePasswordDialog = true;
+    this.viewSettingsDialog = false;
   }
 
   closeViewChangePasswordDialog() {
@@ -212,7 +215,7 @@ export class ProfilePageComponent implements OnInit {
         .subscribe(
           fileData => {
             // If the response is an ArrayBuffer, you need to convert it to a Blob
-            let blob = new Blob([fileData], { type: 'image/jpeg' });
+            let blob = new Blob([fileData], {type: 'image/jpeg'});
             let objectURL = URL.createObjectURL(blob);
             this.userProfileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
           },
@@ -233,14 +236,20 @@ export class ProfilePageComponent implements OnInit {
   }
 
   removeFromFavorites(clubID: number) {
-    this.clubService.unfavoriteClub(clubID, this.userID).subscribe( response => {
+    this.clubService.unfavoriteClub(clubID, this.userID).subscribe(response => {
 
       },
       error => {
-        this.toastr.error('Unsuccessful Unfavorite Club Attempt', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.toastr.error('Unsuccessful Unfavorite Club Attempt', undefined, {
+          positionClass: 'toast-top-center',
+          progressBar: true
+        });
       },
       () => {
-        this.toastr.success('Successfully Unfavorited Club', undefined, {positionClass: 'toast-top-center', progressBar: true});
+        this.toastr.success('Successfully Unfavorited Club', undefined, {
+          positionClass: 'toast-top-center',
+          progressBar: true
+        });
         this.getUsersFavoritedClubs();
       });
   }
@@ -249,7 +258,7 @@ export class ProfilePageComponent implements OnInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 
-  showViewMoreInfoDialog(SpecificEvent: Events){
+  showViewMoreInfoDialog(SpecificEvent: Events) {
     this.certainEvent.push(SpecificEvent);
     this.viewMoreInfoDialog = true;
   }
@@ -291,15 +300,20 @@ export class ProfilePageComponent implements OnInit {
 
   updatePronouns(event: any) {
     const newPronouns = event.value;
-      this.profileService.changeUserPronouns(this.userID, newPronouns).subscribe((response) => {
-          console.log(response);
-          this.getUserInfo();
-        },
-        (error) => {
-          console.log(error)
-        },
-        () => {
-          this.getUserInfo();
-        });
-    }
+    this.profileService.changeUserPronouns(this.userID, newPronouns).subscribe((response) => {
+        console.log(response);
+        this.toastr.success('Pronouns updates successfully!');
+        this.getUserInfo();
+      },
+      (error) => {
+        console.log(error)
+      });
+  }
+
+  protected readonly open = open;
+
 }
+
+
+
+

@@ -12,7 +12,7 @@
                   [modal]="true"
                   [dismissableMask]="true"
                   (onHide)="closeSettingsDialog()"
-                  [style]="{width: '50vw', height: '68vh'}">
+                  [style]="{width: '50vw', height: '75vh'}">
           <div class="settings-dialog">
               <div class="dialog-header">
                 <i class="fa fa-close padding-x" (click)="closeSettingsDialog()"></i>
@@ -32,9 +32,35 @@
                   <textarea pInputTextarea id="bio" placeholder="Tell us about yourself..." [style]="{ width: '450px', height: '160px'}"></textarea>
                 </div>
                 <div class="padding-bio-input"></div>
+                  <button class="blueButton" (click)="openViewChangePasswordDialog()">Change Password</button>
               </div>
           </div>
         </p-dialog>
+      <p-dialog header="Change Password"
+                [(visible)]="viewChangePasswordDialog" [modal]="true"
+                (onHide)="closeViewChangePasswordDialog()"
+                [style]="{width: '50vw', height: '75vh'}"
+                [dismissableMask]="true">
+        <div class="password-dialog">
+          <div class="dialog-header">
+            <i class="fa fa-close padding-x" (click)="closeViewChangePasswordDialog()"></i>
+            <h2 class="blueHeaders settings-padding">Change Password</h2>
+          </div>
+          <div class="password-container">
+            <div class="input-pass-container">
+            <label class="blueHeaders current-label">Current Password:</label>
+            <input pInputText id="currentPass" placeholder="Current Password" [style]="{ width: '450px' }"/>
+            <label class="blueHeaders new-label">New Password:</label>
+            <input pInputText id="newPass" placeholder="New Password" [style]="{ width: '450px' }"/>
+            <label class="blueHeaders confirm-label">Confirm New Password:</label>
+            <input pInputText id="confirmPass" placeholder="Confirm Password" [style]="{ width: '450px' }"/>
+            <div class="update-password">
+              <button class="blueButton">Update Password</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </p-dialog>
     </ng-template>
   </div>
 </div>
@@ -61,7 +87,7 @@
     </h2>
   </div>
   <div class="year-major">
-  <h2 class="year-major-display">{{this.userProfileInfo.year}} | Computer Science</h2>
+  <h2 class="year-major-display">{{this.userProfileInfo.year}} | {{ userMajor }}</h2>
   </div>
   <div class="email">
     <h2 class="email-display">{{this.userProfileInfo.email}}</h2>

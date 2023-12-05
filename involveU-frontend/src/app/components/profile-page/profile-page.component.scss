@@ -21,12 +21,21 @@
   color: $HeritageBlue;
 }
 
+.password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .settings-container {
   display: flex;
   flex-direction: column;
   align-items: center; /* This centers the children horizontally */
 }
 
+i {
+  cursor: pointer;
+}
 
 .pronoun-label {
   margin-right: 357px;
@@ -45,8 +54,35 @@
   font-size: 1.2em;
 }
 
+.input-pass-container {
+  padding-top: 10px;
+}
+
+.current-label {
+  padding-top: 10px;
+  margin-right: 281px;
+  font-size: 1.2em;
+}
+
+.new-label {
+  padding-top: 37px;
+  margin-right: 308px;
+  font-size: 1.2em;
+}
+
+.confirm-label {
+  padding-top: 40px;
+  margin-right: 230px;
+  font-size: 1.2em;
+}
+
+.update-password {
+  padding-top: 35px;
+}
+
+
 .padding-bio-input {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .blueTitleBar {

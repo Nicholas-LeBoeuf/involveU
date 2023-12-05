@@ -64,6 +64,10 @@
           <h3 class="blueHeaders text-center">Location</h3>
           <p [innerHTML]="event.location"></p>
         </div>
+        <div class=>
+          <h3 class="blueHeaders text-center">Number Attending</h3>
+          <p [innerHTML]="event.numOfRsvps"></p>
+        </div>
       </div>
       <ng-container *ngIf="isLoggedIn">
         <ng-container *ngIf="isUserRSVPd(event.eventID) === true; else ShowRSVP">

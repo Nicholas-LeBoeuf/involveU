@@ -59,4 +59,9 @@ export class EventsService {
   getTopRSVP():Observable<Events[]> {
     return this.http.get<Events[]>(environment.apiURL + `events/getTopRSVP`);
   }
+
+  getCountOfRSVP(eventID: number){
+    return this.http.get<number>(environment.apiURL + `event/rsvpCount/${eventID}`);
+
+  }
 }

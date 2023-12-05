@@ -51,6 +51,7 @@ export class SpecificClubPageComponent implements OnInit {
   clubID: number;
   userID: number;
   numberOfRows: number;
+  clubMemberCount: number;
 
   //STRINGS
 
@@ -87,6 +88,7 @@ export class SpecificClubPageComponent implements OnInit {
       this.numberOfRows = 1;
     }
 
+    this.getNumberOfClubMembers();
     this.getClubMembers();
     this.getClubEvents();
     this.isUserLoggedIn();
@@ -263,6 +265,13 @@ export class SpecificClubPageComponent implements OnInit {
 
   closeAllAnnouncementsDialog() {
     this.viewAllAnnouncementsDialog = false;
+  }
+
+  getNumberOfClubMembers()
+  {
+    this.clubService.getCountOfClub(+this.clubID).subscribe(response => {
+      this.clubMemberCount = response;
+  })
   }
 
   getClubMembers(){

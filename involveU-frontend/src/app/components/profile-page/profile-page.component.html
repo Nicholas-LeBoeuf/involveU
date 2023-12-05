@@ -26,11 +26,17 @@
                             [style]="{ width: '450px' }">
                 </p-dropdown>
                 <label class="major-label blueHeaders">Major:</label>
-                <p-dropdown [options]="majors" placeholder="Select Your Major" [style]="{ width: '450px' }"></p-dropdown>
+                <p-dropdown [options]="majors" (onChange)="updateUserMajor($event.value)"
+                            placeholder="Select Your Major" [style]="{ width: '450px' }">
+                </p-dropdown>
                 <label class="bio-label blueHeaders">Bio:</label>
                 <div class="input-bio">
-                  <textarea pInputTextarea id="bio" placeholder="Tell us about yourself..." [style]="{ width: '450px', height: '160px'}"></textarea>
+                  <textarea pInputTextarea id="bio" placeholder="Tell us about yourself..."
+                            [(ngModel)]="userProfileInfo.userBio"
+                            (blur)="updateUserBio(userProfileInfo.userBio)"
+                            [style]="{ width: '450px', height: '160px'}"></textarea>
                 </div>
+
                 <div class="padding-bio-input"></div>
                   <button class="blueButton" (click)="openViewChangePasswordDialog()">Change Password</button>
               </div>
@@ -86,20 +92,17 @@
       <span class="p-display pronouns"> {{this.userProfileInfo.pronouns}}</span>
     </h2>
   </div>
-  <div class="year-major">
-  <h2 class="year-major-display">{{this.userProfileInfo.year}} | {{ userMajor }}</h2>
-  </div>
+      <div class="year-major">
+        <h2 class="year-major-display">{{ userProfileInfo.year }} | {{ userProfileInfo.userMajor }}</h2>
+      </div>
   <div class="email">
     <h2 class="email-display">{{this.userProfileInfo.email}}</h2>
   </div>
 
-  <div class="bio-card">
-    <h2 class="bio-title yellow-text">About Me:</h2>
-    <h2 class="bio-card-content"> I am a graduating senior studying computer science. I love my friends and family.
-      I play video games and enjoy learning about software engineering and artifical intelligence. My favorite class
-      right now is obviously CS-413 Capstone. I am also the treasurer of the Computer Science Student Association!
-      Hope you all are having a great year :) </h2>
-  </div>
+      <div class="bio-card">
+        <h2 class="bio-title yellow-text">About Me:</h2>
+        <h2 class="bio-card-content">{{ userProfileInfo.userBio }}</h2>
+      </div>
 
 </div>
 

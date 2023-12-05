@@ -9,4 +9,6 @@ export interface User {
   isEboard?: number;
   userPassword?: string;
   eboardPosition?: string;
+  userMajor?: string;
+  userBio?: string;
 }

@@ -73,33 +73,33 @@ export class ProfilePageComponent implements OnInit {
     ]
 
     this.majors = [
-      {label: 'Accounting', value: 'accounting'},
-      {label: 'Advertising', value: 'advertising'},
-      {label: 'Aeronautical Engineering', value: 'aeronautical engineering'},
-      {label: 'Aviation', value: 'aviation'},
-      {label: 'Biology', value: 'biology'},
-      {label: 'Business', value: 'business'},
-      {label: 'Chemistry', value: 'chemistry'},
-      {label: 'Computer Information Systems', value: 'cis'},
-      {label: 'Communications', value: 'communications'},
-      {label: 'Computer Science', value: 'computer science'},
-      {label: 'Criminal Justice', value: 'criminal justice'},
-      {label: 'Cyber Security', value: 'cyber security'},
-      {label: 'Economics', value: 'economics'},
-      {label: 'Education', value: 'education'},
-      {label: 'Electrical Engineering', value: 'ee'},
-      {label: 'English', value: 'english'},
-      {label: 'Environmental Science', value: 'environmental science'},
-      {label: 'Game Design', value: 'game design'},
-      {label: 'History', value: 'history'},
-      {label: 'Information Technologies', value: 'it'},
-      {label: 'Mathematics', value: 'mathematics'},
-      {label: 'Mechanical Engineering', value: 'me'},
-      {label: 'Physics', value: 'physics'},
-      {label: 'Politics', value: 'politics'},
-      {label: 'Psychology', value: 'psychology'},
-      {label: 'Sociology', value: 'sociology'},
-    ]
+      { label: 'Accounting', value: 'Accounting' },
+      { label: 'Advertising', value: 'Advertising' },
+      { label: 'Aeronautical Engineering', value: 'Aeronautical Engineering' },
+      { label: 'Aviation', value: 'Aviation' },
+      { label: 'Biology', value: 'Biology' },
+      { label: 'Business', value: 'Business' },
+      { label: 'Chemistry', value: 'Chemistry' },
+      { label: 'Computer Information Systems', value: 'Computer Information Systems' },
+      { label: 'Communications', value: 'Communications' },
+      { label: 'Computer Science', value: 'Computer Science' },
+      { label: 'Criminal Justice', value: 'Criminal Justice' },
+      { label: 'Cyber Security', value: 'Cyber Security' },
+      { label: 'Economics', value: 'Economics' },
+      { label: 'Education', value: 'Education' },
+      { label: 'Electrical Engineering', value: 'Electrical Engineering' },
+      { label: 'English', value: 'English' },
+      { label: 'Environmental Science', value: 'Environmental Science' },
+      { label: 'Game Design', value: 'Game Design' },
+      { label: 'History', value: 'History' },
+      { label: 'Information Technologies', value: 'Information Technologies' },
+      { label: 'Mathematics', value: 'Mathematics' },
+      { label: 'Mechanical Engineering', value: 'Mechanical Engineering' },
+      { label: 'Physics', value: 'Physics' },
+      { label: 'Politics', value: 'Politics' },
+      { label: 'Psychology', value: 'Psychology' },
+      { label: 'Sociology', value: 'Sociology' },
+    ];
 
     if (this.responsiveService.deviceDesktop()) {
       this.numberOfRows = 2;
@@ -159,6 +159,30 @@ export class ProfilePageComponent implements OnInit {
     this.viewChangePasswordDialog = true;
   }
 
+  updateUserMajor(newMajor: string): void {
+    this.profileService.changeUserMajor(this.userID, newMajor).subscribe(
+      response => {
+        console.log('Major updated successfully');
+        this.userProfileInfo.userMajor = newMajor; // Update the major in the userProfileInfo
+      },
+      error => {
+        console.error('Error updating major:', error);
+      }
+    );
+  }
+
+  updateUserBio(newBio: string): void {
+    this.profileService.changeUserBio(this.userID, newBio).subscribe(
+      response => {
+        console.log('Bio updated successfully');
+        this.userProfileInfo.userBio = newBio; // Update the bio in the userProfileInfo
+      },
+      error => {
+        console.error('Error updating bio:', error);
+      }
+    );
+  }
+
   closeViewChangePasswordDialog() {
     this.viewChangePasswordDialog = false;
   }
@@ -174,6 +198,19 @@ export class ProfilePageComponent implements OnInit {
       this.fileInputLabel = 'Choose File';
       this.resetFileInput();
     }
+  }
+
+  updatePronouns(event: any): void {
+    const newPronouns = event.value; // Assuming event.value contains the selected pronouns
+    this.profileService.changeUserPronouns(this.userID, newPronouns).subscribe(
+      response => {
+        console.log('Pronouns updated');
+        this.userProfileInfo.pronouns = newPronouns;
+      },
+      error => {
+        console.error('Error updating pronouns:', error);
+      }
+    );
   }
 
   uploadProfilePicture() {

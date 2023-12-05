@@ -22,6 +22,15 @@ export class ProfileService {
     return this.http.put(environment.apiURL + `user/changePronouns/${UserID}`, Pronouns);
   }
 
+  changeUserBio(userID: number, newBio: string): Observable<any> {
+    return this.http.put(`${environment.apiURL}user/changeBio/${userID}/${encodeURIComponent(newBio)}`, {});
+  }
+
+
+  changeUserMajor(UserID: number, newMajor: string): Observable<any> {
+    return this.http.put(`${environment.apiURL}user/changeMajor/${UserID}/${newMajor}`, {});
+  }
+
   changeUserYear(UserID: number, newYear: string) {
     return this.http.put(environment.apiURL + `user/changeYear/${UserID}/${newYear}`, {});
   }

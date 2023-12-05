@@ -258,12 +258,6 @@ public class UserController extends DBServices{
 
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
-
-
-
-
-
-
 }
 
 

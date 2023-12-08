@@ -31,10 +31,12 @@
                 </p-dropdown>
                 <label class="bio-label blueHeaders">Bio:</label>
                 <div class="input-bio">
-                  <textarea pInputTextarea id="bio" placeholder="Tell us about yourself..."
-                            [(ngModel)]="userProfileInfo.userBio"
-                            (blur)="updateUserBio(userProfileInfo.userBio)"
-                            [style]="{ width: '450px', height: '160px'}"></textarea>
+                  <textarea
+                    pInputTextarea id="bio" placeholder="Tell us about yourself..."
+                    [(ngModel)]="userProfileInfo.userBio"
+                    (blur)="updateUserBio(userProfileInfo.userBio)"
+                    [style]="{ width: '450px', height: '160px'}">
+                  </textarea>
                 </div>
 
                 <div class="padding-bio-input"></div>

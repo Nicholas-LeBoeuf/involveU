@@ -67,9 +67,9 @@ export class ProfilePageComponent implements OnInit {
     /*this.getUserRSVPdEvents();*/
 
     this.pronouns = [
-      {label: 'He/Him', value: 'he/him'},
-      {label: 'She/Her', value: 'she/her'},
-      {label: 'They/Them', value: 'they/them'}
+      {label: 'He/Him', value: 'He/Him'},
+      {label: 'She/Her', value: 'She/Her'},
+      {label: 'They/Them', value: 'They/Them'}
     ]
 
     this.majors = [

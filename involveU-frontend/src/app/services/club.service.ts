@@ -50,7 +50,7 @@ export class ClubService {
   }
 
   getCountOfClub(clubID : number): Observable<number> {
-   return this.http.get<number>(environment.apiURL + `club/memberCount/${clubID}`);
+   return this.http.get<number>(environment.apiURL + `club/favoriteCount/${clubID}`);
   }
 
 

@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ProfileService } from '../../services/profile.service';
-import { ClubService } from '../../services/club.service'; // Import the ClubService
-import { Club } from '../../objects/club'; // Assuming you have a Club model
+import { ToastrService } from 'ngx-toastr';
 
+import {ProfileService} from "../../services/profile.service";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ResponsiveService} from "../../services/responsive.service";
+import {Club} from "../../objects/club";
+import {ClubService} from "../../services/club.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Events} from "../../objects/events";
+import {EventsService} from "../../services/events.service";
 
 @Component({
   selector: 'app-public-profile',
@@ -14,34 +18,43 @@ import { Club } from '../../objects/club'; // Assuming you have a Club model
 export class PublicProfileComponent implements OnInit {
   userProfileInfo: any;
   userProfileImageUrl: SafeUrl | null = null;
-  favoritedClubs: Club[] = []; // Add this property
+  favoritedClubs: Club[] = [];
+  userRSVPdEvents: Events[] = [];
+  userID: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private profileService: ProfileService,
-    private clubService: ClubService, // Inject the ClubService
-    private sanitizer: DomSanitizer
+    private clubService: ClubService,
+    private eventsService: EventsService,
+    private sanitizer: DomSanitizer,
+    private toastr: ToastrService,
+    public responsiveService: ResponsiveService
   ) {}
 
+  isLoading: boolean = true;
+  numberOfRows: number;
+  certainEvent: Events[] = [];
+  viewMoreInfoDialog: boolean = false;
+
   ngOnInit(): void {
-    const userID = this.route.snapshot.paramMap.get('id');
-    this.loadUserProfile(userID);
-    this.loadFavoritedClubs(userID); // Add this call
+    this.userID = +this.route.snapshot.paramMap.get('id');
+    this.loadUserProfile(this.userID.toString());
+    this.loadFavoritedClubs(this.userID.toString());
+    this.getUserRSVPdEvents();
   }
 
-  loadUserProfile(userID: string | null) {
-    if (userID) {
-      this.profileService.getUserProfile(+userID).subscribe(
-        (data) => {
-          this.userProfileInfo = data;
-          this.loadUserProfileImage(userID);
-        },
-        (error) => {
-          console.error('Error fetching user profile', error);
-        }
-      );
-    }
+  loadUserProfile(userID: string) {
+    this.profileService.getUserProfile(+userID).subscribe(
+      (data) => {
+        this.userProfileInfo = data;
+        this.loadUserProfileImage(userID);
+      },
+      (error) => {
+        console.error('Error fetching user profile', error);
+      }
+    );
   }
 
   loadUserProfileImage(userID: string) {
@@ -57,22 +70,53 @@ export class PublicProfileComponent implements OnInit {
     );
   }
 
-  loadFavoritedClubs(userID: string | null) {
-    if (userID) {
-      this.clubService.getUsersFavoritedClubs(+userID).subscribe(
-        (clubs) => {
-          this.favoritedClubs = clubs;
-        },
-        (error) => {
-          console.error("Error loading favorited clubs:", error);
-        }
-      );
-    }
+  showViewMoreInfoDialog(SpecificEvent: Events){
+    this.certainEvent.push(SpecificEvent);
+    this.viewMoreInfoDialog = true;
+  }
+
+  loadFavoritedClubs(userID: string) {
+    this.clubService.getUsersFavoritedClubs(+userID).subscribe(
+      (clubs) => {
+        this.favoritedClubs = clubs;
+      },
+      (error) => {
+        console.error("Error loading favorited clubs:", error);
+      }
+    );
   }
 
   goToClubPage(clubID: number) {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 
-  // You can add goToClubPage method if needed
+  getUserRSVPdEvents() {
+    this.isLoading = true; // Set loading to true when the API call starts
+    this.eventsService.getUserFutureRSVPdEvents(this.userID).subscribe(
+      response => {
+        console.log("RSVP Events:", response);
+        this.userRSVPdEvents = response;
+        console.log(this.userRSVPdEvents);
+        this.isLoading = false; // Set loading to false on successful data retrieval
+      },
+      error => {
+        console.error('Error fetching RSVPd events', error);
+        this.isLoading = false; // Also set loading to false on error
+      }
+    );
+  }
+
+
+  removeEventRSVP(eventID: number) {
+    this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(
+      () => {
+        this.toastr.success('Successfully Removed RSVP To Event');
+        this.getUserRSVPdEvents(); // Refresh the list of RSVPd events
+      },
+      error => {
+        console.error('Error removing RSVP', error);
+        this.toastr.error('Unsuccessful Remove RSVP Attempt');
+      }
+    );
+  }
 }

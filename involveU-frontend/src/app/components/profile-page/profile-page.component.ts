@@ -3,7 +3,6 @@ import {CookieService} from "ngx-cookie-service";
 import {User} from "../../objects/user";
 import { ToastrService } from 'ngx-toastr';
 import { SelectItem } from "primeng/api";
-import { InputTextModule } from "primeng/inputtext";
 
 import {ProfileService} from "../../services/profile.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";

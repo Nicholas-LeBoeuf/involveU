@@ -33,36 +33,63 @@
     </div>
 
     <div class="main-content">
+      <!-- Favorite Clubs Section -->
       <h2 class="blueHeaders club-title-padding">Favorite Clubs</h2>
       <div class="table-padding">
-      <ng-container *ngIf="favoritedClubs.length > 0; else NoFavoritedClubs">
-        <table class="favoritedClubsTable">
-          <thead>
-          <tr>
-            <th class="text-center">Club</th>
-            <th class="text-center">View Club</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let club of favoritedClubs">
-            <td class="text-center">{{ club.clubName }}</td>
-            <td class="text-center">
-              <button class="blueButton" (click)="goToClubPage(club.clubID)">View</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </ng-container>
-      <ng-template #NoFavoritedClubs>
-        <h3 class="club-title-padding">No favorited clubs to show</h3>
-      </ng-template>
-    </div>
-    </div>
-  </div>
-</ng-container>
+        <ng-container *ngIf="favoritedClubs.length > 0; else NoFavoritedClubs">
+          <table class="favoritedClubsTable">
+            <thead>
+            <tr>
+              <th class="text-center">Club</th>
+              <th class="text-center">View Club</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let club of favoritedClubs">
+              <td class="text-center">{{ club.clubName }}</td>
+              <td class="text-center">
+                <button class="blueButton" (click)="goToClubPage(club.clubID)">View</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #NoFavoritedClubs>
+          <h3 class="club-title-padding">No favorited clubs to show</h3>
+        </ng-template>
+      </div>
 
-<ng-container *ngIf="!userProfileInfo">
-  <div class="text-center">
-    <h2>Loading profile...</h2>
+      <!-- RSVP'd Events Section -->
+      <div class="table-padding-rsvp">
+        <h2 class="blueHeaders rsvp-padding">RSVP'd Events</h2>
+        <ng-container *ngIf="userRSVPdEvents.length === 0; else RSVPEventsPresent">
+          <div class="noContent">
+            <h3>There are no events that you are RSVP'd to!</h3>
+          </div>
+        </ng-container>
+
+        <ng-template #RSVPEventsPresent>
+          <p-table [value]="userRSVPdEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows" [loading]="isLoading">
+            <ng-template pTemplate="body" let-RSVPEvent>
+              <div class="eventCard text-center" (click)="showViewMoreInfoDialog(RSVPEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <div class="eventCardPicture">
+                  <div class="imageCenter">
+                    <img *ngIf="RSVPEvent.clubLogo" class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
+                  </div>
+                  <div class="imageMaskEvent"></div>
+                  <h3 class="blueHeaders text-center">{{RSVPEvent.title}}</h3>
+                  <h5 class="eventClubName" (click)="goToClubPage(RSVPEvent.clubID)">{{RSVPEvent.clubName}}</h5>
+                  <p>Date: {{RSVPEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{RSVPEvent.startDateTime | timeFormat}} - {{RSVPEvent.endDateTime | timeFormat}}</p>
+                  <p>Location: {{RSVPEvent.location}}</p>
+                  <button class="blueButton" (click)="removeEventRSVP(RSVPEvent.eventID)">Remove</button>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-template>
+
+      </div>
+    </div>
   </div>
 </ng-container>

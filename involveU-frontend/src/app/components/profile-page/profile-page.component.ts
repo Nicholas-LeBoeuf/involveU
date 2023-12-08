@@ -64,7 +64,7 @@ export class ProfilePageComponent implements OnInit {
     this.changeUserCalendarColors();
     this.loadUserProfileImage();
     this.getUsersFavoritedClubs();
-    /*this.getUserRSVPdEvents();*/
+    this.getUserRSVPdEvents();
 
     this.pronouns = [
       {label: 'He/Him', value: 'He/Him'},
@@ -305,7 +305,7 @@ export class ProfilePageComponent implements OnInit {
     this.viewSettingsDialog = false;
   }
 
-  /*removeEventRSVP(eventID: number) {
+  removeEventRSVP(eventID: number) {
     this.eventsService.removeEventRSVP(eventID, this.userID).subscribe(response => {
       },
       error => {
@@ -318,7 +318,7 @@ export class ProfilePageComponent implements OnInit {
       });
   }
 
-  /*getUserRSVPdEvents() {
+  getUserRSVPdEvents() {
     this.eventsService.getUserFutureRSVPdEvents(this.userID).subscribe(response => {
       this.userRSVPdEvents = response;
       for(let i = 0; i < this.userRSVPdEvents.length; i++) {
@@ -330,6 +330,6 @@ export class ProfilePageComponent implements OnInit {
         })
       }
     })
-  } */
+  }
 
 }

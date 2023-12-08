@@ -44,10 +44,11 @@
               </div>
           </div>
         </p-dialog>
+      <div class="change-pass-styling">
       <p-dialog header="Change Password"
                 [(visible)]="viewChangePasswordDialog" [modal]="true"
                 (onHide)="closeViewChangePasswordDialog()"
-                [style]="{width: '50vw', height: '75vh'}"
+                [style]="{width: '50vw', height: '70vh'}"
                 [dismissableMask]="true">
         <div class="password-dialog">
           <div class="dialog-header">
@@ -69,6 +70,7 @@
           </div>
         </div>
       </p-dialog>
+      </div>
     </ng-template>
   </div>
 </div>
@@ -108,43 +110,10 @@
 
 </div>
 
-    <!--<div>
-      <h2 class="blueHeaders rsvp-padding">RSVP'd Events</h2>
-      <ng-container *ngIf="userRSVPdEvents.length === 0; else RSVPEventsPresent">
-        <div class="noContent">
-          <h3>There are no events that you are RSVP'd to!</h3>
-        </div>
-      </ng-container>-->
-
-      <!--<ng-template #RSVPEventsPresent>
-        <p-table [value]="userRSVPdEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows" [loading]="isLoading">
-          <ng-template pTemplate="body" let-RSVPEvent>
-            <div class="eventCard text-center" (click)="showViewMoreInfoDialog(RSVPEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
-              <div class="eventCardPicture">
-                <div class="imageCenter">
-                  <img class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
-                </div>
-                <div class="imageMaskEvent"></div>
-                <h3 class="blueHeaders text-center" [innerHTML]="RSVPEvent.title"></h3>
-                <h5 class="eventClubName" (click)="goToClubPage(RSVPEvent.clubID)" [innerHTML]="RSVPEvent.clubName"></h5>
-                <p>Date: {{RSVPEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
-                <p>Time: {{RSVPEvent.startDateTime | timeFormat}} - {{RSVPEvent.endDateTime | timeFormat}}</p>
-                <p [innerHTML]="'Location: ' + RSVPEvent.location"></p>
-
-                <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(RSVPEvent.eventID)">Remove RSVP</button>
-
-              </div>
-            </div>
-          </ng-template>
-        </p-table>
-      </ng-template>
-    </div>
-  </div> -->
-
-
     <div class="main-content">
       <div *ngIf="userID !== 0;">
         <h2 class="blueHeaders club-title-padding">Favorite Clubs</h2>
+        <div class="table-padding">
         <ng-container *ngIf="favoritedClubs.length !== 0; else NoFavoritedClubs">
         <p-table styleClass="favoritedClubsTable" [value]="favoritedClubs" responsiveLayout="scroll">
           <ng-template pTemplate="header">
@@ -162,12 +131,45 @@
             </tr>
           </ng-template>
         </p-table>
-      </ng-container>
-      <ng-template #NoFavoritedClubs>
-        <h3 class="club-title-padding">You currently have no favorited clubs to show!</h3>
-      </ng-template>
-  </div>
-  </div>
-  </div>
+        </ng-container>
+        <ng-template #NoFavoritedClubs>
+          <h3 class="club-title-padding">You currently have no favorited clubs to show!</h3>
+        </ng-template>
+      </div>
+
+      <div>
+        <div class="table-padding-rsvp">
+        <h2 class="blueHeaders rsvp-padding">RSVP'd Events</h2>
+        <ng-container *ngIf="userRSVPdEvents.length === 0; else RSVPEventsPresent">
+          <div class="noContent">
+            <h3>There are no events that you are RSVP'd to!</h3>
+          </div>
+        </ng-container>
+        </div>
+
+        <ng-template #RSVPEventsPresent>
+          <p-table [value]="userRSVPdEvents" styleClass="centerItems" [paginator]="true" [pageLinks]="3" [rows]="numberOfRows" [loading]="isLoading">
+            <ng-template pTemplate="body" let-RSVPEvent>
+              <div class="eventCard text-center" (click)="showViewMoreInfoDialog(RSVPEvent)" [ngClass]="{'eventCardSizeWeb' : responsiveService.deviceDesktop(), 'eventCardSizeTabletMobile' : responsiveService.deviceMobile() || responsiveService.deviceTablet()}">
+                <div class="eventCardPicture">
+                  <div class="imageCenter">
+                    <img class="eventImage" [src]="RSVPEvent.clubLogo" alt="{{RSVPEvent.clubName}} Logo"/>
+                  </div>
+                  <div class="imageMaskEvent"></div>
+                  <h3 class="blueHeaders text-center" [innerHTML]="RSVPEvent.title"></h3>
+                  <h5 class="eventClubName" (click)="goToClubPage(RSVPEvent.clubID)" [innerHTML]="RSVPEvent.clubName"></h5>
+                  <p>Date: {{RSVPEvent.dateTimeFormatted | date:'MMMM dd, YYYY'}}</p>
+                  <p>Time: {{RSVPEvent.startDateTime | timeFormat}} - {{RSVPEvent.endDateTime | timeFormat}}</p>
+                  <p [innerHTML]="'Location: ' + RSVPEvent.location"></p>
+                  <button class="blueButton" (click)=" $event.preventDefault(); $event.stopPropagation(); removeEventRSVP(RSVPEvent.eventID)">Remove RSVP</button>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-template>
+      </div>
+      </div>
+    </div>
+</div>
 </ng-template>
 

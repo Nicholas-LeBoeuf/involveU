@@ -38,8 +38,8 @@ i {
 }
 
 .settings-styling {
-  border-radius: 2.2%;
-  border: 8px solid $GoldenYellow;
+  border-radius: 3.2%;
+  border: 6px solid $GoldenYellow;
 }
 
 .pronoun-label {
@@ -65,7 +65,7 @@ i {
 
 .password-container{
   border-radius: 3.2%;
-  border: 8px solid $GoldenYellow;
+  border: 6px solid $GoldenYellow;
 }
 
 .input-pass-container {
@@ -149,7 +149,7 @@ i {
   z-index: 1000;
   flex: 0 0 420px;
   max-width: 420px;
-  border-right: 5px $GoldenYellow solid;
+  border-right: 6px solid $SkyBlue;
   margin: 0;
   padding: 0;
 }

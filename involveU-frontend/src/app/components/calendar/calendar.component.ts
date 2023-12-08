@@ -276,7 +276,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 
-  getRSVPEventCount(eventID: number)
+  getRSVPEventCount()
   {
     this.eventsService.getCountOfRSVP(+this.eventID).subscribe(response => {
       this.RSVPEventCount = response;

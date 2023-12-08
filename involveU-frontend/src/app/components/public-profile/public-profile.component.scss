@@ -1,10 +1,6 @@
 @import "src/styles";
 
 /* General layout and spacing */
-.div {
-  margin-top: 50px;
-  margin-left: 50px;
-}
 
 .profilePadding {
   padding-top: 30px;
@@ -12,7 +8,7 @@
 }
 
 .blueTitleBar {
-  padding-top: 10px;
+  padding-top: 25px;
   height: 100px;
 }
 
@@ -23,17 +19,16 @@
 
 /* Main content styling */
 .main-content {
-  padding-top: 40px;
+  padding-top: 5vh;
   flex-grow: 1;
-  padding-left: 75px; /* Align with the table */
+  padding-left: 7vh; /* Align with the table */
 }
 
 /* Favorite Clubs Table Styling */
 ::ng-deep .favoritedClubsTable {
   margin-bottom: 1.5rem !important;
   width: 90%;
-  margin-left: 75px; /* Align with the sidebar */
-  border-collapse: collapse; /* Optional, for styling borders */
+  margin-left: 2px; /* Align with the sidebar */
 
   th, td {
     padding: 10px; /* Spacing inside each cell */
@@ -74,7 +69,7 @@
 }
 
 .profile-picture-container {
-  padding-top: 25px;
+  padding-top: 2vh;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -86,7 +81,6 @@
   border-radius: 100%;
   border: 3px solid $GoldenYellow;
   object-fit: cover;
-  cursor: pointer;
 }
 
 

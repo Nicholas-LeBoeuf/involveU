@@ -34,6 +34,7 @@
 
     <div class="main-content">
       <h2 class="blueHeaders club-title-padding">Favorite Clubs</h2>
+      <div class="table-padding">
       <ng-container *ngIf="favoritedClubs.length > 0; else NoFavoritedClubs">
         <table class="favoritedClubsTable">
           <thead>
@@ -55,6 +56,7 @@
       <ng-template #NoFavoritedClubs>
         <h3 class="club-title-padding">No favorited clubs to show</h3>
       </ng-template>
+    </div>
     </div>
   </div>
 </ng-container>

@@ -37,6 +37,11 @@ i {
   cursor: pointer;
 }
 
+.settings-styling {
+  border-radius: 2.2%;
+  border: 8px solid $GoldenYellow;
+}
+
 .pronoun-label {
   margin-right: 50vh;
   font-size: 1.2em;
@@ -54,12 +59,20 @@ i {
   font-size: 1.2em;
 }
 
+.change-pass-button {
+  padding-bottom: 2vh;
+}
+
+.password-container{
+  border-radius: 3.2%;
+  border: 8px solid $GoldenYellow;
+}
+
 .input-pass-container {
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .current-label {
-  padding-top: 1vh;
   margin-right: 281px;
   font-size: 1.2em;
 }
@@ -77,9 +90,9 @@ i {
 }
 
 .update-password {
-  padding-top: 5vh;
+  padding-top: 2.5vh;
+  padding-bottom: 1vh;
 }
-
 
 .padding-bio-input {
   padding-top: 2px;
@@ -121,10 +134,6 @@ i {
   padding-left: 3.8vh;
 }
 
-.change-pass-styling {
-}
-
-
 .sidebar-container {
   position: sticky;
   top: 71px;
@@ -145,8 +154,6 @@ i {
   padding: 0;
 }
 
-
-
 .settings-icon-container {
   padding-top: 3px;
   padding-left: 53vh;
@@ -158,6 +165,7 @@ i {
   padding-top: 30px;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -167,14 +175,8 @@ i {
   border-radius: 100%;
   object-fit: cover;
   cursor: pointer;
-}
-
-.profile-picture-label img {
-  display: block;
-  cursor: pointer;
-  object-fit: cover;
-  border-radius: 50%;
   border: 3px solid $GoldenYellow;
+  display: block;
 }
 
 input[type="file"] {

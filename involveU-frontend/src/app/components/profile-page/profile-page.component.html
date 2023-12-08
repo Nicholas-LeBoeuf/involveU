@@ -12,7 +12,8 @@
                   [modal]="true"
                   [dismissableMask]="true"
                   (onHide)="closeSettingsDialog()"
-                  [style]="{width: '50vw', height: '75vh'}">
+                  [style]="{width: '50vw', height: '75.4vh'}">
+          <div class="settings-styling">
           <div class="settings-dialog">
               <div class="dialog-header">
                 <i class="fa fa-close padding-x" (click)="closeSettingsDialog()"></i>
@@ -35,27 +36,29 @@
                     pInputTextarea id="bio" placeholder="Tell us about yourself..."
                     [(ngModel)]="userProfileInfo.userBio"
                     (blur)="updateUserBio(userProfileInfo.userBio)"
-                    [style]="{ width: '450px', height: '160px'}">
+                    [style]="{ width: '450px', height: '140px'}">
                   </textarea>
                 </div>
 
                 <div class="padding-bio-input"></div>
+                <div class="change-pass-button">
                   <button class="blueButton" (click)="openViewChangePasswordDialog()">Change Password</button>
+                </div>
               </div>
           </div>
+          </div>
         </p-dialog>
-      <div class="change-pass-styling">
       <p-dialog header="Change Password"
                 [(visible)]="viewChangePasswordDialog" [modal]="true"
                 (onHide)="closeViewChangePasswordDialog()"
-                [style]="{width: '50vw', height: '70vh'}"
+                [style]="{width: '50vw', height: '66.1vh'}"
                 [dismissableMask]="true">
+        <div class="password-container">
         <div class="password-dialog">
           <div class="dialog-header">
             <i class="fa fa-close padding-x" (click)="closeViewChangePasswordDialog()"></i>
             <h2 class="blueHeaders settings-padding">Change Password</h2>
           </div>
-          <div class="password-container">
             <div class="input-pass-container">
             <label class="blueHeaders current-label">Current Password:</label>
             <input pInputText id="currentPass" placeholder="Current Password" [style]="{ width: '450px' }"/>
@@ -70,7 +73,6 @@
           </div>
         </div>
       </p-dialog>
-      </div>
     </ng-template>
   </div>
 </div>

@@ -12,7 +12,6 @@
 }
 
 .blueTitleBar {
-  padding-top: 10px;
   height: 100px;
 }
 
@@ -37,18 +36,18 @@
 
   th, td {
     padding: 10px; /* Spacing inside each cell */
+    padding: 10px; /* Spacing inside each cell */
     text-align: center; /* Center the text */
-    border-bottom: 1px solid #ddd; /* Border for each cell */
+    background-color: #f4f4f4;
+    border: 1px solid black; /* Border for each cell */
   }
 
   th {
     background-color: $HeritageBlue; /* Color for the header */
-    color: white; /* Text color for the header */
+    color: $GoldenYellow; /* Text color for the header */
   }
 
-  tr:nth-child(even) {
-    background-color: #f2f2f2; /* Zebra striping for rows */
-  }
+
 
   tr:hover {
     background-color: #ddd; /* Hover effect for rows */
@@ -63,14 +62,15 @@
 .sidebar-container {
   position: sticky;
   top: 167px;
-  width: 450px;
+  width: 420px;
   color: white;
-  background-color: $HeritageBlue; /* Ensure this variable is defined */
+  background-color: $HeritageBlue;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: calc(100vh - 167px);
+  border-right: 5px solid $GoldenYellow; /* Add a solid yellow right border */
 }
 
 .profile-picture-container {
@@ -88,7 +88,6 @@
   object-fit: cover;
   cursor: pointer;
 }
-
 
 /* Other styling */
 .name-pronouns-info {

@@ -6,7 +6,7 @@ public class RSVP {
     int eventID;
     int total;
 
-
+    int count;
 
     public int getStudentID() {return studentID;}
 

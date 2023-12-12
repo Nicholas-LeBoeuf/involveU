@@ -86,6 +86,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.getAllClubs();
     this.isUserLoggedIn();
     this.getUserRSVPdEvents();
+    this.getRSVPEventCount();
   }
 
   ngAfterViewInit() {
@@ -276,11 +277,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/clubs/' + clubID]).then();
   }
 
-  getRSVPEventCount()
-  {
+  getRSVPEventCount() {
     this.eventsService.getCountOfRSVP(+this.eventID).subscribe(response => {
       this.RSVPEventCount = response;
-    })
+      console.log('RSVP count:', this.RSVPEventCount);
+    });
   }
 
   protected readonly ResponsiveService = ResponsiveService;

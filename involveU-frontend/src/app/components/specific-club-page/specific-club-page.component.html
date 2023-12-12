@@ -112,10 +112,10 @@
         </div>
 
         <ng-container *ngIf="clubMembers.length !== 0">
-            <h2 class="blueHeaders">Club Members {{clubMemberCount}}</h2>
+          <h2 class="blueHeaders" style="padding-top: 20px;">Club Members: {{clubMemberCount}}</h2>
 
 
-            <p-table styleClass="eboardTable" [value]="clubMembers" responsiveLayout="scroll">
+          <p-table styleClass="eboardTable" [value]="clubMembers" responsiveLayout="scroll">
               <ng-template pTemplate="body" let-member>
                 <tr class="memberList" (click)="goToPublicProfile(member.studentID)">
 
